@@ -36,19 +36,15 @@ echo "TOP=${TOP}  GOAL=${GOAL}  BLACKBOX=${BLACKBOX}"
 echo "OUTDIR=${OUTDIR}"
 
 # ------------------------------------------------------------------
-# Build the file list from scripts/rtl.f (same as DC)
+# Build the file list: only rev4 RTL (skip frozen rev3)
 # ------------------------------------------------------------------
 FILELIST="${OUTDIR}/rtl_spyglass.f"
 SOURCES=()
 while IFS= read -r line; do
     line="$(echo "$line" | xargs)"  # trim
     [[ -z "$line" || "$line" == \#* ]] && continue
-    if [[ "$line" == ../rev3/rtl/* ]]; then
-        fname="$(basename "$line")"
-        SOURCES+=("rtl/rev3_${fname}")
-    else
-        SOURCES+=("$line")
-    fi
+    [[ "$line" == ../rev3/* ]] && continue  # skip frozen rev3
+    SOURCES+=("$line")
 done < scripts/rtl.f
 
 echo "Source files (${#SOURCES[@]}):"
