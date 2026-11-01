@@ -90,7 +90,7 @@ module pe4_fmul (
         if (prod == 0) begin
             zero_out = 1;                             // +-0, sign = s0
         end else begin
-            te = ev + 13'sd(msb);   // exponent for a [1,2) significand
+            te = ev + msb;  // int + signed[12:0]; msb is 0..47, fits in 13b
             if (te > 13'sd127) inf_out = 1;
             else if (te >= -13'sd126) begin
                 if (msb >= 23) begin
