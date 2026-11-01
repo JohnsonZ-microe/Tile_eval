@@ -100,12 +100,12 @@ echo ""
 # ------------------------------------------------------------------
 # Run SpyGlass
 # ------------------------------------------------------------------
-echo "Running: spyglass -lic_queue -goal ${GOAL} -project ${PRJ}"
+SG_CMD="$(command -v spyglass || command -v sg_shell || echo spyglass)"
+echo "Running: ${SG_CMD} -goal ${GOAL} -project ${PRJ}"
 echo ""
 
-spyglass -lic_queue -goal "${GOAL}" -project "${PRJ}" \
-    -dgdata_dir "${OUTDIR}/dgdata" \
-    -cwd "${OUTDIR}" 2>&1 | tee "${OUTDIR}/spyglass_console.log"
+"${SG_CMD}" -goal "${GOAL}" -project "${PRJ}" \
+    2>&1 | tee "${OUTDIR}/spyglass_console.log"
 
 SG_EXIT=$?
 
