@@ -66,28 +66,21 @@ PRJ="${OUTDIR}/spyglass.prj"
     echo "# SpyGlass project — auto-generated $(date -u)"
     echo "# TOP=${TOP} GOAL=${GOAL}"
 
-    # Define macro if blackbox mode
+    # SpyGlass uses -type verilog for SV files; enableSV handles parsing
     if [[ "$BLACKBOX" == "1" ]]; then
-        echo "read_file -type sv -define PE4_MEM_BLACKBOX \\"
+        echo "read_file -type verilog -define PE4_MEM_BLACKBOX \\"
     else
-        echo "read_file -type sv \\"
+        echo "read_file -type verilog \\"
     fi
 
     # List files
-    first=1
     for f in "${SOURCES[@]}"; do
-        if [[ $first -eq 1 ]]; then
-            echo "    $f"
-            first=0
-        else
-            echo "    $f"
-        fi
+        echo "    $f"
     done
 
     echo ""
     echo "# Design settings"
     echo "set_option top ${TOP}"
-    echo "set_option language sv"
     echo "set_option enableSV yes"
     echo "set_option svaoff yes"
 
