@@ -9,6 +9,7 @@
 #   GOAL      — SpyGlass goal (default: lint_rtl; also: lint, cdc, cdc_reset)
 #   OUTDIR    — output directory (default: spyglass_results/<stamp>)
 #   BLACKBOX  — 1=define PE4_MEM_BLACKBOX (default: 0, lint the real code)
+#   --dry-run — generate + self-check spyglass.prj, do NOT launch SpyGlass
 
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -16,6 +17,7 @@ cd "$(dirname "$0")/.."
 TOP="${TOP:-tile_ffn_v4}"
 GOAL="${GOAL:-lint_rtl}"
 BLACKBOX="${BLACKBOX:-0}"
+DRYRUN=0
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 OUTDIR="${OUTDIR:-spyglass_results/${STAMP}-$$}"
 mkdir -p "${OUTDIR}"
@@ -27,6 +29,7 @@ while [[ $# -gt 0 ]]; do
         --goal)   GOAL="$2"; shift 2;;
         --outdir) OUTDIR="$2"; shift 2;;
         --blackbox) BLACKBOX=1; shift;;
+        --dry-run) DRYRUN=1; shift;;
         *) echo "Unknown option: $1"; exit 1;;
     esac
 done
@@ -41,11 +44,16 @@ echo "OUTDIR=${OUTDIR}"
 FILELIST="${OUTDIR}/rtl_spyglass.f"
 SOURCES=()
 while IFS= read -r line; do
-    line="$(echo "$line" | xargs)"  # trim
+    # trim leading/trailing whitespace (pure bash; xargs breaks on spaces)
+    line="${line#"${line%%[![:space:]]*}"}"
+    line="${line%"${line##*[![:space:]]}"}"
     [[ -z "$line" || "$line" == \#* ]] && continue
     [[ "$line" == ../rev3/* ]] && continue  # skip frozen rev3
     SOURCES+=("$line")
 done < scripts/rtl.f
+
+# Keep the filtered file list for reference / other tools
+printf '%s\n' "${SOURCES[@]}" > "${FILELIST}"
 
 echo "Source files (${#SOURCES[@]}):"
 for f in "${SOURCES[@]}"; do echo "  $f"; done
@@ -60,35 +68,77 @@ done
 
 # ------------------------------------------------------------------
 # Generate the SpyGlass project file
+#
+# IMPORTANT: a .prj file is a Tcl script — SpyGlass reads it with a Tcl
+# interpreter. Tcl line continuation ("\" at end of line) must appear on
+# EVERY continued line, so multi-line file lists are fragile. We emit ONE
+# self-contained single-line read_file command per source file: no
+# continuations, no escapes — valid Tcl by construction.
+# SystemVerilog sources use -type sverilog (NOT "sv", NOT verilog).
 # ------------------------------------------------------------------
 PRJ="${OUTDIR}/spyglass.prj"
 {
     echo "# SpyGlass project — auto-generated $(date -u)"
-    echo "# TOP=${TOP} GOAL=${GOAL}"
+    echo "# TOP=${TOP} GOAL=${GOAL} BLACKBOX=${BLACKBOX}"
+    echo ""
 
-    # SpyGlass uses -type verilog for SV files; enableSV handles parsing
+    OPTS="-type sverilog"
     if [[ "$BLACKBOX" == "1" ]]; then
-        echo "read_file -type verilog -define PE4_MEM_BLACKBOX \\"
-    else
-        echo "read_file -type verilog \\"
+        OPTS="${OPTS} -define PE4_MEM_BLACKBOX"
     fi
-
-    # List files
     for f in "${SOURCES[@]}"; do
-        echo "    $f"
+        echo "read_file ${OPTS} $f"
     done
 
     echo ""
     echo "# Design settings"
     echo "set_option top ${TOP}"
-    echo "set_option enableSV yes"
-    echo "set_option svaoff yes"
-
 } > "${PRJ}"
 
 echo ""
 echo "Project file: ${PRJ}"
 echo ""
+
+# ------------------------------------------------------------------
+# Self-check: the .prj is a Tcl script. Validate it with tclsh (SpyGlass
+# commands stubbed out) so syntax errors surface HERE, not as FATAL
+# errors inside SpyGlass after license checkout and a long parse.
+# ------------------------------------------------------------------
+if command -v tclsh >/dev/null 2>&1; then
+    CHECK="${OUTDIR}/prj_syntax_check.tcl"
+    cat > "${CHECK}" <<EOF
+# Auto-generated: stub SpyGlass commands; Tcl syntax check only
+foreach cmd {read_file set_option current_goal run_goal} {
+    proc \$cmd {args} {}
+}
+if {[catch {source {${PRJ}}} err]} {
+    puts stderr "PRJ-SYNTAX-ERROR: \$err"
+    exit 1
+}
+puts "PRJ-SYNTAX-OK"
+EOF
+    echo "Syntax-checking ${PRJ} with tclsh ..."
+    if ! tclsh "${CHECK}"; then
+        echo ""
+        echo "ERROR: generated .prj is not valid Tcl. Content:"
+        echo "---- ${PRJ} ----"
+        cat "${PRJ}"
+        echo "----------------"
+        exit 1
+    fi
+else
+    echo "NOTE: tclsh not found - skipped .prj Tcl syntax self-check"
+fi
+
+if [[ "$DRYRUN" == "1" ]]; then
+    echo ""
+    echo "=== DRY RUN complete - SpyGlass NOT launched ==="
+    echo "---- ${PRJ} ----"
+    cat "${PRJ}"
+    echo "----------------"
+    echo "Output directory: ${OUTDIR}"
+    exit 0
+fi
 
 # ------------------------------------------------------------------
 # Run SpyGlass
@@ -97,10 +147,13 @@ SG_CMD="$(command -v spyglass || command -v sg_shell || echo spyglass)"
 echo "Running: ${SG_CMD} -goal ${GOAL} -project ${PRJ}"
 echo ""
 
+# Disable set -e around the run so a SpyGlass failure still reaches the
+# diagnostics below; PIPESTATUS[0] is spyglass's own exit code, not tee's.
+set +e
 "${SG_CMD}" -goal "${GOAL}" -project "${PRJ}" \
     2>&1 | tee "${OUTDIR}/spyglass_console.log"
-
-SG_EXIT=$?
+SG_EXIT=${PIPESTATUS[0]}
+set -e
 
 echo ""
 echo "=== Results ==="
