@@ -31,7 +31,9 @@ module pe4_quant (
     logic [31:0] amax_c;
     logic nf_c;
     always_comb begin
-        for (int j = 0; j < 32; j++) a32[j] = {1'b0, in_h[16*j +: 16][14:0], 16'b0};
+        // in_h[16j+14:16j] = low 15 bits of the BF16 field (no nested slice:
+        // slicing a part-select expression is VER-324 in DC Presto)
+        for (int j = 0; j < 32; j++) a32[j] = {1'b0, in_h[16*j +: 15], 16'b0};
         amax_c = FLOOR_1EM4;
         nf_c = 0;
         for (int j = 0; j < 32; j++) begin
