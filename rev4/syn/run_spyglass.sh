@@ -6,7 +6,11 @@
 #
 # Options (env vars or flags):
 #   TOP       — design top (default: tile_ffn_v4)
-#   GOAL      — SpyGlass goal (default: lint_rtl; also: lint, cdc, cdc_reset)
+#   GOAL      — SpyGlass goal (default: lint_rtl). Goal availability depends
+#               on the site methodology; if the goal is rejected the script
+#               auto-retries GOAL_FALLBACKS (goal lookup fails fast).
+#   GOAL_FALLBACKS — space-separated fallback goals (default: "lint lint_lint
+#               lint_abstract"). Example: GOAL=cdc GOAL_FALLBACKS='cdc_reset cdc_verify'
 #   OUTDIR    — output directory (default: spyglass_results/<stamp>)
 #   BLACKBOX  — 1=define PE4_MEM_BLACKBOX (default: 0, lint the real code)
 #   TYPE      — read_file file type (default: verilog). This install has NO
@@ -25,6 +29,7 @@ GOAL="${GOAL:-lint_rtl}"
 BLACKBOX="${BLACKBOX:-0}"
 TYPE="${TYPE:-verilog}"
 EXTRA_PRJ_LINES="${EXTRA_PRJ_LINES:-}"
+GOAL_FALLBACKS="${GOAL_FALLBACKS:-lint lint_lint lint_abstract}"
 DRYRUN=0
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 OUTDIR="${OUTDIR:-spyglass_results/${STAMP}-$$}"
@@ -162,18 +167,49 @@ fi
 
 # ------------------------------------------------------------------
 # Run SpyGlass
+#
+# Goal availability depends on the site's methodology (one install reported
+# `lint_rtl' not found). Goal lookup happens BEFORE any RTL compile and
+# fails within seconds, so trying fallback goals is cheap.
 # ------------------------------------------------------------------
 SG_CMD="$(command -v spyglass || command -v sg_shell || echo spyglass)"
-echo "Running: ${SG_CMD} -goal ${GOAL} -project ${PRJ}"
-echo ""
 
-# Disable set -e around the run so a SpyGlass failure still reaches the
-# diagnostics below; PIPESTATUS[0] is spyglass's own exit code, not tee's.
-set +e
-"${SG_CMD}" -goal "${GOAL}" -project "${PRJ}" \
-    2>&1 | tee "${OUTDIR}/spyglass_console.log"
-SG_EXIT=${PIPESTATUS[0]}
-set -e
+GOAL_CANDIDATES=("${GOAL}")
+if [[ -n "${GOAL_FALLBACKS}" ]]; then
+    read -r -a _FB <<< "${GOAL_FALLBACKS}"
+    GOAL_CANDIDATES+=("${_FB[@]}")
+fi
+
+SG_EXIT=1
+ATTEMPTED=""
+for G in "${GOAL_CANDIDATES[@]}"; do
+    [[ " ${ATTEMPTED} " == *" ${G} "* ]] && continue   # skip duplicates
+    ATTEMPTED="${ATTEMPTED} ${G}"
+    echo "Running: ${SG_CMD} -goal ${G} -project ${PRJ}"
+    echo ""
+    # set -e off so a failure still reaches the diagnostics below;
+    # PIPESTATUS[0] is spyglass's own exit code, not tee's.
+    set +e
+    "${SG_CMD}" -goal "${G}" -project "${PRJ}" \
+        2>&1 | tee "${OUTDIR}/spyglass_console.log"
+    SG_EXIT=${PIPESTATUS[0]}
+    set -e
+    if grep -q "not found in current methodology" "${OUTDIR}/spyglass_console.log"; then
+        echo ""
+        echo "NOTE: goal '${G}' not found in this methodology - trying next candidate"
+        echo "      (override the candidate list with GOAL_FALLBACKS='name1 name2 ...')"
+        continue
+    fi
+    GOAL="${G}"
+    break
+done
+
+if grep -q "not found in current methodology" "${OUTDIR}/spyglass_console.log"; then
+    echo ""
+    echo "ERROR: none of the candidate goals${ATTEMPTED} exist in this methodology."
+    echo "       Check which goals your site provides (SpyGlass GUI goal browser or admin docs)"
+    echo "       and rerun with GOAL=<name>."
+fi
 
 echo ""
 echo "=== Results ==="
@@ -199,6 +235,7 @@ done
 echo ""
 echo "Output directory: ${OUTDIR}"
 echo "Console log: ${OUTDIR}/spyglass_console.log"
+echo "Goal used:    ${GOAL}"
 echo "Exit code: ${SG_EXIT}"
 
 exit ${SG_EXIT}
