@@ -1,0 +1,178 @@
+{
+  "started_utc": "2026-10-31T10:50:07.161305+00:00",
+  "finished_utc": "2026-10-31T10:50:32.302611+00:00",
+  "python": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 16:37:03) [MSC v.1929 64 bit (AMD64)]",
+  "command": [
+    "C:\\ProgramData\\anaconda3\\python.exe",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "model",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "python_test_exit": 0,
+  "source_unchanged": true,
+  "frozen_bindings": {
+    "model/reference.py": true,
+    "rev3/rtl/pe3_pkg.sv": true,
+    "rev3/rtl/pe3_round.sv": true,
+    "rev3/rtl/pe3_cpa.sv": true,
+    "rev3/rtl/pe3_float.sv": true,
+    "rev3/rtl/pe3_dot32.sv": true,
+    "rev3/rtl/tile_pe_v3.sv": true,
+    "rev3/rtl/pe3_probes.sv": true,
+    "rtl/pe4_sigmoid_rom.hex": true
+  },
+  "historical_manifest": "local-20261031T103801Z-20536",
+  "historical_hash_matches": {
+    "rtl/pe4_act.sv": true,
+    "rtl/pe4_blackbox.sv": true,
+    "rtl/pe4_bus.sv": true,
+    "rtl/pe4_fmul.sv": true,
+    "rtl/pe4_hbuf.sv": true,
+    "rtl/pe4_pkg.sv": true,
+    "rtl/pe4_probes.sv": true,
+    "rtl/pe4_quant.sv": true,
+    "rtl/pe4_sched.sv": true,
+    "rtl/pe4_sigmoid_rom.hex": true,
+    "rtl/pe4_sram.sv": true,
+    "rtl/pe4_staging.sv": true,
+    "rtl/pe4_yacc.sv": true,
+    "rtl/tile_ffn_v4.sv": true,
+    "tb/tb_math_v4.sv": true,
+    "tb/tb_tile_v4.sv": true,
+    "model/test_tile_cycles.py": true,
+    "model/test_tile_reference.py": true,
+    "model/tile_cycles.py": true,
+    "model/tile_reference.py": true,
+    "model/vectors.py": true,
+    "scripts/gen_sigmoid_rom.py": true,
+    "scripts/rtl.f": true,
+    "scripts/run.py": true,
+    "scripts/run_vcs.sh": true,
+    "scripts/summarize_dc.py": true,
+    "syn/constraints.tcl": true,
+    "syn/run_dc.sh": true,
+    "syn/run_dc.tcl": true
+  },
+  "tools": {
+    "vcs": false,
+    "dc_shell": false,
+    "verilator": false,
+    "iverilog": false
+  },
+  "probes": {
+    "golden_all_ones_dot32": {
+      "expected_fp32": "42000000",
+      "actual_fp32": "00000000"
+    },
+    "sigmoid_negative_tail": {
+      "bf16": "c2ca",
+      "actual": "00000000",
+      "independent_double_fp32": "0000000a"
+    },
+    "bf16_nan_cast": {
+      "input": "7f800001",
+      "actual_bf16": "7f80",
+      "expected_class": "NaN"
+    },
+    "xfifo_field_roundtrip": {
+      "input": {
+        "pass": 5,
+        "lane": 2,
+        "idx": 1
+      },
+      "decoded": {
+        "pass": 10,
+        "lane": 4,
+        "idx": 1
+      }
+    },
+    "ncols_width": {
+      "expected": 8,
+      "actual_3bit": 0
+    },
+    "y_addresses_slot1_row0": {
+      "expected": 10,
+      "commit_concat": 16,
+      "drain_concat": 128
+    },
+    "rom": {
+      "entries": 65536,
+      "matches_reference_entries": true,
+      "independence": "Shared algorithm; matching is not independent numerical validation."
+    },
+    "cycle_examples_unvalidated": {
+      "fp4": {
+        "phases": 2,
+        "gu_sync1_cycles": [
+          5859
+        ],
+        "d_sync1_cycles": [
+          8759
+        ],
+        "finish_cycle": 9478,
+        "stalls": {
+          "rram_credit": 5915,
+          "operand_x": 5,
+          "operand_h": 405,
+          "occupancy": 5378,
+          "rq_empty_gap": 3,
+          "up_credit": 0,
+          "drain_yield": 0,
+          "yacc_overlap": 0
+        },
+        "counters": {
+          "CNT_GU": 1,
+          "CNT_D": 1,
+          "CNT_X_POP": 332,
+          "CNT_H_IN": 288,
+          "CNT_RRAM_RD": 2392,
+          "CNT_X_STALL": 5,
+          "CNT_RRAM_STALL": 5915,
+          "CNT_UP_PKT": 5,
+          "CNT_UP_CRD_STALL": 0,
+          "CNT_Y_YIELD": 0,
+          "CNT_SYNC1": 2
+        }
+      },
+      "bf16": {
+        "phases": 2,
+        "gu_sync1_cycles": [
+          7801
+        ],
+        "d_sync1_cycles": [
+          11970
+        ],
+        "finish_cycle": 12689,
+        "stalls": {
+          "rram_credit": 2878,
+          "operand_x": 5,
+          "operand_h": 405,
+          "occupancy": 0,
+          "rq_empty_gap": 3,
+          "up_credit": 0,
+          "drain_yield": 0,
+          "yacc_overlap": 0
+        },
+        "counters": {
+          "CNT_GU": 1,
+          "CNT_D": 1,
+          "CNT_X_POP": 332,
+          "CNT_H_IN": 288,
+          "CNT_RRAM_RD": 8640,
+          "CNT_X_STALL": 5,
+          "CNT_RRAM_STALL": 2878,
+          "CNT_UP_PKT": 5,
+          "CNT_UP_CRD_STALL": 0,
+          "CNT_Y_YIELD": 0,
+          "CNT_SYNC1": 2
+        }
+      }
+    }
+  }
+}

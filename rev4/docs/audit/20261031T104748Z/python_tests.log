@@ -1,0 +1,24 @@
+test_bf16 (test_tile_cycles.TestFormatParams.test_bf16) ... ok
+test_fp4 (test_tile_cycles.TestFormatParams.test_fp4) ... ok
+test_fp8f32 (test_tile_cycles.TestFormatParams.test_fp8f32) ... ok
+test_d_sync1_after_last_commit (test_tile_cycles.TestPhaseSemantics.test_d_sync1_after_last_commit) ... ok
+test_d_waits_h_bank_full (test_tile_cycles.TestPhaseSemantics.test_d_waits_h_bank_full) ... ok
+test_fp4_gu_duration (test_tile_cycles.TestPhaseSemantics.test_fp4_gu_duration) ... ok
+test_hup_beat_count (test_tile_cycles.TestPhaseSemantics.test_hup_beat_count) ... ok
+test_up_credit_period_slows_hup (test_tile_cycles.TestPhaseSemantics.test_up_credit_period_slows_hup) ... ok
+test_yacc_duration_in_drain (test_tile_cycles.TestPhaseSemantics.test_yacc_duration_in_drain) ... ok
+test_all_formats (test_tile_cycles.TestSteadyStateRate.test_all_formats) ... ok
+test_bias_adds_two_words_per_phase (test_tile_cycles.TestStepOverlap.test_bias_adds_two_words_per_phase) ... ok
+test_deterministic (test_tile_cycles.TestStepOverlap.test_deterministic) ... ok
+test_two_passes_overlap (test_tile_cycles.TestStepOverlap.test_two_passes_overlap) ... ok
+test_encoder_against_bruteforce (test_tile_reference.TestE4M3.test_encoder_against_bruteforce) ... ok
+test_quantize_matches_direct (test_tile_reference.TestE4M3.test_quantize_matches_direct) ... ok
+test_against_oracle (test_tile_reference.TestFmul.test_against_oracle) ... ok
+test_fp4_pass_runs (test_tile_reference.TestScenario.test_fp4_pass_runs) ... ok
+test_monotone_and_range (test_tile_reference.TestSigmoid.test_monotone_and_range) ... ok
+test_specials (test_tile_reference.TestSigmoid.test_specials) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 24.907s
+
+OK

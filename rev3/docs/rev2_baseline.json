@@ -1,0 +1,28 @@
+{
+  "description": "Local revision 2 source and supplied DC reports, preserved. Association of server report to this local source is not proven without the server source manifest.",
+  "sha256": {
+    "rev2/rtl/tile_pe_v2.sv": "ab42529419fe8b833d0f112f2bad464771aeccbd1f0cb107b98e0d0298c6b2b4",
+    "rev2/rtl/pe2_round.sv": "475eb899291a32609b52465511e1f587912ce1a6281db198b7e0aac3d22b7524",
+    "reports/reports/area.rpt": "d79c7577a130baf9f84b1f8f1c1a26dd9b74df8e7c35b5ca21d717775525273f",
+    "rev2/rtl/pe2_float.sv": "6d11eece40c3b2dafac98fcc037da4c35a9c05ad77c8b037b49e1ab52fad4b89",
+    "rev2/rtl/pe2_probes.sv": "50d81704ef0832867bd15226eea2230e25a6cd0805ce3e46b65558b248b8494d",
+    "reports/reports/qor.rpt": "89d3d6d954fa545c5b9215eb03722c4d8261204dedd95a123195745fd5b5f6d5",
+    "reports/reports/constraints.rpt": "63c2ea83c46408f8e8ff5d4145c6a412c480bbf9c0226c515b7092533da16934",
+    "rev2/rtl/pe2_dot32.sv": "eb47ae094163c943cdfd749dd6ce0b342ed83aa4836608d21dee080df6beb6ca",
+    "rev2/rtl/pe2_pkg.sv": "8ca111a6a37871bdc3b2f6d13771b8e9e2a6bb2fc2ee6f703542d1d48c296570",
+    "reports/reports/timing_hold.rpt": "fd22582f20f78c37fac562cdcbccb1f31491d5647f8a207ea303ebe8177ac886",
+    "reports/reports/timing_setup.rpt": "0ccfe37efccee777359aa4a380f77eefdc9710f981e9a056a967a21a674a6c40"
+  },
+  "metrics": {
+    "cell_area_library_units": 1957905.311024,
+    "sequential_cells": 268030,
+    "setup_wns_ns": -0.76,
+    "setup_tns_ns": -6589.82,
+    "setup_violations": 24098,
+    "hold_wns_ns": -0.04,
+    "hold_tns_ns": -214.54,
+    "hold_violations": 9331,
+    "clock_period_ns": 1,
+    "corner": "tt0p8v25c"
+  }
+}

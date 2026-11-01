@@ -1,0 +1,20 @@
+{
+  "description": "Frozen source hashes for rev4: revision 1 oracle and revision 3 RTL are reused unmodified; the sigmoid ROM binds the offline table.",
+  "sha256": {
+    "model/reference.py": "f1785c3e92cae81e4c6b5005d61514897f90f68dce61c685b9ca86c4da7c7efc",
+    "rev3/rtl/pe3_pkg.sv": "26c21e0a0d6b5ea1b1213de9eda937d80dc3e92628a6bb59ebbf33341ba245c9",
+    "rev3/rtl/pe3_round.sv": "badcbc3ed04f995aaf35fcce8994d40b52aeb2a12f2c7173a0f12d7b459726ad",
+    "rev3/rtl/pe3_cpa.sv": "6dba2f29f2366f440b7709cece33c0d3c9ff89365cc08f102cef5986dd5c0cd4",
+    "rev3/rtl/pe3_float.sv": "000bc129562c723826ba8f3760795cd0d89b16d87cb4c2b1dedaaef4730ae9ac",
+    "rev3/rtl/pe3_dot32.sv": "4730857a1e7b4fdaa28a715c23b8bfdf9a9d8be1e127e86e3d1e390bb30bcc5c",
+    "rev3/rtl/tile_pe_v3.sv": "6122752665ef426512914f76e53c47d94d307acc55beead8ea9168e42d90d5d2",
+    "rev3/rtl/pe3_probes.sv": "c12b28b0ebb18d825aef22f6dc9a417914b4a58f275bd54f77c138c0d0a0a831",
+    "rtl/pe4_sigmoid_rom.hex": "b041becb8f31067459f0f9d9935d10af7cbe036817dc010a6624b41b89c6692c"
+  },
+  "spec_sources": {
+    "docs/architecture.md": "v0.12 2026-10-07",
+    "docs/data_bus.md": "v0.12 2026-10-07",
+    "docs/arith_cells.md": "v0.2 2026-10-07"
+  }
+}
+

@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "at": "2026-10-31T11:20:46.948Z",
+  "node": "v24.22.1",
+  "browser": "156.0.8078.76",
+  "command": "node tools/check-rev4-browser.mjs",
+  "mode": "isolated static HTTP; APIs disabled; external requests blocked",
+  "viewports": [
+    1920,
+    1440,
+    1024
+  ],
+  "findings": 33,
+  "modules": 17,
+  "filters": true,
+  "zoom": true,
+  "keyboard": true,
+  "focusRestoration": true,
+  "reducedMotion": true,
+  "animationMs": 200,
+  "labelOverlaps": [],
+  "pageErrors": []
+}

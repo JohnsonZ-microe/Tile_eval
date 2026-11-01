@@ -1,0 +1,20 @@
+{
+  "description": "Revision 1 local files preserved; report source equivalence is not proven without the original server manifest.",
+  "sha256": {
+    "rtl/pe_dot32.sv": "68b9a25a0ef6f1c21fdd7e50917d4db57193422f7261c0683a4ecc1fa7592c67",
+    "rtl/pe_math_pkg.sv": "30f2f05df58b2675a1fe95a73defa8bb7fd477187aac4189f1c709c640177492",
+    "rtl/tile_pe.sv": "bdbceeabb7fc941b7cd38c1a67efb6d4947a40c171e1ca95ef1196bb52a8c585",
+    "model/reference.py": "f1785c3e92cae81e4c6b5005d61514897f90f68dce61c685b9ca86c4da7c7efc",
+    "docs/SPEC.md": "db49099872d5f0872aabcbb72ac1deb7c80cc910bdd0d49a2d0b3dc7604a51b7"
+  },
+  "dc_report": {
+    "source": "D:/Documents/ChatGPT/LNS_DSE/report/reports",
+    "cell_area_library_units": 2050665.253665,
+    "sequential_cells": 23014,
+    "setup_slack_ns": -3.48,
+    "hold_slack_ns": -0.04,
+    "period_ns": 1.0,
+    "corner": "tt0p8v25c",
+    "wireload": "ZeroWireload"
+  }
+}
