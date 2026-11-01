@@ -3,7 +3,7 @@
 // precision evaluation, one FP32 RNE rounding; NaN -> canonical NaN, +inf ->
 // 1.0, -inf -> 0.0) and bound by the SHA-256 in docs/baseline.json. Four
 // independent instances are used below (one per token lane).
-module pe4_sigmoid_rom #(parameter string HEXFILE = "pe4_sigmoid_rom.hex") (
+module pe4_sigmoid_rom #(parameter HEXFILE = "pe4_sigmoid_rom.hex") (
     input  logic clk,
     input  logic [15:0] code,
     output logic [31:0] value
