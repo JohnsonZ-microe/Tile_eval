@@ -110,6 +110,24 @@ module tile_ffn_v4 #(
     logic yb_last;
     logic [1:0] yb_segment;
     logic [7:0] yb_tag;
+    // ---- CTRL/drain/event signals (moved up from the CTRL-decode section:
+    //      they are used in instance port connections below; DC requires
+    //      declaration before use — VER-956) ----
+    logic drain_fire, drain_bank, drain_lastseg;
+    logic [5:0] drain_slot;
+    logic [7:0] drain_cstart, drain_count;
+    logic [1:0] drain_seg;
+    logic st_valid;
+    logic [127:0] st_payload;
+    logic [7:0] st_tag;
+    logic rpgm_ev, proto_ctrl_ev;
+    logic cnt_clear, ctrl_seen;
+    logic up_crd_stall, y_yield_ev;
+    logic [7:0] reg_rd_tag;
+    logic [21:0] alarm_mask;
+    logic alarm_valid, alarm_rdy;
+    logic [127:0] alarm_payload;
+    logic [1:0] pe_err_sticky, pe_err_prev;
     // ---------------- instances ----------------
     pe4_bus bus_u (
         .clk(clk), .rst_n(rst_n),
@@ -252,21 +270,7 @@ module tile_ffn_v4 #(
         .err_status(err_status_q), .tile_status_level(),
         .err_events(sched_err_events));
     // ---------------- CTRL decode ----------------
-    logic drain_fire, drain_bank, drain_lastseg;
-    logic [5:0] drain_slot;
-    logic [7:0] drain_cstart, drain_count;
-    logic [1:0] drain_seg;
-    logic st_valid;
-    logic [127:0] st_payload;
-    logic [7:0] st_tag;
-    logic rpgm_ev, proto_ctrl_ev;
-    logic cnt_clear, ctrl_seen;
-    logic up_crd_stall, y_yield_ev;
-    logic [7:0] reg_rd_tag;
-    logic [21:0] alarm_mask;
-    logic alarm_valid, alarm_rdy;
-    logic [127:0] alarm_payload;
-    logic [1:0] pe_err_sticky, pe_err_prev;
+    // (signal declarations moved above, before the instances)
     assign up_crd_stall = 0;
     assign y_yield_ev = 0;
     assign alarm_rdy = st_ready && alarm_valid;

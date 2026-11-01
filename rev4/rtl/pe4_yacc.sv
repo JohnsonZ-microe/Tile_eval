@@ -99,6 +99,10 @@ module pe4_yacc (
     // bank; a DRAIN read on the same bank yields (yield_stall below)
     logic cre, dre;
     logic [9:0] craddr, draddr;
+    // declared here (before first use): DC Presto requires declaration
+    // before use; these were previously declared further down (VER-956)
+    logic dbank_q;   // registered drain bank for the shared read-port mux
+    logic dbank;     // current DRAIN bank (set by the DRAIN FSM below)
     always_ff @(posedge clk) begin
         if (!rst_n) begin
             re0 <= 0; re1 <= 0; raddr0 <= 0; raddr1 <= 0;
@@ -109,7 +113,6 @@ module pe4_yacc (
             raddr1 <= (cre && cbank) ? craddr : draddr;
         end
     end
-    logic dbank_q;
     always_ff @(posedge clk) begin
         if (!rst_n) begin dbank_q <= 0; end
         else dbank_q <= dbank;
@@ -227,7 +230,6 @@ module pe4_yacc (
     // ---- DRAIN read engine ----
     typedef enum logic [1:0] {DIDLE, DWAIT, DSEND, DV0} dstate_t;
     dstate_t dstate;
-    logic dbank;
     logic [5:0] dslot;
     logic [7:0] dstart, dcount;
     logic [1:0] dseg;
