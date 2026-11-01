@@ -9,6 +9,12 @@
 #   GOAL      — SpyGlass goal (default: lint_rtl; also: lint, cdc, cdc_reset)
 #   OUTDIR    — output directory (default: spyglass_results/<stamp>)
 #   BLACKBOX  — 1=define PE4_MEM_BLACKBOX (default: 0, lint the real code)
+#   TYPE      — read_file file type (default: verilog). This install has NO
+#               'sverilog' type — allowed values (from its own error msg):
+#               verilog vhdl def hdl gateslib gateslibdb sglib lef plib
+#               sgdc waiver adc awl sourcelist sourcelist_relative obw
+#   EXTRA_PRJ_LINES — extra lines appended verbatim to spyglass.prj, e.g.
+#               EXTRA_PRJ_LINES='set_option enableSV yes' bash syn/run_spyglass.sh
 #   --dry-run — generate + self-check spyglass.prj, do NOT launch SpyGlass
 
 set -euo pipefail
@@ -17,6 +23,8 @@ cd "$(dirname "$0")/.."
 TOP="${TOP:-tile_ffn_v4}"
 GOAL="${GOAL:-lint_rtl}"
 BLACKBOX="${BLACKBOX:-0}"
+TYPE="${TYPE:-verilog}"
+EXTRA_PRJ_LINES="${EXTRA_PRJ_LINES:-}"
 DRYRUN=0
 STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 OUTDIR="${OUTDIR:-spyglass_results/${STAMP}-$$}"
@@ -29,6 +37,7 @@ while [[ $# -gt 0 ]]; do
         --goal)   GOAL="$2"; shift 2;;
         --outdir) OUTDIR="$2"; shift 2;;
         --blackbox) BLACKBOX=1; shift;;
+        --type)   TYPE="$2"; shift 2;;
         --dry-run) DRYRUN=1; shift;;
         *) echo "Unknown option: $1"; exit 1;;
     esac
@@ -74,15 +83,18 @@ done
 # EVERY continued line, so multi-line file lists are fragile. We emit ONE
 # self-contained single-line read_file command per source file: no
 # continuations, no escapes — valid Tcl by construction.
-# SystemVerilog sources use -type sverilog (NOT "sv", NOT verilog).
+# File type: verified against THIS install (spyglass vv2023.12-sp1) —
+# 'sverilog' is NOT a valid read_file -type here; .sv files are read with
+# -type verilog. To experiment with extra SpyGlass options without editing
+# this script, use EXTRA_PRJ_LINES (see header).
 # ------------------------------------------------------------------
 PRJ="${OUTDIR}/spyglass.prj"
 {
     echo "# SpyGlass project — auto-generated $(date -u)"
-    echo "# TOP=${TOP} GOAL=${GOAL} BLACKBOX=${BLACKBOX}"
+    echo "# TOP=${TOP} GOAL=${GOAL} BLACKBOX=${BLACKBOX} TYPE=${TYPE}"
     echo ""
 
-    OPTS="-type sverilog"
+    OPTS="-type ${TYPE}"
     if [[ "$BLACKBOX" == "1" ]]; then
         OPTS="${OPTS} -define PE4_MEM_BLACKBOX"
     fi
@@ -93,6 +105,14 @@ PRJ="${OUTDIR}/spyglass.prj"
     echo ""
     echo "# Design settings"
     echo "set_option top ${TOP}"
+    if [[ -n "${EXTRA_PRJ_LINES}" ]]; then
+        echo ""
+        echo "# Extra options via EXTRA_PRJ_LINES"
+        while IFS= read -r l; do
+            [[ -z "$l" ]] && continue
+            echo "$l"
+        done <<< "${EXTRA_PRJ_LINES}"
+    fi
 } > "${PRJ}"
 
 echo ""
@@ -162,7 +182,7 @@ echo "=== Results ==="
 SUMMARY="${OUTDIR}/spyglass_console.log"
 if [[ -f "$SUMMARY" ]]; then
     # Show summary
-    grep -E "(Violation|Warning|Error|Info|PASS|FAIL|Summary|Total)" "$SUMMARY" | tail -20 || true
+    grep -E "(FATAL|invalid|Violation|Warning|Error|Info|PASS|FAIL|Summary|Total)" "$SUMMARY" | tail -20 || true
 fi
 
 # Look for HTML reports
