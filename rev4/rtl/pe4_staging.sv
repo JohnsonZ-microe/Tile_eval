@@ -47,15 +47,15 @@ module pe4_staging (
             kb_q <= rd_kb;    kb_qq <= kb_q;
         end
     end
-    always_comb begin
-        x_data = '0;
-        xs_data = '0;
-        for (int t = 0; t < 4; t++) begin
-            x_data[256*t +: 256] = kb_qq[0] ? xq[512*t+511:512*t+256]
-                                            : xq[512*t +: 256];
-            xs_data[8*t +: 8] = xsq[512*t + 8*kb_qq[5:0] +: 8];
+    // VER-260 fix: DC requires genvar for variable part-select bases
+    genvar mt;
+    generate
+        for (mt = 0; mt < 4; mt++) begin : stg_mux
+            assign x_data[256*mt +: 256] = kb_qq[0] ? xq[512*mt+511:512*mt+256]
+                                                     : xq[512*mt +: 256];
+            assign xs_data[8*mt +: 8] = xsq[512*mt + 8*kb_qq[5:0] +: 8];
         end
-    end
+    endgenerate
     assign rd_valid = req_qq;
 endmodule
 

@@ -50,8 +50,8 @@ package pe4_pkg;
         logic [31:0] step_id;
         logic [15:0] expert_id;
         logic [3:0] lane_mask;
-        logic [5:0] y_slots [0:3];
-        logic [31:0] weights [0:3];
+        logic [3:0][5:0] y_slots;         // packed 4x6b (VER-322 fix)
+        logic [3:0][31:0] weights;        // packed 4x32b (VER-322 fix)
         logic [2:0] fmt;                  // resolved from the latched CTX
         logic sblk128;
         logic bias_en;                    // CTX BIAS_EN (W2[6])
