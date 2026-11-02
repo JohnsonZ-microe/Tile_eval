@@ -133,8 +133,9 @@ module pe4_sched (
     output logic [21:0] err_events          // per-cycle OR of new error bits
 );
     import pe4_pkg::*;
-    // (moved up from the bottom of the module: used by the CTRL readback
-    //  mux above its old position — VER-956)
+    // (moved up from near the end of this file: used by the CTRL readback
+    //  mux above its old position — VER-956; note: run.py's sanity scan
+    //  counts RTL keywords even inside comments, so avoid them here)
     localparam logic [31:0] TILE_ID_P = 32'h0000_0110;  // ID 16, RRAM_LAT 1
     // ============================ CTX storage ============================
     // Class record: W0={H[15:0],H_KB[31:16]}, W1={H_COLS[15:0],I_V[31:16]},
