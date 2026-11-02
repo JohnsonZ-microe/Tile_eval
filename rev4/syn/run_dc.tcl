@@ -55,7 +55,11 @@ if {[catch {
         puts $fh "# mode: LOGIC CHECK (memories and sigmoid ROM blackboxed)"
     }
     foreach_in_collection d [get_designs *] {
-        if {![catch {get_attribute $d is_black_box} bb] && $bb} {
+        # is_black_box may be MISSING (UID-101, caught) or exist but return
+        # an empty string on some designs; testing "" as a boolean aborts Tcl
+        # with 'expected boolean value' -- guard with 'string is boolean'.
+        if {![catch {get_attribute $d is_black_box} bb]
+            && [string is boolean -strict $bb] && $bb} {
             puts $fh "black_box: [get_attribute $d name]"
         }
     }
