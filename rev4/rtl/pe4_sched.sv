@@ -133,6 +133,9 @@ module pe4_sched (
     output logic [21:0] err_events          // per-cycle OR of new error bits
 );
     import pe4_pkg::*;
+    // (moved up from the bottom of the module: used by the CTRL readback
+    //  mux above its old position — VER-956)
+    localparam logic [31:0] TILE_ID_P = 32'h0000_0110;  // ID 16, RRAM_LAT 1
     // ============================ CTX storage ============================
     // Class record: W0={H[15:0],H_KB[31:16]}, W1={H_COLS[15:0],I_V[31:16]},
     // W2=fmt fields (WFMT[2:0],SFMT[4:3],SBLK_128[5],BIAS_EN[6],WPLACE[7],
@@ -280,6 +283,27 @@ module pe4_sched (
     logic [1:0] exp_grp;
     logic [2:0] exp_lane;
     logic [6:0] exp_idx;      // 0..31 within group
+    // (moved up from the sections below: DC requires declaration before use,
+    //  and these are read by the main always_ff further down — VER-956)
+    logic [1:0] gu_slot;
+    logic exp_kind;                 // 1 = XS phase, 0 = X phase
+    logic [7:0] exp_pass;
+    logic [6:0] exp_idx_full;
+    logic [6:0] group_limit;
+    logic [16:0] gu_iss_kb;
+    logic quant_valid;
+    logic [2:0] quant_lane;
+    logic [6:0] quant_idx;
+    logic [511:0] quant_h;
+    logic hsel;
+    logic quant_ov, quant_err;
+    logic [255:0] quant_q;
+    logic [7:0] quant_se;
+    logic [10:0] quant_otag;
+    logic [10:0] quant_unused;
+    logic [7:0] stg_kb_q;
+    logic [6:0] hbuf_kb_q;
+    int ngroups1, sw1, per1;
     logic exp_xs_phase;
     // error and event bus (single-cycle pulses into the register file)
     logic ev_cmd_illegal, ev_unsupported, ev_xorder, ev_horder, ev_rramtag;
@@ -901,12 +925,8 @@ module pe4_sched (
         end
     end
     // ---- staging fill engine: combinational pop decision ----
-    logic [1:0] gu_slot;
-    logic exp_kind;                 // 1 = XS phase, 0 = X phase
-    logic [7:0] exp_pass;
-    logic [6:0] exp_idx_full;
-    logic [6:0] group_limit;
-    logic [16:0] gu_iss_kb;
+    // (gu_slot/exp_kind/exp_pass/exp_idx_full/group_limit/gu_iss_kb are
+    //  declared above, before the main always_ff)
     always_comb begin
         gu_slot = 2;
         if (slot[0].valid && slot[0].phase == 0) gu_slot = 0;
@@ -924,17 +944,8 @@ module pe4_sched (
     assign xfifo_pop = !xfifo_empty && gu_slot != 2 &&
         (exp_is_xs ? xs_writable : x_writable);
     // ---- quantizer ----
-    logic quant_valid;
-    logic [2:0] quant_lane;
-    logic [6:0] quant_idx;
-    logic [511:0] quant_h;
-    logic hsel;
-    logic quant_ov, quant_err;
-    logic [255:0] quant_q;
-    logic [7:0] quant_se;
-    logic [10:0] quant_otag;
+    // (quant_* / hsel signals declared above, before the main always_ff)
     wire [10:0] quant_tag = 11'({hsel, quant_lane, quant_idx});
-    logic [10:0] quant_unused;
     always_comb begin
         hbuf_wr_bank = quant_otag[10];
         hbuf_wr_valid = quant_ov;
@@ -947,10 +958,8 @@ module pe4_sched (
         .clk(clk), .rst_n(rst_n), .in_valid(quant_valid), .in_h(quant_h),
         .in_tag(quant_tag), .out_valid(quant_ov), .out_q(quant_q),
         .out_se(quant_se), .out_tag(quant_otag), .err_nonfinite(quant_err));
-    logic [7:0] stg_kb_q;
-    logic [6:0] hbuf_kb_q;
     // ---- slot-1 issue helpers ----
-    int ngroups1, sw1, per1;
+    // (ngroups1/sw1/per1 declared above, before the main always_ff)
     always_comb begin
         ngroups1 = (slot[1].phase == 0) ? int'(cp[slot[1].ctx_sel].ngroups)
             : (COLS_D + int'(cp[slot[1].ctx_sel].ncols) - 1)
@@ -1091,7 +1100,6 @@ module pe4_sched (
     assign reg_rd_data = reg_rd_data_c;
     assign reg_rd_ack = reg_rd_valid;
     assign err_status = err_q;
-    localparam logic [31:0] TILE_ID_P = 32'h0000_0110;  // ID 16, RRAM_LAT 1
     assign tile_status_level = {run_active_any, xfifo_empty, pstate[2:0],
                                 iss[0].valid, iss[1].valid, rq_cnt[1:0]};
 endmodule
