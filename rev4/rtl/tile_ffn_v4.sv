@@ -62,7 +62,8 @@ module tile_ffn_v4 #(
     logic run_active, load_err;
     logic stg_wr_x, stg_wr_xs, stg_rd_req, stg_rd_valid;
     logic [2:0] stg_wr_lane;
-    logic [9:0] stg_wr_idx, stg_rd_kb;
+    logic [9:0] stg_wr_idx;
+    logic [7:0] stg_rd_kb;   // 8b: matches pe4_sched.stg_rd_kb and pe4_staging.rd_kb
     logic [511:0] stg_wr_data;
     logic [1023:0] stg_x_data;
     logic [31:0] stg_xs_data;
@@ -110,6 +111,7 @@ module tile_ffn_v4 #(
     logic yb_last;
     logic [1:0] yb_segment;
     logic [7:0] yb_tag;
+    logic hbuf_wr_bank_sel;   // 1b bank select (sched hbuf_bank -> hbuf own_bank)
     // ---- CTRL/drain/event signals (moved up from the CTRL-decode section:
     //      they are used in instance port connections below; DC requires
     //      declaration before use — VER-956) ----

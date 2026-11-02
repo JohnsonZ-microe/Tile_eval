@@ -60,9 +60,10 @@ module pe4_hbuf (
     logic [127:0] wbe_c;
     logic [1023:0] wdata_c;
     always_comb begin
+        // variable-base +: selects; constant loop init/bounds (DC ELAB-800)
         wbe_c = '0;
+        wbe_c[32*wr_lane +: 32] = ~32'b0;
         wdata_c = '0;
-        for (int b = 32*wr_lane; b < 32*wr_lane+32; b++) wbe_c[b] = 1'b1;
         wdata_c[256*wr_lane +: 256] = wr_q;
     end
     logic [1023:0] q0, q1;

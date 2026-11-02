@@ -138,12 +138,12 @@ module pe4_yacc (
             cstate <= CIDLE;
             cbank <= 0; cmask <= 0; cmask_left <= 0; csnap <= 0;
             lane_sel <= 0; row_sel <= 0; crd_cnt <= 0;
-            we0 <= 0; we1 <= 0; re0 <= 0; re1 <= 0;
-            waddr0 <= 0; waddr1 <= 0; raddr0 <= 0; raddr1 <= 0;
+            we0 <= 0; we1 <= 0;        // re0/re1/raddr0/raddr1 are owned by
+            waddr0 <= 0; waddr1 <= 0;  // the read-port arbitration block above
             wdata0 <= 0; wdata1 <= 0;
             y_old_r <= 0; mul_v <= 0; add_v <= 0;
             cre <= 0; craddr <= 0;
-            v_set_req <= 0; v_clr_req <= 0;
+            v_set_req <= 0;   // v_clr_req is owned by the DRAIN engine below
             for (int c = 0; c < 80; c++)
                 for (int l = 0; l < 4; l++) dbuf[c][l] <= 0;
         end else begin
@@ -252,6 +252,7 @@ module pe4_yacc (
             yb_valid <= 0; yb_payload <= 0; yb_last <= 0;
             yb_segment <= 0; yb_tag <= 0;
             dre <= 0; draddr <= 0;
+            v_clr_req <= 0;   // single owner: also reset here (ELAB-366 fix)
         end else begin
             drain_illegal <= 0; v0_drain <= 0;
             dre <= 0;                    // drain read is a 1-cycle pulse (R4-019)

@@ -430,7 +430,9 @@ module pe4_sched (
     assign hup_tag = last_hup_pass[7:0];
     // issue-side step helper: bias tail words first (data_bus 4.6), then
     // the matrix stream (scale groups interleaved with weight words)
-    function automatic iss_t iss_step(iss_t s, input int ngroups, sw, period);
+    function automatic iss_t iss_step(input iss_t s_in, input int ngroups, sw, period);
+        iss_t s;
+        s = s_in;   // local copy: assigning the input arg itself warns (VER-1005)
         s.started = 1'b1;
         if (s.bias) begin
             if (s.bleft <= 2'd1) begin
@@ -470,8 +472,12 @@ module pe4_sched (
             rq_push <= 0; rq_fill <= 0; rq_cons <= 0; rq_cnt <= 0;
             for (int i = 0; i < 64; i++) cap_q[i] <= '0;
             cap_head <= 0; cap_tail <= 0; cap_cnt <= 0;
-            hold_v <= '0; hold_hv <= '0;
-            hold_x <= '0; hold_xs <= '0; hold_h <= '0; hold_hs <= '0;
+            // hold_* are unpacked arrays [0:1]: clear element-wise (ELAB-930)
+            for (int c = 0; c < 2; c++) begin
+                hold_v[c] <= 1'b0; hold_hv[c] <= 1'b0;
+                hold_x[c] <= '0; hold_xs[c] <= '0;
+                hold_h[c] <= '0; hold_hs[c] <= '0;
+            end
             x_popped <= '0; xs_popped <= '0;
             for (int c = 0; c < 72; c++)
                 for (int l = 0; l < 4; l++) gu_snap[c][l] <= 0;
@@ -583,8 +589,8 @@ module pe4_sched (
                         (cphase == 1'd1 ? 21'(cp[cctx].gu_words) : 21'd0);
                     tail_base[si] <= 21'(pl[42:22]) +
                         21'(cp[cctx].gu_words) + 21'(cp[cctx].d_words);
-                    hold_v <= '0;                        // fresh pass operands
-                    hold_hv <= '0;
+                    hold_v[0] <= 1'b0; hold_v[1] <= 1'b0;   // fresh pass operands
+                    hold_hv[0] <= 1'b0; hold_hv[1] <= 1'b0;
                     if (si == 0) begin
                         x_popped <= '0; xs_popped <= '0;
                         // fresh pass: the expected X/XS sequence restarts
