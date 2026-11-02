@@ -154,7 +154,9 @@ module pe4_sched (
         logic [1:0] bias_first_d;   // first tail word the D phase rereads
         logic legal;
     } classp_t;
-    function automatic classp_t resolve_class(const ref logic [31:0] w [0:15],
+    // NOTE: 'const ref' args are not supported by DC Presto (VER-294);
+    // pass the array by value instead (function only reads it).
+    function automatic classp_t resolve_class(input logic [31:0] w [0:15],
         input logic [31:0] mode);
         classp_t r;
         int nc, nkb, swd, per, guw, dwv;
