@@ -491,7 +491,7 @@ module pe4_sched (
             yacc_load_valid <= 0;
             ev_cmd_illegal <= 0; ev_unsupported <= 0; ev_xorder <= 0;
             ev_horder <= 0; ev_rramtag <= 0; ev_snapshot <= 0;
-            ev_ctxbusy <= 0; ev_regaddr <= 0; ev_numeric <= 0; ev_hbank <= 0;
+            ev_ctxbusy <= 0; ev_numeric <= 0; ev_hbank <= 0;
             ev_bias <= 0;
             pend_act <= 0;
             pend_commit <= 0;
@@ -519,7 +519,7 @@ module pe4_sched (
             ev_bias <= 0;
             ev_cmd_illegal <= 0; ev_unsupported <= 0; ev_xorder <= 0;
             ev_horder <= 0; ev_rramtag <= 0; ev_snapshot <= 0;
-            ev_ctxbusy <= 0; ev_regaddr <= 0; ev_numeric <= 0; ev_hbank <= 0;
+            ev_ctxbusy <= 0; ev_numeric <= 0; ev_hbank <= 0;
             // ---- CMD latch ----
             if (cmd_in_valid) begin
                 logic [511:0] pl;
@@ -1035,6 +1035,7 @@ module pe4_sched (
             alarm_payload <= 0;
             err_first_bit <= 0;
             err_first_pass <= 0;
+            ev_regaddr <= 0;   // single owner of ev_regaddr (ELAB-366 fix)
             for (int i = 0; i < 13; i++) cnt[i] <= 0;
         end else begin
             err_q <= err_q_n;
@@ -1071,6 +1072,7 @@ module pe4_sched (
                 if (y_yield && cnt[10] != '1) cnt[10] <= cnt[10] + 1;
                 if (ctrl_seen && cnt[12] != '1) cnt[12] <= cnt[12] + 1;
             end
+            ev_regaddr <= 0;   // 1-cycle pulse default; set below on bad address
             if (reg_wr_valid) begin
                 if (reg_wr_addr == 12'h00c) alarm_mask_q <= reg_wr_data[21:0];
                 if (reg_wr_addr >= 12'h100 && reg_wr_addr <= 12'h13c && !run_active_any)
