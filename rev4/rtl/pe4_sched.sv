@@ -61,7 +61,8 @@ module pe4_sched (
     input  logic [31:0] hbuf_rd_scales,
     input  logic hbuf_rd_valid,
     output logic hbuf_take, hbuf_release, hbuf_bank,
-    output logic [7:0] hbuf_pass, hbuf_ntok,
+    output logic [7:0] hbuf_pass,
+    output logic [2:0] hbuf_ntok,   // token count 1..4; was [7:0] (LINK-3)
     input  logic [1:0] hbuf_owner_valid,
     input  logic [1:0] hbuf_bank_ready,
     input  logic [7:0] hbuf_owner_pass0,
