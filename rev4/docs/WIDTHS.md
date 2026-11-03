@@ -28,7 +28,7 @@ be read as silicon SRAM area or timing.
 | pe4_sram (staging) | 2 (request E0 -> data during E2) |
 | pe4_rram | 3 (request E0 -> data during E3), 3-entry credit |
 | pe4_fmul | 4 |
-| pe4_quant | 3 |
+| pe4_quant | 3 (rev4.1: amax = balanced 5-level 15-bit max2 tree, 1e-4 floor applied once after the tree; the former serial 32-stage chain was the -2.39 ns critical path at 1 ns) |
 | pe4_act | 24 (1 in-reg + 6 bias add + 17 core); 1 pair/cycle |
 | yacc row RMW | ~17/row (mul 4 + add 6 + add 6 + seq), one row at a time |
 | PE (frozen) | 36; same-column re-accept >= E36 |

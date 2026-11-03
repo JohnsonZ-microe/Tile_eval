@@ -69,14 +69,25 @@ if {[catch {
     redirect $reportdir/check_timing.rpt { check_timing }
     # ---- compile ----
     compile_ultra -no_autoungroup
-    # ---- reports ----
-    redirect $reportdir/area.rpt { report_area -hierarchy }
-    redirect $reportdir/timing_setup.rpt { report_timing -delay max -max_paths 20 -input_pins -nets -transition_time }
-    redirect $reportdir/timing_hold.rpt { report_timing -delay min -max_paths 20 }
-    redirect $reportdir/timing_registers.rpt { report_registers }
-    redirect $reportdir/constraints.rpt { report_constraints -all_violators }
-    redirect $reportdir/qor.rpt { report_qor }
-    redirect $reportdir/units.rpt { report_units }
+    # ---- reports (individually guarded: one failing report must never
+    #      discard a completed mapping -- the netlist writes come right
+    #      after. Each warning includes $::errorInfo because dc_shell's
+    #      redirect discards the underlying reason otherwise.) ----
+    if {[catch {redirect $reportdir/area.rpt { report_area -hierarchy }} m]} {puts "WARNING: area report failed: $m :: $::errorInfo"}
+    if {[catch {redirect $reportdir/timing_setup.rpt { report_timing -delay max -max_paths 20 -input_pins -nets -transition_time }} m]} {puts "WARNING: timing_setup report failed: $m :: $::errorInfo"}
+    if {[catch {redirect $reportdir/timing_hold.rpt { report_timing -delay min -max_paths 20 }} m]} {puts "WARNING: timing_hold report failed: $m :: $::errorInfo"}
+    # DC-2023.12 has no 'report_registers' command (CMD-005); fall back to
+    # the register-to-register timing report (the rev3-proven form).
+    if {[catch {redirect $reportdir/timing_registers.rpt { report_registers }} m]} {
+        puts "WARNING: report_registers unavailable: $m"
+        if {[catch {redirect $reportdir/timing_registers.rpt { report_timing -from [all_registers -clock_pins] -to [all_registers -data_pins] -delay max -max_paths 100 -nworst 1 }} m3]} {puts "WARNING: reg-to-reg timing report failed: $m3 :: $::errorInfo"}
+    }
+    if {[catch {redirect $reportdir/constraints.rpt { report_constraints -all_violators }} m]} {
+        puts "WARNING: report_constraints failed: $m :: $::errorInfo"
+        if {[catch {redirect $reportdir/constraints.rpt { report_constraint -all_violators }} m2]} {puts "WARNING: report_constraint failed: $m2 :: $::errorInfo"}
+    }
+    if {[catch {redirect $reportdir/qor.rpt { report_qor }} m]} {puts "WARNING: qor report failed: $m :: $::errorInfo"}
+    if {[catch {redirect $reportdir/units.rpt { report_units }} m]} {puts "WARNING: units report failed: $m :: $::errorInfo"}
     # ---- netlist ----
     write -format verilog -hierarchy -output $rundir/netlist.v
     write -format ddc -hierarchy -output $rundir/netlist.ddc
