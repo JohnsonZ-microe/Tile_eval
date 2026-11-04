@@ -89,7 +89,7 @@ module pe4_bus (
     assign ctrl_addr   = dn_payload[22:11];
     assign ctrl_data   = dn_payload[54:23];
     assign ctrl_tag    = dn_sideband[10:3];
-    assign dn_reserved = dn_valid && dtype[2];
+    assign dn_reserved = dn_valid && (dtype == 3'd6 || dtype == 3'd7);
     // ---- x FIFO: rev4 entry = 533 b {pass[7:0], lane[2:0], idx[9:0], kind,
     // payload[511:0]} (the frozen 516 b entry cannot carry the arrival
     // metadata needed for the X_ORDER check; +272 B/tile, docs/WIDTHS.md) ----
@@ -173,7 +173,10 @@ module pe4_bus (
         else if (ysrc_valid) grant = 2'd2;
         else if (st_valid) grant = 2'd3;
     end
-    assign beat_fire = (grant != 0) && (credit != 0);
+    assign beat_fire = (credit != 0) &&
+        ((grant == 2'd1 && hup_valid) ||
+         (grant == 2'd2 && ysrc_valid) ||
+         (grant == 2'd3 && st_valid));
     assign hup_ready = beat_fire && (grant == 2'd1);
     assign ysrc_ready = beat_fire && (grant == 2'd2);
     assign st_ready  = beat_fire && (grant == 2'd3);
@@ -201,7 +204,7 @@ module pe4_bus (
                         // UP_SB (LSB-first): type@1:0 src@8:2 tag@16:9
                         // last@17 nphit@19:18 rsvd@23:20
                         up_sideband <= {4'b0, 2'd0, hup_last,
-                                        hup_tag_q, hsrc_q, 2'(UP_H)};
+                                        hup_tag, hup_src[6:0], 2'(UP_H)};
                         pay_q <= hup_payload;
                         hup_last_q <= hup_last;
                         active_src <= 2'd1;
@@ -212,7 +215,7 @@ module pe4_bus (
                         // UP_SB_Y (LSB-first): type@1:0 src@8:2 tag@16:9
                         // last@17 nphit@19:18 segment@21:20 rsvd@23:22
                         up_sideband <= {2'b0, ysrc_segment, 2'd0,
-                                        ysrc_last, ysrc_tag_q, ysrc_src_q,
+                                        ysrc_last, ysrc_tag, ysrc_src[6:0],
                                         2'(UP_Y)};
                         ysrc_last_q <= ysrc_last;
                         ysrc_seg_q <= ysrc_segment;
@@ -223,7 +226,7 @@ module pe4_bus (
                         up_payload <= st_payload;
                         // single-phit STATUS/ALARM (P3-3): nphit=0, last=1
                         up_sideband <= {4'b0, 2'd0, 1'b1,
-                                        st_tag_q, stsrc_q, 2'(UP_STATUS)};
+                                        st_tag, st_src[6:0], 2'(UP_STATUS)};
                         active_src <= 2'd3;
                         active_valid <= 1'b0;
                     end

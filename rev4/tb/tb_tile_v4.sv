@@ -156,13 +156,14 @@ module tb_tile_v4;
                        && xfifo_credit == 0)
                     @(posedge clk);
                 if (sb[2:0] == 3'd1 || sb[2:0] == 3'd2) xfifo_credit--;
+                @(negedge clk);
                 dn_valid = 1;
                 dn_sideband = sb;
                 dn_payload = pay;
                 flits++;
-                repeat (gap) @(posedge clk);
+                @(negedge clk);
                 dn_valid = 0;
-                @(posedge clk);
+                repeat (gap > 0 ? gap : 1) @(negedge clk);
             end
         end
         $fclose(ffd);

@@ -297,12 +297,15 @@ module pe4_yacc (
                     end
                 end
                 DSEND: begin
+                    if (!yb_valid) begin
                     yb_valid <= 1;
                     yb_payload <= dphit;
                     yb_last <= row_is_last;
                     yb_segment <= dseg;
                     yb_tag <= {dbank, dslot, 1'b0};
-                    if (yb_ready) begin
+                    end
+                    if (yb_valid && yb_ready) begin
+                        yb_valid <= 0;
                         if (row_is_last) begin
                             if (dlastseg && !dv0) begin
                 v_clr_req <= 1;
@@ -319,12 +322,15 @@ module pe4_yacc (
                 end
                 DV0: begin
                     // never-written slot: zero payload beats, no SRAM reads
+                    if (!yb_valid) begin
                     yb_valid <= 1;
                     yb_payload <= 128'h0;
                     yb_last <= row_is_last;
                     yb_segment <= dseg;
                     yb_tag <= {dbank, dslot, 1'b0};
-                    if (yb_ready) begin
+                    end
+                    if (yb_valid && yb_ready) begin
+                        yb_valid <= 0;
                         if (row_is_last) dstate <= DIDLE;
                         else drow <= drow + 1;
                     end
