@@ -406,6 +406,7 @@ module pe4_sched (
         cols_ph = (head.phase == 0) ? COLS_GU : COLS_D;
     end
     // ACT inputs
+    assign act_in_valid = rst_n && (pstate == P_ACT);
     always_comb begin
         for (int t = 0; t < 4; t++) begin
             act_g[t] = gu_snap[act_c][t];
@@ -415,8 +416,8 @@ module pe4_sched (
     end
     // bias feeds: gb/ub for the streaming column (zero when disabled);
     // down-bias vector + enable for the y engine (latched at its trigger)
-    assign act_gb = slot[0].bias_en ? bias_gb[5'(act_c)] : 16'h0000;
-    assign act_ub = slot[0].bias_en ? bias_ub[5'(act_c)] : 16'h0000;
+    assign act_gb = slot[0].bias_en ? bias_gb[act_c] : 16'h0000;
+    assign act_ub = slot[0].bias_en ? bias_ub[act_c] : 16'h0000;
     assign yacc_bias_en = slot[0].valid && slot[0].bias_en;
     always_comb begin
         yacc_db = '0;
@@ -498,7 +499,6 @@ module pe4_sched (
             ev_bias <= 0;
             pend_act <= 0;
             pend_commit <= 0;
-            act_in_valid <= 0;
             // staging expected-order state starts at XS group 0, lane 0
             exp_grp <= 0;
             exp_kind <= 1;
@@ -516,7 +516,6 @@ module pe4_sched (
             yacc_commit_trigger <= 0;
             hbuf_take <= 0; hbuf_release <= 0;
             yacc_load_valid <= 0;
-            act_in_valid <= 0;
             ev_bias <= 0;
             ev_cmd_illegal <= 0; ev_unsupported <= 0; ev_xorder <= 0;
             ev_horder <= 0; ev_rramtag <= 0; ev_snapshot <= 0;
@@ -783,6 +782,7 @@ module pe4_sched (
                             else begin
                                 pstate <= P_ACT;
                                 act_c <= 0;
+                                act_cout <= 0;
                                 for (int e = 0; e < 144; e++) hup_slot[e] <= 0;
                                 last_hup_pass <= slot[0].pass_id;
                             end
@@ -800,6 +800,7 @@ module pe4_sched (
                 pend_act <= 0;
                 pstate <= P_ACT;
                 act_c <= 0;
+                act_cout <= 0;
                 for (int e = 0; e < 144; e++) hup_slot[e] <= 0;
                 last_hup_pass <= slot[0].pass_id;
             end
@@ -813,7 +814,6 @@ module pe4_sched (
                     // streaming (latency 24 < 36 input cycles), so collect in
                     // BOTH states; leave only when all 36 outputs landed
                     if (pstate == P_ACT) begin
-                        act_in_valid <= act_c != 35;
                         if (act_c != 35) act_c <= act_c + 1;
                         else pstate <= P_ACTW;
                     end

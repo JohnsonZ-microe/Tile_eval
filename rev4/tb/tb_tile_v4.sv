@@ -111,9 +111,11 @@ module tb_tile_v4;
             @(negedge clk);
             waited++;
             if (waited >= wait_limit)
-                $fatal(1, "WAIT phase timeout target=%0d sync1=%0d state=%0d rq=%0d err=%06x",
+                $fatal(1, "WAIT phase timeout target=%0d sync1=%0d state=%0d rq=%0d err=%06x act_col=%0d act_out_idx=%0d act_iv=%b act_ov=%b",
                        target, sync1_count, dut.sched_u.pstate,
-                       dut.sched_u.rq_cnt, dut.sched_u.err_q);
+                       dut.sched_u.rq_cnt, dut.sched_u.err_q,
+                       dut.sched_u.act_c, dut.sched_u.act_cout,
+                       dut.sched_u.act_in_valid, dut.sched_u.act_out_valid);
         end
     endtask
     task automatic wait_y_ready(input logic bank, input logic [5:0] slot_id);
