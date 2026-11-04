@@ -70,6 +70,7 @@ module pe4_act (
     logic [31:0] u2p [0:5] [0:3];
     logic [31:0] wq  [0:17] [0:3];        // w aligned to v_add + 17
     logic [31:0] m1 [0:3], m2 [0:3], m3 [0:3];
+    logic [3:0] m3_valid;
     for (genvar t = 0; t < 4; t++) begin : roms
         pe4_sigmoid_rom sig (.clk(clk), .code(code_r[t]), .value(sq[t]));
         pe4_fmul mul1 (.clk(clk), .rst_n(rst_n), .in_valid(vpipe[2]),
@@ -77,7 +78,7 @@ module pe4_act (
         pe4_fmul mul2 (.clk(clk), .rst_n(rst_n), .in_valid(vpipe[6]),
             .a(m1[t]), .b(u2p[5][t]), .out_valid(), .result(m2[t]));
         pe4_fmul mul3 (.clk(clk), .rst_n(rst_n), .in_valid(vpipe[10]),
-            .a(m2[t]), .b(wq[17][t]), .out_valid(), .result(m3[t]));
+            .a(m2[t]), .b(wq[17][t]), .out_valid(m3_valid[t]), .result(m3[t]));
     end
     always_ff @(posedge clk) begin
         if (!rst_n) begin
@@ -112,7 +113,7 @@ module pe4_act (
                 end
             end
             vpipe <= {vpipe[14:0], v_add};
-            out_valid <= vpipe[15];
+            out_valid <= m3_valid[0];
             for (int t = 0; t < 4; t++) begin
                 code_r[t] <= g2q[t][31:16];
                 g2_d1[t] <= g2q[t];
@@ -121,7 +122,7 @@ module pe4_act (
                 g2_d2[t] <= g2_d1[t];
                 for (int s = 1; s <= 5; s++) u2p[s][t] <= u2p[s-1][t];
                 for (int s = 1; s <= 17; s++) wq[s][t] <= wq[s-1][t];
-                if (vpipe[15]) h[t] <= fp32_to_bf16(m3[t]);
+                if (m3_valid[t]) h[t] <= fp32_to_bf16(m3[t]);
             end
         end
     end

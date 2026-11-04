@@ -305,6 +305,8 @@ module pe4_sched (
     logic [10:0] quant_unused;
     logic [7:0] stg_kb_q;
     logic [6:0] hbuf_kb_q;
+    logic [7:0] stg_kb_qq;
+    logic [6:0] hbuf_kb_qq;
     int ngroups1, sw1, per1;
     logic exp_xs_phase;
     // error and event bus (single-cycle pulses into the register file)
@@ -474,6 +476,8 @@ module pe4_sched (
             phase_base[0] <= 0; phase_base[1] <= 0;
             for (int i = 0; i < 4; i++) rq[i] <= '0;
             rq_push <= 0; rq_fill <= 0; rq_cons <= 0; rq_cnt <= 0;
+            stg_kb_q <= 0; stg_kb_qq <= 0;
+            hbuf_kb_q <= 0; hbuf_kb_qq <= 0;
             for (int i = 0; i < 64; i++) cap_q[i] <= '0;
             cap_head <= 0; cap_tail <= 0; cap_cnt <= 0;
             // hold_* are unpacked arrays [0:1]: clear element-wise (ELAB-930)
@@ -742,14 +746,14 @@ module pe4_sched (
                                 (pe_out_valid ? 6'd1 : 6'd0);
             // ---- operand holds (banked by kb parity) ----
             if (stg_rd_valid) begin
-                hold_x[stg_kb_q[0]] <= stg_x_data;
-                hold_xs[stg_kb_q[0]] <= stg_xs_data;
-                hold_v[stg_kb_q[0]] <= 1'b1;
+                hold_x[stg_kb_qq[0]] <= stg_x_data;
+                hold_xs[stg_kb_qq[0]] <= stg_xs_data;
+                hold_v[stg_kb_qq[0]] <= 1'b1;
             end
             if (hbuf_rd_valid) begin
-                hold_h[hbuf_kb_q[0]] <= hbuf_rd_data;
-                hold_hs[hbuf_kb_q[0]] <= hbuf_rd_scales;
-                hold_hv[hbuf_kb_q[0]] <= 1'b1;
+                hold_h[hbuf_kb_qq[0]] <= hbuf_rd_data;
+                hold_hs[hbuf_kb_qq[0]] <= hbuf_rd_scales;
+                hold_hv[hbuf_kb_qq[0]] <= 1'b1;
             end
             // ---- PE commit capture + phase epilogue FSM ----
             if (pe_out_valid) begin
@@ -927,6 +931,8 @@ module pe4_sched (
             // ---- delayed kb indices for operand-hold banking ----
             stg_kb_q <= stg_rd_kb;
             hbuf_kb_q <= hbuf_rd_idx;
+            stg_kb_qq <= stg_kb_q;
+            hbuf_kb_qq <= hbuf_kb_q;
         end
     end
     // ---- staging fill engine: combinational pop decision ----
