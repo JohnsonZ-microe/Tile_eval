@@ -123,6 +123,10 @@ module tb_math_v4;
                 checked++;
             end
             @(posedge clk);
+            // R4-fix: one-cycle in_valid strobe. Clearing only at the next
+            // line's parse left the strobes high for TWO cycles, so every
+            // vector entered the DUT twice and drained the scoreboards.
+            fm_v = 0; ac_v = 0; qu_v = 0;
             harvest();
             @(posedge clk);
             harvest();
