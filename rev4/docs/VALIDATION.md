@@ -13,9 +13,10 @@
 | Cycle-accurate performance model | implemented; 13 tests + deadlock raises | model/tile_cycles.py; CYCLE_MODEL.md |
 | Audit remediation 2026-10-31 | R4-001..012/014..021/023..025/030/033 fixed locally | see below; VCS/DC still pending |
 | Local runner end-to-end | see results/local-* | manifest.json status |
-| RTL compile (VCS) | NOT RUN (no local simulator) | pending server VCS |
-| RTL simulation (math/tile benches) | NOT RUN | pending server VCS |
-| DC synthesis / timing | NOT RUN | pending server DC; SRAM macros unmapped |
+| RTL compile (VCS) | PASS (V-2023.12, full design elaborates) | compile_math.log, vcs-20261104 run |
+| RTL simulation (math bench) | PASS (fmul/act/quant/sigmoid bit-exact, incl. rev4.1 amax tree + one-cycle strobe fix) | run_math.log `PASS math` |
+| RTL simulation (tile bench) | PENDING | run next: `--test tile` |
+| DC synthesis / timing | NOT RUN (rerun pending after rev4.1 amax fix) | pending server DC; SRAM macros unmapped |
 | SRAM macro mapping | NOT AVAILABLE | behavioural arrays only |
 
 Audit items fixed on 2026-10-31 (local Python evidence only; VCS pending):
