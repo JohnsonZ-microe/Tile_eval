@@ -45,7 +45,8 @@ module pe4_quant (
     logic [31:0] nf_vec;
     logic nf_c;
     always_comb begin
-        for (int j = 0; j < 32; j++) mag[j] = in_h[16*j +: 16][14:0];
+        for (int j = 0; j < 32; j++)
+            mag[j] = 15'(in_h[16*j +: 16] & 16'h7fff);
         for (int j = 0; j < 16; j++) t1[j] = max2(mag[2*j], mag[2*j+1]);
         for (int j = 0; j < 8; j++)  t2[j] = max2(t1[2*j], t1[2*j+1]);
         for (int j = 0; j < 4; j++)  t3[j] = max2(t2[2*j], t2[2*j+1]);
