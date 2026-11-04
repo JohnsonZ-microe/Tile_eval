@@ -104,6 +104,7 @@ module tb_tile_v4;
         void'($value$plusargs("GAP=%d", gap));
         void'($value$plusargs("CRED_PERIOD=%d", cred_period));
         repeat (4) @(posedge clk);
+        @(negedge clk);
         rst_n = 1;
         // load the RRAM image through the simulation port
         rfd = $fopen({vecdir, "/rram.hex"}, "r");
@@ -112,6 +113,7 @@ module tb_tile_v4;
             $finish;
         end
         while ($fscanf(rfd, "%h %h", raddr32, word) == 2) begin
+            @(negedge clk);
             sim_load_r = 1'b1;
             sim_addr_r = raddr32[20:0];
             sim_data_r = word;
@@ -119,6 +121,7 @@ module tb_tile_v4;
             addr++;
         end
         $fclose(rfd);
+        @(negedge clk);
         sim_load_r = 1'b0;
         $display("loaded %0d RRAM words", addr);
         efd = $fopen({vecdir, "/expect.txt"}, "r");
