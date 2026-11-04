@@ -385,6 +385,8 @@ module pe4_sched (
     // scale consume condition: in-order wsh update, no PE involvement
     wire head_scale_q = (rq_cnt != 0) && head.full && head.scale
         && !head.bias;
+    assign cons_fire = head_ready_q || head_scale_q || pe_accept;
+    assign cap_push = pe_accept;
     // staging / hbuf operand read issue: on the first MATRIX word of each
     // k-block (bias tail words trigger nothing)
     wire iss0_kb0 = iss_fire0 && first_of_kb0 && !iss[0].bias;
@@ -496,8 +498,6 @@ module pe4_sched (
             ev_bias <= 0;
             pend_act <= 0;
             pend_commit <= 0;
-            cons_fire <= 0;
-            cap_push <= 0;
             act_in_valid <= 0;
             // staging expected-order state starts at XS group 0, lane 0
             exp_grp <= 0;
@@ -701,7 +701,6 @@ module pe4_sched (
                         bias_d_valid <= 1'b1;
                     end
                 end
-                cons_fire <= 1'b1;
             end else if (head_scale_q) begin
                 // scale words consume in order without entering the PE
                 for (int i = 0; i < 128; i++)
@@ -718,15 +717,12 @@ module pe4_sched (
                             wsh[head.slot][head.swi*eper + i] <=
                                 {24'b0, head.data[8*i +: 8]};
                     end
-                cons_fire <= 1'b1;
             end else if (pe_accept) begin
                 // every weight accept pushes a descriptor: 00 intermediate,
                 // {phase,last} for the final-k-block words (R4-011)
                 cap_q[cap_head[5:0]] <= (head.kb == head.nkb - 8'd1)
                     ? {head.phase, head.last_word} : 2'b00;
                 cap_head <= cap_head + 1;
-                cap_push <= 1'b1;
-                cons_fire <= 1'b1;
             end
             // single-pointer/count updates (issue push and consume may
             // collide; both deltas applied together - R4-006)
@@ -736,14 +732,15 @@ module pe4_sched (
             end
             if (rram_valid && rq_cnt != 0 && !rq[rq_fill[1:0]].full)
                 rq_fill <= rq_fill + 2'd1;
-            if (cons_fire) rq_cons <= rq_cons + 2'd1;
+            if (cons_fire) begin
+                rq_cons <= rq_cons + 2'd1;
+                rq[rq_cons[1:0]].full <= 1'b0;
+            end
             rq_cnt <= rq_cnt + (iss_fire0 ? 3'd1 : 3'd0) +
                                (iss_fire1 ? 3'd1 : 3'd0) -
                                (cons_fire ? 3'd1 : 3'd0);
             cap_cnt <= cap_cnt + (cap_push ? 6'd1 : 6'd0) -
                                 (pe_out_valid ? 6'd1 : 6'd0);
-            cons_fire <= 1'b0;
-            cap_push <= 1'b0;
             // ---- operand holds (banked by kb parity) ----
             if (stg_rd_valid) begin
                 hold_x[stg_kb_q[0]] <= stg_x_data;
