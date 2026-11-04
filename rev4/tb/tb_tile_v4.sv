@@ -10,6 +10,9 @@ module tb_tile_v4;
     integer gap = 1, cred_period = 1, cred_timer = 0;
     integer xfifo_credit = 128;
     integer sync1_count = 0;
+    integer y_packet_count = 0;
+    integer phase_requests = 0;
+    integer wait_limit = 2000000;
     integer up_outstanding = 0;
     string vecdir;
     logic [1023:0] a1, a2;
@@ -55,6 +58,8 @@ module tb_tile_v4;
     integer erc;
     always @(posedge clk) begin
         if (rst_n && up_valid) begin
+            if (up_sideband[1:0] == 2'd1 && up_sideband[17])
+                y_packet_count++;
             if (!e_valid) begin
                 $display("FAIL unexpected up beat sb=%06x pay=%032x",
                          up_sideband, up_payload);
@@ -99,10 +104,49 @@ module tb_tile_v4;
     logic [1023:0] word;
     logic [31:0] raddr32;
     integer addr = 0;
+    task automatic wait_phase(input integer target);
+        integer waited;
+        waited = 0;
+        while (sync1_count < target) begin
+            @(negedge clk);
+            waited++;
+            if (waited >= wait_limit)
+                $fatal(1, "WAIT phase timeout target=%0d sync1=%0d state=%0d rq=%0d err=%06x",
+                       target, sync1_count, dut.sched_u.pstate,
+                       dut.sched_u.rq_cnt, dut.sched_u.err_q);
+        end
+    endtask
+    task automatic wait_y_ready(input logic bank, input logic [5:0] slot_id);
+        integer waited;
+        waited = 0;
+        while (dut.yacc_u.commit_busy !== 1'b0 ||
+               dut.sched_u.yacc_commit_trigger !== 1'b0 ||
+               dut.yacc_u.vbit[bank][slot_id] !== 1'b1) begin
+            @(negedge clk);
+            waited++;
+            if (waited >= wait_limit)
+                $fatal(1, "WAIT y commit timeout bank=%0d slot=%0d busy=%b valid=%b err=%06x",
+                       bank, slot_id, dut.yacc_u.commit_busy,
+                       dut.yacc_u.vbit[bank][slot_id], dut.sched_u.err_q);
+        end
+    endtask
+    task automatic wait_y_packet(input integer target);
+        integer waited;
+        waited = 0;
+        while (y_packet_count < target) begin
+            @(negedge clk);
+            waited++;
+            if (waited >= wait_limit)
+                $fatal(1, "WAIT DRAIN timeout target=%0d packets=%0d err=%06x",
+                       target, y_packet_count, dut.sched_u.err_q);
+        end
+    endtask
     initial begin
         if (!$value$plusargs("VECTORS=%s", vecdir)) vecdir = "vectors";
         void'($value$plusargs("GAP=%d", gap));
         void'($value$plusargs("CRED_PERIOD=%d", cred_period));
+        void'($value$plusargs("WAIT_LIMIT=%d", wait_limit));
+        if (wait_limit <= 0) $fatal(1, "WAIT_LIMIT must be positive");
         repeat (4) @(posedge clk);
         @(negedge clk);
         rst_n = 1;
@@ -149,9 +193,19 @@ module tb_tile_v4;
             integer rc;
             logic [31:0] sb;
             logic [511:0] pay;
+            logic is_drain;
+            integer drain_target;
             forever begin
                 rc = $fscanf(ffd, "%s %d %h %h", f1, sb, f2, pay);
                 if (rc < 4) disable replay;
+                if (sb[2:0] == 3'd0 && pay[1:0] == 2'd1)
+                    wait_phase(phase_requests);
+                is_drain = sb[2:0] == 3'd4 && pay[3:0] == 4'd0;
+                drain_target = y_packet_count + 1;
+                if (is_drain) begin
+                    wait_phase(phase_requests);
+                    wait_y_ready(pay[17], pay[16:11]);
+                end
                 while ((sb[2:0] == 3'd1 || sb[2:0] == 3'd2)
                        && xfifo_credit == 0)
                     @(posedge clk);
@@ -160,10 +214,13 @@ module tb_tile_v4;
                 dn_valid = 1;
                 dn_sideband = sb;
                 dn_payload = pay;
+                if (sb[2:0] == 3'd0 && pay[1:0] < 2'd2)
+                    phase_requests++;
                 flits++;
                 @(negedge clk);
                 dn_valid = 0;
                 repeat (gap > 0 ? gap : 1) @(negedge clk);
+                if (is_drain) wait_y_packet(drain_target);
             end
         end
         $fclose(ffd);
