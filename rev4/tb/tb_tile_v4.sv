@@ -36,13 +36,18 @@ module tb_tile_v4;
     logic [1:0] e_seg;
     logic [127:0] e_payload;
     logic e_valid = 0;
+    // R4-fix (VIPCBD): drive the simulation load port through the port
+    // connection; VCS forbids hierarchical assignment to input variables.
+    logic sim_load_r = 0;
+    logic [20:0] sim_addr_r = 0;
+    logic [1023:0] sim_data_r = 0;
     tile_ffn_v4 #(.RRAM_WORDS(131072)) dut (
         .clk(clk), .rst_n(rst_n),
         .dn_valid(dn_valid), .dn_payload(dn_payload), .dn_sideband(dn_sideband),
         .up_valid(up_valid), .up_credit(up_credit), .up_payload(up_payload),
         .up_sideband(up_sideband),
         .sync0(sync0), .sync1(sync1), .err_line(err_line),
-        .sim_load(1'b0), .sim_addr(21'd0), .sim_data(1024'd0));
+        .sim_load(sim_load_r), .sim_addr(sim_addr_r), .sim_data(sim_data_r));
     // ---------- up beat checker ----------
     logic [127:0] exp_payload;
     logic [23:0] exp_sideband;
@@ -107,14 +112,14 @@ module tb_tile_v4;
             $finish;
         end
         while ($fscanf(rfd, "%h %h", raddr32, word) == 2) begin
-            dut.sim_load = 1'b1;
-            dut.sim_addr = raddr32[20:0];
-            dut.sim_data = word;
+            sim_load_r = 1'b1;
+            sim_addr_r = raddr32[20:0];
+            sim_data_r = word;
             @(posedge clk);
             addr++;
         end
         $fclose(rfd);
-        dut.sim_load = 1'b0;
+        sim_load_r = 1'b0;
         $display("loaded %0d RRAM words", addr);
         efd = $fopen({vecdir, "/expect.txt"}, "r");
         ffd = $fopen({vecdir, "/flits.txt"}, "r");

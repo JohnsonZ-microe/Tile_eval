@@ -32,7 +32,6 @@ module pe4_sram #(
     logic [WIDTH-1:0] mem [0:DEPTH-1];
     logic [LAT-2:0] pipe_v;
     logic [AW-1:0] pipe_a [0:LAT-2];
-    logic [WIDTH-1:0] mem_q;
 `ifdef PE4_SRAM_MACRO
     // Vendor macro substitution point. The behavioural model below must be
     // replaced by the compiled instance before any area or timing claim.
@@ -51,13 +50,18 @@ module pe4_sram #(
             pipe_a[s] <= pipe_a[s-1];
         end
     end
-    always_ff @(posedge clk) begin
-        if (LAT == 2) begin
+    // generate-time selection: a procedural (LAT == 2) branch would still
+    // statically evaluate pipe_a[LAT-3] for LAT=2 and trip SIOB (VCS)
+    if (LAT == 2) begin : lat2
+        always_ff @(posedge clk) begin
             rdata  <= mem[pipe_a[0]];      // mem@E1, out reg end of E1
             rvalid <= pipe_v[0];
-        end else begin
-            mem_q <= mem[pipe_a[LAT-3]];   // extra internal stage for LAT>=3
-            rdata <= mem_q;
+        end
+    end else begin : lat3plus
+        logic [WIDTH-1:0] mem_q;
+        always_ff @(posedge clk) begin
+            mem_q  <= mem[pipe_a[LAT-3]];  // extra internal stage for LAT>=3
+            rdata  <= mem_q;
             rvalid <= pipe_v[LAT-2];
         end
     end

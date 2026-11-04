@@ -27,10 +27,10 @@ module tb_math_v4;
     logic qu_ov;
     logic [255:0] qu_q;
     logic [7:0] qu_se;
-    logic [12:0] qu_otag;
+    logic [10:0] qu_otag;
     logic qu_err;
     pe4_quant quant_dut (.clk(clk), .rst_n(rst_n), .in_valid(qu_v),
-        .in_h(qu_h), .in_tag(13'd0), .out_valid(qu_ov), .out_q(qu_q),
+        .in_h(qu_h), .in_tag(11'd0), .out_valid(qu_ov), .out_q(qu_q),
         .out_se(qu_se), .out_tag(qu_otag), .err_nonfinite(qu_err));
     logic [15:0] sg_code = 0;
     logic [31:0] sg_val;

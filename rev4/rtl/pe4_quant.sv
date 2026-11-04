@@ -18,11 +18,11 @@ module pe4_quant (
     input  logic clk, rst_n,
     input  logic in_valid,
     input  logic [511:0] in_h,      // 32 x BF16
-    input  logic [12:0] in_tag,     // {bank, lane[2:0], idx[9:0]}
+    input  logic [10:0] in_tag,     // {bank, lane[2:0], idx[6:0]} (R4-014)
     output logic out_valid,
     output logic [255:0] out_q,     // 32 x E4M3
     output logic [7:0] out_se,
-    output logic [12:0] out_tag,
+    output logic [10:0] out_tag,
     output logic err_nonfinite
 );
     import pe4_pkg::*;
@@ -31,7 +31,7 @@ module pe4_quant (
     logic [31:0] hq [0:31];
     logic [14:0] amag_q;             // registered tree maximum incl. floor
     logic nf_q;                      // any non-finite h in the block
-    logic [12:0] tag_q;
+    logic [10:0] tag_q;
     logic v0, v1, v2;
     logic signed [11:0] e_sel_q;
     logic [7:0] q_c [0:31];
