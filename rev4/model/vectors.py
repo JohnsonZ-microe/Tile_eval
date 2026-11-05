@@ -208,6 +208,16 @@ def ctrl_line(pass_id, op, addr, data):
     return dn_line('CTRL', pass_id, 0, 0, payload)
 
 
+def initial_numeric_alarm(staging, pass_id):
+    invalid = any(((word >> (8 * byte)) & 0x7f) == 0x7f
+                  for word in staging['x'].values() for byte in range(64))
+    if not invalid:
+        raise ValueError('Tile error scenario requires a reserved activation '
+                         'in the first GU; no NUMERIC alarm may be assumed')
+    return dict(type=2, tag=0xF3, last=True, segment=0,
+                payload=(pass_id << 40) | (18 << 32) | (1 << 18))
+
+
 def build_scenarios(rng, out):
     """Full-loop scenarios: six formats x n_tok {1,4}, then error flits."""
     flits = []
@@ -255,6 +265,9 @@ def build_scenarios(rng, out):
                         staging['x'][(lane, 32 * grp + i)] = val
                         flits.append(dn_line('X', pass_id, lane,
                                              32 * grp + i, val))
+            if n_scen == 0:
+                expect.append(initial_numeric_alarm(staging, pass_id))
+                checks['errors'].append('NUMERIC')
             h = ref.gu(cmd, staging)
             expect.extend(ref.hup_beats(h, n_tok, pass_id))
             checks['sync1_gu'] += 1
@@ -293,14 +306,11 @@ def build_scenarios(rng, out):
             n_scen += 1
     flits.append(dn_line('PGM', 0, 0, 0, 0))
     checks['errors'].append('RPGM')
+    checks['errors'].append('UNSUPPORTED')
     flits.append(dn_line('CMD', 9, 0, 0,
                          cmd_payload(3, 0, 64, 0, 0, [0] * 4, [0] * 4, 0)))
     checks['errors'].append('CMD_ILLEGAL')
-    # exactly one ALARM (STATUS subtype 0xF3, P3-6): the PGM flit raises
-    # RPGM(bit17)+UNSUPPORTED(bit19) together; first_bit = lowest = 17;
-    # no second ALARM for the later CMD_ILLEGAL (status never returned to 0)
-    expect.append(dict(type=2, tag=0xF3, last=True, segment=0,
-                       payload=0x00000011000A0000))
+    checks['expected_err_status'] = (1 << 18) | (1 << 17) | (1 << 19) | (1 << 2)
     (out / 'flits.txt').write_text('\n'.join(flits) + '\n')
     (out / 'expect.txt').write_text('\n'.join(
         'U %d %02x %d %d %032x' % (b['type'], b['tag'], b['last'],

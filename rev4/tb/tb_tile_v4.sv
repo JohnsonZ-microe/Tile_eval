@@ -245,10 +245,7 @@ module tb_tile_v4;
             $display("FAIL missing expected beats");
             errors++;
         end
-        // expected sticky errors after the injections: RPGM(bit17) +
-        // CMD_ILLEGAL(bit2) set, every other bit clear
-        if (dut.sched_u.err_q[17] !== 1'b1 || dut.sched_u.err_q[2] !== 1'b1
-            || (dut.sched_u.err_q & ~(22'h2_0000 | 22'h4)) !== 22'h0) begin
+        if (dut.sched_u.err_q !== 22'h0e0004) begin
             $display("FAIL err_status=%06x", dut.sched_u.err_q);
             errors++;
         end
