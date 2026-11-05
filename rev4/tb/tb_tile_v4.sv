@@ -63,15 +63,31 @@ module tb_tile_v4;
     logic [23:0] exp_sideband;
     logic exp_last;
     integer erc;
+    wire [11:0] drain_blocked;
+    assign drain_blocked[0] = !((dut.sched_u.pstate === 3'd0) ||
+                               (dut.sched_u.pstate === 3'd1));
+    assign drain_blocked[1] = ({dut.sched_u.slot[0].valid, dut.sched_u.slot[1].valid} !== '0);
+    assign drain_blocked[2] = ({dut.bus_u.xfifo_level, dut.sched_u.rq_cnt} !== '0);
+    assign drain_blocked[3] = (dut.sched_u.cap_cnt !== '0);
+    assign drain_blocked[4] = ({dut.pe_u.busy, dut.pe_in_valid, dut.pe_out_valid} !== '0);
+    assign drain_blocked[5] = ({dut.sched_u.pend_act, dut.sched_u.pend_commit} !== '0);
+    assign drain_blocked[6] = ({dut.yacc_u.commit_busy, dut.yacc_commit_trigger, dut.yacc_load_valid} !== '0);
+    assign drain_blocked[7] = ({dut.yacc_u.dstate, dut.drain_fire} !== '0);
+    assign drain_blocked[8] = ({dut.bus_u.active_valid, up_valid} !== '0);
+    assign drain_blocked[9] = ({dut.bus_u.hup_valid, dut.yb_valid, dut.st_valid, dut.alarm_valid, dut.stf_cnt} !== '0);
+    assign drain_blocked[10] = ({dut.rram_req, dut.rram_valid, dut.stg_rd_req, dut.stg_rd_valid, dut.hbuf_rd_req, dut.hbuf_rd_valid} !== '0);
+    assign drain_blocked[11] = ({dn_valid, dut.cmd_valid, dut.h_valid, dut.ctrl_valid} !== '0);
     task automatic print_progress(input string event_name);
-        $display("PROGRESS event=%s time=%0t cycle=%0d stage=%s target=%0d flits=%0d beats=%0d sync1=%0d y_packets=%0d x_credit=%0d up_credit=%0d x_fifo=%0d state=%0d rq=%0d pe_busy=%b y_busy=%b err=%06x y_bank=%0d y_slot=%0d y_valid=%b",
+        $display("PROGRESS event=%s time=%0t cycle=%0d stage=%s target=%0d flits=%0d beats=%0d sync1=%0d y_packets=%0d x_credit=%0d up_credit=%0d x_fifo=%0d state=%0d rq=%0d pe_busy=%b y_busy=%b err=%06x y_bank=%0d y_slot=%0d y_valid=%b slot_valid=%b%b cap=%0d drain_blocked=%03x",
                  event_name, $time, cycle_count, diagnostic_stage,
                  diagnostic_target, flits, beats, sync1_count, y_packet_count,
                  xfifo_credit, dut.bus_u.credit, dut.bus_u.xfifo_level,
                  dut.sched_u.pstate, dut.sched_u.rq_cnt, dut.pe_u.busy,
                  dut.yacc_u.commit_busy, dut.sched_u.err_q,
                  diagnostic_bank, diagnostic_slot,
-                 dut.yacc_u.vbit[diagnostic_bank][diagnostic_slot]);
+                 dut.yacc_u.vbit[diagnostic_bank][diagnostic_slot],
+                 dut.sched_u.slot[1].valid, dut.sched_u.slot[0].valid,
+                 dut.sched_u.cap_cnt, drain_blocked);
         $fflush();
     endtask
     task automatic diagnostic_timeout(input string reason);
@@ -290,14 +306,12 @@ module tb_tile_v4;
             integer idle = 0;
             integer waited = 0;
             diagnostic_stage = "final_drain";
+            $display("DRAIN_BLOCK_BITS 0=state 1=slots 2=x_or_rram_queue 3=capture_queue 4=pe 5=epilogue 6=y_commit 7=drain_engine 8=up_packet 9=pending_output 10=memory_io 11=down_input; X/Z blocks idle");
             print_progress("final_drain_begin");
             while (idle < 200) begin
-                @(posedge clk);
+                @(negedge clk);
                 waited++;
-                idle = (up_valid || dut.bus_u.xfifo_level != 0
-                        || dut.sched_u.pstate != 0
-                        || dut.sched_u.rq_cnt != 0
-                        || dut.yacc_u.commit_busy) ? 0 : idle + 1;
+                idle = (drain_blocked === 12'b0) ? idle + 1 : 0;
                 if (waited >= wait_limit && idle < 200)
                     diagnostic_timeout("final_drain");
             end
