@@ -15,8 +15,12 @@ class UpProtocolSourceTests(unittest.TestCase):
         self.assertIn('if (is_drain) wait_y_packet(drain_target);', replay)
         for name in ('wait_phase', 'wait_y_ready', 'wait_y_packet'):
             task = text.split('task automatic ' + name, 1)[1].split('endtask', 1)[0]
-            self.assertIn('$fatal(1,', task)
+            self.assertIn('diagnostic_timeout(', task)
+            self.assertIn('waited >= wait_limit', task)
             self.assertIn('@(negedge clk)', task)
+        timeout = text.split('task automatic diagnostic_timeout', 1)[1].split('endtask', 1)[0]
+        self.assertIn('print_progress(reason);', timeout)
+        self.assertIn('$fatal(1,', timeout)
         self.assertIn('dut.yacc_u.vbit[bank][slot_id]', text)
 
     def test_ctrl_is_not_reserved(self):

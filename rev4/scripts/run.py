@@ -73,7 +73,71 @@ def digest(path):
     return h.hexdigest()
 
 
+def cycle_argument(value):
+    number = int(value)
+    if number < 0 or number > 2147483647:
+        raise argparse.ArgumentTypeError('cycle count must be in 0..2147483647')
+    return number
+
+
+def diagnostic_arguments(args, test):
+    if test != 'tile':
+        return []
+    return ['+PROGRESS_CYCLES=%d' % args.progress_cycles,
+            '+WAIT_LIMIT=%d' % args.wait_limit,
+            '+MAX_CYCLES=%d' % args.max_cycles]
+
+
+def execute_logged(command, logfile, cwd, environment, timeout,
+                   manifest, manifest_path, test=None):
+    command = list(map(str, command))
+    manifest['commands'].append(command)
+    manifest['current_step'] = logfile.name
+    record = dict(status='running', seconds=None, last_progress=None)
+    if test:
+        manifest.setdefault('simulations', {})[test] = record
+        manifest['rtl_validation'] = 'running'
+    manifest_path.write_text(json.dumps(manifest, indent=1))
+    print('Running: ' + ' '.join(command), flush=True)
+    started = time.monotonic()
+    try:
+        with logfile.open('w') as output:
+            done = subprocess.run(command, cwd=str(cwd), env=environment,
+                                  stdout=output, stderr=subprocess.STDOUT,
+                                  timeout=timeout)
+        record['returncode'] = done.returncode
+        log = logfile.read_text(errors='replace')
+        if done.returncode:
+            raise RuntimeError('%s exited %d; see %s' %
+                               (command[0], done.returncode, logfile))
+        if test and (not re.search(r'^PASS ' + re.escape(test) + r'\b', log, re.M)
+                     or re.search(r'^\s*(FAIL\b|Fatal:|FATAL\b)', log, re.M)):
+            raise RuntimeError('Missing clean PASS in ' + test)
+        record['status'] = 'passed'
+        return log
+    except subprocess.TimeoutExpired:
+        record['status'] = 'timeout'
+        manifest['failed_step'] = logfile.name
+        raise
+    except Exception:
+        record['status'] = 'failed'
+        manifest['failed_step'] = logfile.name
+        raise
+    finally:
+        record['seconds'] = time.monotonic() - started
+        if logfile.exists():
+            with logfile.open(errors='replace') as output:
+                for line in output:
+                    if line.startswith('PROGRESS '):
+                        record['last_progress'] = line.rstrip()
+        if test:
+            manifest['rtl_validation'] = record['status']
+        manifest.setdefault('steps', {})[logfile.name] = record
+        manifest_path.write_text(json.dumps(manifest, indent=1))
+
+
 def main():
+    started = time.monotonic()
     parser = argparse.ArgumentParser()
     parser.add_argument('tool', choices=['local', 'vcs', 'dc'])
     parser.add_argument('--suite', choices=['smoke', 'full'], default='full')
@@ -83,7 +147,12 @@ def main():
     parser.add_argument('--top', default='tile_ffn_v4')
     parser.add_argument('--out', type=Path)
     parser.add_argument('--waves', action='store_true')
+    parser.add_argument('--progress-cycles', type=cycle_argument, default=10000)
+    parser.add_argument('--wait-limit', type=cycle_argument, default=2000000)
+    parser.add_argument('--max-cycles', type=cycle_argument, default=20000000)
     args = parser.parse_args()
+    if args.wait_limit == 0 or args.max_cycles == 0:
+        parser.error('--wait-limit and --max-cycles must be positive')
     stamp = datetime.datetime.now(datetime.timezone.utc).strftime(
         '%Y%m%dT%H%M%SZ')
     tag = '%s-%s-%s' % (args.tool, stamp, os.getpid())
@@ -97,7 +166,10 @@ def main():
                     test=args.test, top=args.top, started_utc=stamp,
                     python=sys.version, commands=[], status='running',
                     products_dir=str(out), log_dir=str(logdir),
-                    rtl_validation='not run', timing='not verified',
+                    rtl_validation='not started', timing='not verified',
+                    diagnostics=dict(progress_cycles=args.progress_cycles,
+                                     wait_limit=args.wait_limit,
+                                     max_cycles=args.max_cycles),
                     sram='behavioural arrays; no macro mapping')
     status = 1
     try:
@@ -127,20 +199,13 @@ def main():
         environment = dict(os.environ, PYTHONDONTWRITEBYTECODE='1')
         timeout = int(os.getenv('TIMEOUT_SECONDS',
                                 '345600' if args.tool == 'dc' else '1800'))
+        if timeout <= 0:
+            raise ValueError('TIMEOUT_SECONDS must be positive')
+        manifest['timeout_seconds'] = timeout
 
-        def run(command, name):
-            manifest['commands'].append(list(map(str, command)))
-            print('Running: ' + ' '.join(map(str, command)), flush=True)
-            with (logdir / name).open('w') as fh:
-                done = subprocess.run(list(map(str, command)), cwd=str(snap),
-                                      env=environment, stdout=fh,
-                                      stderr=subprocess.STDOUT,
-                                      timeout=timeout)
-            if done.returncode:
-                raise RuntimeError('%s exited %d; see %s'
-                                   % (command[0], done.returncode,
-                                      logdir / name))
-            return (logdir / name).read_text(errors='replace')
+        def run(command, name, test=None):
+            return execute_logged(command, logdir / name, snap, environment,
+                                  timeout, manifest, out / 'manifest.json', test)
 
         run([sys.executable, '-B', '-m', 'unittest', 'discover', '-s',
              'model', '-p', 'test_*.py'], 'python_reference.log')
@@ -202,11 +267,9 @@ def main():
                                              'pe4_sigmoid_rom.hex')]
                 if args.waves and test == 'tile':
                     cmd.append('+VCD=' + str(out / 'tile_ffn_v4.vcd'))
-                log = run(cmd, 'run_%s.log' % test)
-                if ('PASS ' + test) not in log:
-                    raise RuntimeError('Missing PASS in ' + test)
-            manifest['rtl_validation'] = 'VCS %s %s passed' % (
-                args.test, args.suite)
+                cmd.extend(diagnostic_arguments(args, test))
+                log = run(cmd, 'run_%s.log' % test, test)
+            manifest['rtl_validation'] = 'passed'
         elif args.tool == 'dc':
             exe = shutil.which(os.getenv('DC_SHELL', 'dc_shell'))
             if not exe:
@@ -235,7 +298,12 @@ def main():
         status = 0
     except Exception as error:
         manifest['error'] = str(error)
-        manifest['status'] = 'failed'
+        manifest['status'] = ('timeout' if isinstance(error, subprocess.TimeoutExpired)
+                              else 'failed')
+        if args.tool == 'vcs' and manifest.get('simulations'):
+            manifest['rtl_validation'] = manifest['status']
+        manifest.setdefault('failed_step', manifest.get('current_step', 'setup'))
+    manifest['seconds'] = time.monotonic() - started
     (out / 'manifest.json').write_text(json.dumps(manifest, indent=1))
     (out / 'exit_code.txt').write_text('%d\n' % status)
     (logdir / 'exit_code.txt').write_text('%d\n' % status)

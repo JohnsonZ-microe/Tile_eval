@@ -13,6 +13,13 @@ module tb_tile_v4;
     integer y_packet_count = 0;
     integer phase_requests = 0;
     integer wait_limit = 2000000;
+    integer progress_cycles = 10000;
+    integer max_cycles = 20000000;
+    longint unsigned cycle_count = 0;
+    string diagnostic_stage = "reset";
+    integer diagnostic_target = 0;
+    logic diagnostic_bank = 0;
+    logic [5:0] diagnostic_slot = 0;
     integer up_outstanding = 0;
     string vecdir;
     logic [1023:0] a1, a2;
@@ -56,6 +63,34 @@ module tb_tile_v4;
     logic [23:0] exp_sideband;
     logic exp_last;
     integer erc;
+    task automatic print_progress(input string event_name);
+        $display("PROGRESS event=%s time=%0t cycle=%0d stage=%s target=%0d flits=%0d beats=%0d sync1=%0d y_packets=%0d x_credit=%0d up_credit=%0d x_fifo=%0d state=%0d rq=%0d pe_busy=%b y_busy=%b err=%06x y_bank=%0d y_slot=%0d y_valid=%b",
+                 event_name, $time, cycle_count, diagnostic_stage,
+                 diagnostic_target, flits, beats, sync1_count, y_packet_count,
+                 xfifo_credit, dut.bus_u.credit, dut.bus_u.xfifo_level,
+                 dut.sched_u.pstate, dut.sched_u.rq_cnt, dut.pe_u.busy,
+                 dut.yacc_u.commit_busy, dut.sched_u.err_q,
+                 diagnostic_bank, diagnostic_slot,
+                 dut.yacc_u.vbit[diagnostic_bank][diagnostic_slot]);
+        $fflush();
+    endtask
+    task automatic diagnostic_timeout(input string reason);
+        print_progress(reason);
+        $fatal(1, "TIMEOUT %s", reason);
+    endtask
+    always @(posedge clk) begin
+        if (!rst_n) cycle_count <= 0;
+        else cycle_count <= cycle_count + 1;
+    end
+    always @(negedge clk) begin
+        if (rst_n) begin
+            if (cycle_count >= max_cycles) diagnostic_timeout("global_cycles");
+            if (progress_cycles > 0) begin
+                if (cycle_count != 0 && cycle_count % progress_cycles == 0)
+                    print_progress("heartbeat");
+            end
+        end
+    end
     always @(posedge clk) begin
         if (rst_n && up_valid) begin
             if (up_sideband[1:0] == 2'd1 && up_sideband[17])
@@ -80,7 +115,10 @@ module tb_tile_v4;
                 up_outstanding++;
             end
         end
-        if (sync1) sync1_count++;
+        if (sync1) begin
+            sync1_count++;
+            print_progress("phase_complete");
+        end
         if (sync0 && xfifo_credit < 128) xfifo_credit++;
     end
     // credit return model: one credit per cred_period cycles while owed
@@ -106,20 +144,21 @@ module tb_tile_v4;
     integer addr = 0;
     task automatic wait_phase(input integer target);
         integer waited;
+        diagnostic_stage = "wait_phase";
+        diagnostic_target = target;
         waited = 0;
         while (sync1_count < target) begin
             @(negedge clk);
             waited++;
             if (waited >= wait_limit)
-                $fatal(1, "WAIT phase timeout target=%0d sync1=%0d state=%0d rq=%0d err=%06x act_col=%0d act_out_idx=%0d act_iv=%b act_ov=%b",
-                       target, sync1_count, dut.sched_u.pstate,
-                       dut.sched_u.rq_cnt, dut.sched_u.err_q,
-                       dut.sched_u.act_c, dut.sched_u.act_cout,
-                       dut.sched_u.act_in_valid, dut.sched_u.act_out_valid);
+                diagnostic_timeout("wait_phase");
         end
     endtask
     task automatic wait_y_ready(input logic bank, input logic [5:0] slot_id);
         integer waited;
+        diagnostic_stage = "wait_y_ready";
+        diagnostic_bank = bank;
+        diagnostic_slot = slot_id;
         waited = 0;
         while (dut.yacc_u.commit_busy !== 1'b0 ||
                dut.sched_u.yacc_commit_trigger !== 1'b0 ||
@@ -127,31 +166,36 @@ module tb_tile_v4;
             @(negedge clk);
             waited++;
             if (waited >= wait_limit)
-                $fatal(1, "WAIT y commit timeout bank=%0d slot=%0d busy=%b valid=%b err=%06x",
-                       bank, slot_id, dut.yacc_u.commit_busy,
-                       dut.yacc_u.vbit[bank][slot_id], dut.sched_u.err_q);
+                diagnostic_timeout("wait_y_ready");
         end
     endtask
     task automatic wait_y_packet(input integer target);
         integer waited;
+        diagnostic_stage = "wait_y_packet";
+        diagnostic_target = target;
         waited = 0;
         while (y_packet_count < target) begin
             @(negedge clk);
             waited++;
             if (waited >= wait_limit)
-                $fatal(1, "WAIT DRAIN timeout target=%0d packets=%0d err=%06x",
-                       target, y_packet_count, dut.sched_u.err_q);
+                diagnostic_timeout("wait_y_packet");
         end
+        print_progress("drain_complete");
     endtask
     initial begin
         if (!$value$plusargs("VECTORS=%s", vecdir)) vecdir = "vectors";
         void'($value$plusargs("GAP=%d", gap));
         void'($value$plusargs("CRED_PERIOD=%d", cred_period));
         void'($value$plusargs("WAIT_LIMIT=%d", wait_limit));
+        void'($value$plusargs("PROGRESS_CYCLES=%d", progress_cycles));
+        void'($value$plusargs("MAX_CYCLES=%d", max_cycles));
         if (wait_limit <= 0) $fatal(1, "WAIT_LIMIT must be positive");
+        if (progress_cycles < 0) $fatal(1, "PROGRESS_CYCLES must be nonnegative");
+        if (max_cycles <= 0) $fatal(1, "MAX_CYCLES must be positive");
         repeat (4) @(posedge clk);
         @(negedge clk);
         rst_n = 1;
+        diagnostic_stage = "rram_load";
         // load the RRAM image through the simulation port
         rfd = $fopen({vecdir, "/rram.hex"}, "r");
         if (rfd == 0) begin
@@ -170,6 +214,7 @@ module tb_tile_v4;
         @(negedge clk);
         sim_load_r = 1'b0;
         $display("loaded %0d RRAM words", addr);
+        print_progress("rram_loaded");
         efd = $fopen({vecdir, "/expect.txt"}, "r");
         ffd = $fopen({vecdir, "/flits.txt"}, "r");
         if (efd == 0 || ffd == 0) begin
@@ -197,7 +242,9 @@ module tb_tile_v4;
             logic [511:0] pay;
             logic is_drain;
             integer drain_target;
+            integer credit_waited;
             forever begin
+                diagnostic_stage = "replay";
                 rc = $fscanf(ffd, "%s %d %h %h", f1, sb, f2, pay);
                 if (rc < 4) disable replay;
                 if (sb[2:0] == 3'd0 && pay[1:0] == 2'd1)
@@ -208,9 +255,16 @@ module tb_tile_v4;
                     wait_phase(phase_requests);
                     wait_y_ready(pay[17], pay[16:11]);
                 end
+                credit_waited = 0;
                 while ((sb[2:0] == 3'd1 || sb[2:0] == 3'd2)
-                       && xfifo_credit == 0)
+                       && xfifo_credit == 0) begin
+                    diagnostic_stage = "wait_x_credit";
                     @(posedge clk);
+                    credit_waited++;
+                    if (credit_waited >= wait_limit)
+                        diagnostic_timeout("wait_x_credit");
+                end
+                diagnostic_stage = "send_flit";
                 if (sb[2:0] == 3'd1 || sb[2:0] == 3'd2) xfifo_credit--;
                 @(negedge clk);
                 dn_valid = 1;
@@ -221,6 +275,11 @@ module tb_tile_v4;
                 flits++;
                 @(negedge clk);
                 dn_valid = 0;
+                if (sb[2:0] == 3'd0 && pay[1:0] < 2'd2) begin
+                    if (pay[1:0] == 0) print_progress("gu_sent");
+                    else print_progress("d_sent");
+                end
+                if (is_drain) print_progress("drain_sent");
                 repeat (gap > 0 ? gap : 1) @(negedge clk);
                 if (is_drain) wait_y_packet(drain_target);
             end
@@ -229,12 +288,18 @@ module tb_tile_v4;
         // ---------- drain and final checks ----------
         begin : drain
             integer idle = 0;
+            integer waited = 0;
+            diagnostic_stage = "final_drain";
+            print_progress("final_drain_begin");
             while (idle < 200) begin
                 @(posedge clk);
+                waited++;
                 idle = (up_valid || dut.bus_u.xfifo_level != 0
                         || dut.sched_u.pstate != 0
                         || dut.sched_u.rq_cnt != 0
                         || dut.yacc_u.commit_busy) ? 0 : idle + 1;
+                if (waited >= wait_limit && idle < 200)
+                    diagnostic_timeout("final_drain");
             end
         end
         if (sync1_count != 24) begin
@@ -255,6 +320,7 @@ module tb_tile_v4;
         else
             $display("FAIL tile errors=%0d flits=%0d beats=%0d",
                      errors, flits, beats);
+        $fflush();
         $finish;
     end
 endmodule
