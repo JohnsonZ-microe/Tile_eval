@@ -289,7 +289,7 @@ def build_scenarios(rng, out):
                                               True, tag))
                 flits.append(ctrl_line(0, 0,
                                        (ybank << 6) | slots[lane],
-                                       80 << 8))
+                                       (1 << 16) | (80 << 8)))
             n_scen += 1
     flits.append(dn_line('PGM', 0, 0, 0, 0))
     checks['errors'].append('RPGM')

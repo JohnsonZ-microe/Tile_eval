@@ -1051,7 +1051,7 @@ module pe4_sched (
                 alarm_pending <= 1;
                 alarm_armed <= 0;
                 alarm_payload <= {80'b0, err_first_pass_n, 3'b0,
-                                  err_first_bit_n, err_q_n};
+                                  err_first_bit_n, 10'b0, err_q_n};
             end else if ((err_q_n & ~alarm_mask_q) == '0) begin
                 alarm_armed <= 1;
             end
