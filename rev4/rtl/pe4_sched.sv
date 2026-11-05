@@ -879,11 +879,11 @@ module pe4_sched (
                     if (exp_kind) begin                    // XS flit
                         stg_wr_xs <= 1;
                         stg_wr_x <= 0;
-                        xs_popped[exp_grp] <= 1;
+                        if (exp_lane + 1 >= gl) xs_popped[exp_grp] <= 1;
                     end else begin
                         stg_wr_x <= 1;
                         stg_wr_xs <= 0;
-                        x_popped[xfifo_out_idx] <= 1;
+                        if (exp_lane + 1 >= gl) x_popped[xfifo_out_idx] <= 1;
                     end
                     stg_wr_lane <= xfifo_out_lane;
                     stg_wr_idx <= xfifo_out_idx;

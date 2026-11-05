@@ -205,6 +205,9 @@ module pe4_yacc (
                             wdata0 <= new_row_c;
                         end
                         if (row_sel == 9) begin
+                            v_set_req <= 1;
+                            v_set_bank <= cbank;
+                            v_set_slot <= cur_slot;
                             row_sel <= 0;
                             cmask_left[lane_sel] <= 0;
                             if (lane_sel == 3) cstate <= CDONE;
@@ -216,12 +219,6 @@ module pe4_yacc (
                     end
                 end
                 CDONE: begin
-                    for (int l = 0; l < 4; l++)
-                        if (cmask[l]) begin
-                            v_set_req <= 1;
-                            v_set_bank <= cbank;
-                            v_set_slot <= cslots[l];
-                        end
                     cstate <= CIDLE;
                 end
             endcase
