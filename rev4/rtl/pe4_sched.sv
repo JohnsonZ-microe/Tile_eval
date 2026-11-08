@@ -7,7 +7,9 @@
 // y commit buffer, phase DONE sync[1], and the tile register file.
 // Overlap model (docs/SPEC.md 7): one phase owns the PE at a time; the next
 // phase's RRAM prefetch, H quantization and y commit overlap its drain.
-module pe4_sched (
+module pe4_sched #(
+    parameter logic [5:0] TILE_ID = 6'd16
+) (
     input  logic clk, rst_n,
     // bus side
     input  logic cmd_in_valid,
@@ -137,7 +139,11 @@ module pe4_sched (
     // (moved up from near the end of this file: used by the CTRL readback
     //  mux above its old position — VER-956; note: run.py's sanity scan
     //  counts RTL keywords even inside comments, so avoid them here)
-    localparam logic [31:0] TILE_ID_P = 32'h0000_0110;  // ID 16, RRAM_LAT 1
+    logic init_done;
+    always_ff @(posedge clk) begin
+        if (!rst_n) init_done <= 1'b0;
+        else init_done <= 1'b1;
+    end
     // ============================ CTX storage ============================
     // Class record: W0={H[15:0],H_KB[31:16]}, W1={H_COLS[15:0],I_V[31:16]},
     // W2=fmt fields (WFMT[2:0],SFMT[4:3],SBLK_128[5],BIAS_EN[6],WPLACE[7],
@@ -1098,7 +1104,7 @@ module pe4_sched (
         reg_rd_data_c = 32'h0;
         if (reg_wr_addr == 0) ;   // no-op guard
         case (reg_rd_addr)
-            12'h000: reg_rd_data_c = {32'(TILE_ID_P)};
+            12'h000: reg_rd_data_c = {init_done, 19'b0, 4'd3, 2'b0, TILE_ID};
             12'h004: reg_rd_data_c = {24'b0, tile_status_level};
             12'h008: reg_rd_data_c = {10'b0, err_q};
             12'h00c: reg_rd_data_c = {10'b0, alarm_mask_q};

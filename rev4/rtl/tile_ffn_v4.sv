@@ -215,7 +215,7 @@ module tile_ffn_v4 #(
         .yb_valid(yb_valid), .yb_ready(ysrc_ready),
         .yb_payload(yb_payload), .yb_last(yb_last),
         .yb_segment(yb_segment), .yb_tag(yb_tag));
-    pe4_sched sched_u (
+    pe4_sched #(.TILE_ID(SRC_ID[5:0])) sched_u (
         .clk(clk), .rst_n(rst_n),
         .err_pulse(), .err_idx(),
         .cmd_in_valid(cmd_valid), .cmd_in_payload(cmd_payload),

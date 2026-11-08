@@ -1,5 +1,7 @@
 `timescale 1ns/1ps
 module tb_control_v4;
+    parameter logic [5:0] TEST_ID = 6'd16;
+    localparam logic [31:0] EXPECTED_ID = 32'h80000300 | {26'b0, TEST_ID};
     logic clk = 0, rst_n = 0;
     always #5 clk = ~clk;
     logic dn_valid = 0, up_valid, sync0, sync1, err_line;
@@ -8,7 +10,7 @@ module tb_control_v4;
     logic [1:0] up_credit = 0;
     logic [127:0] up_payload;
     logic [23:0] up_sideband;
-    tile_ffn_v4 #(.RRAM_WORDS(16)) dut(.clk(clk), .rst_n(rst_n),
+    tile_ffn_v4 #(.RRAM_WORDS(16), .SRC_ID({26'b0, TEST_ID})) dut(.clk(clk), .rst_n(rst_n),
         .dn_valid(dn_valid), .dn_payload(dn_payload), .dn_sideband(dn_sideband),
         .up_valid(up_valid), .up_credit(up_credit), .up_payload(up_payload),
         .up_sideband(up_sideband), .sync0(sync0), .sync1(sync1), .err_line(err_line),
@@ -41,9 +43,9 @@ module tb_control_v4;
         dn_sideband = 32'(4 | ((head & 255) << 3));
         dn_payload = 512'(op) | (512'(target) << 4) |
                      (512'(address) << 11) | (512'(value) << 23);
-        if (op == 2 && (target == 16 || target == 127)) begin
+        if (op == 2 && (target == int'(TEST_ID) || target == 127)) begin
             expected_data[head] = {83'b0,1'b0,12'(address),32'(value)};
-            expected_sb[head] = {4'b0,2'b0,1'b1,8'(head),7'd16,2'd2};
+            expected_sb[head] = {4'b0,2'b0,1'b1,8'(head),1'b0,TEST_ID,2'd2};
             head++;
         end
         tick(); dn_valid = 0;
@@ -61,18 +63,18 @@ module tb_control_v4;
         repeat (3) @(negedge clk);
         rst_n = 1;
         for (integer index = 0; index < 16; index++) begin
-            control(16,1,256+4*index,32'h12340000+index);
+            control(int'(TEST_ID),1,256+4*index,32'h12340000+index);
             tick();
         end
         for (integer target = 0; target < 128; target++)
-            control(target,2,0,16);
+            control(target,2,0,EXPECTED_ID);
         flush();
         for (integer index = 0; index < 64; index++)
-            control(index % 2 ? 16 : 127,2,256+4*(index%16),32'h12340000+(index%16));
+            control(index % 2 ? int'(TEST_ID) : 127,2,256+4*(index%16),32'h12340000+(index%16));
         flush();
         return_enable = 0;
         for (integer index = 0; index < 8; index++) begin
-            control(16,2,0,16);
+            control(int'(TEST_ID),2,0,EXPECTED_ID);
             repeat (4) tick();
         end
         repeat (40) tick();
