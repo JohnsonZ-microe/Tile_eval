@@ -100,10 +100,15 @@ module tb_yacc_v4;
                         commit_slots[lane] = 6'(group_id*4+lane);
                     commit_trigger = 1; tick(); commit_trigger = 0;
                     begin
-                        integer waited = 0;
+                        integer waited;
+                        waited = 0;
                         while (commit_busy !== 0) begin
                             tick(); waited++;
-                            if (waited > 10000) $fatal(1, "Y commit timeout");
+                            if (waited > 10000)
+                                $fatal(1, "Y commit timeout bank=%0d group=%0d part=%0d waited=%0d cycles=%0d state=%0d lane=%0d row=%0d mask=%b addb_vo=%h add_vo=%h",
+                                    bank, group_id, part, waited, cycles, dut.cstate,
+                                    dut.lane_sel, dut.row_sel, dut.cmask_left,
+                                    dut.addb_vo, dut.add_vo);
                         end
                     end
                     repeat (3) tick();
