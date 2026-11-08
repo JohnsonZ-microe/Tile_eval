@@ -5,6 +5,11 @@
 `timescale 1ns/1ps
 module tb_tile_v4;
     logic clk = 0, rst_n = 0;
+    logic up_valid;
+    logic [127:0] up_payload;
+    logic [23:0] up_sideband;
+    logic sync0, sync1, err_line;
+    longint unsigned cycle_count = 0;
     always #5 clk = ~clk;
     integer ffd, efd, rfd, errors = 0, beats = 0, flits = 0;
     integer gap = 1, cred_period = 1, cred_timer = 0;
@@ -64,7 +69,7 @@ module tb_tile_v4;
             if (dut.sched_u.quant_valid)
                 trace_event("quant_accept", dut.sched_u.quant_tag, 0);
             if (dut.sched_u.quant_ov) trace_event("quant_return", dut.sched_u.quant_otag, 0);
-            if (dut.hbuf_release) trace_event("bank_release", dut.hbuf_bank, 0);
+            if (dut.hbuf_release) trace_event("bank_release", dut.hbuf_wr_bank_sel, 0);
             if (sync1) begin
                 trace_event("sync1", trace_sync, 0); trace_sync++;
             end
@@ -84,7 +89,6 @@ module tb_tile_v4;
     integer wait_limit = 2000000;
     integer progress_cycles = 10000;
     integer max_cycles = 20000000;
-    longint unsigned cycle_count = 0;
     string diagnostic_stage = "reset";
     integer diagnostic_target = 0;
     logic diagnostic_bank = 0;
@@ -96,10 +100,6 @@ module tb_tile_v4;
     logic [511:0] dn_payload = 0;
     logic [31:0] dn_sideband = 0;
     logic [1:0] up_credit = 0;
-    logic up_valid;
-    logic [127:0] up_payload;
-    logic [23:0] up_sideband;
-    logic sync0, sync1, err_line;
     // optional VCD (run_vcs.sh / run.py --waves passes +VCD=<path>)
     string vcdfile;
     initial begin
