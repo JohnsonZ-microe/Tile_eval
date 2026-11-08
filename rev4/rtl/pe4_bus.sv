@@ -10,7 +10,7 @@
 // up_credit returns 0-2 per cycle, cap 6, over-return sets UP_CREDIT.
 // Launcher priority: H_UP (dedicated slot), Y_UP, STATUS; a started packet
 // holds the link through its last beat; credits only delay, never reorder.
-module pe4_bus (
+module pe4_bus #(parameter logic [6:0] TILE_ID = 7'd16) (
     input  logic clk, rst_n,
     input  logic dn_valid,
     input  logic [511:0] dn_payload,
@@ -48,6 +48,7 @@ module pe4_bus (
     output logic [127:0] up_payload,
     output logic [23:0] up_sideband,
     output logic up_credit_err,
+    output logic credit_stall,
     input  logic hup_valid,
     output logic hup_ready,
     input  logic [127:0] hup_payload,
@@ -83,7 +84,8 @@ module pe4_bus (
     assign h_idx   = dn_sideband[23:14];
     assign h_pass  = dn_sideband[10:3];
     assign h_data  = dn_payload;
-    assign ctrl_valid  = dn_valid && dtype == FT_CTRL;
+    assign ctrl_valid  = dn_valid && dtype == FT_CTRL &&
+                        (ctrl_target == TILE_ID || ctrl_target == 7'h7f);
     assign ctrl_op     = dn_payload[3:0];
     assign ctrl_target = dn_payload[10:4];
     assign ctrl_addr   = dn_payload[22:11];
@@ -122,11 +124,12 @@ module pe4_bus (
             sync0 <= 0;
         end else begin
             xfifo_ovf <= 0;
-            sync0 <= xfifo_pop;      // registered 1-cycle credit pulse
+            sync0 <= xfifo_pop && fcount != 0;
             // R4-006: single next-state update for simultaneous push+pop
             if (xfifo_push && fcount == XFIFO_DEPTH) begin
                 xfifo_ovf <= 1;
-            end else begin
+            end
+            begin
                 if (fifo_we) begin
 `ifndef PE4_MEM_BLACKBOX
                     fmem[fhead] <= fifo_wd;
@@ -174,6 +177,10 @@ module pe4_bus (
         else if (st_valid) grant = 2'd3;
     end
     assign beat_fire = (credit != 0) &&
+        ((grant == 2'd1 && hup_valid) ||
+         (grant == 2'd2 && ysrc_valid) ||
+         (grant == 2'd3 && st_valid));
+    assign credit_stall = (credit == 0) &&
         ((grant == 2'd1 && hup_valid) ||
          (grant == 2'd2 && ysrc_valid) ||
          (grant == 2'd3 && st_valid));

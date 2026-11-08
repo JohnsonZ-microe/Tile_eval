@@ -1,0 +1,241 @@
+{
+  "schema": 1,
+  "date": "2026-11-08",
+  "spec": "RTL-TILE-FFN-004; architecture/data_bus v0.12; arith_cells v0.2",
+  "baseline": "vcs-20261105T071912Z-44675 applies only to its historical snapshot",
+  "rtl_validation": "not run",
+  "cycle_calibration": "not calibrated",
+  "issues": [
+    {
+      "id": "R4-001",
+      "probe": "test_probes.AuditArithmeticTests.test_actual_run_phase_all_ones_and_weight_change",
+      "acceptance": "run_phase 六格式、mask=1010、权重变零后 RF 逐位匹配",
+      "remaining": "独立 PE/完整 Tile 仍需 VCS",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-002",
+      "probe": "cells, math",
+      "acceptance": "两个算术 top 编译运行且输入输出守恒",
+      "remaining": "VCS 未运行",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-003",
+      "probe": "math, modules",
+      "acceptance": "ACT 连续/空泡/复位的 valid 周期逐拍匹配",
+      "remaining": "VCS 未运行",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-004",
+      "probe": "tile --suite full",
+      "acceptance": "六格式 × 1~4 token 输出/计数逐位匹配",
+      "remaining": "VCS 未运行",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-005",
+      "probe": "protocol",
+      "acceptance": "FIFO 数据、pass/lane/index/kind 顺序不变",
+      "remaining": "VCS 未运行",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-006",
+      "probe": "protocol, control",
+      "acceptance": "FIFO 满/空/同时入出/多次绕回；STATUS 连续回复和满后恢复",
+      "remaining": "超出 STATUS 容量的非法请求处置仍需规格复核",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-007",
+      "probe": "math, modules",
+      "acceptance": "quant/fmul 连续事务数据、scale、tag、错误及延迟匹配",
+      "remaining": "已修改 quant；VCS 未运行",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-008",
+      "probe": "cells",
+      "acceptance": "E4M3 精确枚举期望与 RTL 逐位匹配，含负指数和下溢",
+      "remaining": "VCS 未运行",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-009",
+      "probe": "test_probes.AuditArithmeticTests.test_rom_exhaustive_independent",
+      "acceptance": "65536 项对照独立 Decimal exp + 冻结 double 运算契约逐位匹配",
+      "remaining": "直接高精度舍入的差异仅作诊断；非更改数值契约",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-010",
+      "probe": "cells",
+      "acceptance": "NaN payload、inf、符号零和 BF16 ties 按位匹配",
+      "remaining": "VCS 未运行",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-011",
+      "probe": "tile + queue assertions",
+      "acceptance": "每次 PE accept 对应 commit，capture 不越界，最终排空",
+      "remaining": "全 Tile 在途复位仍缺动态测试",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-012",
+      "probe": "protocol, memory, modules",
+      "acceptance": "子模块复位清空 valid、所有权和队列",
+      "remaining": "完整 scheduler 在途复位及非法 XS 序列探针仍待补充",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-013",
+      "probe": "memory, tile --overlap",
+      "acceptance": "X/XS 160 个块连续返回正确；提前 D 不破坏 GU hold",
+      "remaining": "已修复跨阶段清 hold；同阶段双 CMD 生命周期仍未闭环",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-014",
+      "probe": "modules, memory",
+      "acceptance": "quant 最大/交错 tag 逐位匹配，双 bank 数据正确",
+      "remaining": "VCS 未运行",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-015",
+      "probe": "memory",
+      "acceptance": "重复/越界 lane/越界 row/未拥有 bank 写均拒绝且数据不变",
+      "remaining": "VCS 未运行",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-016",
+      "probe": "math, modules",
+      "acceptance": "变化 w 连续输入 ACT 按 E0->E23 对齐",
+      "remaining": "w 延迟由18寄存器改19；VCS 未运行",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-017",
+      "probe": "yacc",
+      "acceptance": "两 bank × 全64 slot 读写、DRAIN 地址和释放正确",
+      "remaining": "VCS 未运行",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-018",
+      "probe": "yacc",
+      "acceptance": "末四 bias 列、mask 1010/0101、连续 commit 逐位正确",
+      "remaining": "commit 与同 bank DRAIN 并发压力仍待补充",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-019",
+      "probe": "protocol, yacc",
+      "acceptance": "credit 停止/源空泡/输出反压后无重发丢失，包锁定正确",
+      "remaining": "VCS 未运行",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-020",
+      "probe": "protocol, control",
+      "acceptance": "当前拍 sideband 和 CTRL 回复元数据逐位匹配",
+      "remaining": "VCS 未运行；不宣称字段组合穷举",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-021",
+      "probe": "control, protocol",
+      "acceptance": "128 targets 过滤、16 CTX 地址差分、STATUS 和 stall 计数正确",
+      "remaining": "Y yield 事件已接线；同 bank 争用及计数清除专项仍待补充",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-022",
+      "probe": "tile --overlap --trace + ownership assertions",
+      "acceptance": "提前 D CMD 场景按序完成，孤立 slot/commit 覆盖断言不触发",
+      "remaining": "仍未解决：slot/RQ/wscale 迁移、同阶段双 CMD 和更广重叠；不得关闭",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-023",
+      "probe": "memory, vector_check, tile",
+      "acceptance": "RRAM 地址/数据/加载拒绝、DRAIN 元数据和完整计数匹配",
+      "remaining": "完整 expert base 边界读回尚未穷举",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-024",
+      "probe": "math, modules, vector_check, test_probe_infrastructure",
+      "acceptance": "空/坏/截断向量拒绝，所有输出及延迟守恒，失败退出",
+      "remaining": "平台负例部分为 Python 测试，不能充当 VCS 故障注入证据",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-025",
+      "probe": "tile --suite full",
+      "acceptance": "六格式 × 1/2/3/4 token；K=5120/2304；全部 expected 比较",
+      "remaining": "外部 gather 仍是测试驱动，非真实 hub",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-026",
+      "probe": "test_probes.CycleProbes + trace_compare",
+      "acceptance": "返回后 credit 与 RQ 容量分离；同刺激事件逐周期一致",
+      "remaining": "trace 采集/比较已交付；模型输入仍为近似，缺同刺激重放适配和 VCS trace",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-027",
+      "probe": "test_probes.CycleProbes",
+      "acceptance": "Y ready 不早于末 row 完成；周期上限抛出失败",
+      "remaining": "Y row 常量仍是模型假设，未与 RTL 校准",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-028",
+      "probe": "docs/WIDTHS.md + source hashes",
+      "acceptance": "X/XS 各512B、FIFO8544B、当前 ROM hash 可追溯",
+      "remaining": "已修当前文档；历史文档保留",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-029",
+      "probe": "run.py, run_probe_matrix.sh, test_run_diagnostics",
+      "acceptance": "suite 真正改变规模；WAVES/参数/DC_CORES 生效；失败非零",
+      "remaining": "DC 实际 core 数仍需服务器日志确认",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-030",
+      "probe": "all testbench tops + DC checks",
+      "acceptance": "所有新增 top 编译，无意外 latch/多驱动/未知控制",
+      "remaining": "未安装 HDL 工具；本地未做编译或综合",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-031",
+      "probe": "run_probe_matrix.sh",
+      "acceptance": "seed817 全专项+full，818/819 full Tile，legacy817 独立回归",
+      "remaining": "只交付命令，未启动服务器",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-032",
+      "probe": "syn/run_dc.sh",
+      "acceptance": "实际库/宏绑定后 setup/hold/映射/latch/约束审查通过",
+      "remaining": "外部阻塞：许可证、物理 SRAM/ROM 宏及实际 DC 结果；保持未验证",
+      "status": "probe delivered; see remaining gaps; not closed"
+    },
+    {
+      "id": "R4-033",
+      "probe": "cells",
+      "acceptance": "六格式 scale，BF16 低16位含1/2/负值及两阶段舍入按位匹配",
+      "remaining": "VCS 未运行",
+      "status": "probe delivered; see remaining gaps; not closed"
+    }
+  ]
+}

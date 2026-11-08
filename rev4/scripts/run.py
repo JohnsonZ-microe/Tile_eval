@@ -140,18 +140,22 @@ def main():
     started = time.monotonic()
     parser = argparse.ArgumentParser()
     parser.add_argument('tool', choices=['local', 'vcs', 'dc'])
-    parser.add_argument('--suite', choices=['smoke', 'full'], default='full')
+    parser.add_argument('--suite', choices=['legacy', 'smoke', 'full'], default='full')
     parser.add_argument('--seed', type=int, default=817)
-    parser.add_argument('--test', choices=['all', 'math', 'tile'],
+    parser.add_argument('--test', choices=['all', 'cells', 'math', 'modules', 'protocol', 'memory', 'yacc', 'control', 'tile'],
                         default='all')
     parser.add_argument('--top', default='tile_ffn_v4')
     parser.add_argument('--out', type=Path)
-    parser.add_argument('--waves', action='store_true')
+    parser.add_argument('--waves', action='store_true', default=os.getenv('WAVES') == '1')
+    parser.add_argument('--trace', action='store_true')
+    parser.add_argument('--overlap', action='store_true')
+    parser.add_argument('--credit-period', type=cycle_argument, default=1)
+    parser.add_argument('--input-gap', type=cycle_argument, default=1)
     parser.add_argument('--progress-cycles', type=cycle_argument, default=10000)
     parser.add_argument('--wait-limit', type=cycle_argument, default=2000000)
     parser.add_argument('--max-cycles', type=cycle_argument, default=20000000)
     args = parser.parse_args()
-    if args.wait_limit == 0 or args.max_cycles == 0:
+    if args.wait_limit == 0 or args.max_cycles == 0 or args.credit_period == 0:
         parser.error('--wait-limit and --max-cycles must be positive')
     stamp = datetime.datetime.now(datetime.timezone.utc).strftime(
         '%Y%m%dT%H%M%SZ')
@@ -210,7 +214,9 @@ def main():
         run([sys.executable, '-B', '-m', 'unittest', 'discover', '-s',
              'model', '-p', 'test_*.py'], 'python_reference.log')
         run([sys.executable, '-B', 'model/vectors.py', '--outdir',
-             str(out / 'vectors'), '--seed', str(args.seed)], 'vectors.log')
+             str(out / 'vectors'), '--seed', str(args.seed), '--suite', args.suite], 'vectors.log')
+        run([sys.executable, '-B', 'model/vector_check.py',
+             str(out / 'vectors')], 'vector_check.log')
         for f in (ROOT / 'rtl').glob('*.sv'):
             text = f.read_text(errors='replace')
             if re.search(r'\b(real|shortreal)\b', text):
@@ -249,9 +255,11 @@ def main():
             exe = shutil.which(os.getenv('VCS', 'vcs'))
             if not exe:
                 raise RuntimeError('VCS not found')
-            for test in (['math', 'tile'] if args.test == 'all'
+            for test in (['cells', 'math', 'modules', 'protocol', 'memory', 'yacc', 'control', 'tile'] if args.test == 'all'
                          else [args.test]):
-                top = {'math': 'tb_math_v4', 'tile': 'tb_tile_v4'}[test]
+                top = {'cells': 'tb_cells_v4', 'math': 'tb_math_v4', 'modules': 'tb_math_v4',
+                       'protocol': 'tb_protocol_v4', 'memory': 'tb_memory_v4',
+                       'yacc': 'tb_yacc_v4', 'control': 'tb_control_v4', 'tile': 'tb_tile_v4'}[test]
                 binary = out / ('simv_' + test)
                 clog = run([exe, '-full64', '-sverilog',
                             '-timescale=1ns/1ps', '-debug_access+all',
@@ -268,6 +276,16 @@ def main():
                 if args.waves and test == 'tile':
                     cmd.append('+VCD=' + str(out / 'tile_ffn_v4.vcd'))
                 cmd.extend(diagnostic_arguments(args, test))
+                if test == 'modules':
+                    cmd.extend(['+RESULT_NAME=modules', '+MATH_FILE=modules.txt', '+BUBBLE_MASK=3',
+                                '+RESET_AFTER=13'])
+                if test == 'tile' and args.trace:
+                    cmd.append('+TRACE=' + str(out / 'tile-events.csv'))
+                if test == 'tile':
+                    cmd.extend(['+CRED_PERIOD=%d' % args.credit_period,
+                                '+GAP=%d' % args.input_gap])
+                    if args.overlap:
+                        cmd.append('+OVERLAP')
                 log = run(cmd, 'run_%s.log' % test, test)
             manifest['rtl_validation'] = 'passed'
         elif args.tool == 'dc':

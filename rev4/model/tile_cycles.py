@@ -213,6 +213,12 @@ class TileCycleModel(object):
         self.h_gap = max(1, int(h_gap))
         self.drain = drain
         self.lat = dict(LATENCIES)
+        self.events = []
+        self.accepted = 0
+
+    def _event(self, cycle, event, transaction, value=0):
+        self.events.append(dict(cycle=cycle, event=event,
+                                transaction=transaction, value=value))
 
     def run_pass(self):
         """One expert pass: GU then D. Returns TileReport."""
@@ -232,11 +238,16 @@ class TileCycleModel(object):
         return report
 
     def _simulate(self, phases, report):
+        self.events = []
+        self.accepted = 0
         lat = self.lat
         st = _SimState(lat['UP_CREDITS'])
-        max_cycles = 400000 * max(1, len(phases))
+        max_cycles = getattr(self, 'max_cycles', 400000 * max(1, len(phases)))
         t = 0
         while t <= max_cycles:
+            for entry in st.rq:
+                if entry['ret'] == t:
+                    self._event(t, 'rram_return', entry['sequence'])
             self._credits(st, t)
             self._latch(phases, t)
             self._fill(phases, t, st)
@@ -332,7 +343,7 @@ class TileCycleModel(object):
         blocked = None
         if ip.wi == 0 and st.rq:
             blocked = 'rq_empty_gap'
-        elif st.issued - st.consumed >= lat['RRAM_CREDITS']:
+        elif sum(entry['ret'] >= t for entry in st.rq) >= lat['RRAM_CREDITS']:
             blocked = 'rram_credit'
         elif len(st.rq) >= lat['RQ_DEPTH']:
             blocked = 'rram_credit'
@@ -361,7 +372,9 @@ class TileCycleModel(object):
         ip.timing.words += 1
         if w['kind'] == 'W':
             ip.timing.matrix_words += 1
-        st.rq.append(dict(ret=t + lat['RRAM_LAT'], phase=ip, word=w))
+        st.rq.append(dict(ret=t + lat['RRAM_LAT'], phase=ip, word=w,
+                          sequence=st.issued))
+        self._event(t, 'rram_issue', st.issued)
         st.issued += 1
         st.counters['CNT_RRAM_RD'] += 1
         ip.wi += 1
@@ -374,6 +387,7 @@ class TileCycleModel(object):
         hp = head['phase']
         hw = head['word']
         if hw['kind'] in ('B', 'S'):
+            self._event(t, 'rram_consume', head['sequence'])
             st.rq.popleft()
             st.consumed += 1
             hp.timing.last_consume = t
@@ -389,6 +403,10 @@ class TileCycleModel(object):
         if t <= st.pe_last_accept:
             return
         st.rq.popleft()
+        self._event(t, 'rram_consume', head['sequence'])
+        hw['_accept_id'] = self.accepted
+        self._event(t, 'pe_accept', self.accepted, base)
+        self.accepted += 1
         st.consumed += 1
         hp.timing.last_consume = t
         for c in range(base, base + hp.ncols):
@@ -400,6 +418,7 @@ class TileCycleModel(object):
         lat = self.lat
         while st.commits and st.commits[0][0] <= t:
             _, cp, cw = st.commits.popleft()
+            self._event(t, 'pe_commit', cw['_accept_id'], cw['g'] * cp.ncols)
             cp.timing.last_commit = t
             if cw['kb'] != cp.nkb - 1 or not cw['last']:
                 continue
@@ -434,7 +453,7 @@ class TileCycleModel(object):
         if self.drain:
             for lane in range(self.n_tok):
                 ready = (trig + lat['YACC_WARM'] +
-                         (lane * 10 + 9) * lat['YACC_ROW'] + 1)
+                         (lane + 1) * 10 * lat['YACC_ROW'])
                 st.y_q.append((ready, 10))
 
     def _launcher(self, phases, st, t):

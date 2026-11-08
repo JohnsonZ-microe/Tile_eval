@@ -11,6 +11,9 @@ proc setting {name default} {
 }
 if {[catch {
     set top $::env(TOP)
+    set cores [setting DC_CORES 4]
+    if {![string is integer -strict $cores] || $cores < 1} {error "Invalid DC_CORES"}
+    set_host_options -max_cores $cores
     set target $::env(TARGET_DB)
     set rundir $::env(DC_RUN_DIR)
     set filelist [setting FILELIST ""]

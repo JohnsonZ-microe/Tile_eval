@@ -71,9 +71,11 @@ class FinalDrainSourceTests(unittest.TestCase):
     def test_scoreboard_and_diagnostics_retained(self):
         self.assertIn('slot_valid=%b%b cap=%0d drain_blocked=%03x', self.source)
         self.assertIn('up_payload !== e_payload', self.source)
-        self.assertIn("dut.sched_u.err_q !== 22'h0e0004", self.source)
+        self.assertIn("dut.sched_u.err_q !== expected_errors", self.source)
         self.assertIn('if (e_valid)', self.source)
-        self.assertIn('sync1_count != 24', self.source)
+        self.assertIn('sync1_count != expected_sync', self.source)
+        self.assertIn('beats != expected_beats', self.source)
+        self.assertIn('y_packet_count != expected_packets', self.source)
 
 
 if __name__ == '__main__':

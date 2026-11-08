@@ -131,7 +131,7 @@ module tile_ffn_v4 #(
     logic [127:0] alarm_payload;
     logic [1:0] pe_err_sticky, pe_err_prev;
     // ---------------- instances ----------------
-    pe4_bus bus_u (
+    pe4_bus #(.TILE_ID(SRC_ID[6:0])) bus_u (
         .clk(clk), .rst_n(rst_n),
         .dn_valid(dn_valid), .dn_payload(dn_payload), .dn_sideband(dn_sideband),
         .cmd_valid(cmd_valid), .cmd_payload(cmd_payload), .cmd_pass(cmd_pass),
@@ -149,6 +149,7 @@ module tile_ffn_v4 #(
         .xfifo_empty(xfifo_empty), .xfifo_level(xfifo_level), .sync0(sync0),
         .up_credit(up_credit), .up_valid(up_valid), .up_payload(up_payload),
         .up_sideband(up_sideband), .up_credit_err(up_credit_err),
+        .credit_stall(up_crd_stall),
         .hup_valid(hup_valid), .hup_ready(hup_ready),
         .hup_payload(hup_payload), .hup_last(hup_last),
         .hup_src(SRC_ID[7:0]), .hup_tag(hup_tag),
@@ -205,6 +206,7 @@ module tile_ffn_v4 #(
         .commit_mask(yacc_mask), .commit_slots(yacc_slots),
         .commit_weights(yacc_weights), .commit_busy(yacc_busy),
         .commit_rd_active(), .commit_bank_id(),
+        .drain_yield(y_yield_ev),
         .drain_valid(drain_fire), .drain_bank(drain_bank),
         .drain_slot(drain_slot), .drain_col_start(drain_cstart),
         .drain_count(drain_count), .drain_segment(drain_seg),
@@ -274,8 +276,6 @@ module tile_ffn_v4 #(
         .err_events(sched_err_events));
     // ---------------- CTRL decode ----------------
     // (signal declarations moved above, before the instances)
-    assign up_crd_stall = 0;
-    assign y_yield_ev = 0;
     assign alarm_rdy = st_ready && alarm_valid;
     always_ff @(posedge clk) begin
         if (!rst_n) begin
@@ -336,7 +336,8 @@ module tile_ffn_v4 #(
         logic err;
     } stf_t;
     stf_t stf [0:1];
-    logic [1:0] stf_cnt, stf_head, stf_tail;
+    logic [1:0] stf_cnt;
+    logic stf_head, stf_tail;
     wire stf_push = reg_rd_valid && (stf_cnt != 2'd2);
     wire stf_pop = st_ready && !alarm_valid && (stf_cnt != 0);
     wire stf_addr_ok = (reg_rd_addr[1:0] == 2'b00) &&

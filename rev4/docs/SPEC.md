@@ -14,7 +14,7 @@ pinned in `baseline.json`.
 | `arith_cells.md` | v0.2 | dec/dot32/sclap/act/quant cell contracts, P5-x |
 | rev3 `rtl/*.sv` | baseline.json SHA-256 | PE reused unmodified |
 | rev1 `model/reference.py` | f1785c3e… | FP32/dot32/scale oracle (imported by `model/tile_reference.py`) |
-| `rtl/pe4_sigmoid_rom.hex` | dab74aaf… (SHA-256) | offline-generated sigmoid table |
+| `rtl/pe4_sigmoid_rom.hex` | b041becb8f31067459f0f9d9935d10af7cbe036817dc010a6624b41b89c6692c (SHA-256) | offline-generated sigmoid table |
 
 ## 2. Fixed configuration (only this is accepted)
 
@@ -39,7 +39,8 @@ Activation is always FP8 E4M3 + UE8M0 per 32 k.
 
 Both accept one read per cycle, fixed latency, never stall. Return buffer
 space is reserved before requesting (staging: scheduler hold banks; RRAM:
-3-entry credit budget counting in-flight + unconsumed returns).
+3-entry credit budget counting requests through their return sampling edge;
+the scheduler separately reserves four queue entries until consumption).
 SRAM data is not reset; only valid/ownership/queue state resets. A load
 during compute sets `UNSUPPORTED` via `load_err`. Same-address
 read-during-write is prevented by controllers. All arrays are behavioural;
@@ -107,8 +108,8 @@ holds the link through its last beat; credits only delay, never reorder.
 Not implemented (explicit error, never silent degradation): PGM flits (->
 RPGM + UNSUPPORTED), SCAN CMD and its SCAN_CRC reply, rpgm ops and
 PGM_CREDIT/PGM_EVENT statuses, REMAP, EP partials, VSPLIT > 1.
-The x FIFO entry is 533 b (payload + pass/lane/idx/kind) instead of 516 b so
-X_ORDER can actually verify arrival metadata; registered as a +272 B/tile
+The x FIFO entry is 534 b (payload + pass/lane/idx/kind) instead of 516 b so
+X_ORDER can actually verify arrival metadata; registered as a +288 B/tile
 rev4 deviation (docs/WIDTHS.md).
 
 ## 6. Numeric contract (bit-exact against model/tile_reference.py)

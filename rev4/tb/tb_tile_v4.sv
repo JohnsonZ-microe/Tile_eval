@@ -12,6 +12,75 @@ module tb_tile_v4;
     integer sync1_count = 0;
     integer y_packet_count = 0;
     integer phase_requests = 0;
+    bit overlap = 0, pending_gather_fence = 0;
+    integer expected_flits, expected_beats, expected_sync, expected_packets, cfd;
+    logic [21:0] expected_errors;
+    integer trace_fd = 0, trace_issue = 0, trace_return = 0, trace_consume = 0;
+    integer trace_accept = 0, trace_commit = 0;
+    integer trace_sync = 0, trace_beat = 0;
+    string trace_path;
+    bit [127:0] trace_y_valid = 0;
+    initial begin
+        if ($value$plusargs("TRACE=%s", trace_path)) begin
+            trace_fd = $fopen(trace_path, "w");
+            if (!trace_fd) $fatal(1, "cannot open TRACE");
+            $fdisplay(trace_fd, "cycle,event,transaction,value");
+        end
+    end
+    task automatic trace_event(input string event_name, input integer transaction, value);
+        $fdisplay(trace_fd, "%0d,%s,%0d,%0d",
+                  cycle_count, event_name, transaction, value);
+    endtask
+    always @(posedge clk) begin
+        if (!rst_n) begin
+            trace_issue = 0; trace_return = 0; trace_consume = 0;
+            trace_accept = 0; trace_commit = 0; trace_y_valid = 0;
+            trace_sync = 0; trace_beat = 0;
+        end else if (trace_fd) begin
+            if (dut.rram_req && dut.rram_ready) begin
+                trace_event("rram_issue", trace_issue, 0);
+                trace_issue++;
+            end
+            if (dut.rram_valid) begin
+                trace_event("rram_return", trace_return, 0);
+                trace_return++;
+            end
+            if (dut.sched_u.cons_fire) begin
+                trace_event("rram_consume", trace_consume, 0);
+                trace_consume++;
+            end
+            if (dut.sched_u.pe_accept) begin
+                trace_event("pe_accept", trace_accept, dut.sched_u.pe_col_base);
+                trace_accept++;
+            end
+            if (dut.pe_out_valid) begin
+                trace_event("pe_commit", trace_commit, dut.pe_out_col_base);
+                trace_commit++;
+            end
+            if (dut.sched_u.act_in_valid)
+                trace_event("act_accept", dut.sched_u.act_c, 0);
+            if (dut.sched_u.act_out_valid)
+                trace_event("act_return", dut.sched_u.act_cout, 0);
+            if (dut.sched_u.quant_valid)
+                trace_event("quant_accept", dut.sched_u.quant_tag, 0);
+            if (dut.sched_u.quant_ov) trace_event("quant_return", dut.sched_u.quant_otag, 0);
+            if (dut.hbuf_release) trace_event("bank_release", dut.hbuf_bank, 0);
+            if (sync1) begin
+                trace_event("sync1", trace_sync, 0); trace_sync++;
+            end
+            if (up_valid) begin
+                trace_event("up_beat", trace_beat, int'(up_sideband)); trace_beat++;
+            end
+            for (integer bank = 0; bank < 2; bank++)
+                for (integer slot_id = 0; slot_id < 64; slot_id++) begin
+                    if (dut.yacc_u.vbit[bank][slot_id] === 1'b1 &&
+                        !trace_y_valid[bank*64+slot_id])
+                        trace_event("y_ready", bank*64+slot_id, 0);
+                    trace_y_valid[bank*64+slot_id] = dut.yacc_u.vbit[bank][slot_id] === 1'b1;
+                end
+            $fflush(trace_fd);
+        end
+    end
     integer wait_limit = 2000000;
     integer progress_cycles = 10000;
     integer max_cycles = 20000000;
@@ -51,7 +120,7 @@ module tb_tile_v4;
     logic sim_load_r = 0;
     logic [20:0] sim_addr_r = 0;
     logic [1023:0] sim_data_r = 0;
-    tile_ffn_v4 #(.RRAM_WORDS(131072)) dut (
+    tile_ffn_v4 #(.RRAM_WORDS(262144)) dut (
         .clk(clk), .rst_n(rst_n),
         .dn_valid(dn_valid), .dn_payload(dn_payload), .dn_sideband(dn_sideband),
         .up_valid(up_valid), .up_credit(up_credit), .up_payload(up_payload),
@@ -64,6 +133,18 @@ module tb_tile_v4;
     logic exp_last;
     integer erc;
     wire [11:0] drain_blocked;
+    always @(posedge clk) begin
+        if (rst_n) begin
+            if ($isunknown({dut.sched_u.rq_cnt, dut.sched_u.cap_cnt}) ||
+                dut.sched_u.rq_cnt > 4 || dut.sched_u.cap_cnt > 63)
+                $fatal(1, "queue count invariant");
+            if (dut.sched_u.pe_accept &&
+                dut.sched_u.slot[dut.sched_u.head.slot].valid !== 1'b1)
+                $fatal(1, "PE accepted an orphaned slot descriptor");
+            if (dut.yacc_load_valid && dut.yacc_u.commit_busy)
+                $fatal(1, "D capture overwrote an active commit buffer");
+        end
+    end
     assign drain_blocked[0] = !((dut.sched_u.pstate === 3'd0) ||
                                (dut.sched_u.pstate === 3'd1));
     assign drain_blocked[1] = ({dut.sched_u.slot[0].valid, dut.sched_u.slot[1].valid} !== '0);
@@ -200,6 +281,14 @@ module tb_tile_v4;
     endtask
     initial begin
         if (!$value$plusargs("VECTORS=%s", vecdir)) vecdir = "vectors";
+        overlap = $test$plusargs("OVERLAP");
+        cfd = $fopen({vecdir, "/checks.txt"}, "r");
+        if (!cfd) $fatal(1, "missing checks.txt");
+        if ($fscanf(cfd, "%d %d %d %d %h", expected_flits, expected_beats,
+                    expected_sync, expected_packets, expected_errors) != 5 ||
+            expected_flits <= 0 || expected_beats <= 0)
+            $fatal(1, "malformed checks.txt");
+        $fclose(cfd);
         void'($value$plusargs("GAP=%d", gap));
         void'($value$plusargs("CRED_PERIOD=%d", cred_period));
         void'($value$plusargs("WAIT_LIMIT=%d", wait_limit));
@@ -263,8 +352,12 @@ module tb_tile_v4;
                 diagnostic_stage = "replay";
                 rc = $fscanf(ffd, "%s %d %h %h", f1, sb, f2, pay);
                 if (rc < 4) disable replay;
-                if (sb[2:0] == 3'd0 && pay[1:0] == 2'd1)
+                if (!overlap && sb[2:0] == 3'd0 && pay[1:0] == 2'd1)
                     wait_phase(phase_requests);
+                if (pending_gather_fence && sb[2:0] == 3'd3) begin
+                    wait_phase(phase_requests - 1);
+                    pending_gather_fence = 0;
+                end
                 is_drain = sb[2:0] == 3'd4 && pay[3:0] == 4'd0;
                 drain_target = y_packet_count + 1;
                 if (is_drain) begin
@@ -286,6 +379,8 @@ module tb_tile_v4;
                 dn_valid = 1;
                 dn_sideband = sb;
                 dn_payload = pay;
+                if (overlap && sb[2:0] == 3'd0 && pay[1:0] == 2'd1)
+                    pending_gather_fence = 1;
                 if (sb[2:0] == 3'd0 && pay[1:0] < 2'd2)
                     phase_requests++;
                 flits++;
@@ -316,15 +411,18 @@ module tb_tile_v4;
                     diagnostic_timeout("final_drain");
             end
         end
-        if (sync1_count != 24) begin
-            $display("FAIL sync1 count %0d != 24", sync1_count);
+        if (sync1_count != expected_sync || flits != expected_flits ||
+            beats != expected_beats || y_packet_count != expected_packets) begin
+            $display("FAIL count mismatch flits=%0d/%0d beats=%0d/%0d sync=%0d/%0d y=%0d/%0d",
+                     flits, expected_flits, beats, expected_beats,
+                     sync1_count, expected_sync, y_packet_count, expected_packets);
             errors++;
         end
         if (e_valid) begin
             $display("FAIL missing expected beats");
             errors++;
         end
-        if (dut.sched_u.err_q !== 22'h0e0004) begin
+        if (dut.sched_u.err_q !== expected_errors) begin
             $display("FAIL err_status=%06x", dut.sched_u.err_q);
             errors++;
         end

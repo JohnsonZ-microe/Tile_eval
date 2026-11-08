@@ -24,6 +24,7 @@ module pe4_yacc (
     output logic commit_busy,
     output logic commit_rd_active,         // same-bank DRAIN yield hint
     output logic commit_bank_id,
+    output logic drain_yield,
     input  logic drain_valid,
     input  logic drain_bank,
     input  logic [5:0] drain_slot,
@@ -239,6 +240,7 @@ module pe4_yacc (
     assign row_is_last = (drow == drow_last);
     assign yield_stall = (dstate == DWAIT) && commit_rd_active &&
                          (commit_bank_id == dbank);
+    assign drain_yield = yield_stall;
     always_ff @(posedge clk) begin
         if (!rst_n) begin
             dstate <= DIDLE;

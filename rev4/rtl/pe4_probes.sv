@@ -32,7 +32,7 @@ endmodule
 module pe4_quant_probe (
     input logic clk, rst_n, in_valid,
     input logic [511:0] in_h,
-    input logic [12:0] in_tag,
+    input logic [10:0] in_tag,
     output logic out_valid,
     output logic [255:0] out_q,
     output logic [7:0] out_se,
@@ -59,11 +59,12 @@ module pe4_yacc_probe (
     end
     pe4_yacc dut (.clk(clk), .rst_n(rst_n),
         .load_valid(1'b0), .load_base(7'd0), .load_cen(8'd0),
-        .load_data(64'd0),
+        .load_data(1024'd0),
         .commit_trigger(commit_trigger), .commit_bank(commit_bank),
         .commit_bias_en(1'b0), .commit_db(1280'd0),
         .commit_mask(commit_mask), .commit_slots(sl), .commit_weights(wt),
         .commit_busy(commit_busy), .commit_rd_active(), .commit_bank_id(),
+        .drain_yield(),
         .drain_valid(1'b0), .drain_bank(1'b0), .drain_slot(6'd0),
         .drain_col_start(8'd0), .drain_count(8'd0), .drain_segment(2'd0),
         .drain_last_seg(1'b0), .drain_illegal(), .v0_drain(),

@@ -1,4 +1,10 @@
-# Rev4 tile cycle-accurate Python model (`model/tile_cycles.py`)
+# Rev4 tile timing model (`model/tile_cycles.py`) — not RTL-calibrated
+
+2026-11-08: credit lifetime and final-row readiness were corrected. The event
+export/comparator is diagnostic infrastructure, not calibration evidence.
+The numbers below are historical model estimates, not current RTL measurements;
+do not reuse them as performance evidence after the model changes. See
+probes-20261108/README.md for remaining same-stimulus replay and event coverage gaps.
 
 Single-file, self-contained (Python 3.6+, standard library only). Copy
 `tile_cycles.py` into your LLM code and `from tile_cycles import

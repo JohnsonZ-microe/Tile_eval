@@ -593,9 +593,13 @@ module pe4_sched (
                         (cphase == 1'd1 ? 21'(cp[cctx].gu_words) : 21'd0);
                     tail_base[si] <= 21'(pl[42:22]) +
                         21'(cp[cctx].gu_words) + 21'(cp[cctx].d_words);
-                    hold_v[0] <= 1'b0; hold_v[1] <= 1'b0;   // fresh pass operands
-                    hold_hv[0] <= 1'b0; hold_hv[1] <= 1'b0;
-                    if (si == 0) begin
+                    if (cphase == 0 && (si == 0 || slot[0].phase != 0)) begin
+                        hold_v[0] <= 1'b0; hold_v[1] <= 1'b0;
+                    end
+                    if (cphase == 1 && (si == 0 || slot[0].phase != 1)) begin
+                        hold_hv[0] <= 1'b0; hold_hv[1] <= 1'b0;
+                    end
+                    if (cphase == 0 && (si == 0 || slot[0].phase != 0)) begin
                         x_popped <= '0; xs_popped <= '0;
                         // fresh pass: the expected X/XS sequence restarts
                         exp_grp <= 0;

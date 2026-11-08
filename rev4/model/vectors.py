@@ -122,6 +122,29 @@ def build_pass(rng, fmt, n_tok, pass_id, base, expert=0):
 
 
 def unit_vectors(rng, out):
+    from tile_reference import reference, e4m3_from_value
+    partials = [0, 0x80000000, 1, 2, 0x7fffff, 0x800000,
+                0x3f800000, 0xbf800000, 0x3f800001, 0x7f7fffff,
+                0x7f800000, 0xff800000, 0x7fc00000]
+    scales = []
+    for fmt in range(6):
+        weights = ((126, 127, 255) if fmt < 2 else
+                   ((0x3f800000, 0x40000000, 0xbf800000) if fmt == 2 else
+                    (0x3f80, 0x4000, 0xbf80)))
+        for partial in partials:
+            for activation_scale in (0, 1, 126, 127, 254, 255):
+                for weight_scale in weights:
+                    scales.append('%d %08x %d %08x %08x' % (
+                        fmt, partial, activation_scale, weight_scale,
+                        reference.apply_scale(partial, fmt, activation_scale, weight_scale)))
+    (out / 'scale.txt').write_text('\n'.join(scales) + '\n')
+    encodings = []
+    for partial in partials[:10] + [0x3f880000, 0x3f980000, 0x38800000]:
+        for exponent in (-22, -9, 0, 8, 120):
+            encodings.append('%08x %d %02x' % (
+                partial, exponent, e4m3_from_value(fp_value(partial), exponent,
+                                                  bool(partial >> 31))))
+    (out / 'encode.txt').write_text('\n'.join(encodings) + '\n')
     lines = []
     # fmul: random + corner pairs vs the mirror (also vs oracle in the test)
     corners = [0, 0x80000000, 0x3F800000, 0x7F800000, 0xFF800000, 0x7FC00000,
@@ -171,6 +194,11 @@ def unit_vectors(rng, out):
     for c in sorted(sg):
         lines.append('SG %04x %08x' % (c, sigmoid(c)))
     (out / 'math.txt').write_text('\n'.join(lines) + '\n')
+    groups = [[line for line in lines if line.startswith(kind)]
+              for kind in ('FM ', 'AC ', 'QU ', 'SG ')]
+    interleaved = [group[index] for index in range(max(map(len, groups)))
+                   for group in groups if index < len(group)]
+    (out / 'modules.txt').write_text('\n'.join(interleaved) + '\n')
     return len(lines)
 
 
@@ -218,15 +246,16 @@ def initial_numeric_alarm(staging, pass_id):
                 payload=(pass_id << 40) | (18 << 32) | (1 << 18))
 
 
-def build_scenarios(rng, out):
+def build_scenarios(rng, out, suite='legacy'):
     """Full-loop scenarios: six formats x n_tok {1,4}, then error flits."""
     flits = []
     expect = []
     checks = {'errors': [], 'sync1_gu': 0, 'sync1_d': 0}
     image = {}
     n_scen = 0
-    for fmt in range(6):
-        for n_tok in (1, 4):
+    formats, tokens = scenario_matrix(suite)
+    for fmt in formats:
+        for n_tok in tokens:
             base = 64 + n_scen * 8192
             bias_en = (n_scen % 2 == 0)          # even scenarios run bias
             ref = TileRef(image, fmt, bias_en)
@@ -311,6 +340,12 @@ def build_scenarios(rng, out):
                          cmd_payload(3, 0, 64, 0, 0, [0] * 4, [0] * 4, 0)))
     checks['errors'].append('CMD_ILLEGAL')
     checks['expected_err_status'] = (1 << 18) | (1 << 17) | (1 << 19) | (1 << 2)
+    checks.update(flits=len(flits), beats=len(expect), scenarios=n_scen,
+                  y_packets=sum(b['type'] == 1 and b['last'] for b in expect),
+                  suite=suite, formats=list(formats), tokens=list(tokens))
+    (out / 'checks.txt').write_text('%d %d %d %d %x\n' % (
+        len(flits), len(expect), checks['sync1_gu'] + checks['sync1_d'],
+        checks['y_packets'], checks['expected_err_status']))
     (out / 'flits.txt').write_text('\n'.join(flits) + '\n')
     (out / 'expect.txt').write_text('\n'.join(
         'U %d %02x %d %d %032x' % (b['type'], b['tag'], b['last'],
@@ -323,12 +358,22 @@ def build_scenarios(rng, out):
                 words=len(image))
 
 
-def main_wrapper(outdir, seed=817):
+def scenario_matrix(suite):
+    if suite == 'legacy':
+        return tuple(range(6)), (1, 4)
+    if suite == 'full':
+        return tuple(range(6)), (1, 2, 3, 4)
+    if suite == 'smoke':
+        return (0,), (1,)
+    raise ValueError('unknown suite: ' + suite)
+
+
+def main_wrapper(outdir, seed=817, suite='legacy'):
     out = Path(outdir)
     out.mkdir(parents=True, exist_ok=True)
     rng = random.Random(seed)
     stats = {'unit_lines': unit_vectors(random.Random(seed), out)}
-    stats.update(build_scenarios(rng, out))
+    stats.update(build_scenarios(rng, out, suite))
     return stats
 
 
@@ -336,8 +381,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--outdir', required=True)
     ap.add_argument('--seed', type=int, default=817)
+    ap.add_argument('--suite', choices=['legacy', 'smoke', 'full'], default='full')
     args = ap.parse_args()
-    print(json.dumps(main_wrapper(args.outdir, args.seed)))
+    print(json.dumps(main_wrapper(args.outdir, args.seed, args.suite)))
     return 0
 
 

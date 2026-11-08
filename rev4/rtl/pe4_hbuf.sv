@@ -52,7 +52,8 @@ module pe4_hbuf (
         wr_bad = 1'b0;
         if (wr_valid) begin
             if (!owner_v[wr_bank]) wr_bad = 1'b1;
-            else if (wr_lane >= exp_ntok[wr_bank]) wr_bad = 1'b1;
+            else if (wr_idx >= 72 || wr_lane >= 4 ||
+                     wr_lane >= exp_ntok[wr_bank]) wr_bad = 1'b1;
             else if (lane_seen[wr_bank][wr_idx][wr_lane]) wr_bad = 1'b1;
         end
         take_illegal = own_take && owner_v[own_bank];

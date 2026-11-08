@@ -35,6 +35,10 @@ module pe4_quant (
     logic v0, v1, v2;
     logic signed [11:0] e_sel_q;
     logic [7:0] q_c [0:31];
+    logic [255:0] encoded_s1, encoded_s2;
+    logic [7:0] scale_s1, scale_s2;
+    logic [10:0] tag_s1, tag_s2;
+    logic nf_s1, nf_s2;
     // C0: 15-bit magnitude extraction + balanced max tree + floor
     function automatic logic [14:0] max2(input logic [14:0] a,
                                          input logic [14:0] b);
@@ -94,11 +98,23 @@ module pe4_quant (
                 nf_q <= nf_c;
                 tag_q <= in_tag;
             end
+            if (v0) begin
+                for (int j = 0; j < 32; j++) encoded_s1[8*j +: 8] <= q_c[j];
+                scale_s1 <= nf_q ? 8'd247 : 8'(e_sel_q + 12'sd127);
+                tag_s1 <= tag_q;
+                nf_s1 <= nf_q;
+            end
+            if (v1) begin
+                encoded_s2 <= encoded_s1;
+                scale_s2 <= scale_s1;
+                tag_s2 <= tag_s1;
+                nf_s2 <= nf_s1;
+            end
             if (v2) begin
-                for (int j = 0; j < 32; j++) out_q[8*j +: 8] <= q_c[j];
-                out_se <= nf_q ? 8'd247 : 8'(e_sel_q + 12'sd127);
-                out_tag <= tag_q;
-                err_nonfinite <= nf_q;
+                out_q <= encoded_s2;
+                out_se <= scale_s2;
+                out_tag <= tag_s2;
+                err_nonfinite <= nf_s2;
             end
         end
     end

@@ -4,9 +4,9 @@
 
 | Block | Size | Organisation | Notes |
 |---|---:|---|---|
-| x FIFO | 8,576 B | 128 x 533 b | +272 B vs frozen 516 b entry (SPEC 5) |
-| X staging | 4,096 B | 8 macros 512 b x 2 | 2 banks x 4 tokens x 64 B |
-| XS staging | 4,096 B | 8 macros 512 b x 2 | as above |
+| x FIFO | 8,544 B | 128 x 534 b | +288 B vs frozen 516 b entry |
+| X staging | 512 B | 4 behavioural arrays 512 b x 2 | 2 banks x 4 tokens x 64 B |
+| XS staging | 512 B | 4 behavioural arrays 512 b x 2 | as above; X + XS = 1,024 B |
 | h data | 18,432 B | 2 banks x 72 rows x 1024 b | 4 lanes x 32 FP8 per row |
 | h scales | 576 B | flops 2 x 72 x 4 x 8 b | written with the row |
 | y banks | 40,960 B | 2 banks x 640 rows x 256 b | 8 FP32/row = 64 slots x 10 rows |
@@ -15,7 +15,7 @@
 | H_UP slot | 288 B | flops 144 x 16 b | dedicated up slot |
 | RF (in PE) | 1,280 B | 80 x 4 FP32 | frozen rev3 |
 | wscale holds | 640 B | 2 x 80 x 32 b | per CMD slot |
-| sigmoid ROMs | 1,024 KiB | 4 x 64Ki x 32 b | SHA dab74aaf…; must be reported separately |
+| sigmoid ROMs | 1,024 KiB | 4 x 64Ki x 32 b | SHA-256 b041becb8f31067459f0f9d9935d10af7cbe036817dc010a6624b41b89c6692c; report separately |
 
 SRAM macros are NOT mapped: pe4_sram/pe4_rram instantiate behavioural
 arrays behind a `PE4_SRAM_MACRO` substitution point. No synthesis number may
