@@ -11,6 +11,13 @@ def source(relative):
     return re.sub(r'//[^\n]*|/\*.*?\*/', '', text, flags=re.S)
 
 
+def scheduler_connections(text):
+    instances = re.findall(r'\bsched_u\s*\((.*?)\)\s*;', text, re.S)
+    if len(instances) != 1:
+        raise ValueError('Expected exactly one sched_u instance port list')
+    return re.findall(r'\.([a-zA-Z_]\w*)\s*\(', instances[0])
+
+
 class Vcs90222SourceTests(unittest.TestCase):
     def test_tb_load_uses_connected_signals(self):
         text = source('tb/tb_tile_v4.sv')
@@ -42,10 +49,20 @@ class Vcs90222SourceTests(unittest.TestCase):
         for declaration in re.split(r'\b(?:input|output)\s+logic\s+', scheduler)[1:]:
             declaration = re.sub(r'\[[^]]+\]', '', declaration)
             ports.extend(re.findall(r'\b[a-zA-Z_]\w*\b', declaration))
-        instance = source('rtl/tile_ffn_v4.sv').split('pe4_sched sched_u (', 1)[1].split(');', 1)[0]
-        connected = re.findall(r'\.([a-zA-Z_]\w*)\s*\(', instance)
+        connected = scheduler_connections(source('rtl/tile_ffn_v4.sv'))
         self.assertEqual(set(ports), set(connected))
         self.assertEqual(len(connected), len(set(connected)))
+
+    def test_scheduler_instance_parser(self):
+        for prefix in ('pe4_sched', 'pe4_sched #(.TILE_ID(SRC_ID[5:0]))'):
+            with self.subTest(prefix=prefix):
+                text = prefix + ' sched_u (\n.clk(clk), .rst_n(rst_n)\n);'
+                self.assertEqual(scheduler_connections(text), ['clk', 'rst_n'])
+        for text in ('', 'pe4_sched sched_u (.clk(clk))',
+                     'pe4_sched sched_u (); pe4_sched sched_u ();'):
+            with self.subTest(text=text):
+                with self.assertRaises(ValueError):
+                    scheduler_connections(text)
 
 
 if __name__ == '__main__':
