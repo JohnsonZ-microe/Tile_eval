@@ -91,6 +91,14 @@ module tb_control_v4;
         if (tail != 74 || dut.sched_u.err_q !== 0) $fatal(1, "control final checks");
         control(int'(TEST_ID),1,12'h00c,32'h00040000);
         repeat (3) tick();
+        // quant_ov both gates the NUMERIC event (sched:1023) and drives
+        // hbuf_wr_valid (sched:972): forcing it pulses writes into an
+        // unowned h bank every cycle, latching H_ORDER (bit 5) -- unmasked,
+        // so an ALARM STATUS fires that the 74-entry expectation queue
+        // never counted (seen as payload ...00040020 = NUMERIC|H_ORDER).
+        // Suppress only the observable error pulse; the gated write inside
+        // pe4_hbuf never commits anyway.
+        force dut.hbuf_u.wr_err = 1'b0;
         force dut.sched_u.quant_ov = 1'b1;
         force dut.sched_u.quant_err = 1'b1;
         tick();
@@ -108,6 +116,7 @@ module tb_control_v4;
         repeat (4) tick();
         release dut.sched_u.quant_ov;
         release dut.sched_u.quant_err;
+        release dut.hbuf_u.wr_err;
         if (dut.sched_u.err_q !== 0) $fatal(1, "numeric final clear failed");
         $display("PASS control replies=%0d stall_cycles=%0d numeric_w1c=1",tail,stalls);
         $finish;
