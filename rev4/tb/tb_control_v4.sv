@@ -81,7 +81,27 @@ module tb_control_v4;
         if (dut.stf_cnt !== 2 || stalls == 0) $fatal(1, "STATUS full/stall coverage");
         return_enable = 1; flush();
         if (tail != 74 || dut.sched_u.err_q !== 0) $fatal(1, "control final checks");
-        $display("PASS control replies=%0d stall_cycles=%0d",tail,stalls);
+        control(int'(TEST_ID),1,12'h00c,32'h00040000);
+        repeat (3) tick();
+        force dut.sched_u.quant_ov = 1'b1;
+        force dut.sched_u.quant_err = 1'b1;
+        tick();
+        if (dut.sched_u.err_q !== 22'h040000) $fatal(1, "numeric event missing");
+        force dut.sched_u.quant_ov = 1'b0;
+        control(int'(TEST_ID),1,12'h008,32'h00040000);
+        repeat (4) tick();
+        if (dut.sched_u.err_q !== 0) $fatal(1, "held quant error defeats W1C");
+        force dut.sched_u.quant_ov = 1'b1;
+        tick();
+        if (dut.sched_u.err_q !== 22'h040000) $fatal(1, "new numeric event not rearmed");
+        force dut.sched_u.quant_ov = 1'b0;
+        force dut.sched_u.quant_err = 1'b0;
+        control(int'(TEST_ID),1,12'h008,32'h00040000);
+        repeat (4) tick();
+        release dut.sched_u.quant_ov;
+        release dut.sched_u.quant_err;
+        if (dut.sched_u.err_q !== 0) $fatal(1, "numeric final clear failed");
+        $display("PASS control replies=%0d stall_cycles=%0d numeric_w1c=1",tail,stalls);
         $finish;
     end
 endmodule

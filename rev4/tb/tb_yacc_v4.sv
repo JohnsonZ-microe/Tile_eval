@@ -33,11 +33,14 @@ module tb_yacc_v4;
     endfunction
     function automatic logic [15:0] expected_value(input integer lane, column);
         if (column < 76) return input_value(lane) >> 16;
-        case (lane)
-            0: return 16'h4040;
-            1: return 16'h4080;
-            2: return 16'h40a0;
-            default: return 16'h40c0;
+        case (lane + column - 73)
+            3: return 16'h4040;
+            4: return 16'h4080;
+            5: return 16'h40a0;
+            6: return 16'h40c0;
+            7: return 16'h40e0;
+            8: return 16'h4100;
+            default: return 16'h4110;
         endcase
     endfunction
     task automatic tick;
@@ -79,8 +82,10 @@ module tb_yacc_v4;
         for (integer lane = 0; lane < 4; lane++) begin
             commit_slots[lane] = 0; commit_weights[lane] = 32'h3f800000;
         end
-        for (integer column = 76; column < 80; column++)
-            commit_db[16*column +: 16] = 16'h4000;
+        commit_db[16*76 +: 16] = 16'h4000;
+        commit_db[16*77 +: 16] = 16'h4040;
+        commit_db[16*78 +: 16] = 16'h4080;
+        commit_db[16*79 +: 16] = 16'h40a0;
         @(negedge clk);
         repeat (3) tick();
         rst_n = 1;

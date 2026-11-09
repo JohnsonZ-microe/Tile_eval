@@ -1,5 +1,12 @@
 `timescale 1ns/1ps
 module tb_protocol_v4;
+    string vcdfile;
+    initial begin
+        if ($value$plusargs("VCD=%s", vcdfile)) begin
+            $dumpfile(vcdfile);
+            $dumpvars(0, tb_protocol_v4);
+        end
+    end
     logic  clk = '0;
     logic  rst_n = '0;
     logic  dn_valid = '0;

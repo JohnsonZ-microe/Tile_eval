@@ -1020,7 +1020,7 @@ module pe4_sched #(
         err_events[ERR_RRAM_TAG] = ev_rramtag;
         err_events[ERR_SNAPSHOT] = ev_snapshot;
         err_events[ERR_UNSUPPORTED] = ev_unsupported;
-        err_events[ERR_NUMERIC] = quant_err;
+        err_events[ERR_NUMERIC] = quant_ov && quant_err;
         err_events[ERR_CTX_BUSY] = ev_ctxbusy;
         err_events[ERR_REG_ADDR] = ev_regaddr;
         err_events[ERR_H_BANK] = ev_hbank;

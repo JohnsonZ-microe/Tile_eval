@@ -25,6 +25,13 @@ DEFAULT_PRODUCTS = '/staff/ee/eezhyzhao/Desktop/Products'
 DEFAULT_LOGS = '/staff/ee/eezhyzhao/Desktop/Products/logs'
 
 
+def waveform_arguments(enabled, test, output):
+    names = {'tile': 'tile_ffn_v4.vcd', 'protocol': 'protocol_v4.vcd'}
+    if not enabled or test not in names:
+        return []
+    return ['+VCD=' + str(Path(output) / names[test])]
+
+
 def _writable(path):
     """True if path exists (or can be created) and accepts a test write."""
     try:
@@ -273,8 +280,7 @@ def main():
                        '+VECTORS=' + str(out / 'vectors'),
                        '+SIGMOID_HEX=' + str(snap / 'rtl' /
                                              'pe4_sigmoid_rom.hex')]
-                if args.waves and test == 'tile':
-                    cmd.append('+VCD=' + str(out / 'tile_ffn_v4.vcd'))
+                cmd.extend(waveform_arguments(args.waves, test, out))
                 cmd.extend(diagnostic_arguments(args, test))
                 if test == 'modules':
                     cmd.extend(['+RESULT_NAME=modules', '+MATH_FILE=modules.txt', '+BUBBLE_MASK=3',
@@ -321,6 +327,8 @@ def main():
         if args.tool == 'vcs' and manifest.get('simulations'):
             manifest['rtl_validation'] = manifest['status']
         manifest.setdefault('failed_step', manifest.get('current_step', 'setup'))
+    manifest['waveforms'] = [{'file': path.name, 'bytes': path.stat().st_size}
+                             for path in sorted(out.glob('*.vcd'))]
     manifest['seconds'] = time.monotonic() - started
     (out / 'manifest.json').write_text(json.dumps(manifest, indent=1))
     (out / 'exit_code.txt').write_text('%d\n' % status)
