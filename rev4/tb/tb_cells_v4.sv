@@ -3,6 +3,14 @@ module tb_cells_v4;
     import pe4_pkg::*;
     logic clk = 0, rst_n = 0, in_valid = 0, out_valid;
     always #5 clk = ~clk;
+    // optional VCD (run.py --waves passes +VCD=<path>)
+    string vcdfile;
+    initial begin
+        if ($value$plusargs("VCD=%s", vcdfile)) begin
+            $dumpfile(vcdfile);
+            $dumpvars(0, tb_cells_v4);
+        end
+    end
     logic [31:0] partial_value = 0, weight_scale = 0, result;
     logic [7:0] activation_scale = 127;
     logic [2:0] fmt = 0;

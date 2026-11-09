@@ -2,6 +2,14 @@
 module tb_yacc_v4;
     logic clk = 0, rst_n = 0;
     always #5 clk = ~clk;
+    // optional VCD (run.py --waves passes +VCD=<path>)
+    string vcdfile;
+    initial begin
+        if ($value$plusargs("VCD=%s", vcdfile)) begin
+            $dumpfile(vcdfile);
+            $dumpvars(0, tb_yacc_v4);
+        end
+    end
     logic load_valid = 0;
     logic [6:0] load_base = 0;
     logic [7:0] load_cen = 0;

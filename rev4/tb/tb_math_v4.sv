@@ -3,6 +3,14 @@ module tb_math_v4;
     localparam integer LIMIT = 16384;
     logic clk = 0, rst_n = 0;
     always #5 clk = ~clk;
+    // optional VCD (run.py --waves passes +VCD=<path>)
+    string vcdfile;
+    initial begin
+        if ($value$plusargs("VCD=%s", vcdfile)) begin
+            $dumpfile(vcdfile);
+            $dumpvars(0, tb_math_v4);
+        end
+    end
     integer fd, rc, fields, cycle = 0, checked = 0, rows = 0;
     integer bubble_mask = 0, reset_after = 0, prefix_rows = 0;
     integer fm_head = 0, fm_tail = 0, ac_head = 0, ac_tail = 0;

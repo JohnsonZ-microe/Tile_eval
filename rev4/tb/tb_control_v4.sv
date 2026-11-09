@@ -4,6 +4,14 @@ module tb_control_v4;
     localparam logic [31:0] EXPECTED_ID = 32'h80000300 | {26'b0, TEST_ID};
     logic clk = 0, rst_n = 0;
     always #5 clk = ~clk;
+    // optional VCD (run.py --waves passes +VCD=<path>)
+    string vcdfile;
+    initial begin
+        if ($value$plusargs("VCD=%s", vcdfile)) begin
+            $dumpfile(vcdfile);
+            $dumpvars(0, tb_control_v4);
+        end
+    end
     logic dn_valid = 0, up_valid, sync0, sync1, err_line;
     logic [511:0] dn_payload = 0;
     logic [31:0] dn_sideband = 4;

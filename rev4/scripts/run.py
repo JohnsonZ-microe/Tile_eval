@@ -26,7 +26,16 @@ DEFAULT_LOGS = '/staff/ee/eezhyzhao/Desktop/Products/logs'
 
 
 def waveform_arguments(enabled, test, output):
-    names = {'tile': 'tile_ffn_v4.vcd', 'protocol': 'protocol_v4.vcd'}
+    # Every bench accepts +VCD=<path>; math/modules share tb_math_v4 so the
+    # file is named per test to avoid collisions in an --test all run.
+    names = {'cells': 'cells_v4.vcd',
+             'math': 'math_v4.vcd',
+             'modules': 'modules_v4.vcd',
+             'protocol': 'protocol_v4.vcd',
+             'memory': 'memory_v4.vcd',
+             'yacc': 'yacc_v4.vcd',
+             'control': 'control_v4.vcd',
+             'tile': 'tile_ffn_v4.vcd'}
     if not enabled or test not in names:
         return []
     return ['+VCD=' + str(Path(output) / names[test])]
