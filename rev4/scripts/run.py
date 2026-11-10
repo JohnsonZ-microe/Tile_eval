@@ -120,19 +120,34 @@ def execute_logged(command, logfile, cwd, environment, timeout,
     verbose = os.getenv('VERBOSE', '').strip() in ('1', 'true', 'yes')
     try:
         if verbose:
-            # tee mode: stream output to both the log file and the terminal
-            # universal_newlines works on Python 3.5+ (text= needs 3.7)
+            # tee mode: a daemon thread streams output to both the log file
+            # and the terminal; the main thread enforces the timeout via
+            # proc.wait() — a blocking for-loop on stdout would never reach
+            # the timeout check when the process goes quiet.
+            import threading
             proc = subprocess.Popen(command, cwd=str(cwd), env=environment,
                                     stdout=subprocess.PIPE,
                                     stderr=subprocess.STDOUT,
                                     universal_newlines=True)
-            with logfile.open('w') as output:
+            handle = logfile.open('w')
+
+            def pump():
                 for line in proc.stdout:
-                    output.write(line)
-                    output.flush()
+                    handle.write(line)
+                    handle.flush()
                     sys.stdout.write(line)
                     sys.stdout.flush()
+
+            reader = threading.Thread(target=pump, daemon=True)
+            reader.start()
+            try:
                 proc.wait(timeout=timeout)
+            except subprocess.TimeoutExpired:
+                proc.kill()
+                raise
+            finally:
+                reader.join(timeout=5)
+                handle.close()
             done_rc = proc.returncode
             class _R:
                 returncode = done_rc
