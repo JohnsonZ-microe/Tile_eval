@@ -125,10 +125,13 @@ module tb_compute_v4;
     // ---- pipeline monitors ----
     integer dot_seq = 0, scale_seq = 0, commit_seq = 0;
     integer kb_idx, col_idx;
+    // Module-level flat arrays in tile_pe_v3 (no generate-block indexing):
+    //   dot_valid[c][0] == columns[c].lanes[0].dot.out_valid
+    //   scale_valid[c][0] == the pe3_scale out_valid
     always @(posedge clk) begin
         if (rst_n) begin
             for (int c = 0; c < 8; c++) begin
-                if (dut.columns[c].lanes[0].dot.out_valid && dot_seq < MAX_KB*8) begin
+                if (dut.dot_valid[c][0] && dot_seq < MAX_KB*8) begin
                     kb_idx = dot_seq / 8; col_idx = dot_seq % 8;
                     check(1, $sformatf("kb=%0d col=%0d fp32", kb_idx, col_idx),
                           exp_fp32[kb_idx][col_idx], dut.partials[c][0]);
