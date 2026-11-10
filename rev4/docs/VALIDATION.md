@@ -15,6 +15,7 @@
 | Local runner end-to-end | see results/local-* | manifest.json status |
 | RTL compile (VCS) | PASS (V-2023.12, full design elaborates) | compile_math.log, vcs-20261104 run |
 | RTL simulation (math bench) | PASS (fmul/act/quant/sigmoid bit-exact, incl. rev4.1 amax tree + one-cycle strobe fix) | run_math.log `PASS math` |
+| RTL simulation (compute bench) | PASS (80/80 checkpoints, coverage=100%; FP4 dot32/scale/RF-accum/commit/readback all bit-exact vs Python golden) | run_compute.log `PASS compute checkpoints=80 coverage=100%` |
 | RTL simulation (tile bench) | PENDING | run next: `--test tile` |
 | DC synthesis / timing | NOT RUN (rerun pending after rev4.1 amax fix) | pending server DC; SRAM macros unmapped |
 | SRAM macro mapping | NOT AVAILABLE | behavioural arrays only |
