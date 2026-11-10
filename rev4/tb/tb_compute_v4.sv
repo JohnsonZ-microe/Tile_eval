@@ -120,6 +120,8 @@ module tb_compute_v4;
         logic [1023:0] a = 0;
         for (int j = 0; j < 32; j++) a[j*8 +: 8] = a_codes[j];
         return a;
+    endfunction
+
     // ---- pipeline monitors ----
     integer dot_seq = 0, scale_seq = 0, commit_seq = 0;
     integer kb_idx, col_idx;
