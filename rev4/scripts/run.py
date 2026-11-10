@@ -121,9 +121,11 @@ def execute_logged(command, logfile, cwd, environment, timeout,
     try:
         if verbose:
             # tee mode: stream output to both the log file and the terminal
+            # universal_newlines works on Python 3.5+ (text= needs 3.7)
             proc = subprocess.Popen(command, cwd=str(cwd), env=environment,
                                     stdout=subprocess.PIPE,
-                                    stderr=subprocess.STDOUT, text=True)
+                                    stderr=subprocess.STDOUT,
+                                    universal_newlines=True)
             with logfile.open('w') as output:
                 for line in proc.stdout:
                     output.write(line)
