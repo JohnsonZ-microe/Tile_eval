@@ -200,6 +200,7 @@ def main():
     parser.add_argument('--out', type=Path)
     parser.add_argument('--waves', action='store_true', default=os.getenv('WAVES') == '1')
     parser.add_argument('--trace', action='store_true')
+    parser.add_argument('--calibration-trace', action='store_true')
     parser.add_argument('--overlap', action='store_true')
     parser.add_argument('--credit-period', type=cycle_argument, default=1)
     parser.add_argument('--input-gap', type=cycle_argument, default=1)
@@ -336,6 +337,12 @@ def main():
                                 '+RESET_AFTER=13'])
                 if test == 'tile' and args.trace:
                     cmd.append('+TRACE=' + str(out / 'tile-events.csv'))
+                if test == 'tile' and args.calibration_trace:
+                    cmd.append('+CALIBRATION_TRACE=' + str(out / 'calibration-events.csv'))
+                    manifest['calibration_trace'] = dict(schema=2, file='calibration-events.csv',
+                        sampling='pre: inputs consumed at edge; post: registered outputs visible after edge',
+                        cycle_origin='first active rising edge after reset = 0; epoch increments on subsequent reset',
+                        calibration='not calibrated')
                 if test == 'tile':
                     cmd.extend(['+CRED_PERIOD=%d' % args.credit_period,
                                 '+GAP=%d' % args.input_gap])

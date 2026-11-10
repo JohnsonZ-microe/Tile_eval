@@ -435,5 +435,108 @@ module tb_tile_v4;
         $fflush();
         $finish;
     end
+    integer calibration_fd = 0;
+    integer calibration_epoch = 0;
+    integer calibration_issue = 0, calibration_return = 0, calibration_consume = 0;
+    longint unsigned calibration_cycle = 0;
+    bit calibration_reset_seen = 0;
+    bit [127:0] calibration_y_valid = 0;
+    string calibration_path;
+    initial begin
+        if ($value$plusargs("CALIBRATION_TRACE=%s", calibration_path)) begin
+            calibration_fd = $fopen(calibration_path, "w");
+            if (!calibration_fd) $fatal(1, "cannot open CALIBRATION_TRACE");
+            $fdisplay(calibration_fd, "epoch,cycle,sample,event,transaction,pass,phase,slot,kb,group,bank,payload");
+        end
+    end
+    task automatic calibration_event(input string sampling, event_name,
+        input longint unsigned edge_cycle,
+        input integer transaction, pass_id, phase_id, slot_id, kb, group_id, bank,
+        input logic [511:0] payload);
+        $fdisplay(calibration_fd, "%0d,%0d,%s,%s,%0d,%0d,%0d,%0d,%0d,%0d,%0d,%0128h",
+            calibration_epoch, edge_cycle, sampling, event_name, transaction,
+            pass_id, phase_id, slot_id, kb, group_id, bank, payload);
+    endtask
+    always @(posedge clk) begin : calibration_monitor
+        longint unsigned edge_cycle;
+        edge_cycle = calibration_cycle;
+        if (calibration_fd) begin
+            if (!rst_n) begin
+                if (!calibration_reset_seen) begin
+                    calibration_event("pre", "reset", 0, -1, -1, -1, -1, -1, -1, -1, '0);
+                    calibration_reset_seen = 1;
+                end
+                calibration_cycle = 0;
+                calibration_y_valid = 0;
+                calibration_issue = 0; calibration_return = 0; calibration_consume = 0;
+            end else begin
+                calibration_reset_seen = 0;
+                if (dn_valid)
+                    calibration_event("pre", "down", edge_cycle, int'(dn_sideband), int'(dn_sideband[10:3]), -1, -1, -1, -1, -1, dn_payload);
+                if (up_credit != 0)
+                    calibration_event("pre", "credit", edge_cycle, -1, -1, -1, -1, -1, -1, -1, 512'(up_credit));
+                if (dut.rram_req && dut.rram_ready) begin
+                    calibration_event("pre", "memory_issue", edge_cycle, calibration_issue, -1, -1, -1, -1, -1, -1, 512'(dut.rram_addr));
+                    calibration_issue++;
+                end
+                if (dut.rram_valid) begin
+                    calibration_event("pre", "memory_return", edge_cycle, calibration_return, -1, -1, -1, -1, -1, -1, '0);
+                    calibration_return++;
+                end
+                if (dut.sched_u.cons_fire) begin
+                    calibration_event("pre", "memory_consume", edge_cycle, calibration_consume,
+                        int'(dut.sched_u.slot[dut.sched_u.head.slot].pass_id), int'(dut.sched_u.head.phase),
+                        int'(dut.sched_u.head.slot), int'(dut.sched_u.head.kb), int'(dut.sched_u.head.g), -1,
+                        512'({dut.sched_u.head.bias,dut.sched_u.head.scale}));
+                    calibration_consume++;
+                end
+                if (dut.sched_u.pe_accept)
+                    calibration_event("pre", "pe_accept", edge_cycle, int'(dut.pe_tag), int'(dut.sched_u.slot[dut.sched_u.head.slot].pass_id),
+                        int'(dut.sched_u.head.phase), int'(dut.sched_u.head.slot), int'(dut.sched_u.head.kb), int'(dut.sched_u.head.g), -1,
+                        512'({dut.pe_col_base,dut.pe_mask}));
+                if (dut.stg_rd_req)
+                    calibration_event("pre", "staging_request", edge_cycle, int'(dut.stg_rd_kb), -1, 0, -1, int'(dut.stg_rd_kb), -1, -1, '0);
+                if (dut.stg_rd_valid)
+                    calibration_event("pre", "staging_consume", edge_cycle, -1, -1, 0, -1, -1, -1, -1, '0);
+                if (dut.hbuf_rd_req)
+                    calibration_event("pre", "hbank_request", edge_cycle, int'(dut.hbuf_rd_idx), -1, 1, -1, int'(dut.hbuf_rd_idx), -1, int'(dut.hbuf_rd_bank), '0);
+                if (dut.hbuf_rd_valid)
+                    calibration_event("pre", "hbank_consume", edge_cycle, -1, -1, 1, -1, -1, -1, -1, '0);
+                if (dut.act_in_valid)
+                    calibration_event("pre", "act_accept", edge_cycle, int'(dut.sched_u.act_c), -1, 0, -1, -1, -1, -1, '0);
+                if (dut.act_out_valid)
+                    calibration_event("pre", "act_consume", edge_cycle, int'(dut.sched_u.act_cout), -1, 0, -1, -1, -1, -1, '0);
+                if (dut.sched_u.quant_valid)
+                    calibration_event("pre", "quant_accept", edge_cycle, int'(dut.sched_u.quant_tag), -1, 1, -1, -1, -1, -1, '0);
+                if (dut.sched_u.quant_ov)
+                    calibration_event("pre", "quant_consume", edge_cycle, int'(dut.sched_u.quant_otag), -1, 1, -1, -1, -1, -1, '0);
+                if (dut.hbuf_release)
+                    calibration_event("pre", "bank_release", edge_cycle, -1, -1, 1, -1, -1, -1, int'(dut.hbuf_wr_bank_sel), '0);
+                if (dut.yacc_commit_trigger)
+                    calibration_event("pre", "y_commit", edge_cycle, -1, -1, 1, -1, -1, -1, int'(dut.yacc_bank), 512'(dut.yacc_mask));
+                if (dut.drain_fire)
+                    calibration_event("pre", "drain_accept", edge_cycle, int'(dut.drain_slot), -1, 1, -1, -1, -1, int'(dut.drain_bank),
+                        512'({dut.drain_cstart,dut.drain_count}));
+                if (up_valid)
+                    calibration_event("pre", "up_beat", edge_cycle, int'(up_sideband), int'(up_sideband[16:9]), -1, -1, -1, -1, -1, 512'(up_payload));
+                if (sync1)
+                    calibration_event("pre", "sync1", edge_cycle, -1, -1, -1, -1, -1, -1, -1, '0);
+                #1;
+                if (dut.pe_out_valid)
+                    calibration_event("post", "pe_commit_visible", edge_cycle, int'(dut.pe_u.out_tag), -1, -1, -1, -1, -1, -1, 512'(dut.pe_out_col_base));
+                for (integer bank_id = 0; bank_id < 2; bank_id++)
+                    for (integer slot_id = 0; slot_id < 64; slot_id++) begin
+                        if (dut.yacc_u.vbit[bank_id][slot_id] === 1'b1 && !calibration_y_valid[bank_id*64+slot_id])
+                            calibration_event("post", "y_ready_visible", edge_cycle, slot_id, -1, 1, -1, -1, -1, bank_id, '0);
+                        calibration_y_valid[bank_id*64+slot_id] = dut.yacc_u.vbit[bank_id][slot_id] === 1'b1;
+                    end
+                calibration_cycle = edge_cycle + 1;
+            end
+            $fflush(calibration_fd);
+        end
+    end
+    always @(negedge rst_n) begin
+        if (calibration_fd && calibration_cycle != 0) calibration_epoch++;
+    end
 endmodule
 
