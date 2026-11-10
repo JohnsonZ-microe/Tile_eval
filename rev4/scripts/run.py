@@ -31,6 +31,7 @@ def waveform_arguments(enabled, test, output):
     names = {'cells': 'cells_v4.vcd',
              'math': 'math_v4.vcd',
              'modules': 'modules_v4.vcd',
+             'compute': 'compute_v4.vcd',
              'protocol': 'protocol_v4.vcd',
              'memory': 'memory_v4.vcd',
              'yacc': 'yacc_v4.vcd',
@@ -158,7 +159,7 @@ def main():
     parser.add_argument('tool', choices=['local', 'vcs', 'dc'])
     parser.add_argument('--suite', choices=['legacy', 'smoke', 'full'], default='full')
     parser.add_argument('--seed', type=int, default=817)
-    parser.add_argument('--test', choices=['all', 'cells', 'math', 'modules', 'protocol', 'memory', 'yacc', 'control', 'tile'],
+    parser.add_argument('--test', choices=['all', 'cells', 'math', 'modules', 'compute', 'protocol', 'memory', 'yacc', 'control', 'tile'],
                         default='all')
     parser.add_argument('--top', default='tile_ffn_v4')
     parser.add_argument('--out', type=Path)
@@ -231,6 +232,9 @@ def main():
              'model', '-p', 'test_*.py'], 'python_reference.log')
         run([sys.executable, '-B', 'model/vectors.py', '--outdir',
              str(out / 'vectors'), '--seed', str(args.seed), '--suite', args.suite], 'vectors.log')
+        run([sys.executable, '-B', 'model/compute_trace.py', '--out',
+             str(out / 'vectors/compute_trace.txt'), '--seed', str(args.seed)],
+            'compute_trace.log')
         run([sys.executable, '-B', 'model/vector_check.py',
              str(out / 'vectors')], 'vector_check.log')
         for f in (ROOT / 'rtl').glob('*.sv'):
@@ -271,9 +275,10 @@ def main():
             exe = shutil.which(os.getenv('VCS', 'vcs'))
             if not exe:
                 raise RuntimeError('VCS not found')
-            for test in (['cells', 'math', 'modules', 'protocol', 'memory', 'yacc', 'control', 'tile'] if args.test == 'all'
+            for test in (['cells', 'math', 'modules', 'compute', 'protocol', 'memory', 'yacc', 'control', 'tile'] if args.test == 'all'
                          else [args.test]):
                 top = {'cells': 'tb_cells_v4', 'math': 'tb_math_v4', 'modules': 'tb_math_v4',
+                       'compute': 'tb_compute_v4',
                        'protocol': 'tb_protocol_v4', 'memory': 'tb_memory_v4',
                        'yacc': 'tb_yacc_v4', 'control': 'tb_control_v4', 'tile': 'tb_tile_v4'}[test]
                 binary = out / ('simv_' + test)
