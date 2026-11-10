@@ -117,11 +117,29 @@ def execute_logged(command, logfile, cwd, environment, timeout,
     manifest_path.write_text(json.dumps(manifest, indent=1))
     print('Running: ' + ' '.join(command), flush=True)
     started = time.monotonic()
+    verbose = os.getenv('VERBOSE', '').strip() in ('1', 'true', 'yes')
     try:
-        with logfile.open('w') as output:
-            done = subprocess.run(command, cwd=str(cwd), env=environment,
-                                  stdout=output, stderr=subprocess.STDOUT,
-                                  timeout=timeout)
+        if verbose:
+            # tee mode: stream output to both the log file and the terminal
+            proc = subprocess.Popen(command, cwd=str(cwd), env=environment,
+                                    stdout=subprocess.PIPE,
+                                    stderr=subprocess.STDOUT, text=True)
+            with logfile.open('w') as output:
+                for line in proc.stdout:
+                    output.write(line)
+                    output.flush()
+                    sys.stdout.write(line)
+                    sys.stdout.flush()
+                proc.wait(timeout=timeout)
+            done_rc = proc.returncode
+            class _R:
+                returncode = done_rc
+            done = _R()
+        else:
+            with logfile.open('w') as output:
+                done = subprocess.run(command, cwd=str(cwd), env=environment,
+                                      stdout=output, stderr=subprocess.STDOUT,
+                                      timeout=timeout)
         record['returncode'] = done.returncode
         log = logfile.read_text(errors='replace')
         if done.returncode:
