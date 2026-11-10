@@ -170,7 +170,9 @@ module tb_compute_v4;
             pe_wfmt = 3'd0; pe_weights = build_weights(kb);
             pe_acts = build_activations();
             pe_ascales = {24'b0, ascale_val};
-            pe_wscales = {224'b0, wscale_val};
+            pe_wscales = '0;
+            for (int c = 0; c < 8; c++)
+                pe_wscales[c*32 +: 32] = {24'b0, wscale_val};
             pe_mask = 4'b0001; pe_col_base = 7'd0;
             pe_first = (kb == 0); pe_last = (kb == MAX_KB-1);
             @(negedge clk);
