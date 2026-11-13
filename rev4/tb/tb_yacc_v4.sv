@@ -35,10 +35,15 @@ module tb_yacc_v4;
     logic [9:0] read_identity_output [0:1];
     bit read_identity_known [0:1];
     bit read_identity_output_known [0:1];
+    // Sticky flag: a commit read fired on the drain's bank since the drain
+    // last issued its own read (shared port, commit priority). The tracked
+    // address may then belong to the commit, not the drain.
+    bit commit_since_drain;
     integer read_identity_checks = 0;
     always @(posedge clk) begin : read_identity_monitor
         if (!rst_n) begin
             read_identity_checks <= 0;
+            commit_since_drain <= 0;
             for (integer bank = 0; bank < 2; bank++) begin
                 read_identity_addr[bank] <= 0;
                 read_identity_output[bank] <= 0;
@@ -46,6 +51,13 @@ module tb_yacc_v4;
                 read_identity_output_known[bank] <= 0;
             end
         end else begin
+            // reset the interleave flag at the drain's read issue point
+            if (dut.dstate == 2'd1 && dut.dwait_cnt == 3'd0 && !drain_yield)
+                commit_since_drain <= 0;
+            // set it when the commit engine reads the same bank
+            else if (dut.commit_rd_active === 1'b1
+                     && dut.commit_bank_id === dut.dbank)
+                commit_since_drain <= 1;
             if (dut.re0 === 1'b1) begin
                 read_identity_addr[0] <= dut.raddr0;
                 read_identity_known[0] <= 1;
@@ -59,12 +71,10 @@ module tb_yacc_v4;
                 read_identity_output_known[bank] <= read_identity_known[bank];
             end
             // Check the SRAM read address identity at the DRAIN capture point.
-            // Guard: when the commit engine is reading the same bank, the
-            // shared port gives commit priority and overwrites the tracked
-            // address — the identity check only applies to uninterleaved
-            // drain reads (data correctness is separately checked by value).
+            // Skip when a commit read interleaved (address was overwritten);
+            // data correctness is separately verified by the value comparison.
             if (dut.dstate == 2'd1 && dut.dwait_cnt == 3'd4 && !drain_yield
-                    && !(dut.commit_rd_active && dut.commit_bank_id === dut.dbank)) begin
+                    && !commit_since_drain) begin
                 if (read_identity_output_known[dut.dbank] !== 1'b1 ||
                     read_identity_output[dut.dbank] !== 10'(10*int'(dut.dslot)+int'(dut.drow)))
                     $fatal(1, "Y read identity bank=%0d slot=%0d row=%0d actual_addr=%0d expected_addr=%0d cycle=%0d", dut.dbank,dut.dslot,dut.drow,read_identity_output[dut.dbank],10*int'(dut.dslot)+int'(dut.drow),cycles);
