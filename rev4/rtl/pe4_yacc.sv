@@ -94,7 +94,13 @@ module pe4_yacc (
     logic [5:0] cur_slot;
     assign cur_slot = cslots[lane_sel];
     assign commit_busy = (cstate != CIDLE);
-    assign commit_rd_active = (cstate == CRD);
+    assign commit_rd_active = (cstate == CRD) || (cre === 1'b1);
+    // ^ includes the actual SRAM read cycle (cre is registered: fires one
+    //   cycle AFTER CRD). Without this, the DRAIN sees yield deasserted
+    //   during the CWT entry cycle, issues its own read, and the shared
+    //   port silently routes the COMMIT's address — the DRAIN captures
+    //   data from the wrong slot (observed as slot=0 returning slot=1's
+    //   data in the overlap probe).
     assign commit_bank_id = cbank;
     // shared y-bank port arbitration: commit reads have priority on their
     // bank; a DRAIN read on the same bank yields (yield_stall below)
