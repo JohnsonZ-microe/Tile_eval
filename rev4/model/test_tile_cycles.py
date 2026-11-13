@@ -6,7 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from tile_cycles import (LATENCIES, TileCycleModel, analytic_matrix_rate,  # noqa: E402
-                         format_params, profile)
+                         format_params, profile, _Phase, _SimState)
 
 
 class TestFormatParams(unittest.TestCase):
@@ -47,6 +47,53 @@ class TestSteadyStateRate(unittest.TestCase):
 
 
 class TestPhaseSemantics(unittest.TestCase):
+    def test_staging_group_waits_for_every_token(self):
+        for tokens in range(1,5):
+            model = TileCycleModel(n_tok=tokens)
+            phase = _Phase(0,'GU',0,tokens,False)
+            phase.timing.latch = 0
+            state = _SimState(6)
+            for lane in range(tokens):
+                model._fill([phase],lane+1,state)
+                self.assertEqual(phase.xs_popped[0],lane==tokens-1)
+            for lane in range(tokens):
+                model._fill([phase],tokens+lane+1,state)
+                self.assertEqual(phase.x_popped[0],lane==tokens-1)
+            self.assertEqual(state.counters['CNT_X_POP'],2*tokens)
+
+    def test_credit_and_queue_stalls_are_distinguished(self):
+        for return_cycle, count, expected in ((20, 3, 'rram_inflight'), (1, 4, 'rq_full')):
+            model = TileCycleModel()
+            phase = _Phase(0, 'GU', 0, 4, False)
+            phase.timing.latch = 0
+            phase.wi = 1
+            state = _SimState(6)
+            state.rq.extend(dict(ret=return_cycle) for index in range(count))
+            model._issue([phase], state, 10)
+            self.assertEqual(state.stalls[expected], 1)
+            self.assertEqual(state.stalls['rram_credit'], 1)
+            self.assertEqual(state.counters['CNT_RRAM_STALL'], 1)
+            self.assertEqual(phase.wi, 1)
+
+    def test_memory_stall_subtotals_conserve_legacy_counter(self):
+        for fmt in range(6):
+            report = TileCycleModel(fmt=fmt).run_pass()
+            self.assertEqual(report.stalls['rram_credit'],
+                             report.stalls['rram_inflight']+report.stalls['rq_full'])
+            self.assertEqual(report.stalls['rram_credit'],report.counters['CNT_RRAM_STALL'])
+
+    def test_return_fill_must_precede_consume_edge(self):
+        for fmt in range(6):
+            model = TileCycleModel(fmt=fmt, n_tok=1, bias_en=True)
+            model.run_pass()
+            returns = {entry['transaction']: entry['cycle'] for entry in model.events
+                       if entry['event'] == 'rram_return'}
+            consumed = [entry for entry in model.events if entry['event'] == 'rram_consume']
+            self.assertEqual(len(consumed), len(returns))
+            for entry in consumed:
+                self.assertGreater(entry['cycle'], returns[entry['transaction']],
+                                   'RQ full is registered on the return edge')
+
     def test_fp4_gu_duration(self):
         # fp4 GU: 1440 matrix words at 9/36 rate + fill/drain overheads
         rep = TileCycleModel(fmt=0, n_tok=4).run_pass()

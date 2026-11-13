@@ -52,6 +52,22 @@ class RunDiagnosticsTests(unittest.TestCase):
         self.assertEqual(self.saved_record()['status'], 'failed')
         self.assertEqual(self.manifest['failed_step'], 'run_tile.log')
 
+    def test_yacc_requires_new_overlap_evidence(self):
+        good = 'CHECK yacc_overlap banks=2 offsets=44 packets=88 yields=2\nPASS yacc packets=216 cycles=1000'
+        self.run_process('print(%r)' % good, test='yacc')
+        self.assertEqual(self.manifest['simulations']['yacc']['coverage']['overlap_yields'], 2)
+        for bad in ('PASS yacc packets=128 cycles=1000',
+                    'PASS yacc packets=216 cycles=1000',
+                    good.replace('yields=2', 'yields=0'),
+                    good + '\n' + good,
+                    '\n'.join(reversed(good.splitlines())),
+                    good + '\nFAIL overlap',
+                    good.replace('packets=216', 'packets=132')):
+            with self.subTest(log=bad):
+                with self.assertRaises(RuntimeError):
+                    self.run_process('print(%r)' % bad, test='yacc')
+                self.assertEqual(self.manifest['simulations']['yacc']['status'], 'failed')
+
     def test_missing_pass(self):
         with self.assertRaises(RuntimeError):
             self.run_process("print('loaded 53843 RRAM words')")

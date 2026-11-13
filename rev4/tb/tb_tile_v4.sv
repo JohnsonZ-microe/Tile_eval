@@ -128,6 +128,90 @@ module tb_tile_v4;
         .sync0(sync0), .sync1(sync1), .err_line(err_line),
         .sim_load(sim_load_r), .sim_addr(sim_addr_r), .sim_data(sim_data_r));
     // ---------- up beat checker ----------
+    logic [30:0] rq_probe_metadata [0:3];
+    logic [7:0] rq_probe_pass [0:3];
+    logic [1023:0] rq_probe_data [0:3];
+    longint unsigned rq_probe_issue_cycle [0:3];
+    longint unsigned rq_probe_return_cycle [0:3];
+    longint unsigned rq_probe_cycle = 0;
+    integer rq_probe_issued = 0, rq_probe_returned = 0, rq_probe_consumed = 0;
+    always @(posedge clk) begin : rq_identity_monitor
+        integer entry_index, source_slot;
+        logic [30:0] actual_metadata;
+        if (!rst_n) begin
+            rq_probe_cycle = 0;
+            rq_probe_issued = 0; rq_probe_returned = 0; rq_probe_consumed = 0;
+        end else begin
+            if ($isunknown({dut.rram_req, dut.rram_ready, dut.rram_valid,
+                            dut.sched_u.cons_fire}))
+                $fatal(1, "RQ probe unknown handshake");
+            if (dut.sched_u.rq_cnt !== 3'(rq_probe_issued-rq_probe_consumed))
+                $fatal(1, "RQ probe reservation count");
+            if (dut.rram_req && dut.rram_ready &&
+                (rq_probe_issued-rq_probe_consumed >= 4 ||
+                 rq_probe_issued-rq_probe_returned >= 3))
+                $fatal(1, "RQ probe pre-edge capacity violation");
+            if (rq_probe_returned < rq_probe_issued &&
+                rq_probe_cycle == rq_probe_issue_cycle[rq_probe_returned % 4]+3 &&
+                dut.rram_valid !== 1'b1)
+                $fatal(1, "RQ probe missing scheduled return");
+            if (dut.sched_u.cons_fire) begin
+                if (rq_probe_consumed >= rq_probe_returned)
+                    $fatal(1, "RQ probe consume before registered return");
+                entry_index = rq_probe_consumed % 4;
+                if (rq_probe_cycle <= rq_probe_return_cycle[entry_index])
+                    $fatal(1, "RQ probe same-edge return bypass");
+                actual_metadata = {dut.sched_u.head.slot, dut.sched_u.head.phase,
+                    dut.sched_u.head.bias, dut.sched_u.head.scale,
+                    dut.sched_u.head.bidx, dut.sched_u.head.swi,
+                    dut.sched_u.head.kb, dut.sched_u.head.g,
+                    dut.sched_u.head.ncols, dut.sched_u.head.fmt};
+                if (actual_metadata !== rq_probe_metadata[entry_index] ||
+                    dut.sched_u.slot[dut.sched_u.head.slot].pass_id !== rq_probe_pass[entry_index])
+                    $fatal(1, "RQ probe metadata/pass mismatch transaction=%0d", rq_probe_consumed);
+                if (dut.sched_u.head.full !== 1'b1 ||
+                    dut.sched_u.head.data !== rq_probe_data[entry_index] ||
+                    $isunknown(dut.sched_u.head.data))
+                    $fatal(1, "RQ probe consumed data mismatch transaction=%0d", rq_probe_consumed);
+                rq_probe_consumed++;
+            end
+            if (dut.rram_valid) begin
+                if (rq_probe_returned >= rq_probe_issued)
+                    $fatal(1, "RQ probe unsolicited return");
+                entry_index = rq_probe_returned % 4;
+                if (rq_probe_cycle-rq_probe_issue_cycle[entry_index] != 3)
+                    $fatal(1, "RQ probe return latency transaction=%0d", rq_probe_returned);
+                if ($isunknown(dut.rram_data))
+                    $fatal(1, "RQ probe unknown returned data");
+                rq_probe_data[entry_index] = dut.rram_data;
+                rq_probe_return_cycle[entry_index] = rq_probe_cycle;
+                rq_probe_returned++;
+            end
+            if (dut.rram_req && dut.rram_ready) begin
+                if (rq_probe_issued-rq_probe_consumed >= 4)
+                    $fatal(1, "RQ probe reservation overflow");
+                if ({dut.sched_u.iss_fire1, dut.sched_u.iss_fire0} !== 2'b01 &&
+                    {dut.sched_u.iss_fire1, dut.sched_u.iss_fire0} !== 2'b10)
+                    $fatal(1, "RQ probe ambiguous issue slot");
+                source_slot = dut.sched_u.iss_fire0 ? 0 : 1;
+                entry_index = rq_probe_issued % 4;
+                rq_probe_metadata[entry_index] = {1'(source_slot),
+                    dut.sched_u.slot[source_slot].phase,
+                    dut.sched_u.iss[source_slot].bias,
+                    (dut.sched_u.iss[source_slot].scale && !dut.sched_u.iss[source_slot].bias),
+                    dut.sched_u.iss[source_slot].bidx, dut.sched_u.iss[source_slot].swi,
+                    8'(dut.sched_u.iss[source_slot].kb), dut.sched_u.iss[source_slot].g,
+                    dut.sched_u.cp[dut.sched_u.slot[source_slot].ctx_sel].ncols,
+                    dut.sched_u.slot[source_slot].fmt};
+                rq_probe_pass[entry_index] = dut.sched_u.slot[source_slot].pass_id;
+                if ($isunknown({rq_probe_metadata[entry_index], rq_probe_pass[entry_index]}))
+                    $fatal(1, "RQ probe unknown issue metadata");
+                rq_probe_issue_cycle[entry_index] = rq_probe_cycle;
+                rq_probe_issued++;
+            end
+            rq_probe_cycle++;
+        end
+    end
     logic [127:0] exp_payload;
     logic [23:0] exp_sideband;
     logic exp_last;
@@ -427,6 +511,11 @@ module tb_tile_v4;
             errors++;
         end
         if (errors == 0)
+            if (rq_probe_issued == 0 || rq_probe_issued != rq_probe_returned ||
+                rq_probe_returned != rq_probe_consumed)
+                $fatal(1, "RQ probe incomplete workload");
+            $display("CHECK rq_identity issued=%0d returned=%0d consumed=%0d",
+                     rq_probe_issued, rq_probe_returned, rq_probe_consumed);
             $display("PASS tile flits=%0d beats=%0d sync1=%0d",
                      flits, beats, sync1_count);
         else
@@ -459,6 +548,7 @@ module tb_tile_v4;
     endtask
     always @(posedge clk) begin : calibration_monitor
         longint unsigned edge_cycle;
+        integer issue_slot;
         edge_cycle = calibration_cycle;
         if (calibration_fd) begin
             if (!rst_n) begin
@@ -476,7 +566,11 @@ module tb_tile_v4;
                 if (up_credit != 0)
                     calibration_event("pre", "credit", edge_cycle, -1, -1, -1, -1, -1, -1, -1, 512'(up_credit));
                 if (dut.rram_req && dut.rram_ready) begin
-                    calibration_event("pre", "memory_issue", edge_cycle, calibration_issue, -1, -1, -1, -1, -1, -1, 512'(dut.rram_addr));
+                    issue_slot = dut.sched_u.iss_fire0 ? 0 : 1;
+                    calibration_event("pre", "memory_issue", edge_cycle, calibration_issue,
+                        int'(dut.sched_u.slot[issue_slot].pass_id), int'(dut.sched_u.slot[issue_slot].phase),
+                        issue_slot, int'(dut.sched_u.iss[issue_slot].kb), int'(dut.sched_u.iss[issue_slot].g),
+                        -1, 512'(dut.rram_addr));
                     calibration_issue++;
                 end
                 if (dut.rram_valid) begin

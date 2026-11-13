@@ -132,6 +132,7 @@ module tb_protocol_v4;
     integer head = 0, tail = 0, count = 0, credits = 6, locked = 0;
     integer cycles = 0, up_checked = 0, fifo_checked = 0;
     integer hseq = 0, yseq = 0, sseq = 0;
+    integer credit_cases = 0;
     bit take_h, take_y, take_s;
     task automatic tick;
         integer selected;
@@ -189,14 +190,17 @@ module tb_protocol_v4;
             end
         endcase
         credit_error = credits + int'(up_credit) > 6;
-        credits = sent ? credits + int'(up_credit) - 1 :
-                  (credit_error ? 6 : credits + int'(up_credit));
+        if (!credit_error) credits += int'(up_credit);
+        if (sent) credits--;
         count += int'(write_ok) - int'(read_ok);
         @(posedge clk); #1;
         if (xfifo_level !== 8'(count) || sync0 !== read_ok || xfifo_ovf !== overflow)
             $fatal(1, "FIFO count/credit/overflow cycle=%0d", cycles);
         if (up_valid !== sent || up_credit_err !== credit_error)
             $fatal(1, "up valid/credit error cycle=%0d", cycles);
+        if (dut.credit !== 3'(credits) || dut.credit > 6)
+            $fatal(1, "credit counter recovery cycle=%0d got=%0d expected=%0d",
+                   cycles, dut.credit, credits);
         if (sent) begin
             if (up_payload !== payload || up_sideband !== sideband)
                 $fatal(1, "up data/metadata cycle=%0d", cycles);
@@ -205,6 +209,28 @@ module tb_protocol_v4;
         hseq += int'(take_h); yseq += int'(take_y); sseq += int'(take_s);
         cycles++;
         @(negedge clk);
+    endtask
+
+    task automatic check_credit_case(input integer initial_credit,
+                                     input integer returned,
+                                     input bit request_beat);
+        rst_n = 0;
+        dn_valid = 0; xfifo_pop = 0; up_credit = 0;
+        hup_valid = 0; ysrc_valid = 0; st_valid = 0;
+        @(posedge clk); #1;
+        if (dut.credit !== 3'd6 || up_credit_err !== 0 || up_valid !== 0)
+            $fatal(1, "credit case reset");
+        @(negedge clk);
+        rst_n = 1; credits = 6; locked = 0; count = 0;
+        hup_valid = 1; hup_last = 1;
+        hup_payload = 128'h1234; hup_tag = 8'h5a; hup_src = 8'd16;
+        repeat (6-initial_credit) tick();
+        hup_valid = request_beat; up_credit = 2'(returned);
+        tick();
+        up_credit = 0; hup_valid = 0;
+        tick();
+        if (up_credit_err !== 0) $fatal(1, "credit error pulse did not clear");
+        credit_cases++;
     endtask
 
     initial begin
@@ -250,12 +276,17 @@ module tb_protocol_v4;
         end
         if (fifo_checked < 700 || up_checked < 100 || yseq == 0 || sseq == 0)
             $fatal(1, "protocol coverage did not exercise all paths");
+        for (integer initial_credit = 0; initial_credit <= 6; initial_credit++)
+            for (integer returned = 0; returned <= 2; returned++)
+                for (integer request_beat = 0; request_beat <= 1; request_beat++)
+                    check_credit_case(initial_credit, returned, 1'(request_beat));
+        if (credit_cases != 42) $fatal(1, "credit case coverage");
         @(negedge clk); rst_n = 0;
         @(posedge clk); #1;
         if (xfifo_level !== 0 || up_valid !== 0 || dut.active_valid !== 0)
             $fatal(1, "reset failed to flush protocol state");
-        $display("PASS protocol fifo=%0d up=%0d h=%0d y=%0d status=%0d",
-                 fifo_checked, up_checked, hseq, yseq, sseq);
+        $display("PASS protocol fifo=%0d up=%0d h=%0d y=%0d status=%0d credit_cases=%0d",
+                 fifo_checked, up_checked, hseq, yseq, sseq, credit_cases);
         $finish;
     end
 endmodule

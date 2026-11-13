@@ -197,7 +197,8 @@ module pe4_sched #(
         // rev4 validation (docs/SPEC.md 4): V4.1 geometry, VSPLIT=1,
         // BIAS_EN optional, WPLACE=h, VACC_FP32=0, BF16 Y, matched
         // SFMT/SBLK, V4.1 ACT preset
-        r.legal = (w[0][15:0] == 16'(K_GU)) && (w[0][31:16] == 16'(NKB_GU)) &&
+        r.legal = (r.fmt <= 3'd5) &&
+                  (w[0][15:0] == 16'(K_GU)) && (w[0][31:16] == 16'(NKB_GU)) &&
                   (w[1][15:0] == 16'(H_COLS)) && (w[1][31:16] == 16'(K_D)) &&
                   (w[3][15:0] == 16'd1) &&
                   (w[2][7] == 1'b0) && (w[2][8] == 1'b0) &&
@@ -530,6 +531,10 @@ module pe4_sched #(
             ev_cmd_illegal <= 0; ev_unsupported <= 0; ev_xorder <= 0;
             ev_horder <= 0; ev_rramtag <= 0; ev_snapshot <= 0;
             ev_ctxbusy <= 0; ev_numeric <= 0; ev_hbank <= 0;
+            if (reg_wr_valid && run_active_any && reg_wr_addr[1:0] == 2'b00 &&
+                ((reg_wr_addr >= 12'h100 && reg_wr_addr <= 12'h140) ||
+                 (reg_wr_addr >= 12'h180 && reg_wr_addr <= 12'h1c0)))
+                ev_ctxbusy <= 1;
             // ---- CMD latch ----
             if (cmd_in_valid) begin
                 logic [511:0] pl;
@@ -1087,15 +1092,17 @@ module pe4_sched #(
                 if (ctrl_seen && cnt[12] != '1) cnt[12] <= cnt[12] + 1;
             end
             ev_regaddr <= 0;   // 1-cycle pulse default; set below on bad address
-            if (reg_wr_valid) begin
+            if (reg_wr_valid && reg_wr_addr[1:0] == 2'b00) begin
                 if (reg_wr_addr == 12'h00c) alarm_mask_q <= reg_wr_data[21:0];
                 if (reg_wr_addr >= 12'h100 && reg_wr_addr <= 12'h13c && !run_active_any)
                     ctx_word[0][(reg_wr_addr - 12'h100) >> 2] <= reg_wr_data;
-                if (reg_wr_addr == 12'h140) ctx_mode[0] <= reg_wr_data;
+                if (reg_wr_addr == 12'h140 && !run_active_any) ctx_mode[0] <= reg_wr_data;
                 if (reg_wr_addr >= 12'h180 && reg_wr_addr <= 12'h1bc && !run_active_any)
                     ctx_word[1][(reg_wr_addr - 12'h180) >> 2] <= reg_wr_data;
-                if (reg_wr_addr == 12'h1c0) ctx_mode[1] <= reg_wr_data;
+                if (reg_wr_addr == 12'h1c0 && !run_active_any) ctx_mode[1] <= reg_wr_data;
                 if (reg_wr_addr >= 12'h200) ev_regaddr <= 1;   // REMAP: rev4 no
+            end else if (reg_wr_valid) begin
+                ev_regaddr <= 1;
             end
         end
     end

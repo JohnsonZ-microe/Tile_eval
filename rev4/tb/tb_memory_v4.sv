@@ -43,6 +43,11 @@ module tb_memory_v4;
         .rd_valid(rvalid), .rd_data(rdata), .sim_load(rload),
         .sim_addr(load_addr), .sim_data(load_data), .load_err(rerr));
     integer cycle = 0, checked = 0, accepted = 0, returned = 0;
+    integer reset_checked = 0;
+    initial begin
+        #1000000;
+        $fatal(1, "memory global watchdog");
+    end
     logic sx = 0, ss = 0, sr = 0, sv;
     logic [2:0] slane = 0;
     logic [9:0] sidx = 0;
@@ -114,6 +119,78 @@ module tb_memory_v4;
         checked++;
         tick();
     endtask
+    task automatic reset_inflight(input integer age, input bit hold_requests);
+        @(negedge clk);
+        rst_n = 1;
+        sr = 1; skb = 0;
+        rd_req = 1; rd_bank = 0; rd_idx = 0;
+        rreq = 1; raddr = 0;
+        repeat (age) begin
+            if (rready !== 1'b1) $fatal(1, "reset probe request not accepted");
+            @(posedge clk); #1;
+            @(negedge clk);
+        end
+        if (rram.outstanding !== 2'(age)) $fatal(1, "reset probe has no inflight requests");
+        rst_n = 0;
+        sr = hold_requests; rd_req = hold_requests; rreq = hold_requests;
+        repeat (2) begin
+            @(posedge clk); #1;
+            if (sv !== 0 || rd_valid !== 0 || rvalid !== 0 ||
+                rready !== 1 || owner_valid !== 0 || bank_ready !== 0)
+                $fatal(1, "inflight reset failed age=%0d hold=%0d", age, hold_requests);
+            @(negedge clk);
+        end
+        sr = 0; rd_req = 0; rreq = 0; rst_n = 1;
+        repeat (4) begin
+            @(posedge clk); #1;
+            if (sv !== 0 || rd_valid !== 0 || rvalid !== 0 || rready !== 1)
+                $fatal(1, "stale return after reset");
+            @(negedge clk);
+        end
+        own_take = 1; own_bank = 0; own_ntok = 1; own_pass = 8'h5a;
+        @(posedge clk); #1;
+        if (owner_valid !== 2'b01 || owner_pass0 !== 8'h5a)
+            $fatal(1, "h ownership recovery");
+        @(negedge clk);
+        own_take = 0;
+        wr_valid = 1; wr_bank = 0; wr_lane = 0; wr_idx = 0;
+        wr_q = {8{32'h13579bdf}}; wr_se = 8'h7f;
+        @(posedge clk); #1;
+        if (wr_err !== 0) $fatal(1, "h write after reset rejected");
+        @(negedge clk);
+        wr_valid = 0;
+        sr = 1; rd_req = 1; rreq = 1;
+        @(posedge clk); #1;
+        if (sv !== 0 || rd_valid !== 0 || rvalid !== 0)
+            $fatal(1, "early recovery return");
+        @(negedge clk);
+        sr = 0; rd_req = 0; rreq = 0;
+        @(posedge clk); #1;
+        if (sv !== 1 || rd_valid !== 1 || rvalid !== 0)
+            $fatal(1, "operand recovery latency");
+        if (rd_data[255:0] !== {8{32'h13579bdf}} || rd_scales[7:0] !== 8'h7f)
+            $fatal(1, "h recovery data");
+        for (integer lane = 0; lane < 4; lane++) begin
+            if (ssdata[8*lane +: 8] !== 8'(lane*8)) $fatal(1, "XS lost across reset");
+            for (integer element = 0; element < 32; element++)
+                if (sxdata[256*lane+8*element +: 8] !== 8'(lane*8+element))
+                    $fatal(1, "X lost across reset");
+        end
+        @(negedge clk);
+        @(posedge clk); #1;
+        if (sv !== 0 || rd_valid !== 0 || rvalid !== 1 || rdata !== 1024'h12340000)
+            $fatal(1, "external memory recovery latency/data");
+        @(negedge clk);
+        repeat (4) begin
+            @(posedge clk); #1;
+            if (sv !== 0 || rd_valid !== 0 || rvalid !== 0 || rready !== 1)
+                $fatal(1, "duplicate recovery return");
+            @(negedge clk);
+        end
+        reset_checked++;
+        $display("CHECK memory inflight_reset age=%0d held_requests=%0d", age, hold_requests);
+        $fflush();
+    endtask
     initial begin
         @(negedge clk);
         repeat (4) tick();
@@ -183,7 +260,11 @@ module tb_memory_v4;
         end
         rst_n = 0; tick();
         if (owner_valid !== 0 || bank_ready !== 0) $fatal(1, "ownership reset");
-        $display("PASS memory rows=%0d rram=%0d", checked, returned);
+        for (integer age = 1; age <= 2; age++)
+            for (integer hold_requests = 0; hold_requests <= 1; hold_requests++)
+                reset_inflight(age, 1'(hold_requests));
+        if (reset_checked != 4) $fatal(1, "missing reset probes");
+        $display("PASS memory rows=%0d rram=%0d reset_probes=%0d", checked, returned, reset_checked);
         $finish;
     end
 endmodule

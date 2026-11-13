@@ -165,6 +165,15 @@ def execute_logged(command, logfile, cwd, environment, timeout,
         if test and (not re.search(r'^PASS ' + re.escape(test) + r'\b', log, re.M)
                      or re.search(r'^\s*(FAIL\b|Fatal:|FATAL\b)', log, re.M)):
             raise RuntimeError('Missing clean PASS in ' + test)
+        if test == 'yacc':
+            overlap = re.findall(r'^CHECK yacc_overlap banks=2 offsets=44 packets=88 yields=([0-9]+)\s*$', log, re.M)
+            passed = re.findall(r'^PASS yacc packets=216 cycles=([0-9]+)\s*$', log, re.M)
+            if len(overlap) != 1 or len(passed) != 1 or int(overlap[0]) <= 0 or int(passed[0]) <= 0:
+                raise RuntimeError('Missing complete yacc overlap evidence')
+            if log.index('CHECK yacc_overlap') > log.index('PASS yacc'):
+                raise RuntimeError('Yacc overlap evidence follows PASS')
+            record['coverage'] = dict(packets=216, overlap_banks=2, overlap_offsets=44, overlap_packets=88,
+                                      overlap_yields=int(overlap[0]))
         record['status'] = 'passed'
         return log
     except subprocess.TimeoutExpired:

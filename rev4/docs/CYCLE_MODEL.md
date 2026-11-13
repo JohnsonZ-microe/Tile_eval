@@ -1,5 +1,40 @@
 # Rev4 tile timing model (`model/tile_cycles.py`) — not RTL-calibrated
 
+2026-11-12: standalone `_fill` now marks an X/XS group ready only after the
+last active token in its generated ordered sequence has been popped. Previously
+the first token prematurely made the whole group ready. RTL `exp_lane+1>=gl`
+is the source of this all-token fence. Native/generic fill overrides already
+count token completions separately and are unchanged by this correction.
+The standalone model still assumes ordered contiguous token lanes and abstracts
+the registered pop/write/issue edge sequencing; this correction alone does not
+calibrate that complete path. The new diagnostic snapshot is
+`reports/af-estimate/20261112-throughput-v2`; v1 remains historical.
+
+2026-11-12: RQ consumption now requires `return_cycle < current_cycle`.
+The external memory request accepted at E0 is sampled by the scheduler at E3;
+the RQ full bit is registered then, permitting consumption no earlier than E4.
+The three memory credits track requests until return, whereas the four RQ
+reservations last until consumption. No same-edge credit/slot bypass is assumed.
+Six formats times four token counts, one pass without bias and default gaps,
+each increased by two cycles in a local before/after run. This is a component
+timing correction, not full RTL calibration. Published historical snapshots
+retain their old source hashes and cycle counts until explicitly re-evaluated.
+
+Memory issue diagnostics now split the legacy `rram_credit` aggregate into
+`rram_inflight` and `rq_full`; their sum equals the aggregate. These are exclusive
+selected blockers: inflight credit takes precedence when both conditions hold.
+`CNT_RRAM_STALL` retains its prior aggregate behavior. Do not sum the aggregate
+with these subtotals or add issue stalls to overlapping consume-side occupancy
+stalls as if they were exclusive wall-cycle categories. The split does not alter
+issue decisions or latency. Reproduce the 72-case sensitivity report with:
+
+```text
+python NPU_eval/af/throughput_diagnosis.py --output reports/af-estimate/NEW_DIRECTORY
+```
+
+This sweeps six formats, 1–4 tokens and default/slow-input/slow-credit conditions,
+records source hashes and does not represent measured traffic or physical PPA.
+
 2026-11-08: credit lifetime and final-row readiness were corrected. The event
 export/comparator is diagnostic infrastructure, not calibration evidence.
 The numbers below are historical model estimates, not current RTL measurements;

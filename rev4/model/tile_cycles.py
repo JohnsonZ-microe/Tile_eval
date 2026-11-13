@@ -31,8 +31,8 @@ __all__ = ['LATENCIES', 'FORMATS', 'TileCycleModel', 'TileReport',
            'PhaseTiming', 'format_params']
 
 LATENCIES = {
-    'RRAM_LAT': 3,        # pe4_rram: request E0 -> data during E3
-    'RRAM_CREDITS': 3,    # in-flight + unconsumed returns
+    'RRAM_LAT': 3,
+    'RRAM_CREDITS': 3,
     'RQ_DEPTH': 4,        # scheduler return queue
     'SRAM_LAT': 2,        # pe4_sram staging/hbuf read latency
     'PE_COMMIT': 35,      # frozen rev3 PE: accept E0 -> out_valid E35
@@ -295,7 +295,7 @@ class TileCycleModel(object):
             if p.timing.latch is None or p.timing.latch > t:
                 continue
             if p.phase == 'GU' and p.x_si < len(p.x_seq):
-                kind, idx = p.x_seq[p.x_si][0], p.x_seq[p.x_si][1]
+                kind, idx, lane = p.x_seq[p.x_si]
                 arrival = p.timing.latch + 1 + p.x_si * self.x_gap
                 if t >= arrival:
                     issue_kb = (p.words[p.wi]['kb']
@@ -305,9 +305,9 @@ class TileCycleModel(object):
                     else:
                         ok = idx <= 1 or issue_kb >= 2 * idx - 2
                     if ok:
-                        if kind == 'XS':
+                        if kind == 'XS' and lane == self.n_tok-1:
                             p.xs_popped[idx] = True
-                        else:
+                        elif kind == 'X' and lane == self.n_tok-1:
                             p.x_popped[idx] = True
                         p.x_si += 1
                         st.counters['CNT_X_POP'] += 1
@@ -344,9 +344,9 @@ class TileCycleModel(object):
         if ip.wi == 0 and st.rq:
             blocked = 'rq_empty_gap'
         elif sum(entry['ret'] >= t for entry in st.rq) >= lat['RRAM_CREDITS']:
-            blocked = 'rram_credit'
+            blocked = 'rram_inflight'
         elif len(st.rq) >= lat['RQ_DEPTH']:
-            blocked = 'rram_credit'
+            blocked = 'rq_full'
         else:
             first_of_kb = ((w['kind'] == 'S' and w['swi'] == 0) or
                            (w['kind'] == 'W' and w['g'] == 0))
@@ -363,7 +363,8 @@ class TileCycleModel(object):
             st.stalls[blocked] += 1
             if blocked == 'operand_x':
                 st.counters['CNT_X_STALL'] += 1
-            elif blocked == 'rram_credit':
+            elif blocked in ('rram_inflight', 'rq_full'):
+                st.stalls['rram_credit'] += 1
                 st.counters['CNT_RRAM_STALL'] += 1
             return
         if ip.timing.first_issue is None:
@@ -381,7 +382,7 @@ class TileCycleModel(object):
 
     def _consume(self, phases, st, t):
         lat = self.lat
-        if not st.rq or st.rq[0]['ret'] > t:
+        if not st.rq or st.rq[0]['ret'] >= t:
             return
         head = st.rq[0]
         hp = head['phase']
@@ -517,7 +518,7 @@ class _SimState(object):
         self.crd_cycles = set()
         self.yacc_free = -1
         self.stalls = dict((k, 0) for k in (
-            'rram_credit', 'operand_x', 'operand_h', 'occupancy',
+            'rram_credit', 'rram_inflight', 'rq_full', 'operand_x', 'operand_h', 'occupancy',
             'rq_empty_gap', 'up_credit', 'drain_yield', 'yacc_overlap'))
         self.counters = dict((k, 0) for k in (
             'CNT_GU', 'CNT_D', 'CNT_X_POP', 'CNT_H_IN', 'CNT_RRAM_RD',
@@ -536,7 +537,8 @@ def analytic_matrix_rate(fmt):
     min(1, ngroups/REACCEPT, RRAM_CREDITS/(RRAM_LAT+1)) words/cycle.
     The occupancy rule caps per-column-group re-acceptance; the 3-entry
     RRAM credit budget caps at 3/(3+1) = 0.75 words/cycle because each
-    word holds a credit from issue until its consume (LAT+1 cycles)."""
+    old-state ready cannot reuse the credit on its return sampling edge.
+    Queue reservation is separate and lasts until consumption."""
     ncols, sw, period, ng_gu, ng_d, _, _ = format_params(fmt)
     lat = LATENCIES
     return min(1.0,

@@ -27,6 +27,9 @@ module tb_control_v4;
     logic [23:0] expected_sb[0:511];
     integer head = 0, tail = 0, debt = 0, cycles = 0, stalls = 0;
     bit return_enable = 1;
+    integer context_cases = 0, rejected_commands = 0;
+    integer context_busy_cases = 0;
+    integer unaligned_cases = 0;
     task automatic tick;
         #1;
         up_credit = return_enable && debt > 0 ? 1 : 0;
@@ -45,6 +48,43 @@ module tb_control_v4;
         if (dut.sched_u.cnt[9] !== 32'(stalls)) $fatal(1, "credit stall counter");
         if (dut.stf_cnt > 2) $fatal(1, "STATUS FIFO range");
         @(negedge clk);
+    endtask
+    task automatic check_context_formats;
+        integer scale_format;
+        control(int'(TEST_ID),1,12'h00c,32'h003fffff);
+        control(int'(TEST_ID),1,12'h100,32'(5120 | (160 << 16)));
+        control(int'(TEST_ID),1,12'h104,32'(36 | (2304 << 16)));
+        control(int'(TEST_ID),1,12'h10c,1);
+        control(int'(TEST_ID),1,12'h140,0);
+        for (integer index = 0; index < 8; index++)
+            control(int'(TEST_ID),1,12'h120+4*index,pe4_pkg::V41_ACT[index]);
+        for (integer format_id = 0; format_id < 8; format_id++) begin
+            scale_format = format_id == 5 ? 3 : format_id == 2 ? 2 :
+                           (format_id == 3 || format_id == 4) ? 1 : 0;
+            control(int'(TEST_ID),1,12'h108,format_id | (scale_format << 3) |
+                    ((format_id == 2 || format_id == 3) ? 32 : 0));
+            tick();
+            if (dut.sched_u.cp[0].legal !== (format_id < 6))
+                $fatal(1, "CTX format validity format=%0d", format_id);
+            context_cases++;
+            if (format_id >= 6) begin
+                dn_valid = 1; dn_sideband = 0;
+                dn_payload = (512'd3 << 20) | (512'd1 << 43);
+                tick(); dn_valid = 0;
+                repeat (5) begin
+                    if (dut.sched_u.slot[0].valid !== 0 || dut.sched_u.slot[1].valid !== 0 ||
+                        dut.rram_req !== 0 || dut.pe_in_valid !== 0)
+                        $fatal(1, "reserved format started work");
+                    tick();
+                end
+                if (dut.sched_u.err_q !== 22'h000004)
+                    $fatal(1, "reserved format CMD_ILLEGAL missing");
+                control(int'(TEST_ID),1,12'h008,4);
+                repeat (3) tick();
+                if (dut.sched_u.err_q !== 0) $fatal(1, "reserved format W1C failed");
+                rejected_commands++;
+            end
+        end
     endtask
     task automatic control(input integer target, op, address, value);
         dn_valid = 1;
@@ -66,6 +106,64 @@ module tb_control_v4;
             if (waited > 1000) $fatal(1, "missing STATUS response");
         end
         repeat (5) tick();
+    endtask
+    task automatic check_context_busy;
+        integer address;
+        control(int'(TEST_ID),1,12'h108,0);
+        control(int'(TEST_ID),1,12'h180,32'h12345678);
+        control(int'(TEST_ID),1,12'h1c0,0);
+        repeat (3) tick();
+        dn_valid = 1; dn_sideband = 0;
+        dn_payload = (512'd3 << 20) | (512'd1 << 43);
+        tick(); dn_valid = 0;
+        repeat (3) tick();
+        if (dut.sched_u.slot[0].valid !== 1'b1 || dut.rram_req !== 0)
+            $fatal(1, "CTX busy probe failed to establish waiting CMD");
+        for (integer index = 0; index < 4; index++) begin
+            case (index)
+                0: address = 12'h100;
+                1: address = 12'h140;
+                2: address = 12'h180;
+                default: address = 12'h1c0;
+            endcase
+            control(int'(TEST_ID),1,address,32'hffffffff);
+            repeat (4) tick();
+            if (dut.sched_u.ctx_word[0][0] !== 32'(5120 | (160 << 16)) ||
+                dut.sched_u.ctx_word[1][0] !== 32'h12345678 ||
+                dut.sched_u.ctx_mode[0] !== 0 || dut.sched_u.ctx_mode[1] !== 0)
+                $fatal(1, "busy CTX write modified storage");
+            if (dut.sched_u.err_q !== 22'h008000 || dut.rram_req !== 0 ||
+                dut.sched_u.slot[0].valid !== 1'b1)
+                $fatal(1, "CTX_BUSY missing or active CMD disturbed");
+            control(int'(TEST_ID),1,12'h008,32'h00008000);
+            repeat (4) tick();
+            if (dut.sched_u.err_q !== 0) $fatal(1, "CTX_BUSY W1C failed");
+            context_busy_cases++;
+        end
+        rst_n = 0;
+        @(posedge clk); #1;
+        if (dut.sched_u.slot[0].valid !== 0 || dut.sched_u.slot[1].valid !== 0)
+            $fatal(1, "CTX busy probe reset did not cancel CMD");
+        @(negedge clk);
+    endtask
+    task automatic check_unaligned_context;
+        control(int'(TEST_ID),1,12'h180,32'h12345678);
+        repeat (3) tick();
+        for (integer bank = 0; bank < 2; bank++) begin
+            for (integer offset = 1; offset < 4; offset++) begin
+                control(int'(TEST_ID),1,12'h100+bank*128+offset,32'hffffffff);
+                repeat (4) tick();
+                if (dut.sched_u.ctx_word[0][0] !== 32'(5120 | (160 << 16)) ||
+                    dut.sched_u.ctx_word[1][0] !== 32'h12345678)
+                    $fatal(1, "unaligned CTX write aliased a word");
+                if (dut.sched_u.err_q !== 22'h010000)
+                    $fatal(1, "unaligned CTX write REG_ADDR missing");
+                control(int'(TEST_ID),1,12'h008,32'h00010000);
+                repeat (4) tick();
+                if (dut.sched_u.err_q !== 0) $fatal(1, "REG_ADDR W1C failed");
+                unaligned_cases++;
+            end
+        end
     endtask
     initial begin
         repeat (3) @(negedge clk);
@@ -118,7 +216,15 @@ module tb_control_v4;
         release dut.sched_u.quant_err;
         release dut.hbuf_u.wr_err;
         if (dut.sched_u.err_q !== 0) $fatal(1, "numeric final clear failed");
-        $display("PASS control replies=%0d stall_cycles=%0d numeric_w1c=1",tail,stalls);
+        check_context_formats();
+        flush();
+        if (context_cases != 8 || rejected_commands != 2) $fatal(1, "CTX format coverage");
+        check_unaligned_context();
+        if (unaligned_cases != 6) $fatal(1, "unaligned CTX coverage");
+        check_context_busy();
+        if (context_busy_cases != 4) $fatal(1, "CTX busy coverage");
+        $display("PASS control replies=%0d stall_cycles=%0d numeric_w1c=1 context_cases=%0d rejected_commands=%0d context_busy_cases=%0d unaligned_cases=%0d",
+                 tail,stalls,context_cases,rejected_commands,context_busy_cases,unaligned_cases);
         $finish;
     end
 endmodule

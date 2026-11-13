@@ -161,10 +161,9 @@ module pe4_bus #(parameter logic [6:0] TILE_ID = 7'd16) (
             up_credit_err <= 0;
             if (int'(credit) + int'(up_credit) > UP_CREDITS)
                 up_credit_err <= 1;
-            credit <= 3'(beat_fire ? (int'(credit) + int'(up_credit) - 1)
-                                   : (int'(credit) + int'(up_credit) > UP_CREDITS
-                                      ? UP_CREDITS
-                                      : int'(credit) + int'(up_credit)));
+            credit <= 3'(int'(credit) - int'(beat_fire) +
+                          (int'(credit) + int'(up_credit) > UP_CREDITS
+                           ? 0 : int'(up_credit)));
         end
     end
     // arbiter: H first (dedicated slot, M22), then Y, then STATUS; a packet
