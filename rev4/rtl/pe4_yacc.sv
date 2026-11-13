@@ -94,6 +94,10 @@ module pe4_yacc (
     logic [5:0] cur_slot;
     assign cur_slot = cslots[lane_sel];
     assign commit_busy = (cstate != CIDLE);
+    assign commit_bank_id = cbank;
+    // shared y-bank port arbitration: commit reads have priority on their
+    // bank; a DRAIN read on the same bank yields (yield_stall below)
+    logic cre, dre;
     assign commit_rd_active = (cstate == CRD) || (cre === 1'b1);
     // ^ includes the actual SRAM read cycle (cre is registered: fires one
     //   cycle AFTER CRD). Without this, the DRAIN sees yield deasserted
@@ -101,10 +105,6 @@ module pe4_yacc (
     //   port silently routes the COMMIT's address — the DRAIN captures
     //   data from the wrong slot (observed as slot=0 returning slot=1's
     //   data in the overlap probe).
-    assign commit_bank_id = cbank;
-    // shared y-bank port arbitration: commit reads have priority on their
-    // bank; a DRAIN read on the same bank yields (yield_stall below)
-    logic cre, dre;
     logic [9:0] craddr, draddr;
     // declared here (before first use): DC Presto requires declaration
     // before use; these were previously declared further down (VER-956)
