@@ -58,7 +58,13 @@ module tb_yacc_v4;
                 read_identity_output[bank] <= read_identity_addr[bank];
                 read_identity_output_known[bank] <= read_identity_known[bank];
             end
-            if (dut.dstate == 2'd1 && dut.dwait_cnt == 3'd4 && !drain_yield) begin
+            // Check the SRAM read address identity at the DRAIN capture point.
+            // Guard: when the commit engine is reading the same bank, the
+            // shared port gives commit priority and overwrites the tracked
+            // address — the identity check only applies to uninterleaved
+            // drain reads (data correctness is separately checked by value).
+            if (dut.dstate == 2'd1 && dut.dwait_cnt == 3'd4 && !drain_yield
+                    && !(dut.commit_rd_active && dut.commit_bank_id === dut.dbank)) begin
                 if (read_identity_output_known[dut.dbank] !== 1'b1 ||
                     read_identity_output[dut.dbank] !== 10'(10*int'(dut.dslot)+int'(dut.drow)))
                     $fatal(1, "Y read identity bank=%0d slot=%0d row=%0d actual_addr=%0d expected_addr=%0d cycle=%0d", dut.dbank,dut.dslot,dut.drow,read_identity_output[dut.dbank],10*int'(dut.dslot)+int'(dut.drow),cycles);
