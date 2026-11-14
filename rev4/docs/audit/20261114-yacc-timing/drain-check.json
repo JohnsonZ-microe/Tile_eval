@@ -1,0 +1,21 @@
+{
+  "edges": 71276,
+  "commands": 216,
+  "beats": 2160,
+  "packets": 216,
+  "reads": 2160,
+  "clears": 216,
+  "yields": 9394,
+  "stalls": 6020,
+  "identity_checks": 2160,
+  "arbitration": "whole-commit",
+  "scope": "DRAIN control and read identity only; observed commit-set/busy inputs; no payload or full Tile calibration",
+  "wave_sha256": "27cf59be941dd90b13cd91bf32ed46934d7a7d4fe23f2ea35913ef56e434c89e",
+  "sources": {
+    "vcd_drain_check.py": "084de67bbe8f672fd95ee1cfc5fb3d1bf24709f91727a601e61ab11e0c33bd8b",
+    "vcd_bus_check.py": "6ac169ab41d7fcfbf8c59116f619edc00d5218a47c340dce04a9587e751fc0fb",
+    "drain_replay.py": "b1b59515dac4cfd5e379867cd064dc976bbc59c1eba2576c602e490d619a7709",
+    "y_control_replay.py": "a62a2cde5eea05b342c800319ddda5558eb2637321dead9edd31c89ed5c475d4",
+    "commit_replay.py": "a3e2b275dbf68edd7977f1d5a2468bacce397c748b1154db99a7214d87b7e4c2"
+  }
+}

@@ -17,7 +17,7 @@ control path; see rev4/docs/CYCLE_MODEL.md for fidelity/approximations):
     fence for D admission, H quantisation latency
   - GU epilogue: ACT (36 column pairs, 1/cycle, 24-cycle latency) and the
     H_UP packet through the credit-limited up launcher (H > Y > STATUS)
-  - D epilogue: y commit RMW (n_tok x 10 rows, ~17 cycles/row) overlapping
+  - D epilogue: y commit RMW (n_tok x 10 rows, 22 cycles/row) overlapping
     the next phase, DRAIN reads with same-bank yield
   - Two CMD slots with cross-phase prefetch overlap
 
@@ -28,7 +28,7 @@ datapath values are computed).
 from collections import deque
 
 __all__ = ['LATENCIES', 'FORMATS', 'TileCycleModel', 'TileReport',
-           'PhaseTiming', 'format_params']
+           'PhaseTiming', 'format_params', 'yacc_commit_schedule']
 
 LATENCIES = {
     'RRAM_LAT': 3,
@@ -40,13 +40,39 @@ LATENCIES = {
     'QUANT': 3,           # pe4_quant pipeline
     'ACT': 24,            # pe4_act latency (bias add + core)
     'ACT_COLS': 36,       # SwiGLU column pairs (H_COLS)
-    'YACC_ROW': 17,       # y commit row: mul(4)+add(6)+add(6)+seq
+    'YACC_ROW': 22,       # registered row sequencer; VCD-checked 2026-11-14
     'YACC_WARM': 1,       # trigger -> first row read
     'DRAIN_ROW': 6,       # drain: read (SRAM_LAT) + build + beat gap
     'UP_CREDITS': 6,      # tile->L1 launcher credits
     'XFIFO': 128,         # x FIFO depth (hub-side credit seed)
     'HUB_TURN': 2,        # H broadcast start after the last H_UP beat
 }
+
+def yacc_commit_schedule(mask, trigger=0, row_cycles=22, warm=1):
+    """Commit component edge schedule, including inactive-lane scans.
+
+    trigger/read/write are consumer edges. Publications and idle_visible are
+    visible after NBA at that edge, consumable at the next edge. No datapath,
+    DRAIN arbitration, reset, or full-tile calibration is implied.
+    """
+    if not isinstance(mask, int) or not 0 <= mask < 16:
+        raise ValueError('commit mask must be 0..15')
+    if trigger < 0 or row_cycles < 1 or warm < 1:
+        raise ValueError('invalid commit timing')
+    cycle = trigger + warm
+    reads, writes, publications = [], [], []
+    for lane in range(4):
+        if not mask & (1 << lane):
+            cycle += 1
+            continue
+        for row in range(10):
+            reads.append(dict(cycle=cycle, lane=lane, row=row))
+            cycle += row_cycles
+            writes.append(cycle)
+        publications.append(cycle)
+    return dict(row_reads=reads, writes=writes, publications=publications,
+                idle_visible=cycle)
+
 
 FORMATS = {0: 'fp4', 1: 'fp8', 2: 'fp8-f32', 3: 'fp8-bf16', 4: 'int4',
            5: 'bf16'}
@@ -443,19 +469,18 @@ class TileCycleModel(object):
 
     def _arm_dcommit(self, cp, st, trig):
         lat = self.lat
-        rows = self.n_tok * 10
+        schedule = yacc_commit_schedule((1 << self.n_tok) - 1, trig,
+                                        lat['YACC_ROW'], lat['YACC_WARM'])
         cp.timing.sync1 = trig
         cp.retired = True
         st.counters['CNT_SYNC1'] += 1
         st.counters['CNT_D'] += 1
-        for i in range(rows):
-            st.crd_cycles.add(trig + lat['YACC_WARM'] + i * lat['YACC_ROW'])
-        st.yacc_free = trig + lat['YACC_WARM'] + rows * lat['YACC_ROW']
+        for row in schedule['row_reads']:
+            st.crd_cycles.add(row['cycle'])
+        st.yacc_free = schedule['idle_visible']
         if self.drain:
-            for lane in range(self.n_tok):
-                ready = (trig + lat['YACC_WARM'] +
-                         (lane + 1) * 10 * lat['YACC_ROW'])
-                st.y_q.append((ready, 10))
+            for publication in schedule['publications']:
+                st.y_q.append((publication + 1, 10))
 
     def _launcher(self, phases, st, t):
         lat = self.lat

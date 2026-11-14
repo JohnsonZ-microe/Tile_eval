@@ -1,3 +1,10 @@
+2026-11-14: YACC commit rows corrected from 17 to 22 cycles using 152 commits
+from the supplied VCS waveform. Disabled-lane scan cycles and next-edge valid
+consumption are included. See audit/20261114-yacc-timing/REPORT.md for all-event
+comparison, source identity, model impact and coverage limits. This validates
+only the commit schedule for observed masks. The standalone DRAIN launcher still
+uses an obsolete CRD-only yield approximation whereas current RTL blocks DWAIT
+throughout a same-bank commit; whole-tile timing is not calibrated.
 # Rev4 tile timing model (`model/tile_cycles.py`) — not RTL-calibrated
 
 2026-11-12: standalone `_fill` now marks an X/XS group ready only after the

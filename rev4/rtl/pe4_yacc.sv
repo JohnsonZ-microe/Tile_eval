@@ -280,7 +280,12 @@ module pe4_yacc (
                         dstate <= vbit[drain_bank][drain_slot] ? DWAIT : DV0;
                     end
                 end
-                DWAIT: if (!yield_stall) begin
+                DWAIT: if (yield_stall) begin
+                    // A commit may replace SRAM rdata after DRAIN issued its
+                    // read. Restart the request after the busy fence, rather
+                    // than resuming a stale capture countdown.
+                    dwait_cnt <= 0;
+                end else begin
                     if (dwait_cnt == 0) begin
                         dre <= 1;
                         draddr <= 10'(10 * int'(dslot) + int'(drow));

@@ -35,15 +35,10 @@ module tb_yacc_v4;
     logic [9:0] read_identity_output [0:1];
     bit read_identity_known [0:1];
     bit read_identity_output_known [0:1];
-    // Sticky flag: a commit read fired on the drain's bank since the drain
-    // last issued its own read (shared port, commit priority). The tracked
-    // address may then belong to the commit, not the drain.
-    bit commit_since_drain;
     integer read_identity_checks = 0;
     always @(posedge clk) begin : read_identity_monitor
         if (!rst_n) begin
             read_identity_checks <= 0;
-            commit_since_drain <= 0;
             for (integer bank = 0; bank < 2; bank++) begin
                 read_identity_addr[bank] <= 0;
                 read_identity_output[bank] <= 0;
@@ -51,13 +46,6 @@ module tb_yacc_v4;
                 read_identity_output_known[bank] <= 0;
             end
         end else begin
-            // reset the interleave flag at the drain's read issue point
-            if (dut.dstate == 2'd1 && dut.dwait_cnt == 3'd0 && !drain_yield)
-                commit_since_drain <= 0;
-            // set it when the commit engine reads the same bank
-            else if (dut.commit_rd_active === 1'b1
-                     && dut.commit_bank_id === dut.dbank)
-                commit_since_drain <= 1;
             if (dut.re0 === 1'b1) begin
                 read_identity_addr[0] <= dut.raddr0;
                 read_identity_known[0] <= 1;
@@ -71,10 +59,9 @@ module tb_yacc_v4;
                 read_identity_output_known[bank] <= read_identity_known[bank];
             end
             // Check the SRAM read address identity at the DRAIN capture point.
-            // Skip when a commit read interleaved (address was overwritten);
-            // data correctness is separately verified by the value comparison.
-            if (dut.dstate == 2'd1 && dut.dwait_cnt == 3'd4 && !drain_yield
-                    && !commit_since_drain) begin
+            // Every capture must retain DRAIN identity, including after a
+            // commit interrupted an in-flight request. No skip exemption.
+            if (dut.dstate == 2'd1 && dut.dwait_cnt == 3'd4 && !drain_yield) begin
                 if (read_identity_output_known[dut.dbank] !== 1'b1 ||
                     read_identity_output[dut.dbank] !== 10'(10*int'(dut.dslot)+int'(dut.drow)))
                     $fatal(1, "Y read identity bank=%0d slot=%0d row=%0d actual_addr=%0d expected_addr=%0d cycle=%0d", dut.dbank,dut.dslot,dut.drow,read_identity_output[dut.dbank],10*int'(dut.dslot)+int'(dut.drow),cycles);
@@ -124,6 +111,8 @@ module tb_yacc_v4;
         commit_trigger = concurrent_commit && commit_lead == 0;
         tick(); commit_trigger = 0; drain_valid = 0; received = 0; waited = 0;
         while (received < 10) begin
+            // Negative lead: commit begins after DRAIN has already started.
+            commit_trigger = concurrent_commit && commit_lead < 0 && waited == -commit_lead-1;
             yb_ready = concurrent_commit || waited % 11 >= 5;
             #1;
             fire = yb_valid && yb_ready;
@@ -136,7 +125,7 @@ module tb_yacc_v4;
                     yb_segment !== drain_segment) $fatal(1, "Y metadata");
                 received++;
             end
-            tick(); waited++;
+            tick(); commit_trigger = 0; waited++;
             if (waited > 10000) $fatal(1, "Y missing packet");
         end
         yb_ready = 0;
@@ -162,7 +151,7 @@ module tb_yacc_v4;
         integer yields_before;
         for (integer bank = 0; bank < 2; bank++) begin
             yields_before = overlap_yields;
-            for (integer lead = 0; lead < 22; lead++) begin
+            for (integer lead = -21; lead < 22; lead++) begin
             commit_bank = 1'(bank);
             commit_mask = 4'b0001;
             commit_slots[0] = 6'd0;
@@ -184,7 +173,7 @@ module tb_yacc_v4;
                 $fatal(1, "same-bank yield not exercised bank=%0d", bank);
         end
         if (overlap_yields == 0) $fatal(1, "same-bank overlap did not exercise yield");
-        $display("CHECK yacc_overlap banks=2 offsets=44 packets=88 yields=%0d", overlap_yields);
+        $display("CHECK yacc_overlap banks=2 offsets=86 packets=172 yields=%0d", overlap_yields);
     endtask
     initial begin
         for (integer lane = 0; lane < 4; lane++) begin
@@ -237,8 +226,8 @@ module tb_yacc_v4;
         end
         if (packets != 128) $fatal(1, "Y slot coverage");
         check_same_bank_overlap();
-        if (packets != 216) $fatal(1, "Y overlap packet coverage");
-        if (read_identity_checks != 2160) $fatal(1, "Y read identity coverage");
+        if (packets != 300) $fatal(1, "Y overlap packet coverage");
+        if (read_identity_checks != 3000) $fatal(1, "Y read identity coverage");
         $display("CHECK yacc_read_identity rows=%0d", read_identity_checks);
         $display("PASS yacc packets=%0d cycles=%0d",packets,cycles);
         $finish;

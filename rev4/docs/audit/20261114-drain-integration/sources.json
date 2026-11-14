@@ -1,0 +1,8 @@
+{
+  "NPU_eval/rev4/drain_leaf_timing.py": "11a048e6da3ffb5092ffe4fafd19d30238fd3ee1529baa373ab320379ad383c5",
+  "NPU_eval/rev4/npu_cycles.py": "746a84a97d18433844fd8d454575310a75f62a67b0ff88246c88b95b11ce61aa",
+  "NPU_eval/generic/generic_cycles.py": "680f054e6afad71e551e073b0ff847af74aa2fab77220cf1089cdf3ae440ad9c",
+  "NPU_eval/rev4/SPEC.md": "6f756d0f705b71aa56d683d71baf7b61a8fa3db9d584ded606b8dfb4bc8460c6",
+  "NPU_eval/generic/SPEC.md": "f5dee3296bcdb47ed3589c6f36789d03913852fd85168f68a376f73a02fdb085",
+  "NPU_eval/rev4/tests/test_drain_leaf_timing.py": "041fc8026b80612ee34e0d98196f1e94d856bf8c84b0c28b978218ee615f9a25"
+}

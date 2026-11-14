@@ -1,0 +1,106 @@
+[
+  {
+    "batch": 1,
+    "hold": 0,
+    "cycles": 276,
+    "token_capture_cycles": [
+      275
+    ],
+    "root_beats": 192,
+    "buffer_hold": 0
+  },
+  {
+    "batch": 1,
+    "hold": 2000,
+    "cycles": 276,
+    "token_capture_cycles": [
+      275
+    ],
+    "root_beats": 192,
+    "buffer_hold": 2000
+  },
+  {
+    "batch": 4,
+    "hold": 0,
+    "cycles": 852,
+    "token_capture_cycles": [
+      275,
+      467,
+      659,
+      851
+    ],
+    "root_beats": 768,
+    "buffer_hold": 0
+  },
+  {
+    "batch": 4,
+    "hold": 2000,
+    "cycles": 2744,
+    "token_capture_cycles": [
+      275,
+      467,
+      2551,
+      2743
+    ],
+    "root_beats": 768,
+    "buffer_hold": 2000
+  },
+  {
+    "batch": 20,
+    "hold": 0,
+    "cycles": 3924,
+    "token_capture_cycles": [
+      275,
+      467,
+      659,
+      851,
+      1043,
+      1235,
+      1427,
+      1619,
+      1811,
+      2003,
+      2195,
+      2387,
+      2579,
+      2771,
+      2963,
+      3155,
+      3347,
+      3539,
+      3731,
+      3923
+    ],
+    "root_beats": 3840,
+    "buffer_hold": 0
+  },
+  {
+    "batch": 20,
+    "hold": 2000,
+    "cycles": 20952,
+    "token_capture_cycles": [
+      275,
+      467,
+      2551,
+      2743,
+      4827,
+      5019,
+      7103,
+      7295,
+      9379,
+      9571,
+      11655,
+      11847,
+      13931,
+      14123,
+      16207,
+      16399,
+      18483,
+      18675,
+      20759,
+      20951
+    ],
+    "root_beats": 3840,
+    "buffer_hold": 2000
+  }
+]
