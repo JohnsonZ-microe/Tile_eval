@@ -98,13 +98,16 @@ module pe4_yacc (
     // shared y-bank port arbitration: commit reads have priority on their
     // bank; a DRAIN read on the same bank yields (yield_stall below)
     logic cre, dre;
+    // Conservative same-bank yield: the DRAIN waits whenever the COMMIT is
+    // non-idle on the same bank. The previous fine-grained yield (CRD+cre)
+    // left a 1-cycle window where dre (registered, arrives 1 cycle after
+    // the FSM decision) could coincide with cre at the shared port — the
+    // commit address won and the DRAIN silently captured wrong-slot data.
+    // Yielding for the whole commit duration is slower but correct; the
+    // overlap probe still exercises yields and the counter increments.
+    assign drain_yield = (dstate == DWAIT) &&
+                         (cstate != CIDLE) && (cbank == dbank);
     assign commit_rd_active = (cstate == CRD) || (cre === 1'b1);
-    // ^ includes the actual SRAM read cycle (cre is registered: fires one
-    //   cycle AFTER CRD). Without this, the DRAIN sees yield deasserted
-    //   during the CWT entry cycle, issues its own read, and the shared
-    //   port silently routes the COMMIT's address — the DRAIN captures
-    //   data from the wrong slot (observed as slot=0 returning slot=1's
-    //   data in the overlap probe).
     logic [9:0] craddr, draddr;
     // declared here (before first use): DC Presto requires declaration
     // before use; these were previously declared further down (VER-956)
@@ -241,12 +244,10 @@ module pe4_yacc (
     logic [6:0] drow, drow_last;
     logic [2:0] dwait_cnt;
     logic [127:0] dphit;
-    logic yield_stall;
     logic row_is_last;
     assign row_is_last = (drow == drow_last);
-    assign yield_stall = (dstate == DWAIT) && commit_rd_active &&
-                         (commit_bank_id == dbank);
-    assign drain_yield = yield_stall;
+    // yield_stall == drain_yield (assigned above, conservative same-bank)
+    assign yield_stall = drain_yield;
     always_ff @(posedge clk) begin
         if (!rst_n) begin
             dstate <= DIDLE;
