@@ -166,9 +166,21 @@ module tb_tile_v4;
                     dut.sched_u.head.bidx, dut.sched_u.head.swi,
                     dut.sched_u.head.kb, dut.sched_u.head.g,
                     dut.sched_u.head.ncols, dut.sched_u.head.fmt};
+                if ($isunknown({actual_metadata, dut.sched_u.head.full,
+                                dut.sched_u.head.data}))
+                    $fatal(1, "RQ probe X in consume view transaction=%0d cyc=%0d rq_cons=%0d cnt=%0d",
+                           rq_probe_consumed, rq_probe_cycle,
+                           dut.sched_u.rq_cons, dut.sched_u.rq_cnt);
                 if (actual_metadata !== rq_probe_metadata[entry_index] ||
                     dut.sched_u.slot[dut.sched_u.head.slot].pass_id !== rq_probe_pass[entry_index])
-                    $fatal(1, "RQ probe metadata/pass mismatch transaction=%0d", rq_probe_consumed);
+                    $fatal(1, "RQ probe metadata/pass mismatch transaction=%0d cyc=%0d exp=%08h act=%08h slot=%0d pass=%02h/%02h iss_fire=%b%b rq_cons=%0d cnt=%0d",
+                           rq_probe_consumed, rq_probe_cycle,
+                           rq_probe_metadata[entry_index], actual_metadata,
+                           dut.sched_u.head.slot,
+                           rq_probe_pass[entry_index],
+                           dut.sched_u.slot[dut.sched_u.head.slot].pass_id,
+                           dut.sched_u.iss_fire0, dut.sched_u.iss_fire1,
+                           dut.sched_u.rq_cons, dut.sched_u.rq_cnt);
                 if (dut.sched_u.head.full !== 1'b1 ||
                     dut.sched_u.head.data !== rq_probe_data[entry_index] ||
                     $isunknown(dut.sched_u.head.data))
