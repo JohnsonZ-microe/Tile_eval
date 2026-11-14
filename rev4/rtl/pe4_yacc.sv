@@ -96,17 +96,9 @@ module pe4_yacc (
     assign commit_busy = (cstate != CIDLE);
     assign commit_bank_id = cbank;
     // shared y-bank port arbitration: commit reads have priority on their
-    // bank; a DRAIN read on the same bank yields (yield_stall below)
+    // bank; a DRAIN read on the same bank yields (drain_yield assigned
+    // below, after the DRAIN engine declarations)
     logic cre, dre;
-    // Conservative same-bank yield: the DRAIN waits whenever the COMMIT is
-    // non-idle on the same bank. The previous fine-grained yield (CRD+cre)
-    // left a 1-cycle window where dre (registered, arrives 1 cycle after
-    // the FSM decision) could coincide with cre at the shared port — the
-    // commit address won and the DRAIN silently captured wrong-slot data.
-    // Yielding for the whole commit duration is slower but correct; the
-    // overlap probe still exercises yields and the counter increments.
-    assign drain_yield = (dstate == DWAIT) &&
-                         (cstate != CIDLE) && (cbank == dbank);
     assign commit_rd_active = (cstate == CRD) || (cre === 1'b1);
     logic [9:0] craddr, draddr;
     // declared here (before first use): DC Presto requires declaration
@@ -246,7 +238,13 @@ module pe4_yacc (
     logic [127:0] dphit;
     logic row_is_last;
     assign row_is_last = (drow == drow_last);
-    // yield_stall == drain_yield (assigned above, conservative same-bank)
+    // Conservative same-bank yield: the DRAIN waits whenever the COMMIT is
+    // non-idle on the same bank (CRD, CWT, or cre cycle). The previous
+    // fine-grained yield left a 1-cycle race where dre (registered) could
+    // coincide with cre at the shared port — the commit address won and the
+    // DRAIN captured wrong-slot data. Whole-commit yield is correct.
+    assign drain_yield = (dstate == DWAIT) &&
+                         (cstate != CIDLE) && (cbank == dbank);
     assign yield_stall = drain_yield;
     always_ff @(posedge clk) begin
         if (!rst_n) begin
