@@ -409,10 +409,79 @@ def main():
             shutil.copy2(str(checks), str(logdir / 'checks.json'))
     except OSError:
         pass  # logs dir may be unwritable; products copies are authoritative
+    # ---- automatic log push to the local Windows receiver (best-effort) ----
+    push_result = _push_logs(logdir)
+    if push_result:
+        print(push_result)
     print(json.dumps({k: manifest.get(k) for k in
                       ('status', 'error', 'rtl_validation', 'products_dir',
                        'log_dir', 'seconds')}))
     return status
+
+
+def _push_logs(logdir):
+    """Tar the run's log directory and POST it to the local receiver.
+
+    Reads PUSH_URL and PUSH_TOKEN from ~/.tile-logs-sync.conf (same config
+    as tools/logs_sync/vdi_push_logs.sh). Returns a status string, or None
+    if push is not configured / fails silently.
+    """
+    import tarfile
+    import urllib.request
+    import urllib.error
+
+    conf = Path.home() / '.tile-logs-sync.conf'
+    if not conf.exists():
+        return None  # not configured; run on the server once to bootstrap
+
+    push_url, push_token = '', ''
+    for line in conf.read_text().splitlines():
+        if line.startswith('PUSH_URL='):
+            push_url = line.split('=', 1)[1].strip()
+        elif line.startswith('PUSH_TOKEN='):
+            push_token = line.split('=', 1)[1].strip()
+    if not push_url or not push_token:
+        return None
+
+    tag = logdir.name
+    # settle: wait for the directory to stop changing (exit_code.txt is
+    # written last by run.py, but VCD copies etc. may still be flushing)
+    time.sleep(3)
+
+    # tar the logdir in memory (gzip)
+    import io
+    buf = io.BytesIO()
+    try:
+        with tarfile.open(fileobj=buf, mode='w:gz') as tf:
+            for f in sorted(logdir.rglob('*')):
+                if f.is_file():
+                    tf.add(str(f), arcname=str(f.relative_to(logdir.parent)))
+    except OSError as exc:
+        return 'LOG_PUSH: tar failed (%s)' % exc
+
+    data = buf.getvalue()
+    req = urllib.request.Request(
+        '%s/push/%s.tgz' % (push_url, tag),
+        data=data,
+        headers={'X-Sync-Token': push_token,
+                 'Content-Type': 'application/gzip'},
+        method='POST')
+    try:
+        resp = urllib.request.urlopen(req, timeout=120)
+        code = resp.getcode()
+        detail = resp.read().decode('utf-8', errors='replace').strip()
+        if code in (200, 201):
+            return 'LOG_PUSH: ok %s -> %s (%d bytes) %s' % (
+                tag, push_url, len(data), detail)
+        elif code == 409:
+            return 'LOG_PUSH: skip %s (receiver already has identical)' % tag
+        return 'LOG_PUSH: http=%d %s' % (code, detail)
+    except urllib.error.HTTPError as exc:
+        if exc.code == 409:
+            return 'LOG_PUSH: skip %s (identical)' % tag
+        return 'LOG_PUSH: http=%d from receiver' % exc.code
+    except (urllib.error.URLError, OSError) as exc:
+        return 'LOG_PUSH: unreachable (%s) — receiver running?' % exc
 
 
 if __name__ == '__main__':
