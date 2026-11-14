@@ -115,6 +115,13 @@ module tb_tile_v4;
                 $dumpoff;
                 wait ($time >= 64'(5 + 10 * vcd_from));
                 $dumpon;
+                // $fatal terminates the process WITHOUT flushing VCS's
+                // buffered VCD writer - the whole window would be lost.
+                // Flush every cycle from here on so the dump survives.
+                forever begin
+                    @(posedge clk);
+                    $dumpflush;
+                end
             end
         end
     end
