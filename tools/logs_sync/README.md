@@ -3,7 +3,9 @@
 把 ECE VDI 上每次 VCS 仿真结束后的日志目录，自动回收到本地
 `C:\Users\Administrator\Dropbox\LNS_DSE\Tile_eval\logs\<tag>\`；
 `run.py --waves` 产生的波形（`*.vcd`）也会自动回收到
-`C:\Users\Administrator\Dropbox\LNS_DSE\Tile_eval\vcd\<name>.vcd`。
+`C:\Users\Administrator\Dropbox\LNS_DSE\Tile_eval\vcd\<name>.vcd`；
+仿真侧 CSV 跟踪（`tile-events.csv`、`calibration-events.csv` 等）则合并进
+`logs\<tag>\`。
 
 ## 为什么是"推"而不是"拉"
 
@@ -23,6 +25,11 @@ VDI: ~/Desktop/Products/<tag>/*.vcd        （--waves 波形，位于 products �
         │  每个文件单独打包，POST /vcd/<name>.vcd.tgz
         ▼
     C:\Users\Administrator\Dropbox\LNS_DSE\Tile_eval\vcd\<name>.vcd
+
+VDI: ~/Desktop/Products/<tag>/*.csv        （+TRACE/+CALIBRATION_TRACE 跟踪）
+        │  按 <tag>/<name>.csv 成员打包，POST /push/<tag>.tgz
+        ▼
+    C:\Users\Administrator\Dropbox\LNS_DSE\Tile_eval\logs\<tag>\<name>.csv
 ```
 
 ## 一次性部署
@@ -98,6 +105,7 @@ python3 scripts/run.py ... && ~/vdi_push_logs.sh --once
 | 同名 vcd 已存在且内容相同 | 返回 `409`，脚本记为已发送 |
 | 同名 vcd 但内容更新 | **原子覆盖**为新版本，`vcd\.sync.json` 记录 sha256/大小/来源 tag/时间 |
 | 单个波形 > `VCD_MAX_MB`（默认 400MB） | VDI 侧**警告一次并跳过不传**（`.skip` 标记，`--force` 也不传）；接收端兜底拒绝 `413` |
+| products 目录的 `*.csv` | 每个文件单独推送，**合并**进 `logs\<tag>\`（不覆盖已有日志）；失败下轮自动补推 |
 
 接收端只写文件，**从不执行任何东西**；写完后在目标目录留一份 `.sync.json`
 （sha256、推送时间、文件清单），便于核对来源。

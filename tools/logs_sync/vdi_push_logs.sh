@@ -10,6 +10,9 @@
 # C:\Users\Administrator\Dropbox\LNS_DSE\Tile_eval\vcd\<name>.vcd.
 # Waveforms larger than VCD_MAX_MB (default 400) MB are warned about once
 # and never transferred.
+# CSV traces (tile-events.csv, calibration-events.csv, ...) are also written
+# to the products dir; each is merged into logs/<tag>/ on the laptop through
+# the regular /push endpoint.
 #
 # A run is considered finished when its directory contains exit_code.txt
 # (run.py writes that last) and has stopped changing for SETTLE seconds.
@@ -201,6 +204,67 @@ push_vcd_one() {
   return $rc
 }
 
+# CSV traces (tile-events.csv, calibration-events.csv, ...) are written next
+# to the waveforms in $PRODUCTS_DIR/<tag>. They belong with the logs, so each
+# one is tarred as <tag>/<name>.csv and POSTed to the regular /push endpoint,
+# which merges it into logs/<tag>/ on the laptop. Own marker per file, so a
+# failed transfer is retried on the next scan.
+push_csv_one() {
+  local tag="$1"
+  local dir="$PRODUCTS_DIR/$tag"
+  local force="${2:-0}"
+  local rc=0 csv base marker tmp resp code attempt size
+
+  [ -d "$dir" ] || return 0
+  for csv in "$dir"/*.csv; do
+    [ -f "$csv" ] || continue
+    base=$(basename "$csv")
+    marker="$PUSHED_DIR/csv-$tag-$base"
+    if [ -f "$marker" ] && [ "$force" != "1" ]; then
+      log "skip $base (already pushed; use --force to resend)"
+      continue
+    fi
+
+    tmp=$(mktemp -t "tilecsv.XXXXXX") || return 1
+    resp="${tmp}.resp"
+    # members must sit under <tag>/ for the receiver's path checks
+    if ! tar czf "$tmp" -C "$PRODUCTS_DIR" "$tag/$base" 2>"${tmp}.err"; then
+      log "tar failed for $base: $(cat "${tmp}.err")"
+      rm -f "$tmp" "${tmp}.err" "$resp"
+      rc=1
+      continue
+    fi
+    size=$(wc -c < "$tmp")
+    log "pushing $base from $tag (${size} bytes) -> $PUSH_URL/push"
+
+    code=""
+    for attempt in 1 2 3; do
+      code=$(curl -sS -m 300 -o "$resp" -w '%{http_code}' \
+        -H "X-Sync-Token: $PUSH_TOKEN" \
+        -H "Content-Type: application/gzip" \
+        --data-binary @- \
+        "$PUSH_URL/push/$tag.tgz" < "$tmp" 2>"${tmp}.curlerr") || code="000"
+      case "$code" in
+        200|201) break ;;
+        409)     log "server already has identical $base"; break ;;
+        000|5*)  log "attempt $attempt failed (http=$code): $(cat "${tmp}.curlerr")"; sleep $((attempt * 3)) ;;
+        *)       log "rejected (http=$code): $(head -c 300 "$resp" 2>/dev/null)"; break ;;
+      esac
+    done
+
+    if [ "$code" = "200" ] || [ "$code" = "201" ] || [ "$code" = "409" ]; then
+      date '+%Y-%m-%dT%H:%M:%S%z' > "$marker"
+      log "ok $base ($code)"
+      rm -f "$tmp" "$resp" "${tmp}.err" "${tmp}.curlerr"
+    else
+      log "giving up on $base for now (http=$code); will retry on next scan"
+      rm -f "$tmp" "$resp" "${tmp}.err" "${tmp}.curlerr"
+      rc=1
+    fi
+  done
+  return $rc
+}
+
 scan_once() {
   local tag rc=0
   [ -d "$LOGS_DIR" ] || { log "no logs dir: $LOGS_DIR"; return 1; }
@@ -214,6 +278,7 @@ scan_once() {
       push_one "$tag" "${FORCE:-0}" || rc=1
     fi
     push_vcd_one "$tag" "${FORCE:-0}" || rc=1
+    push_csv_one "$tag" "${FORCE:-0}" || rc=1
   done
   return $rc
 }
@@ -243,6 +308,14 @@ status() {
         printf '  wave PENDING   %s\n' "$(basename "$vcd")"
       fi
     done
+    for csv in "$PRODUCTS_DIR/$tag"/*.csv; do
+      [ -f "$csv" ] || continue
+      if [ -f "$PUSHED_DIR/csv-$tag-$(basename "$csv")" ]; then
+        printf '  csv sent       %s\n' "$(basename "$csv")"
+      else
+        printf '  csv PENDING    %s\n' "$(basename "$csv")"
+      fi
+    done
   done
 }
 
@@ -257,7 +330,7 @@ while [ $# -gt 0 ]; do
     --status) MODE="status" ;;
     --tag)    shift; ONE_TAG="${1:-}" ;;
     -h|--help)
-      sed -n '2,26p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+      sed -n '2,29p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
     *) echo "unknown argument: $1" >&2; exit 2 ;;
   esac
   shift
@@ -271,6 +344,7 @@ case "$MODE" in
     if [ -n "$ONE_TAG" ]; then
       push_one "$ONE_TAG" "$FORCE"
       push_vcd_one "$ONE_TAG" "$FORCE"
+      push_csv_one "$ONE_TAG" "$FORCE"
     else
       scan_once
     fi ;;
