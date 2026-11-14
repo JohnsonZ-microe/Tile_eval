@@ -72,10 +72,12 @@ class CycleProbes(unittest.TestCase):
         state = _SimState(6)
         phase = SimpleNamespace(timing=SimpleNamespace(sync1=None), retired=False)
         model._arm_dcommit(phase, state, 7)
-        expected = [7 + model.lat['YACC_WARM'] + (lane+1)*10*model.lat['YACC_ROW']
+        # y_q entries = publication + 1 (NBA edge -> consumable on next edge);
+        # yacc_free = last publication edge (no +1, commit_busy drops at NBA)
+        expected = [7 + model.lat['YACC_WARM'] + (lane+1)*10*model.lat['YACC_ROW'] + 1
                     for lane in range(4)]
         self.assertEqual([entry[0] for entry in state.y_q], expected)
-        self.assertEqual(expected[-1], state.yacc_free)
+        self.assertEqual(expected[-1] - 1, state.yacc_free)
 
     def test_model_timeout_is_failure(self):
         model = TileCycleModel()
