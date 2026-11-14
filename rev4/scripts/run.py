@@ -25,7 +25,7 @@ DEFAULT_PRODUCTS = '/staff/ee/eezhyzhao/Desktop/Products'
 DEFAULT_LOGS = '/staff/ee/eezhyzhao/Desktop/Products/logs'
 
 
-def waveform_arguments(enabled, test, output):
+def waveform_arguments(enabled, test, output, vcd_from=None):
     # Every bench accepts +VCD=<path>; math/modules share tb_math_v4 so the
     # file is named per test to avoid collisions in an --test all run.
     names = {'cells': 'cells_v4.vcd',
@@ -39,7 +39,12 @@ def waveform_arguments(enabled, test, output):
              'tile': 'tile_ffn_v4.vcd'}
     if not enabled or test not in names:
         return []
-    return ['+VCD=' + str(Path(output) / names[test])]
+    args = ['+VCD=' + str(Path(output) / names[test])]
+    if vcd_from:
+        # windowed dump: keep the VCD dark until this cycle (tb_tile_v4);
+        # a whole-tile full-suite dump otherwise reaches tens of GB
+        args.append('+VCD_FROM=%d' % int(vcd_from))
+    return args
 
 
 def _writable(path):
@@ -211,6 +216,9 @@ def main():
     parser.add_argument('--top', default='tile_ffn_v4')
     parser.add_argument('--out', type=Path)
     parser.add_argument('--waves', action='store_true', default=os.getenv('WAVES') == '1')
+    parser.add_argument('--vcd-from', type=cycle_argument, default=None,
+                        help='with --waves: keep the VCD dark until this cycle '
+                             '(windowed dump; tb_tile_v4, avoids tens-of-GB files)')
     parser.add_argument('--trace', action='store_true')
     parser.add_argument('--calibration-trace', action='store_true')
     parser.add_argument('--overlap', action='store_true')
@@ -342,7 +350,8 @@ def main():
                        '+VECTORS=' + str(out / 'vectors'),
                        '+SIGMOID_HEX=' + str(snap / 'rtl' /
                                              'pe4_sigmoid_rom.hex')]
-                cmd.extend(waveform_arguments(args.waves, test, out))
+                cmd.extend(waveform_arguments(args.waves, test, out,
+                                              args.vcd_from))
                 cmd.extend(diagnostic_arguments(args, test))
                 if test == 'modules':
                     cmd.extend(['+RESULT_NAME=modules', '+MATH_FILE=modules.txt', '+BUBBLE_MASK=3',
