@@ -2,7 +2,10 @@
 """tile-logs-sync receiver (Windows side).
 
 Listens for tarballs pushed by the ECE VDI and unpacks each one into
-D:\\Documents\\ChatGPT\\LNS_DSE\\Tile_eval\\logs\\<tag>\\.
+C:\\Users\\Administrator\\Dropbox\\LNS_DSE\\Tile_eval\\logs\\<tag>\\.
+Waveform archives (POST /vcd/<name>.vcd.tgz, produced by run.py --waves)
+are placed as single files into
+C:\\Users\\Administrator\\Dropbox\\LNS_DSE\\Tile_eval\\vcd\\<name>.vcd.
 
 Guarantees:
   * only accepts POST /push/<tag>.tgz with the shared X-Sync-Token header
@@ -11,6 +14,8 @@ Guarantees:
   * extraction goes to a staging dir first; the live dir is replaced only
     after the whole archive verified, so a torn transfer never corrupts logs
   * identical content is skipped (HTTP 409), so re-pushing is harmless
+  * waveform files larger than vcd_max_bytes (default 400 MB) are refused
+    with HTTP 413 and never written
   * nothing is ever executed
 
 Usage:
@@ -31,7 +36,8 @@ import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-DEFAULT_DEST = r"D:\Documents\ChatGPT\LNS_DSE\Tile_eval\logs"
+DEFAULT_DEST = os.path.abspath(os.path.join(HERE, "..", "..", "logs"))
+DEFAULT_VCD_DEST = os.path.abspath(os.path.join(HERE, "..", "..", "vcd"))
 # keep the shared secret out of the git working tree
 _CONFIG_HOME = os.environ.get("LOCALAPPDATA") or HERE
 DEFAULT_CONFIG = os.path.join(_CONFIG_HOME, "tile-logs-sync", "sync_config.json")
@@ -40,7 +46,8 @@ TAG_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,120}$")
 MAX_BYTES = 512 * 1024 * 1024
 LOCK = threading.Lock()
 
-CFG = {"token": "", "dest": DEFAULT_DEST, "port": 8000}
+CFG = {"token": "", "dest": DEFAULT_DEST, "port": 8000, "vcd_dest": DEFAULT_VCD_DEST,
+       "vcd_max_bytes": 400 * 1024 * 1024}
 
 
 def load_config(path):
@@ -50,7 +57,8 @@ def load_config(path):
     if os.path.exists(path):
         with open(path, "r", encoding="utf-8") as fh:
             data = json.load(fh)
-        CFG.update({k: data[k] for k in ("token", "dest", "port") if k in data})
+        CFG.update({k: data[k] for k in ("token", "dest", "port", "vcd_dest",
+                                         "vcd_max_bytes") if k in data})
     else:
         CFG["token"] = hashlib.sha256(os.urandom(32)).hexdigest()[:24]
         save_config(path)
@@ -69,6 +77,14 @@ def log(msg):
 
 def sha256_bytes(data):
     return hashlib.sha256(data).hexdigest()
+
+
+def sha256_file(path):
+    digest = hashlib.sha256()
+    with open(path, "rb") as fh:
+        for chunk in iter(lambda: fh.read(4 * 1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def validate_members(tf, tag):
@@ -152,6 +168,70 @@ def install(tar_bytes, tag):
         raise
 
 
+def _record_vcd(name, digest, size, src_tag):
+    """Keep vcd/.sync.json up to date (sha256 provenance for audits)."""
+    record_path = os.path.join(CFG["vcd_dest"], ".sync.json")
+    try:
+        with open(record_path, "r", encoding="utf-8") as fh:
+            record = json.load(fh)
+        if not isinstance(record, dict):
+            record = {}
+    except Exception:
+        record = {}
+    record[name] = {"sha256": digest, "bytes": size, "tag": src_tag,
+                    "pushed_at": time.strftime("%Y-%m-%dT%H:%M:%S%z")}
+    tmp = record_path + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as fh:
+        json.dump(record, fh, indent=1, sort_keys=True)
+    os.replace(tmp, record_path)
+
+
+def install_vcd(tar_bytes, name, src_tag=""):
+    """Verify + atomically place one waveform <name>.vcd into vcd_dest.
+
+    Returns (status, detail): 409 when identical content is already on disk,
+    200 when the file was written or replaced by a newer version.
+    """
+    vcd_root = CFG["vcd_dest"]
+    os.makedirs(vcd_root, exist_ok=True)
+    target = os.path.join(vcd_root, name)
+
+    with tarfile.open(fileobj=io.BytesIO(tar_bytes), mode="r:gz") as tf:
+        members = tf.getmembers()
+        if len(members) != 1 or not members[0].isfile():
+            raise ValueError("expected exactly one regular file in archive")
+        base = members[0].name.replace("\\", "/").split("/")[-1]
+        if base != name:
+            raise ValueError("member %r does not match %r" % (members[0].name, name))
+        src = tf.extractfile(members[0])
+        if src is None:
+            raise ValueError("cannot read archive member")
+        data = src.read()
+
+    limit = CFG["vcd_max_bytes"]
+    if len(data) > limit:
+        return 413, "%s is %d bytes, over the %d-byte limit; not stored" % (
+            name, len(data), limit)
+
+    digest = sha256_bytes(data)
+    with LOCK:
+        if os.path.exists(target) and sha256_file(target) == digest:
+            return 409, "identical content already present"
+        fd, tmp = tempfile.mkstemp(prefix=".vcd-%s-" % name, dir=vcd_root)
+        try:
+            with os.fdopen(fd, "wb") as fh:
+                fh.write(data)
+            os.replace(tmp, target)  # atomic: readers never see a torn vcd
+        except Exception:
+            try:
+                os.remove(tmp)
+            except OSError:
+                pass
+            raise
+        _record_vcd(name, digest, len(data), src_tag)
+        return 200, "%s written (%d bytes)" % (name, len(data))
+
+
 class Handler(BaseHTTPRequestHandler):
     server_version = "TileLogsSync/1.0"
     protocol_version = "HTTP/1.1"
@@ -167,7 +247,8 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         path = self.path.split("?")[0]
         if path in ("/", "/ping"):
-            return self._send(200, "TileLogsSync alive; dest=%s\n" % CFG["dest"])
+            return self._send(200, "TileLogsSync alive; dest=%s vcd=%s\n"
+                              % (CFG["dest"], CFG["vcd_dest"]))
         if path in ("/" + SCRIPT_NAME, "/script"):
             script = os.path.join(HERE, SCRIPT_NAME)
             if not os.path.exists(script):
@@ -189,12 +270,20 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         path = self.path.split("?")[0]
-        m = re.match(r"^/push/([^/]+)\.tgz$", path)
-        if not m:
-            return self._send(404, "expected POST /push/<tag>.tgz\n")
-        tag = m.group(1)
-        if not TAG_RE.match(tag):
-            return self._send(400, "bad tag\n")
+        push = re.match(r"^/push/([^/]+)\.tgz$", path)
+        vcd = re.match(r"^/vcd/([^/]+)\.tgz$", path)
+        if not push and not vcd:
+            return self._send(404, "expected POST /push/<tag>.tgz or /vcd/<name>.vcd.tgz\n")
+        if push:
+            tag = push.group(1)
+            if not TAG_RE.match(tag):
+                return self._send(400, "bad tag\n")
+        else:
+            tag = None
+            name = vcd.group(1)
+            if not name.endswith(".vcd") or not TAG_RE.match(name[:-len(".vcd")]):
+                return self._send(400, "bad name\n")
+
         token = (self.headers.get("X-Sync-Token") or "").strip()
         if not CFG["token"] or token != CFG["token"]:
             log("REJECT bad token from %s" % self.client_address[0])
@@ -216,12 +305,18 @@ class Handler(BaseHTTPRequestHandler):
         if got != length:
             return self._send(400, "short read %d/%d\n" % (got, length))
 
+        src_tag = (self.headers.get("X-Sync-Tag") or "").strip()
+        if not TAG_RE.match(src_tag):
+            src_tag = ""
         try:
-            code, detail = install(b"".join(chunks), tag)
+            if push:
+                code, detail = install(b"".join(chunks), tag)
+            else:
+                code, detail = install_vcd(b"".join(chunks), name, src_tag)
         except Exception as exc:
-            log("FAIL %s from %s: %s" % (tag, self.client_address[0], exc))
+            log("FAIL %s from %s: %s" % (tag or name, self.client_address[0], exc))
             return self._send(422, "rejected: %s\n" % exc)
-        log("%s %s from %s: %s" % ("OK" if code == 200 else "SKIP", tag,
+        log("%s %s from %s: %s" % ("OK" if code == 200 else "SKIP", tag or name,
                                    self.client_address[0], detail))
         return self._send(code, detail + "\n")
 
@@ -233,18 +328,23 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--port", type=int, default=None)
     ap.add_argument("--dest", default=None)
+    ap.add_argument("--vcd-dest", default=None)
     ap.add_argument("--config", default=DEFAULT_CONFIG)
     args = ap.parse_args()
 
     load_config(args.config)
     if args.dest:
         CFG["dest"] = args.dest
+    if args.vcd_dest:
+        CFG["vcd_dest"] = args.vcd_dest
     if args.port:
         CFG["port"] = args.port
     save_config(args.config)
 
     os.makedirs(CFG["dest"], exist_ok=True)
+    os.makedirs(CFG["vcd_dest"], exist_ok=True)
     log("dest     : %s" % CFG["dest"])
+    log("vcd dest : %s" % CFG["vcd_dest"])
     log("port     : %d" % CFG["port"])
     log("token    : %s" % CFG["token"])
     log("bootstrap: curl -fsS http://<this-host>:%d/%s -o ~/%s"

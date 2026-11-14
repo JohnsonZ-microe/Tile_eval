@@ -510,7 +510,7 @@ module tb_tile_v4;
             $display("FAIL err_status=%06x", dut.sched_u.err_q);
             errors++;
         end
-        if (errors == 0)
+        if (errors == 0) begin
             if (rq_probe_issued == 0 || rq_probe_issued != rq_probe_returned ||
                 rq_probe_returned != rq_probe_consumed)
                 $fatal(1, "RQ probe incomplete workload");
@@ -518,6 +518,7 @@ module tb_tile_v4;
                      rq_probe_issued, rq_probe_returned, rq_probe_consumed);
             $display("PASS tile flits=%0d beats=%0d sync1=%0d",
                      flits, beats, sync1_count);
+        end
         else
             $display("FAIL tile errors=%0d flits=%0d beats=%0d",
                      errors, flits, beats);

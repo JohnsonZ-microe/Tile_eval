@@ -63,3 +63,35 @@ python -B -m unittest discover -s model -p test_tile_cycles.py -v
 Tests cover all identity fields, missing/extra/duplicate/reordered events,
 required-channel absence, empty traces, reset epochs, pre/post ordering and X/Z.
 These are Python checks, not VCS execution or RTL coverage measurements.
+
+## External-input extraction (2026-11-14)
+
+The schema-2 trace now has a separate Python input extraction entrypoint:
+
+    python -B model/calibration_stimulus.py calibration-events.csv --out NEW-stimulus.json
+
+It retains only pre-edge down-link payload/sideband, nonzero up-credit increments,
+and reset epoch initialization. Silent active cycles mean dn_valid=0 and
+up_credit=0; cycle gaps are preserved, not compressed. Same-edge independent
+input channels are canonicalized. Duplicate edges, missing epoch resets,
+out-of-width inputs and sideband/pass disagreement fail. The output is created
+exclusively and cannot overwrite an existing artifact.
+
+This extractor does not generate model predictions. Internal DUT events,
+upstream output payloads, memory returns and completion timing are excluded
+from model inputs. The file records the source trace hash for provenance;
+changing DUT observations may change that hash, but cannot change the extracted
+input sequence. A regression explicitly checks this independence.
+
+A replay adapter still needs the frozen memory image, an explicit execution
+horizon/termination contract, and independently generated scheduler/datapath
+outputs. Reset records encode epoch initialization only; they do not capture
+physical reset pulse duration. This is not yet an end-to-end numerical replay
+or whole-Tile calibration. The current strict schema reader rejects negative
+transaction values, so signed decimal encoding of sidebands with bit 31 set
+is not supported; the trace format needs an explicit representation before
+such stimuli can be accepted.
+
+Validation: 13 calibration tests passed (7 comparator, 4 external-input
+extraction, 2 trace-interface source checks). New full-Tile VCS execution and
+same-input model comparison remain required.

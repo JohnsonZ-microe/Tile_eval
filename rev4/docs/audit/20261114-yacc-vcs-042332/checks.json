@@ -1,0 +1,733 @@
+{
+  "run": "vcs-20261114T042332Z-95723",
+  "status": "log-source-and-component-waveform-verified",
+  "coverage": {
+    "packets": 300,
+    "overlap_banks": 2,
+    "overlap_offsets": 86,
+    "overlap_packets": 172,
+    "overlap_yields": 18784,
+    "read_identity_rows": 3000
+  },
+  "cycles": 98113,
+  "compiled_sources_checked": 22,
+  "sources": [
+    {
+      "path": "oracle/test_reference.py",
+      "expected": "d8ce77141ff57eae26bb11b0a6cda02d170fc9b2ef30211ae6f2969fa4268d49",
+      "actual": "d8ce77141ff57eae26bb11b0a6cda02d170fc9b2ef30211ae6f2969fa4268d49",
+      "matches": true
+    },
+    {
+      "path": "oracle/test_vectors.py",
+      "expected": "9347c82dae4dd9007e2616d0a308a38af51644b057411e29c9c86b3610e56642",
+      "actual": "9347c82dae4dd9007e2616d0a308a38af51644b057411e29c9c86b3610e56642",
+      "matches": true
+    },
+    {
+      "path": "oracle/test_run_script.py",
+      "expected": "b1b74da4a683e1cf71b37ed2847f408b2f17f624528619a86e07a6aa91297273",
+      "actual": "b1b74da4a683e1cf71b37ed2847f408b2f17f624528619a86e07a6aa91297273",
+      "matches": true
+    },
+    {
+      "path": "oracle/generate_vectors.py",
+      "expected": "7b2db79e29c1fa23473440ecb148de2f7ba891ea81663351f5260a22a2853944",
+      "actual": "7b2db79e29c1fa23473440ecb148de2f7ba891ea81663351f5260a22a2853944",
+      "matches": true
+    },
+    {
+      "path": "oracle/reference.py",
+      "expected": "f1785c3e92cae81e4c6b5005d61514897f90f68dce61c685b9ca86c4da7c7efc",
+      "actual": "f1785c3e92cae81e4c6b5005d61514897f90f68dce61c685b9ca86c4da7c7efc",
+      "matches": true
+    },
+    {
+      "path": "scripts/run_vcs.sh",
+      "expected": "24b2bae4e6c9087825f3926d751c5268453943c6c987f6d2bacecc072a8f0021",
+      "actual": "24b2bae4e6c9087825f3926d751c5268453943c6c987f6d2bacecc072a8f0021",
+      "matches": true
+    },
+    {
+      "path": "scripts/scan_decls.py",
+      "expected": "926f7e6d982b3b588f6949d3ec908529a87e980fbcc4fd659e2c60fa0c83090e",
+      "actual": "926f7e6d982b3b588f6949d3ec908529a87e980fbcc4fd659e2c60fa0c83090e",
+      "matches": true
+    },
+    {
+      "path": "scripts/summarize_dc.py",
+      "expected": "8ab67afc3cd25dd3003d69b805f6e98a8baa5f8ad24f5e72d4cf72fa98c5984b",
+      "actual": "8ab67afc3cd25dd3003d69b805f6e98a8baa5f8ad24f5e72d4cf72fa98c5984b",
+      "matches": true
+    },
+    {
+      "path": "scripts/run.py",
+      "expected": "0aa2a7da553ff3ee5461d99701280b68e822876cab10e47d093848e4b70d3359",
+      "actual": "0aa2a7da553ff3ee5461d99701280b68e822876cab10e47d093848e4b70d3359",
+      "matches": true
+    },
+    {
+      "path": "scripts/gen_sigmoid_rom.py",
+      "expected": "eed96638d9451a62f75202f112f52d4f1511298e5f96b7f3ee3c72ae64af98c0",
+      "actual": "eed96638d9451a62f75202f112f52d4f1511298e5f96b7f3ee3c72ae64af98c0",
+      "matches": true
+    },
+    {
+      "path": "scripts/rtl.f",
+      "expected": "0287e0840bf5d71ed3ef18c2a12d3a99a28892d8b7216fe76f212c35e83bd747",
+      "actual": "0287e0840bf5d71ed3ef18c2a12d3a99a28892d8b7216fe76f212c35e83bd747",
+      "matches": true
+    },
+    {
+      "path": "scripts/run_probe_matrix.sh",
+      "expected": "e815e1e6f845c9a646504bd30234cf7fb3d9cdb62458c5a50531951c86047b91",
+      "actual": "e815e1e6f845c9a646504bd30234cf7fb3d9cdb62458c5a50531951c86047b91",
+      "matches": true
+    },
+    {
+      "path": "rtl/pe4_quant.sv",
+      "expected": "19739881155a0775b82442a808b3de93cead5118852e72c3d7f8eed2c9bd8be4",
+      "actual": "19739881155a0775b82442a808b3de93cead5118852e72c3d7f8eed2c9bd8be4",
+      "matches": true
+    },
+    {
+      "path": "rtl/pe4_yacc.sv",
+      "expected": "a98ec0b6a5f94b701828a93a970ea64f4d8da52d76856426f080e6d9717ff3c1",
+      "actual": "a98ec0b6a5f94b701828a93a970ea64f4d8da52d76856426f080e6d9717ff3c1",
+      "matches": true
+    },
+    {
+      "path": "rtl/rev3_pe3_dot32.sv",
+      "expected": "4730857a1e7b4fdaa28a715c23b8bfdf9a9d8be1e127e86e3d1e390bb30bcc5c",
+      "actual": "4730857a1e7b4fdaa28a715c23b8bfdf9a9d8be1e127e86e3d1e390bb30bcc5c",
+      "matches": true
+    },
+    {
+      "path": "rtl/rev3_tile_pe_v3.sv",
+      "expected": "6122752665ef426512914f76e53c47d94d307acc55beead8ea9168e42d90d5d2",
+      "actual": "6122752665ef426512914f76e53c47d94d307acc55beead8ea9168e42d90d5d2",
+      "matches": true
+    },
+    {
+      "path": "rtl/pe4_bus.sv",
+      "expected": "4bb1f2cf489ecbe3e4289cc242b50197643166f441e0adf140784f9ac6546b8e",
+      "actual": "4bb1f2cf489ecbe3e4289cc242b50197643166f441e0adf140784f9ac6546b8e",
+      "matches": true
+    },
+    {
+      "path": "rtl/pe4_sram.sv",
+      "expected": "5f3fa94b574cdd06c635ca0c51b41f375ee4dde2f1c4ab5e16bc635729d48b53",
+      "actual": "5f3fa94b574cdd06c635ca0c51b41f375ee4dde2f1c4ab5e16bc635729d48b53",
+      "matches": true
+    },
+    {
+      "path": "rtl/rev3_pe3_cpa.sv",
+      "expected": "6dba2f29f2366f440b7709cece33c0d3c9ff89365cc08f102cef5986dd5c0cd4",
+      "actual": "6dba2f29f2366f440b7709cece33c0d3c9ff89365cc08f102cef5986dd5c0cd4",
+      "matches": true
+    },
+    {
+      "path": "rtl/rev3_pe3_pkg.sv",
+      "expected": "26c21e0a0d6b5ea1b1213de9eda937d80dc3e92628a6bb59ebbf33341ba245c9",
+      "actual": "26c21e0a0d6b5ea1b1213de9eda937d80dc3e92628a6bb59ebbf33341ba245c9",
+      "matches": true
+    },
+    {
+      "path": "rtl/pe4_blackbox.sv",
+      "expected": "5cf795b76ab46f5a444d40769ca62a900745077dc1978729aba811232c362bc6",
+      "actual": "5cf795b76ab46f5a444d40769ca62a900745077dc1978729aba811232c362bc6",
+      "matches": true
+    },
+    {
+      "path": "rtl/pe4_sigmoid_rom.hex",
+      "expected": "b041becb8f31067459f0f9d9935d10af7cbe036817dc010a6624b41b89c6692c",
+      "actual": "b041becb8f31067459f0f9d9935d10af7cbe036817dc010a6624b41b89c6692c",
+      "matches": true
+    },
+    {
+      "path": "rtl/pe4_sched.sv",
+      "expected": "a483ed828339d7ea48bd1f707beda26756323813c9c740194efe38971a693b64",
+      "actual": "a483ed828339d7ea48bd1f707beda26756323813c9c740194efe38971a693b64",
+      "matches": true
+    },
+    {
+      "path": "rtl/rev3_pe3_probes.sv",
+      "expected": "c12b28b0ebb18d825aef22f6dc9a417914b4a58f275bd54f77c138c0d0a0a831",
+      "actual": "c12b28b0ebb18d825aef22f6dc9a417914b4a58f275bd54f77c138c0d0a0a831",
+      "matches": true
+    },
+    {
+      "path": "rtl/pe4_act.sv",
+      "expected": "2e203ec73b0a3237f27b23dc8d3c773428db25bd2185e402fc4b18be74ac9d61",
+      "actual": "2e203ec73b0a3237f27b23dc8d3c773428db25bd2185e402fc4b18be74ac9d61",
+      "matches": true
+    },
+    {
+      "path": "rtl/pe4_pkg.sv",
+      "expected": "3b140987785364a96a92642d8d9f7369c4836a6375846a82d798ce9c12c720bb",
+      "actual": "3b140987785364a96a92642d8d9f7369c4836a6375846a82d798ce9c12c720bb",
+      "matches": true
+    },
+    {
+      "path": "rtl/tile_ffn_v4.sv",
+      "expected": "01b9dfef3975d84406bcca4c1ddfa9c130e88d556c501f321ee0d638cbf19987",
+      "actual": "01b9dfef3975d84406bcca4c1ddfa9c130e88d556c501f321ee0d638cbf19987",
+      "matches": true
+    },
+    {
+      "path": "rtl/pe4_fmul.sv",
+      "expected": "b4c4758a90373c87a3ade463827cf3d21244e0906bc9264dac753f4b54095ee2",
+      "actual": "b4c4758a90373c87a3ade463827cf3d21244e0906bc9264dac753f4b54095ee2",
+      "matches": true
+    },
+    {
+      "path": "rtl/pe4_hbuf.sv",
+      "expected": "32ef70f832b74b168fbeb3b21eeba25ae9632571c0cb81fbda5c787b62be558e",
+      "actual": "32ef70f832b74b168fbeb3b21eeba25ae9632571c0cb81fbda5c787b62be558e",
+      "matches": true
+    },
+    {
+      "path": "rtl/rev3_pe3_round.sv",
+      "expected": "badcbc3ed04f995aaf35fcce8994d40b52aeb2a12f2c7173a0f12d7b459726ad",
+      "actual": "badcbc3ed04f995aaf35fcce8994d40b52aeb2a12f2c7173a0f12d7b459726ad",
+      "matches": true
+    },
+    {
+      "path": "rtl/pe4_staging.sv",
+      "expected": "64b0738bfbb3a10cd884a409887bb4da627821ddc942d14351a115a2d43204cd",
+      "actual": "64b0738bfbb3a10cd884a409887bb4da627821ddc942d14351a115a2d43204cd",
+      "matches": true
+    },
+    {
+      "path": "rtl/rev3_pe3_float.sv",
+      "expected": "000bc129562c723826ba8f3760795cd0d89b16d87cb4c2b1dedaaef4730ae9ac",
+      "actual": "000bc129562c723826ba8f3760795cd0d89b16d87cb4c2b1dedaaef4730ae9ac",
+      "matches": true
+    },
+    {
+      "path": "rtl/pe4_probes.sv",
+      "expected": "7c0006ced83573df62fb137e1457795c4a0145e8697aa8be9e3a483aa97e3d36",
+      "actual": "7c0006ced83573df62fb137e1457795c4a0145e8697aa8be9e3a483aa97e3d36",
+      "matches": true
+    },
+    {
+      "path": "model/test_drain_alarm_source.py",
+      "expected": "68975b0b8895d47c0e5cb91e6fd397f3709767aaef638d6ab3109455b7b73c88",
+      "actual": "68975b0b8895d47c0e5cb91e6fd397f3709767aaef638d6ab3109455b7b73c88",
+      "matches": true
+    },
+    {
+      "path": "model/tile_cycles.py",
+      "expected": "52251c0ab9b36c0671ce52b0a94a92aef05245b1cc633f16c3ace5108e3de438",
+      "actual": "52251c0ab9b36c0671ce52b0a94a92aef05245b1cc633f16c3ace5108e3de438",
+      "matches": true
+    },
+    {
+      "path": "model/test_control_id_source.py",
+      "expected": "98b7548ab470c1240855944a295db345b1ede6402de0ff9748dfec958dd006e7",
+      "actual": "98b7548ab470c1240855944a295db345b1ede6402de0ff9748dfec958dd006e7",
+      "matches": true
+    },
+    {
+      "path": "model/test_tile_reference.py",
+      "expected": "a2b946a8e25851652c677ee9ff318422bc8c1851a9e14522af46196bdea7d0ce",
+      "actual": "a2b946a8e25851652c677ee9ff318422bc8c1851a9e14522af46196bdea7d0ce",
+      "matches": true
+    },
+    {
+      "path": "model/test_alarm_vectors.py",
+      "expected": "eea75f1c703e490602a8f8e70ba2d3338e08092cd6a3e1087ead1c8fb8014763",
+      "actual": "eea75f1c703e490602a8f8e70ba2d3338e08092cd6a3e1087ead1c8fb8014763",
+      "matches": true
+    },
+    {
+      "path": "model/yacc_wave_timing.py",
+      "expected": "b0fa19a43274140fdb4dcec5e7d22a042821f780f6091175d65cea18dae44eb4",
+      "actual": "b0fa19a43274140fdb4dcec5e7d22a042821f780f6091175d65cea18dae44eb4",
+      "matches": true
+    },
+    {
+      "path": "model/test_multitoken_source.py",
+      "expected": "111c0d802b8c94ef0a3a471e3c268f7009db24153ad27488415668643fc51485",
+      "actual": "111c0d802b8c94ef0a3a471e3c268f7009db24153ad27488415668643fc51485",
+      "matches": true
+    },
+    {
+      "path": "model/test_run_diagnostics.py",
+      "expected": "2133cda443b980a524fe6979dd5c8003efe3744f859a85879bd9804cb6b7a5e8",
+      "actual": "5d5b53a7c1838049d6c0e3c46bff35715a8989026f105987f1256ec9be23c61a",
+      "matches": false
+    },
+    {
+      "path": "model/test_context_format_source.py",
+      "expected": "f0a98c907f75b5aa171fef621939faf2a26c82c2695ab3275284830d137c528e",
+      "actual": "f0a98c907f75b5aa171fef621939faf2a26c82c2695ab3275284830d137c528e",
+      "matches": true
+    },
+    {
+      "path": "model/vectors.py",
+      "expected": "a49f10661f04706f116d7eecc2b73c5c38765b72ea779e32c8a241c039d1c4dd",
+      "actual": "a49f10661f04706f116d7eecc2b73c5c38765b72ea779e32c8a241c039d1c4dd",
+      "matches": true
+    },
+    {
+      "path": "model/test_yacc_timing.py",
+      "expected": "5aff4d160f340c01707a574c3e2bdd238b2299b8b5572d65cb174c55fd5bf3d0",
+      "actual": "5aff4d160f340c01707a574c3e2bdd238b2299b8b5572d65cb174c55fd5bf3d0",
+      "matches": true
+    },
+    {
+      "path": "model/test_tile_cycles.py",
+      "expected": "ac837eb61b2b3bd30dfb2899f7e711a2dcc61eb209710755585bb2413b793383",
+      "actual": "ac837eb61b2b3bd30dfb2899f7e711a2dcc61eb209710755585bb2413b793383",
+      "matches": true
+    },
+    {
+      "path": "model/test_scheduler_events_source.py",
+      "expected": "934ac71225d235fc4ef1a2e6008bc245bff955c641611ee543d495128e768558",
+      "actual": "934ac71225d235fc4ef1a2e6008bc245bff955c641611ee543d495128e768558",
+      "matches": true
+    },
+    {
+      "path": "model/test_calibration_trace_source.py",
+      "expected": "987cdfd6148ced5fbb8e66184ccd9684d17d4f231f5ad0dc387a77a0eea550ea",
+      "actual": "987cdfd6148ced5fbb8e66184ccd9684d17d4f231f5ad0dc387a77a0eea550ea",
+      "matches": true
+    },
+    {
+      "path": "model/probe_reference.py",
+      "expected": "4d47129f3f1390eb17c041c55a4ecf8f29f20f25ad9912e49bbfcbe0e49bb4bd",
+      "actual": "4d47129f3f1390eb17c041c55a4ecf8f29f20f25ad9912e49bbfcbe0e49bb4bd",
+      "matches": true
+    },
+    {
+      "path": "model/compute_trace.py",
+      "expected": "3cad6563c1925440216a328fc696c45e1c0cf4b20ff92bb5b3cbb126eb29c5b6",
+      "actual": "3cad6563c1925440216a328fc696c45e1c0cf4b20ff92bb5b3cbb126eb29c5b6",
+      "matches": true
+    },
+    {
+      "path": "model/test_rq_identity_source.py",
+      "expected": "8063190ec5a55822b6c34bfa52fa4c5e37d0c97e072a5fbe5695a646da596c1d",
+      "actual": "8063190ec5a55822b6c34bfa52fa4c5e37d0c97e072a5fbe5695a646da596c1d",
+      "matches": true
+    },
+    {
+      "path": "model/test_probes.py",
+      "expected": "c0e219ac1261b11763c05eb8eba717453db7ca2d5da577da264129deb63fba09",
+      "actual": "c0e219ac1261b11763c05eb8eba717453db7ca2d5da577da264129deb63fba09",
+      "matches": true
+    },
+    {
+      "path": "model/test_yacc_watchdog_source.py",
+      "expected": "5bc84ba16f286a0acefeba8aeb525494187ebc411d5ef06e1aac910c3cd93b14",
+      "actual": "5bc84ba16f286a0acefeba8aeb525494187ebc411d5ef06e1aac910c3cd93b14",
+      "matches": true
+    },
+    {
+      "path": "model/test_up_protocol_source.py",
+      "expected": "fb99a06f36392465c0f63be5a58b12927e86ba2971b9788245b2c20bab2051a9",
+      "actual": "fb99a06f36392465c0f63be5a58b12927e86ba2971b9788245b2c20bab2051a9",
+      "matches": true
+    },
+    {
+      "path": "model/tile_reference.py",
+      "expected": "22690dbb9983049088c534f0bee0fbcd14a1840c8a652487d4b3b9869b40d7c0",
+      "actual": "22690dbb9983049088c534f0bee0fbcd14a1840c8a652487d4b3b9869b40d7c0",
+      "matches": true
+    },
+    {
+      "path": "model/vector_check.py",
+      "expected": "f4adb704291c4d7eb37ecd318b4bb6cdbafeddd86b1a799584617b139e8b2a4b",
+      "actual": "f4adb704291c4d7eb37ecd318b4bb6cdbafeddd86b1a799584617b139e8b2a4b",
+      "matches": true
+    },
+    {
+      "path": "model/test_probe_infrastructure.py",
+      "expected": "f255593c561522d91153277c9da31c4a7c84e4ca0a3eb97531fa933e3e3e4bfa",
+      "actual": "f255593c561522d91153277c9da31c4a7c84e4ca0a3eb97531fa933e3e3e4bfa",
+      "matches": true
+    },
+    {
+      "path": "model/trace_compare.py",
+      "expected": "ef31ff2fab1fb7b1ebbabe0b6679066b75d4bc3bf9aa081b238726a55adb1aff",
+      "actual": "ef31ff2fab1fb7b1ebbabe0b6679066b75d4bc3bf9aa081b238726a55adb1aff",
+      "matches": true
+    },
+    {
+      "path": "model/test_return_alignment_source.py",
+      "expected": "a528d02e801a46edf6af14ae5bb299d4b2d0c727e0dd423b23068ae8aee2e9bb",
+      "actual": "a528d02e801a46edf6af14ae5bb299d4b2d0c727e0dd423b23068ae8aee2e9bb",
+      "matches": true
+    },
+    {
+      "path": "model/test_final_drain_source.py",
+      "expected": "d0cae784a2bd53eb844fd17c3fb987cf39d1ffd80154be21591feaa1ef502521",
+      "actual": "d0cae784a2bd53eb844fd17c3fb987cf39d1ffd80154be21591feaa1ef502521",
+      "matches": true
+    },
+    {
+      "path": "model/test_calibration_compare.py",
+      "expected": "ea04d69fdf49ccd00f215ee58ab59b41c482d46a58f62852b30ae5477f45ef4a",
+      "actual": "ea04d69fdf49ccd00f215ee58ab59b41c482d46a58f62852b30ae5477f45ef4a",
+      "matches": true
+    },
+    {
+      "path": "model/test_vcs_90222_source.py",
+      "expected": "a43ef61a3ee74e09cd75119f8b9724de5a87330b73d194febc767715439ae668",
+      "actual": "a43ef61a3ee74e09cd75119f8b9724de5a87330b73d194febc767715439ae668",
+      "matches": true
+    },
+    {
+      "path": "model/test_act_launch_source.py",
+      "expected": "136d0690b8aa6764aa09cd103bfad5a80fa56f9df575aaf15a621319ab6c113d",
+      "actual": "136d0690b8aa6764aa09cd103bfad5a80fa56f9df575aaf15a621319ab6c113d",
+      "matches": true
+    },
+    {
+      "path": "model/calibration_compare.py",
+      "expected": "ab9c502b286d92fcd4daa9188cdf5bbe51d421e070bb61917ce46672d38b2209",
+      "actual": "ab9c502b286d92fcd4daa9188cdf5bbe51d421e070bb61917ce46672d38b2209",
+      "matches": true
+    },
+    {
+      "path": "model/test_tile_trace_source.py",
+      "expected": "9fe3eeef4828543d7d53eb2bef5b9164c5c0ac2530ec2a73e23d570ef4995b5e",
+      "actual": "9fe3eeef4828543d7d53eb2bef5b9164c5c0ac2530ec2a73e23d570ef4995b5e",
+      "matches": true
+    },
+    {
+      "path": "model/test_memory_reset_source.py",
+      "expected": "9e669b0cdaf1e1dc85517d4eb964199ca2828c97b2e973339639c6e27184c3b3",
+      "actual": "9e669b0cdaf1e1dc85517d4eb964199ca2828c97b2e973339639c6e27184c3b3",
+      "matches": true
+    },
+    {
+      "path": "model/test_numeric_event.py",
+      "expected": "de432963abd4d104275469c83c9db23c4164443f62ded0a4a11246ba9eac6bdd",
+      "actual": "de432963abd4d104275469c83c9db23c4164443f62ded0a4a11246ba9eac6bdd",
+      "matches": true
+    },
+    {
+      "path": "model/test_protocol_waves.py",
+      "expected": "23b20961127e7160d42db44e118f2d17260a0cdbe8bb37c420e3d93d5e4468f9",
+      "actual": "23b20961127e7160d42db44e118f2d17260a0cdbe8bb37c420e3d93d5e4468f9",
+      "matches": true
+    },
+    {
+      "path": "docs/SPEC.md",
+      "expected": "9c084867987c6c90be8c9d85095b57e1c5191058b93e791da0fff1c03967dd7e",
+      "actual": "9c084867987c6c90be8c9d85095b57e1c5191058b93e791da0fff1c03967dd7e",
+      "matches": true
+    },
+    {
+      "path": "docs/PROTOCOL_VCD_20261109.md",
+      "expected": "8a4b6f16cdd0eed1464643696383b77ae42b099ef5f3a44ecff5fc0b94d9cb71",
+      "actual": "8a4b6f16cdd0eed1464643696383b77ae42b099ef5f3a44ecff5fc0b94d9cb71",
+      "matches": true
+    },
+    {
+      "path": "docs/CYCLE_MODEL.md",
+      "expected": "a09e5ea36d4dd7a9aaa38d14ab29cfaa5645f6c4fe31acb7d62694ede3e06a13",
+      "actual": "a09e5ea36d4dd7a9aaa38d14ab29cfaa5645f6c4fe31acb7d62694ede3e06a13",
+      "matches": true
+    },
+    {
+      "path": "docs/baseline.json",
+      "expected": "4c0c738129819d31c8a5874efe9a1716c0c9cd5a7f8481ef91835564bc113eb7",
+      "actual": "4c0c738129819d31c8a5874efe9a1716c0c9cd5a7f8481ef91835564bc113eb7",
+      "matches": true
+    },
+    {
+      "path": "docs/VALIDATION.md",
+      "expected": "4ac75e0abec09bc4e6f9c1634c47c1ef54f4ac7de68fb1ed818b6e40c67ba775",
+      "actual": "4ac75e0abec09bc4e6f9c1634c47c1ef54f4ac7de68fb1ed818b6e40c67ba775",
+      "matches": true
+    },
+    {
+      "path": "docs/WIDTHS.md",
+      "expected": "2891ef091fead88389a6ba22fa6aba5330685f6267a1632644aa1ca21e35fcc2",
+      "actual": "2891ef091fead88389a6ba22fa6aba5330685f6267a1632644aa1ca21e35fcc2",
+      "matches": true
+    },
+    {
+      "path": "docs/control-id-fix-20261108.md",
+      "expected": "5d3bb5f23cd0e75ed77e77a79a1ef9152f6b626cd333dd1eac115e81075fe317",
+      "actual": "5d3bb5f23cd0e75ed77e77a79a1ef9152f6b626cd333dd1eac115e81075fe317",
+      "matches": true
+    },
+    {
+      "path": "docs/\u591a\u7cbe\u5ea6Tensor Core.md",
+      "expected": "7359fa96ecffa101983c58bd82628103016bf04f492957d93fd75b4ca1ebf6b4",
+      "actual": "7359fa96ecffa101983c58bd82628103016bf04f492957d93fd75b4ca1ebf6b4",
+      "matches": true
+    },
+    {
+      "path": "docs/CALIBRATION_COMPARE.md",
+      "expected": "32bef0b4846d5e5a90da3ba718c3e2e63c511d4b1a516d4f4105ed84d10af878",
+      "actual": "6a4ccac00dc18e911b5b566c448c64349bbff8a945148ccaee3111b6ff54ffdb",
+      "matches": false
+    },
+    {
+      "path": "docs/TIMEOUT_DIAGNOSTICS.md",
+      "expected": "4f1be4cfa041dfe34bbecff538cd7b142a241f3a1b26ae8a36ed3d0226f95214",
+      "actual": "4f1be4cfa041dfe34bbecff538cd7b142a241f3a1b26ae8a36ed3d0226f95214",
+      "matches": true
+    },
+    {
+      "path": "docs/probes-20261108/README.md",
+      "expected": "2051540e06a2ad0c9c16ace41917995522d577d7e9f2eb48234dc308d39f3eac",
+      "actual": "2051540e06a2ad0c9c16ace41917995522d577d7e9f2eb48234dc308d39f3eac",
+      "matches": true
+    },
+    {
+      "path": "docs/probes-20261108/probe_matrix.json",
+      "expected": "54607fe0c235e62b1c71b79ad266c24cd4a73e3ee1c953c3b072c92e227cd049",
+      "actual": "54607fe0c235e62b1c71b79ad266c24cd4a73e3ee1c953c3b072c92e227cd049",
+      "matches": true
+    },
+    {
+      "path": "docs/probes-20261108/local_validation.json",
+      "expected": "ffbb7b8cd50d720b436f4c2663aade32954b70a3ea98d42869fcec8e09668cc5",
+      "actual": "ffbb7b8cd50d720b436f4c2663aade32954b70a3ea98d42869fcec8e09668cc5",
+      "matches": true
+    },
+    {
+      "path": "docs/audit/20261031T104748Z/source_hashes.json",
+      "expected": "9eab4f09c287c8e674dde5ac6f46e7f346be56200504a4ce2f8a1a74dbb6ca00",
+      "actual": "75c4878055ed3fdccc48da298e00309a5d5c61447b22a63bf86c9abfbbfdb0f0",
+      "matches": false
+    },
+    {
+      "path": "docs/audit/20261031T104748Z/REPORT.md",
+      "expected": "b0afb8cc4a2856023730c950cd9d706590e683f9120a59eafa006a2bc2181a91",
+      "actual": "b0afb8cc4a2856023730c950cd9d706590e683f9120a59eafa006a2bc2181a91",
+      "matches": true
+    },
+    {
+      "path": "docs/audit/20261031T104748Z/page-1920.png",
+      "expected": "0029431b4a77318f89be42d6f2001eb555f916f0ec721daaf7c356742370fc21",
+      "actual": "0029431b4a77318f89be42d6f2001eb555f916f0ec721daaf7c356742370fc21",
+      "matches": true
+    },
+    {
+      "path": "docs/audit/20261031T104748Z/checks.json",
+      "expected": "506a96d62e82d5b91a1841af4e5d1d9923fc6e1736c25c6d868f7f5097b4eb30",
+      "actual": "528fe1fe81fd5a999149a1d5220a709e3976bb9d181b907abcd4296dd27624f5",
+      "matches": false
+    },
+    {
+      "path": "docs/audit/20261031T104748Z/node-tests.log",
+      "expected": "517066fa26b03bf2ee3bee63d4e99719de3b9818d75f371bd10d7709bf6cad70",
+      "actual": "6d6cfee16cb46aeff8c960b1efcfc7fa0a31eb371472344f44ce71d34e340668",
+      "matches": false
+    },
+    {
+      "path": "docs/audit/20261031T104748Z/page-1440.png",
+      "expected": "148d39242dcfcbf4f75f01b048cf45c3ce5e95294bf4df0e0640b44f5d65acf9",
+      "actual": "148d39242dcfcbf4f75f01b048cf45c3ce5e95294bf4df0e0640b44f5d65acf9",
+      "matches": true
+    },
+    {
+      "path": "docs/audit/20261031T104748Z/verify.py",
+      "expected": "2cf0c2bf7646e267078bf870ac8da497fa5362b9e623ebc9717b47e25b492f94",
+      "actual": "2cf0c2bf7646e267078bf870ac8da497fa5362b9e623ebc9717b47e25b492f94",
+      "matches": true
+    },
+    {
+      "path": "docs/audit/20261031T104748Z/python_tests.log",
+      "expected": "e14bcf94e9441d3d46ff1bb081ecfced0047d65b777ba384e0f6829fadf75cc3",
+      "actual": "cbe95cc1f1e8d2908ca6013bd30d92dd1cabc96c578e4085781e92ed8c44ba1f",
+      "matches": false
+    },
+    {
+      "path": "docs/audit/20261031T104748Z/detail-1440.png",
+      "expected": "1b4f7cb4799246d44b45392055f43f12056235fb2ad102a8018cf66f2c2a31a1",
+      "actual": "1b4f7cb4799246d44b45392055f43f12056235fb2ad102a8018cf66f2c2a31a1",
+      "matches": true
+    },
+    {
+      "path": "docs/audit/20261031T104748Z/audit-data.json",
+      "expected": "58eb999df4a34c0c725e8221e237ef1ed4ace3268d2bced4693f98c56c8dc4da",
+      "actual": "58eb999df4a34c0c725e8221e237ef1ed4ace3268d2bced4693f98c56c8dc4da",
+      "matches": true
+    },
+    {
+      "path": "docs/audit/20261031T104748Z/page-1024.png",
+      "expected": "d730a519e86d5f3c52c768a9329286d702837e8755d524169bb356548d70a194",
+      "actual": "d730a519e86d5f3c52c768a9329286d702837e8755d524169bb356548d70a194",
+      "matches": true
+    },
+    {
+      "path": "docs/audit/20261031T104748Z/diagram-1440.png",
+      "expected": "10ec5db3b3ad140294b0b0fc2b98c0f81d619c21d6ab4bff56668bcbedb6c7a0",
+      "actual": "10ec5db3b3ad140294b0b0fc2b98c0f81d619c21d6ab4bff56668bcbedb6c7a0",
+      "matches": true
+    },
+    {
+      "path": "docs/audit/20261031T104748Z/web-checks.json",
+      "expected": "42a8a564ca76b84ccea5d4900a1d55735de5bdc8bcd08745e638d1ee3033dffe",
+      "actual": "42a8a564ca76b84ccea5d4900a1d55735de5bdc8bcd08745e638d1ee3033dffe",
+      "matches": true
+    },
+    {
+      "path": "docs/audit/20261114-yacc-timing/REPORT.md",
+      "expected": "36a97cc595fc89d2871879a0b01b7924d298a8b7fefd69cf0eaa2114c546f594",
+      "actual": "fd8366189e176f31b3b17e4ee531d616c002c5423d69f8af357c4c1154de7757",
+      "matches": false
+    },
+    {
+      "path": "docs/audit/20261114-yacc-timing/drain-check.json",
+      "expected": "24f91a3d10106d0dd998d1da0b0b09dd67fa7e6814aeee4475b052a64ea8be04",
+      "actual": "26a3b0f69c38541081b2ad5be935edeedcfa771980033cf012992c26d714020f",
+      "matches": false
+    },
+    {
+      "path": "docs/audit/20261114-yacc-timing/yacc-model-impact.json",
+      "expected": "d2a77872d3e7d9331cdd846d939e9d0c6eb617edda7ab2787a36f8e891ff09cf",
+      "actual": "56ca5e1a36c958e3985959211922133ee947583a7762c263b95483b16e4ce7c2",
+      "matches": false
+    },
+    {
+      "path": "docs/audit/20261114-yacc-timing/DRAIN.md",
+      "expected": "f78a6660f0bd94b3eb1783d3dab0e76cf6b4e8406b6d32abc5bd5fa78951de54",
+      "actual": "55ac07968367255d1d08c5160c975dedb6ddc898e0882e691e1b7a432a78e58e",
+      "matches": false
+    },
+    {
+      "path": "docs/audit/20261114-yacc-timing/yacc-timing-checked.json",
+      "expected": "a5dab436a3311fb8cb13650ac742c2cfa741516035bbdf41ced0966ce7e6eaa5",
+      "actual": "b56b705522b10da1b56adc2bfefa18e571fd4fe27ab97285ff8bb6fd3c544eb2",
+      "matches": false
+    },
+    {
+      "path": "docs/audit/20261114-drain-interruption/REPORT.md",
+      "expected": "2c12095d2c8ac9b0e50927d6869d9252113284e0450e206dd8e265bb9aec4381",
+      "actual": "7ed878d15bc56242237097195194876ac4da7a244332c756d50d18fbfe3c6117",
+      "matches": false
+    },
+    {
+      "path": "docs/audit/20261114-drain-interruption/sources.json",
+      "expected": "de76822eb620e6d2c618f1343c476f6d1e1d3fb52fbb61a934339472b9f3da6d",
+      "actual": "4ebfa5c71de1b519d9da795670eb42c86ed1801893b8e2e21dd8c19b9a517048",
+      "matches": false
+    },
+    {
+      "path": "docs/audit/20261114-drain-integration/REPORT.md",
+      "expected": "04ed152318b99d2fee6340c3574f7691d71fa0a42954cf68dede93cf2258bc2f",
+      "actual": "4fa215db8b8595cbcd1d408b5515006ce441f3e6ee3c5b019d4444bed0039dc4",
+      "matches": false
+    },
+    {
+      "path": "docs/audit/20261114-drain-integration/sources.json",
+      "expected": "b8c69dde5b0d0d443eee023f10abafb71990e57bd545814a28cccb5ac3537d29",
+      "actual": "ff20386f29dc75643cfc47b76c92958194da956eb4041ed324bf3e0e398ac7ad",
+      "matches": false
+    },
+    {
+      "path": "docs/audit/20261114-drain-integration/drain-after.json",
+      "expected": "5d8fde9e455b82e2891624159e4667c9895d68874c4a75b8f3807fb9e142da14",
+      "actual": "3f78504569aa4451e422dd2e5c204b9aa8b7981845a6ae237d8de8bd73178812",
+      "matches": false
+    },
+    {
+      "path": "docs/audit/20261114-drain-integration/drain-before.json",
+      "expected": "75b0ad4084136c61216ffe156af6be1d85a6e6c3b101e5977b74a29da826aaae",
+      "actual": "4ba42c63d73db799b07f5440dd354aabe5353af910a9c3643f90ee59fb7eeb78",
+      "matches": false
+    },
+    {
+      "path": "tb/tb_compute_v4.sv",
+      "expected": "3024bcc50042828b639965cc135efb82014fca03d4089668f6182035e6008f7c",
+      "actual": "3024bcc50042828b639965cc135efb82014fca03d4089668f6182035e6008f7c",
+      "matches": true
+    },
+    {
+      "path": "tb/tb_rf8_candidate.sv",
+      "expected": "5a49f8c810acd27cd0642237253254438c49323a3a8e662f2c4004f610f23253",
+      "actual": "5a49f8c810acd27cd0642237253254438c49323a3a8e662f2c4004f610f23253",
+      "matches": true
+    },
+    {
+      "path": "tb/tb_math_v4.sv",
+      "expected": "0e2f9d15c519a1e3508adfa3c92020cd351c124971be3cb42e146d7dc4c4f8ee",
+      "actual": "0e2f9d15c519a1e3508adfa3c92020cd351c124971be3cb42e146d7dc4c4f8ee",
+      "matches": true
+    },
+    {
+      "path": "tb/tb_yacc_v4.sv",
+      "expected": "9e85a63c55908004f12eb3ec42f5eb919d35fde811712435fdebd2667532d53c",
+      "actual": "9e85a63c55908004f12eb3ec42f5eb919d35fde811712435fdebd2667532d53c",
+      "matches": true
+    },
+    {
+      "path": "tb/tb_cells_v4.sv",
+      "expected": "ae31820d0ad5b77e06bd6e313e7283b72ba74db9bd3dadaa4a4cdf2ab16494f9",
+      "actual": "ae31820d0ad5b77e06bd6e313e7283b72ba74db9bd3dadaa4a4cdf2ab16494f9",
+      "matches": true
+    },
+    {
+      "path": "tb/tb_tile_v4.sv",
+      "expected": "ab9377b06b7ef36252c7c1287f9638000b282c041a2e0a8f85a19fb75d0dbf2f",
+      "actual": "ab9377b06b7ef36252c7c1287f9638000b282c041a2e0a8f85a19fb75d0dbf2f",
+      "matches": true
+    },
+    {
+      "path": "tb/tb_protocol_v4.sv",
+      "expected": "a18f11a9a7757dc097c69625f56872d7cbcf8ef2e800d0c653b39686d1a9fbef",
+      "actual": "a18f11a9a7757dc097c69625f56872d7cbcf8ef2e800d0c653b39686d1a9fbef",
+      "matches": true
+    },
+    {
+      "path": "tb/tb_control_v4.sv",
+      "expected": "09f20983eed4ba81520998e6dccfe1dea6cd7716a1d3fcaa96deb33593887889",
+      "actual": "09f20983eed4ba81520998e6dccfe1dea6cd7716a1d3fcaa96deb33593887889",
+      "matches": true
+    },
+    {
+      "path": "tb/tb_memory_v4.sv",
+      "expected": "df470260e4721935fe42be70159613e91094a434783380d4b2ba32993deeb194",
+      "actual": "df470260e4721935fe42be70159613e91094a434783380d4b2ba32993deeb194",
+      "matches": true
+    },
+    {
+      "path": "syn/run_spyglass.sh",
+      "expected": "52904a9fdb17a9f0c019113aec3f9935c785f9791cd00925b34ad0ec6de7fa6c",
+      "actual": "52904a9fdb17a9f0c019113aec3f9935c785f9791cd00925b34ad0ec6de7fa6c",
+      "matches": true
+    },
+    {
+      "path": "syn/run_dc.tcl",
+      "expected": "46ab2f03b601b35c5cf39a55cae72dd99a579a39df161f8c808fe58fc3d7f4c7",
+      "actual": "46ab2f03b601b35c5cf39a55cae72dd99a579a39df161f8c808fe58fc3d7f4c7",
+      "matches": true
+    },
+    {
+      "path": "syn/constraints.tcl",
+      "expected": "f558ebf22a8c6c02500bffbf2d12058c78ff1ea72023d214d505bb01b49e4291",
+      "actual": "f558ebf22a8c6c02500bffbf2d12058c78ff1ea72023d214d505bb01b49e4291",
+      "matches": true
+    },
+    {
+      "path": "syn/run_dc.sh",
+      "expected": "17b69967c67f330dd384da0ada1ad09b3efc3e413d0e5e0056e0e98e5520ef49",
+      "actual": "17b69967c67f330dd384da0ada1ad09b3efc3e413d0e5e0056e0e98e5520ef49",
+      "matches": true
+    }
+  ],
+  "evidence_hashes": {
+    "manifest.json": "d6de86ad34857182b2f9b2ed9dd655dbd6d9e4c51d6e2590e9dacacad33312ab",
+    "run_yacc.log": "8eb408b14b6f75839947a9514ad575abc0f5f0c8ea754e1a3fb426e0aa827bd5",
+    "compile_yacc.log": "14439accc6bcb682616453e774a41c2dc1545b90b6117e72c13a960b8f4b0acb",
+    "exit_code.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+  },
+  "waveform": {
+    "path": "Tile_eval\\vcd\\yacc_v4.vcd",
+    "expected_bytes": 58107988,
+    "actual_bytes": 58107988,
+    "sha256": "2baa34fd8477684040ef4462a322f193892b21faa91c9ad13660cb83d9a214e9",
+    "size_matches": true,
+    "cycle_replay_verified": true
+  },
+  "scope": "YACC component numerical, metadata and read-identity scoreboard; not whole Tile, code coverage, PPA or complete AF calibration"
+}

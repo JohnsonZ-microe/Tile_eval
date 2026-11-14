@@ -6,7 +6,7 @@
 [CmdletBinding()]
 param(
     [int]$Port = 8000,
-    [string]$Dest = "D:\Documents\ChatGPT\LNS_DSE\Tile_eval\logs",
+    [string]$Dest = (Join-Path $PSScriptRoot "..\..\logs"),
     [string]$Config = (Join-Path $env:LOCALAPPDATA "tile-logs-sync\sync_config.json")
 )
 

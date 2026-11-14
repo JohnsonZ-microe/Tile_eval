@@ -1,0 +1,15 @@
+{
+  "edges": 98114,
+  "commands": 300,
+  "beats": 3000,
+  "packets": 300,
+  "reads": 3024,
+  "clears": 300,
+  "yields": 18784,
+  "stalls": 7490,
+  "identity_checks": 3000,
+  "arbitration": "whole-commit",
+  "sha256": "2baa34fd8477684040ef4462a322f193892b21faa91c9ad13660cb83d9a214e9",
+  "scope": "DRAIN control and read identity only; observed commit-set/busy inputs; no payload or full Tile calibration",
+  "checker_sha256": "fe77caae6f69dfbe800e9559d4cc795eee8689d2c1eef925564183b387c39552"
+}

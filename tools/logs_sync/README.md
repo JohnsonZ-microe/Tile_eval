@@ -1,7 +1,9 @@
 # tile-logs-sync
 
 把 ECE VDI 上每次 VCS 仿真结束后的日志目录，自动回收到本地
-`D:\Documents\ChatGPT\LNS_DSE\Tile_eval\logs\<tag>\`。
+`C:\Users\Administrator\Dropbox\LNS_DSE\Tile_eval\logs\<tag>\`；
+`run.py --waves` 产生的波形（`*.vcd`）也会自动回收到
+`C:\Users\Administrator\Dropbox\LNS_DSE\Tile_eval\vcd\<name>.vcd`。
 
 ## 为什么是"推"而不是"拉"
 
@@ -10,12 +12,17 @@ VDI（`ecelvd713`，`10.21.222.213` / `10.132.222.213`）在私网里，笔记�
 因此方向固定为：**VDI → 笔记本**，由 VDI 侧主动推送。
 
 ```
-VDI: ~/Desktop/Products/logs/<tag>/        （仿真产物，exit_code.txt 是完成标记）
+VDI: ~/Desktop/Products/logs/<tag>/        （仿真日志，exit_code.txt 是完成标记）
         │  tar czf - | curl --data-binary @-
         ▼
 笔记本: 143.89.176.1:8000  receiver.py     （校验 token、路径、gzip、幂等）
         ▼
-    D:\Documents\ChatGPT\LNS_DSE\Tile_eval\logs\<tag>\
+    C:\Users\Administrator\Dropbox\LNS_DSE\Tile_eval\logs\<tag>\
+
+VDI: ~/Desktop/Products/<tag>/*.vcd        （--waves 波形，位于 products 目录）
+        │  每个文件单独打包，POST /vcd/<name>.vcd.tgz
+        ▼
+    C:\Users\Administrator\Dropbox\LNS_DSE\Tile_eval\vcd\<name>.vcd
 ```
 
 ## 一次性部署
@@ -23,7 +30,7 @@ VDI: ~/Desktop/Products/logs/<tag>/        （仿真产物，exit_code.txt 是�
 ### 1. 笔记本侧（只需一次）
 
 ```powershell
-cd D:\Documents\ChatGPT\LNS_DSE\Tile_eval\tools\logs_sync
+cd C:\Users\Administrator\Dropbox\LNS_DSE\Tile_eval\tools\logs_sync
 powershell -ExecutionPolicy Bypass -File .\install_task.ps1
 ```
 
@@ -44,6 +51,9 @@ New-NetFirewallRule -DisplayName "TileLogsSync-8000" -Direction Inbound `
 curl -fsS http://143.89.176.1:8000/vdi_push_logs.sh -o ~/vdi_push_logs.sh
 chmod +x ~/vdi_push_logs.sh
 ```
+
+> 脚本更新后（例如新增的 vcd 推送），在 VDI 上重新执行一次上面的两条命令
+> 即可拿到新版，token 会由接收端自动注入。
 
 脚本会自己生成 `~/.tile-logs-sync.conf`，里面已经带好 URL 和 token（由接收端注入）。
 如果拿到的是干净版本，手工建这个文件：
@@ -85,6 +95,9 @@ python3 scripts/run.py ... && ~/vdi_push_logs.sh --once
 | 端口/网络不通 | 每次尝试间隔 3/6 秒重试，失败后下一轮扫描继续 |
 | 不是 vcs-* 目录 | 忽略 |
 | 恶意 tar | 拒绝绝对路径、`..`、符号链接；`<tag>` 必须匹配 `^[A-Za-z0-9][A-Za-z0-9._-]*$` |
+| 同名 vcd 已存在且内容相同 | 返回 `409`，脚本记为已发送 |
+| 同名 vcd 但内容更新 | **原子覆盖**为新版本，`vcd\.sync.json` 记录 sha256/大小/来源 tag/时间 |
+| 单个波形 > `VCD_MAX_MB`（默认 400MB） | VDI 侧**警告一次并跳过不传**（`.skip` 标记，`--force` 也不传）；接收端兜底拒绝 `413` |
 
 接收端只写文件，**从不执行任何东西**；写完后在目标目录留一份 `.sync.json`
 （sha256、推送时间、文件清单），便于核对来源。
@@ -98,11 +111,13 @@ VDI 侧（`~/.tile-logs-sync.conf` 或环境变量）：
 | `PUSH_URL` | `http://143.89.176.1:8000` | 接收端地址 |
 | `PUSH_TOKEN` | 空（必填） | 与接收端一致 |
 | `LOGS_DIR` | `~/Desktop/Products/logs` | 远端日志根 |
+| `PRODUCTS_DIR` | `LOGS_DIR` 的上级目录 | `--waves` 波形（`*.vcd`）所在的 products 目录 |
+| `VCD_MAX_MB` | `400` | 单个波形大小上限（MB），超过则警告一次并跳过不传 |
 | `INTERVAL` | 15 | `--watch` 扫描间隔（秒） |
 | `SETTLE` | 8 | 目录静默多久算写完（秒） |
 | `STATE_DIR` | `~/.cache/tile-logs-sync` | 已发送标记目录 |
 
-笔记本侧：`receiver.py --port 8000 --dest <dir> --config <file>`。
+笔记本侧：`receiver.py --port 8000 --dest <dir> --vcd-dest <dir> --config <file>`。
 
 ## 故障排查
 

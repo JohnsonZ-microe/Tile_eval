@@ -3,7 +3,13 @@
 #
 # Watches ~/Desktop/Products/logs for finished VCS run directories and pushes
 # each one to the local Windows machine, which unpacks it into
-# D:\Documents\ChatGPT\LNS_DSE\Tile_eval\logs\<tag>\.
+# C:\Users\Administrator\Dropbox\LNS_DSE\Tile_eval\logs\<tag>\.
+# Waveforms (*.vcd, written by run.py when it is given --waves) live in the
+# products dir next to the logs (~/Desktop/Products/<tag>), so after the logs
+# each one is pushed separately and lands in
+# C:\Users\Administrator\Dropbox\LNS_DSE\Tile_eval\vcd\<name>.vcd.
+# Waveforms larger than VCD_MAX_MB (default 400) MB are warned about once
+# and never transferred.
 #
 # A run is considered finished when its directory contains exit_code.txt
 # (run.py writes that last) and has stopped changing for SETTLE seconds.
@@ -11,7 +17,7 @@
 # Usage:
 #   ./vdi_push_logs.sh --once            push everything finished, then exit
 #   ./vdi_push_logs.sh --watch           keep watching (default)
-#   ./vdi_push_logs.sh --tag vcs-...     push one specific run
+#   ./vdi_push_logs.sh --tag vcs-...     push one specific run (logs + waves)
 #   ./vdi_push_logs.sh --force           re-push even if already sent
 #   ./vdi_push_logs.sh --status          show what is pending/already sent
 #
@@ -22,11 +28,14 @@
 set -u
 
 LOGS_DIR="${LOGS_DIR:-$HOME/Desktop/Products/logs}"
+# run.py products dir (manifest.json, simv, *.vcd from --waves runs)
+PRODUCTS_DIR="${PRODUCTS_DIR:-$(dirname "$LOGS_DIR")}"
 CONF="${LOGS_CONF:-$HOME/.tile-logs-sync.conf}"
 STATE_DIR="${STATE_DIR:-$HOME/.cache/tile-logs-sync}"
 PUSHED_DIR="$STATE_DIR/pushed"
 INTERVAL="${INTERVAL:-15}"        # seconds between scans in --watch
 SETTLE="${SETTLE:-8}"             # seconds a dir must be quiet to count as done
+VCD_MAX_MB="${VCD_MAX_MB:-400}"   # waveforms above this size are warned + skipped
 MARKER="exit_code.txt"
 
 mkdir -p "$PUSHED_DIR" || { echo "cannot create $PUSHED_DIR" >&2; exit 1; }
@@ -124,6 +133,74 @@ push_one() {
   return 1
 }
 
+# Push every *.vcd the run left in $PRODUCTS_DIR/<tag> to the /vcd endpoint,
+# which stores them as vcd/<name>.vcd on the laptop. Each waveform gets its
+# own marker so a failed transfer is retried on the next scan.
+push_vcd_one() {
+  local tag="$1"
+  local dir="$PRODUCTS_DIR/$tag"
+  local force="${2:-0}"
+  local rc=0 vcd base marker tmp resp code attempt size
+
+  [ -d "$dir" ] || return 0
+  for vcd in "$dir"/*.vcd; do
+    [ -f "$vcd" ] || continue
+    base=$(basename "$vcd")
+    marker="$PUSHED_DIR/vcd-$tag-$base"
+    if [ -f "$marker.skip" ] && [ "$force" != "1" ]; then
+      continue  # oversized waveform: warned once already, never transferred
+    fi
+    if [ -f "$marker" ] && [ "$force" != "1" ]; then
+      log "skip $base (already pushed; use --force to resend)"
+      continue
+    fi
+    size=$(wc -c < "$vcd")
+    if [ "$size" -gt $((VCD_MAX_MB * 1024 * 1024)) ]; then
+      log "WARNING: $base from $tag is ${size} bytes (> ${VCD_MAX_MB}MB) - NOT transferring; fetch it manually from $vcd if needed"
+      date '+%Y-%m-%dT%H:%M:%S%z' > "$marker.skip"
+      continue
+    fi
+
+    tmp=$(mktemp -t "tilevcd.XXXXXX") || return 1
+    resp="${tmp}.resp"
+    if ! tar czf "$tmp" -C "$dir" "$base" 2>"${tmp}.err"; then
+      log "tar failed for $base: $(cat "${tmp}.err")"
+      rm -f "$tmp" "${tmp}.err" "$resp"
+      rc=1
+      continue
+    fi
+    size=$(wc -c < "$tmp")
+    log "pushing $base from $tag (${size} bytes) -> $PUSH_URL/vcd"
+
+    code=""
+    for attempt in 1 2 3; do
+      code=$(curl -sS -m 900 -o "$resp" -w '%{http_code}' \
+        -H "X-Sync-Token: $PUSH_TOKEN" \
+        -H "X-Sync-Tag: $tag" \
+        -H "Content-Type: application/gzip" \
+        --data-binary @- \
+        "$PUSH_URL/vcd/$base.tgz" < "$tmp" 2>"${tmp}.curlerr") || code="000"
+      case "$code" in
+        200|201) break ;;
+        409)     log "server already has identical $base"; break ;;
+        000|5*)  log "attempt $attempt failed (http=$code): $(cat "${tmp}.curlerr")"; sleep $((attempt * 3)) ;;
+        *)       log "rejected (http=$code): $(head -c 300 "$resp" 2>/dev/null)"; break ;;
+      esac
+    done
+
+    if [ "$code" = "200" ] || [ "$code" = "201" ] || [ "$code" = "409" ]; then
+      date '+%Y-%m-%dT%H:%M:%S%z' > "$marker"
+      log "ok $base ($code)"
+      rm -f "$tmp" "$resp" "${tmp}.err" "${tmp}.curlerr"
+    else
+      log "giving up on $base for now (http=$code); will retry on next scan"
+      rm -f "$tmp" "$resp" "${tmp}.err" "${tmp}.curlerr"
+      rc=1
+    fi
+  done
+  return $rc
+}
+
 scan_once() {
   local tag rc=0
   [ -d "$LOGS_DIR" ] || { log "no logs dir: $LOGS_DIR"; return 1; }
@@ -131,15 +208,20 @@ scan_once() {
     [ -d "$dir" ] || continue
     tag=$(basename "$dir")
     if ! dir_ready "$dir"; then continue; fi
-    if [ -f "$PUSHED_DIR/$tag" ] && [ "${FORCE:-0}" != "1" ]; then continue; fi
-    push_one "$tag" "${FORCE:-0}" || rc=1
+    if [ -f "$PUSHED_DIR/$tag" ] && [ "${FORCE:-0}" != "1" ]; then
+      :  # logs already sent; waveforms below may still be pending
+    else
+      push_one "$tag" "${FORCE:-0}" || rc=1
+    fi
+    push_vcd_one "$tag" "${FORCE:-0}" || rc=1
   done
   return $rc
 }
 
 status() {
-  local tag
+  local tag vcd
   echo "logs dir : $LOGS_DIR"
+  echo "products : $PRODUCTS_DIR (waveform dir)"
   echo "endpoint : $PUSH_URL"
   for dir in "$LOGS_DIR"/vcs-*; do
     [ -d "$dir" ] || continue
@@ -151,6 +233,16 @@ status() {
     else
       printf '  running  %s\n' "$tag"
     fi
+    for vcd in "$PRODUCTS_DIR/$tag"/*.vcd; do
+      [ -f "$vcd" ] || continue
+      if [ -f "$PUSHED_DIR/vcd-$tag-$(basename "$vcd").skip" ]; then
+        printf '  wave TOO BIG   %s (over %sMB, not sent)\n' "$(basename "$vcd")" "$VCD_MAX_MB"
+      elif [ -f "$PUSHED_DIR/vcd-$tag-$(basename "$vcd")" ]; then
+        printf '  wave sent      %s\n' "$(basename "$vcd")"
+      else
+        printf '  wave PENDING   %s\n' "$(basename "$vcd")"
+      fi
+    done
   done
 }
 
@@ -176,7 +268,12 @@ need_url
 case "$MODE" in
   status) status ;;
   once)
-    if [ -n "$ONE_TAG" ]; then push_one "$ONE_TAG" "$FORCE"; else scan_once; fi ;;
+    if [ -n "$ONE_TAG" ]; then
+      push_one "$ONE_TAG" "$FORCE"
+      push_vcd_one "$ONE_TAG" "$FORCE"
+    else
+      scan_once
+    fi ;;
   watch)
     log "watching $LOGS_DIR -> $PUSH_URL (every ${INTERVAL}s)"
     log "already-sent state: $PUSHED_DIR"
