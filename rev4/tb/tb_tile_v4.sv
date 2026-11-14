@@ -181,9 +181,9 @@ module tb_tile_v4;
                 entry_index = rq_probe_returned % 4;
                 if (rq_probe_cycle-rq_probe_issue_cycle[entry_index] != 3)
                     $fatal(1, "RQ probe return latency transaction=%0d", rq_probe_returned);
-                if ($isunknown(dut.rram_data))
+                if ($isunknown(dut.rram_rdata))
                     $fatal(1, "RQ probe unknown returned data");
-                rq_probe_data[entry_index] = dut.rram_data;
+                rq_probe_data[entry_index] = dut.rram_rdata;
                 rq_probe_return_cycle[entry_index] = rq_probe_cycle;
                 rq_probe_returned++;
             end
