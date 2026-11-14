@@ -105,6 +105,7 @@ python3 scripts/run.py ... && ~/vdi_push_logs.sh --once
 | 同名 vcd 已存在且内容相同 | 返回 `409`，脚本记为已发送 |
 | 同名 vcd 但内容更新 | **原子覆盖**为新版本，`vcd\.sync.json` 记录 sha256/大小/来源 tag/时间 |
 | 单个波形 > `VCD_MAX_MB`（默认 400MB） | VDI 侧**警告一次并跳过不传**（`.skip` 标记，`--force` 也不传）；接收端兜底拒绝 `413` |
+| 波形太大但只需要某段 | 用 `tools/vcd_trim.py` 裁剪出关注周期窗口后再推（如 `python3 tools/vcd_trim.py big.vcd small.vcd --from 112900 --to 113060`），裁剪件照常经 `/vcd` 通道落地 |
 | products 目录的 `*.csv` | 每个文件单独推送，**合并**进 `logs\<tag>\`（不覆盖已有日志）；失败下轮自动补推 |
 
 接收端只写文件，**从不执行任何东西**；写完后在目标目录留一份 `.sync.json`
