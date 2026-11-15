@@ -178,21 +178,26 @@ module tb_tile_v4;
     logic [1:0] up_credit = 0;
     // optional VCD (run_vcs.sh / run.py --waves passes +VCD=<path>)
     string vcdfile;
-    longint unsigned vcd_from = 0;
+    longint unsigned vcd_from = 0, vcd_to = 0;
     initial begin
         if ($value$plusargs("VCD=%s", vcdfile)) begin
             if ($value$plusargs("VCD_FROM=%d", vcd_from) && vcd_from != 0) begin
-                // windowed dump: a full-suite whole-tile dump reaches tens of
-                // GB. Delay $dumpvars itself to the window start (posedge k is
-                // at 5+10k ns); calling it late still emits the complete
-                // current-value snapshot. NB: wait ($time >= X) does NOT work
-                // here - $time is not a signal, so the wait never re-evaluates.
+                // windowed dump (posedge k is at 5+10k ns): delaying
+                // $dumpvars to the window start still emits the complete
+                // current-value snapshot. NB: wait ($time >= X) does NOT
+                // work here - $time is not a signal, the wait never wakes.
                 $dumpfile(vcdfile);
                 #(5 + 10 * vcd_from);
                 $dumpvars(0, tb_tile_v4);
+                if ($value$plusargs("VCD_TO=%d", vcd_to) && vcd_to > vcd_from) begin
+                    // bound the file size: a passing run reaches ~150k cycles
+                    // (~74 KB/cycle), i.e. GBs without an upper bound
+                    #(10 * (vcd_to - vcd_from));
+                    $dumpoff;
+                    $dumpflush;
+                end
                 // $fatal terminates the process WITHOUT flushing VCS's
-                // buffered VCD writer - flush every cycle from here on so the
-                // window survives an abrupt end.
+                // buffered VCD writer - flush every cycle while live.
                 forever begin
                     @(posedge clk);
                     $dumpflush;
