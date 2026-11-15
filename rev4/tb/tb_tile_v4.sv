@@ -23,10 +23,33 @@ module tb_tile_v4;
     // External-interface coincidence probe: never force scheduler state.
     always @(posedge clk) begin : cmd_retire_monitor
         logic [7:0] expected_pass;
+        logic [511:0] expected_payload;
+        logic [20:0] expected_phase_base, expected_tail_base;
+        logic [2:0] expected_fmt;
+        logic expected_bias, expected_sblk128, expected_scale;
+        logic [1:0] expected_bidx;
         integer survivors;
         if (rst_n && cmd_retire_probe && dn_valid && dn_sideband[2:0] == 0 &&
             dn_payload[1:0] == 1 && dut.hup_valid && dut.hup_ready && dut.hup_last) begin
+            // Sample the external command and context BEFORE NBA updates.
+            // This probe intentionally exercises one occupied slot, not full rejection.
+            if (dut.sched_u.slot[0].valid !== 1'b1 ||
+                dut.sched_u.slot[1].valid !== 1'b0 ||
+                dut.sched_u.cp[dn_payload[11]].legal !== 1'b1)
+                $fatal(1, "CMD_RETIRE invalid probe precondition");
             expected_pass = dn_sideband[10:3];
+            expected_payload = dn_payload;
+            expected_phase_base = 21'(dn_payload[42:22]) +
+                21'(dut.sched_u.cp[dn_payload[11]].gu_words);
+            expected_tail_base = expected_phase_base +
+                21'(dut.sched_u.cp[dn_payload[11]].d_words);
+            expected_fmt = dut.sched_u.cp[dn_payload[11]].fmt;
+            expected_sblk128 = dut.sched_u.cp[dn_payload[11]].sblk128;
+            expected_bias = dut.sched_u.cp[dn_payload[11]].bias_en;
+            expected_bidx = expected_bias ?
+                dut.sched_u.cp[dn_payload[11]].bias_first_d : 2'd0;
+            expected_scale = !expected_bias &&
+                (dut.sched_u.cp[dn_payload[11]].sw > 0);
             cmd_retire_hits++;
             #1;
             survivors = 0;
@@ -36,6 +59,35 @@ module tb_tile_v4;
                     survivors++;
                     if (dut.sched_u.iss[si].valid !== 1'b1)
                         $fatal(1, "CMD_RETIRE issuer missing pass=%0d slot=%0d", expected_pass, si);
+                    if (dut.sched_u.slot[si].base_word !== expected_payload[42:22] ||
+                        dut.sched_u.slot[si].ctx_sel !== expected_payload[11] ||
+                        dut.sched_u.slot[si].n_tok !== expected_payload[45:43] ||
+                        dut.sched_u.slot[si].ybank !== expected_payload[46] ||
+                        dut.sched_u.slot[si].hbank !== expected_payload[47] ||
+                        dut.sched_u.slot[si].fmt !== expected_fmt ||
+                        dut.sched_u.slot[si].sblk128 !== expected_sblk128 ||
+                        dut.sched_u.slot[si].bias_en !== expected_bias)
+                        $fatal(1, "CMD_RETIRE descriptor corrupted pass=%0d slot=%0d", expected_pass, si);
+                    for (integer lane = 0; lane < 4; lane++) begin
+                        if (dut.sched_u.slot[si].y_slots[lane] !== expected_payload[96+40*lane +: 6] ||
+                            dut.sched_u.slot[si].weights[lane] !== expected_payload[102+40*lane +: 32])
+                            $fatal(1, "CMD_RETIRE lane metadata corrupted pass=%0d lane=%0d", expected_pass, lane);
+                    end
+                    if (dut.sched_u.phase_base[si] !== expected_phase_base ||
+                        dut.sched_u.tail_base[si] !== expected_tail_base)
+                        $fatal(1, "CMD_RETIRE address base corrupted pass=%0d slot=%0d", expected_pass, si);
+                    // A newly accepted command cannot have issued on this edge:
+                    // issue selection reads the pre-edge empty destination slot.
+                    if (dut.sched_u.iss[si].kb !== 17'd0 ||
+                        dut.sched_u.iss[si].g !== 6'd0 ||
+                        dut.sched_u.iss[si].swi !== 4'd0 ||
+                        dut.sched_u.iss[si].off !== 17'd0 ||
+                        dut.sched_u.iss[si].started !== 1'b0 ||
+                        dut.sched_u.iss[si].bias !== expected_bias ||
+                        dut.sched_u.iss[si].bidx !== expected_bidx ||
+                        dut.sched_u.iss[si].bleft !== (expected_bias ? 2'd2 : 2'd0) ||
+                        dut.sched_u.iss[si].scale !== expected_scale)
+                        $fatal(1, "CMD_RETIRE issuer initialization corrupted pass=%0d slot=%0d", expected_pass, si);
                 end
             end
             if (survivors != 1)
