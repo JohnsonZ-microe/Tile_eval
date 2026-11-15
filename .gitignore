@@ -2,6 +2,7 @@ __pycache__/
 *.pyc
 results/
 logs/
+vcd/
 spyglass_results/
 *.vcd
 *.pyc
