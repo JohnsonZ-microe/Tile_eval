@@ -28,6 +28,23 @@ class RunDiagnosticsTests(unittest.TestCase):
             self.path / 'run_tile.log', self.path, dict(os.environ), timeout,
             self.manifest, self.path / 'manifest.json', test)
 
+    def test_cmd_retire_probe_requires_exact_coverage(self):
+        for output, succeeds in [
+            ('CHECK cmd_retire hits=24\nPASS tile flits=9818 beats=877 sync1=48', True),
+            ('PASS tile flits=9818 beats=877 sync1=48', False),
+            ('CHECK cmd_retire hits=0\nPASS tile flits=9818 beats=877 sync1=48', False),
+            ('CHECK cmd_retire hits=23\nPASS tile flits=9818 beats=877 sync1=48', False),
+            ('PASS tile flits=9818 beats=877 sync1=48\nCHECK cmd_retire hits=24', False)]:
+            command = [sys.executable, '-B', '-c', 'print(%r)' % output, '+CMD_RETIRE_PROBE']
+            def run():
+                return RUNNER.execute_logged(command, self.path/'probe.log', self.path,
+                    dict(os.environ), 10, self.manifest, self.path/'manifest.json', 'tile')
+            if succeeds:
+                run()
+                self.assertEqual(self.manifest['simulations']['tile']['coverage']['cmd_retire_hits'],24)
+            else:
+                with self.assertRaises(RuntimeError): run()
+
     def saved_record(self):
         saved = json.loads((self.path / 'manifest.json').read_text())
         self.assertEqual(saved['simulations']['tile'],

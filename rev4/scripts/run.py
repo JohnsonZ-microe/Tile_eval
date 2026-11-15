@@ -170,6 +170,14 @@ def execute_logged(command, logfile, cwd, environment, timeout,
         if test and (not re.search(r'^PASS ' + re.escape(test) + r'\b', log, re.M)
                      or re.search(r'^\s*(FAIL\b|Fatal:|FATAL\b)', log, re.M)):
             raise RuntimeError('Missing clean PASS in ' + test)
+        if test == 'tile' and '+CMD_RETIRE_PROBE' in command:
+            hits = re.findall(r'^CHECK cmd_retire hits=([0-9]+)\s*$', log, re.M)
+            syncs = re.findall(r'^PASS tile flits=[0-9]+ beats=[0-9]+ sync1=([0-9]+)\s*$', log, re.M)
+            if (len(hits) != 1 or len(syncs) != 1 or int(hits[0]) <= 0 or
+                    2*int(hits[0]) != int(syncs[0]) or
+                    log.index('CHECK cmd_retire') > log.index('PASS tile')):
+                raise RuntimeError('Missing complete CMD retirement collision evidence')
+            record['coverage'] = dict(cmd_retire_hits=int(hits[0]))
         if test == 'yacc':
             overlap = re.findall(r'^CHECK yacc_overlap banks=2 offsets=86 packets=172 yields=([0-9]+)\s*$', log, re.M)
             passed = re.findall(r'^PASS yacc packets=300 cycles=([0-9]+)\s*$', log, re.M)
@@ -222,6 +230,7 @@ def main():
     parser.add_argument('--trace', action='store_true')
     parser.add_argument('--calibration-trace', action='store_true')
     parser.add_argument('--overlap', action='store_true')
+    parser.add_argument('--cmd-retire-probe', action='store_true')
     parser.add_argument('--credit-period', type=cycle_argument, default=1)
     parser.add_argument('--input-gap', type=cycle_argument, default=1)
     parser.add_argument('--progress-cycles', type=cycle_argument, default=10000)
@@ -369,6 +378,8 @@ def main():
                                 '+GAP=%d' % args.input_gap])
                     if args.overlap:
                         cmd.append('+OVERLAP')
+                    if args.cmd_retire_probe:
+                        cmd.append('+CMD_RETIRE_PROBE')
                 log = run(cmd, 'run_%s.log' % test, test)
             manifest['rtl_validation'] = 'passed'
         elif args.tool == 'dc':

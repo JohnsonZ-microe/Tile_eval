@@ -1,0 +1,358 @@
+[
+  {
+    "run": "vcs-20261114T103159Z-70119",
+    "commands": 48,
+    "first_command": 107291,
+    "last_sync": 354805,
+    "last_output": 355982,
+    "early_d_commands": 0,
+    "pairs": [
+      {
+        "case": 0,
+        "pass_id": 5,
+        "d_command": 113143,
+        "gu_done": 113141,
+        "lead": -2
+      },
+      {
+        "case": 1,
+        "pass_id": 6,
+        "d_command": 122189,
+        "gu_done": 122187,
+        "lead": -2
+      },
+      {
+        "case": 2,
+        "pass_id": 7,
+        "d_command": 131755,
+        "gu_done": 131753,
+        "lead": -2
+      },
+      {
+        "case": 3,
+        "pass_id": 8,
+        "d_command": 141840,
+        "gu_done": 141838,
+        "lead": -2
+      },
+      {
+        "case": 4,
+        "pass_id": 9,
+        "d_command": 152415,
+        "gu_done": 152413,
+        "lead": -2
+      },
+      {
+        "case": 5,
+        "pass_id": 10,
+        "d_command": 161486,
+        "gu_done": 161484,
+        "lead": -2
+      },
+      {
+        "case": 6,
+        "pass_id": 11,
+        "d_command": 171077,
+        "gu_done": 171075,
+        "lead": -2
+      },
+      {
+        "case": 7,
+        "pass_id": 12,
+        "d_command": 181187,
+        "gu_done": 181185,
+        "lead": -2
+      },
+      {
+        "case": 8,
+        "pass_id": 13,
+        "d_command": 191777,
+        "gu_done": 191775,
+        "lead": -2
+      },
+      {
+        "case": 9,
+        "pass_id": 14,
+        "d_command": 200853,
+        "gu_done": 200851,
+        "lead": -2
+      },
+      {
+        "case": 10,
+        "pass_id": 15,
+        "d_command": 210449,
+        "gu_done": 210447,
+        "lead": -2
+      },
+      {
+        "case": 11,
+        "pass_id": 16,
+        "d_command": 220564,
+        "gu_done": 220562,
+        "lead": -2
+      },
+      {
+        "case": 12,
+        "pass_id": 17,
+        "d_command": 231156,
+        "gu_done": 231154,
+        "lead": -2
+      },
+      {
+        "case": 13,
+        "pass_id": 18,
+        "d_command": 240230,
+        "gu_done": 240228,
+        "lead": -2
+      },
+      {
+        "case": 14,
+        "pass_id": 19,
+        "d_command": 249824,
+        "gu_done": 249822,
+        "lead": -2
+      },
+      {
+        "case": 15,
+        "pass_id": 20,
+        "d_command": 259937,
+        "gu_done": 259935,
+        "lead": -2
+      },
+      {
+        "case": 16,
+        "pass_id": 21,
+        "d_command": 270516,
+        "gu_done": 270514,
+        "lead": -2
+      },
+      {
+        "case": 17,
+        "pass_id": 22,
+        "d_command": 279564,
+        "gu_done": 279562,
+        "lead": -2
+      },
+      {
+        "case": 18,
+        "pass_id": 23,
+        "d_command": 289132,
+        "gu_done": 289130,
+        "lead": -2
+      },
+      {
+        "case": 19,
+        "pass_id": 24,
+        "d_command": 299219,
+        "gu_done": 299217,
+        "lead": -2
+      },
+      {
+        "case": 20,
+        "pass_id": 25,
+        "d_command": 311725,
+        "gu_done": 311723,
+        "lead": -2
+      },
+      {
+        "case": 21,
+        "pass_id": 26,
+        "d_command": 323982,
+        "gu_done": 323980,
+        "lead": -2
+      },
+      {
+        "case": 22,
+        "pass_id": 27,
+        "d_command": 336759,
+        "gu_done": 336757,
+        "lead": -2
+      },
+      {
+        "case": 23,
+        "pass_id": 28,
+        "d_command": 350055,
+        "gu_done": 350053,
+        "lead": -2
+      }
+    ]
+  },
+  {
+    "run": "vcs-20261115T023443Z-101124",
+    "commands": 48,
+    "first_command": 107291,
+    "last_sync": 354733,
+    "last_output": 355910,
+    "early_d_commands": 24,
+    "pairs": [
+      {
+        "case": 0,
+        "pass_id": 5,
+        "d_command": 107543,
+        "gu_done": 113141,
+        "lead": 5598
+      },
+      {
+        "case": 1,
+        "pass_id": 6,
+        "d_command": 117474,
+        "gu_done": 122184,
+        "lead": 4710
+      },
+      {
+        "case": 2,
+        "pass_id": 7,
+        "d_command": 128541,
+        "gu_done": 131747,
+        "lead": 3206
+      },
+      {
+        "case": 3,
+        "pass_id": 8,
+        "d_command": 139348,
+        "gu_done": 141829,
+        "lead": 2481
+      },
+      {
+        "case": 4,
+        "pass_id": 9,
+        "d_command": 146791,
+        "gu_done": 152401,
+        "lead": 5610
+      },
+      {
+        "case": 5,
+        "pass_id": 10,
+        "d_command": 156759,
+        "gu_done": 161469,
+        "lead": 4710
+      },
+      {
+        "case": 6,
+        "pass_id": 11,
+        "d_command": 167851,
+        "gu_done": 171057,
+        "lead": 3206
+      },
+      {
+        "case": 7,
+        "pass_id": 12,
+        "d_command": 178683,
+        "gu_done": 181164,
+        "lead": 2481
+      },
+      {
+        "case": 8,
+        "pass_id": 13,
+        "d_command": 186139,
+        "gu_done": 191751,
+        "lead": 5612
+      },
+      {
+        "case": 9,
+        "pass_id": 14,
+        "d_command": 196115,
+        "gu_done": 200824,
+        "lead": 4709
+      },
+      {
+        "case": 10,
+        "pass_id": 15,
+        "d_command": 207212,
+        "gu_done": 210417,
+        "lead": 3205
+      },
+      {
+        "case": 11,
+        "pass_id": 16,
+        "d_command": 218049,
+        "gu_done": 220529,
+        "lead": 2480
+      },
+      {
+        "case": 12,
+        "pass_id": 17,
+        "d_command": 225507,
+        "gu_done": 231118,
+        "lead": 5611
+      },
+      {
+        "case": 13,
+        "pass_id": 18,
+        "d_command": 235480,
+        "gu_done": 240189,
+        "lead": 4709
+      },
+      {
+        "case": 14,
+        "pass_id": 19,
+        "d_command": 246575,
+        "gu_done": 249780,
+        "lead": 3205
+      },
+      {
+        "case": 15,
+        "pass_id": 20,
+        "d_command": 257410,
+        "gu_done": 259890,
+        "lead": 2480
+      },
+      {
+        "case": 16,
+        "pass_id": 21,
+        "d_command": 264867,
+        "gu_done": 270466,
+        "lead": 5599
+      },
+      {
+        "case": 17,
+        "pass_id": 22,
+        "d_command": 274802,
+        "gu_done": 279511,
+        "lead": 4709
+      },
+      {
+        "case": 18,
+        "pass_id": 23,
+        "d_command": 285871,
+        "gu_done": 289076,
+        "lead": 3205
+      },
+      {
+        "case": 19,
+        "pass_id": 24,
+        "d_command": 296680,
+        "gu_done": 299160,
+        "lead": 2480
+      },
+      {
+        "case": 20,
+        "pass_id": 25,
+        "d_command": 304123,
+        "gu_done": 311663,
+        "lead": 7540
+      },
+      {
+        "case": 21,
+        "pass_id": 26,
+        "d_command": 317672,
+        "gu_done": 323917,
+        "lead": 6245
+      },
+      {
+        "case": 22,
+        "pass_id": 27,
+        "d_command": 332454,
+        "gu_done": 336691,
+        "lead": 4237
+      },
+      {
+        "case": 23,
+        "pass_id": 28,
+        "d_command": 346712,
+        "gu_done": 349984,
+        "lead": 3272
+      }
+    ]
+  }
+]

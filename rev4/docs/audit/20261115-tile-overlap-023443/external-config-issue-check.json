@@ -1,0 +1,818 @@
+[
+  {
+    "run": "vcs-20261114T103159Z-70119",
+    "decoded": {
+      "configurations": [
+        {
+          "epoch": 0,
+          "pass": 5,
+          "phase": 0,
+          "fmt": 0,
+          "base": 64,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 5,
+          "phase": 1,
+          "fmt": 0,
+          "base": 64,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 6,
+          "phase": 0,
+          "fmt": 0,
+          "base": 8256,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 6,
+          "phase": 1,
+          "fmt": 0,
+          "base": 8256,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 7,
+          "phase": 0,
+          "fmt": 0,
+          "base": 16448,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 7,
+          "phase": 1,
+          "fmt": 0,
+          "base": 16448,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 8,
+          "phase": 0,
+          "fmt": 0,
+          "base": 24640,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 8,
+          "phase": 1,
+          "fmt": 0,
+          "base": 24640,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 9,
+          "phase": 0,
+          "fmt": 1,
+          "base": 32832,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 9,
+          "phase": 1,
+          "fmt": 1,
+          "base": 32832,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 10,
+          "phase": 0,
+          "fmt": 1,
+          "base": 41024,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 10,
+          "phase": 1,
+          "fmt": 1,
+          "base": 41024,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 11,
+          "phase": 0,
+          "fmt": 1,
+          "base": 49216,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 11,
+          "phase": 1,
+          "fmt": 1,
+          "base": 49216,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 12,
+          "phase": 0,
+          "fmt": 1,
+          "base": 57408,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 12,
+          "phase": 1,
+          "fmt": 1,
+          "base": 57408,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 13,
+          "phase": 0,
+          "fmt": 2,
+          "base": 65600,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 13,
+          "phase": 1,
+          "fmt": 2,
+          "base": 65600,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 14,
+          "phase": 0,
+          "fmt": 2,
+          "base": 73792,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 14,
+          "phase": 1,
+          "fmt": 2,
+          "base": 73792,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 15,
+          "phase": 0,
+          "fmt": 2,
+          "base": 81984,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 15,
+          "phase": 1,
+          "fmt": 2,
+          "base": 81984,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 16,
+          "phase": 0,
+          "fmt": 2,
+          "base": 90176,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 16,
+          "phase": 1,
+          "fmt": 2,
+          "base": 90176,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 17,
+          "phase": 0,
+          "fmt": 3,
+          "base": 98368,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 17,
+          "phase": 1,
+          "fmt": 3,
+          "base": 98368,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 18,
+          "phase": 0,
+          "fmt": 3,
+          "base": 106560,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 18,
+          "phase": 1,
+          "fmt": 3,
+          "base": 106560,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 19,
+          "phase": 0,
+          "fmt": 3,
+          "base": 114752,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 19,
+          "phase": 1,
+          "fmt": 3,
+          "base": 114752,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 20,
+          "phase": 0,
+          "fmt": 3,
+          "base": 122944,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 20,
+          "phase": 1,
+          "fmt": 3,
+          "base": 122944,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 21,
+          "phase": 0,
+          "fmt": 4,
+          "base": 131136,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 21,
+          "phase": 1,
+          "fmt": 4,
+          "base": 131136,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 22,
+          "phase": 0,
+          "fmt": 4,
+          "base": 139328,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 22,
+          "phase": 1,
+          "fmt": 4,
+          "base": 139328,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 23,
+          "phase": 0,
+          "fmt": 4,
+          "base": 147520,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 23,
+          "phase": 1,
+          "fmt": 4,
+          "base": 147520,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 24,
+          "phase": 0,
+          "fmt": 4,
+          "base": 155712,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 24,
+          "phase": 1,
+          "fmt": 4,
+          "base": 155712,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 25,
+          "phase": 0,
+          "fmt": 5,
+          "base": 163904,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 25,
+          "phase": 1,
+          "fmt": 5,
+          "base": 163904,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 26,
+          "phase": 0,
+          "fmt": 5,
+          "base": 172096,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 26,
+          "phase": 1,
+          "fmt": 5,
+          "base": 172096,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 27,
+          "phase": 0,
+          "fmt": 5,
+          "base": 180288,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 27,
+          "phase": 1,
+          "fmt": 5,
+          "base": 180288,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 28,
+          "phase": 0,
+          "fmt": 5,
+          "base": 188480,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 28,
+          "phase": 1,
+          "fmt": 5,
+          "base": 188480,
+          "bias": false
+        }
+      ],
+      "rejected": [
+        {
+          "epoch": 0,
+          "cycle": 355987,
+          "errors": [
+            "CMD_ILLEGAL"
+          ]
+        }
+      ],
+      "assumption": "CTX writes occur while no slots are active; occupancy not predicted",
+      "scope": "external-input config and issue address order only; no issue cycle prediction"
+    },
+    "check": {
+      "status": "passed",
+      "requests": 108600,
+      "phases": 48,
+      "scope": "explicit complete phase address sequences only; not issue-cycle or raw CMD/CTX prediction"
+    }
+  },
+  {
+    "run": "vcs-20261115T023443Z-101124",
+    "decoded": {
+      "configurations": [
+        {
+          "epoch": 0,
+          "pass": 5,
+          "phase": 0,
+          "fmt": 0,
+          "base": 64,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 5,
+          "phase": 1,
+          "fmt": 0,
+          "base": 64,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 6,
+          "phase": 0,
+          "fmt": 0,
+          "base": 8256,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 6,
+          "phase": 1,
+          "fmt": 0,
+          "base": 8256,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 7,
+          "phase": 0,
+          "fmt": 0,
+          "base": 16448,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 7,
+          "phase": 1,
+          "fmt": 0,
+          "base": 16448,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 8,
+          "phase": 0,
+          "fmt": 0,
+          "base": 24640,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 8,
+          "phase": 1,
+          "fmt": 0,
+          "base": 24640,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 9,
+          "phase": 0,
+          "fmt": 1,
+          "base": 32832,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 9,
+          "phase": 1,
+          "fmt": 1,
+          "base": 32832,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 10,
+          "phase": 0,
+          "fmt": 1,
+          "base": 41024,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 10,
+          "phase": 1,
+          "fmt": 1,
+          "base": 41024,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 11,
+          "phase": 0,
+          "fmt": 1,
+          "base": 49216,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 11,
+          "phase": 1,
+          "fmt": 1,
+          "base": 49216,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 12,
+          "phase": 0,
+          "fmt": 1,
+          "base": 57408,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 12,
+          "phase": 1,
+          "fmt": 1,
+          "base": 57408,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 13,
+          "phase": 0,
+          "fmt": 2,
+          "base": 65600,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 13,
+          "phase": 1,
+          "fmt": 2,
+          "base": 65600,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 14,
+          "phase": 0,
+          "fmt": 2,
+          "base": 73792,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 14,
+          "phase": 1,
+          "fmt": 2,
+          "base": 73792,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 15,
+          "phase": 0,
+          "fmt": 2,
+          "base": 81984,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 15,
+          "phase": 1,
+          "fmt": 2,
+          "base": 81984,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 16,
+          "phase": 0,
+          "fmt": 2,
+          "base": 90176,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 16,
+          "phase": 1,
+          "fmt": 2,
+          "base": 90176,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 17,
+          "phase": 0,
+          "fmt": 3,
+          "base": 98368,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 17,
+          "phase": 1,
+          "fmt": 3,
+          "base": 98368,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 18,
+          "phase": 0,
+          "fmt": 3,
+          "base": 106560,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 18,
+          "phase": 1,
+          "fmt": 3,
+          "base": 106560,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 19,
+          "phase": 0,
+          "fmt": 3,
+          "base": 114752,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 19,
+          "phase": 1,
+          "fmt": 3,
+          "base": 114752,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 20,
+          "phase": 0,
+          "fmt": 3,
+          "base": 122944,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 20,
+          "phase": 1,
+          "fmt": 3,
+          "base": 122944,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 21,
+          "phase": 0,
+          "fmt": 4,
+          "base": 131136,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 21,
+          "phase": 1,
+          "fmt": 4,
+          "base": 131136,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 22,
+          "phase": 0,
+          "fmt": 4,
+          "base": 139328,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 22,
+          "phase": 1,
+          "fmt": 4,
+          "base": 139328,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 23,
+          "phase": 0,
+          "fmt": 4,
+          "base": 147520,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 23,
+          "phase": 1,
+          "fmt": 4,
+          "base": 147520,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 24,
+          "phase": 0,
+          "fmt": 4,
+          "base": 155712,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 24,
+          "phase": 1,
+          "fmt": 4,
+          "base": 155712,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 25,
+          "phase": 0,
+          "fmt": 5,
+          "base": 163904,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 25,
+          "phase": 1,
+          "fmt": 5,
+          "base": 163904,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 26,
+          "phase": 0,
+          "fmt": 5,
+          "base": 172096,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 26,
+          "phase": 1,
+          "fmt": 5,
+          "base": 172096,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 27,
+          "phase": 0,
+          "fmt": 5,
+          "base": 180288,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 27,
+          "phase": 1,
+          "fmt": 5,
+          "base": 180288,
+          "bias": true
+        },
+        {
+          "epoch": 0,
+          "pass": 28,
+          "phase": 0,
+          "fmt": 5,
+          "base": 188480,
+          "bias": false
+        },
+        {
+          "epoch": 0,
+          "pass": 28,
+          "phase": 1,
+          "fmt": 5,
+          "base": 188480,
+          "bias": false
+        }
+      ],
+      "rejected": [
+        {
+          "epoch": 0,
+          "cycle": 355915,
+          "errors": [
+            "CMD_ILLEGAL"
+          ]
+        }
+      ],
+      "assumption": "CTX writes occur while no slots are active; occupancy not predicted",
+      "scope": "external-input config and issue address order only; no issue cycle prediction"
+    },
+    "check": {
+      "status": "passed",
+      "requests": 108600,
+      "phases": 48,
+      "scope": "explicit complete phase address sequences only; not issue-cycle or raw CMD/CTX prediction"
+    }
+  }
+]

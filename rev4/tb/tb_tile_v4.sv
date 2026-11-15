@@ -18,6 +18,30 @@ module tb_tile_v4;
     integer y_packet_count = 0;
     integer phase_requests = 0;
     bit overlap = 0, pending_gather_fence = 0;
+    bit cmd_retire_probe = 0;
+    integer cmd_retire_hits = 0;
+    // External-interface coincidence probe: never force scheduler state.
+    always @(posedge clk) begin : cmd_retire_monitor
+        logic [7:0] expected_pass;
+        integer survivors;
+        if (rst_n && cmd_retire_probe && dn_valid && dn_sideband[2:0] == 0 &&
+            dn_payload[1:0] == 1 && dut.hup_valid && dut.hup_ready && dut.hup_last) begin
+            expected_pass = dn_sideband[10:3];
+            cmd_retire_hits++;
+            #1;
+            survivors = 0;
+            for (integer si = 0; si < 2; si++) begin
+                if (dut.sched_u.slot[si].valid && dut.sched_u.slot[si].phase == 1 &&
+                    dut.sched_u.slot[si].pass_id == expected_pass) begin
+                    survivors++;
+                    if (dut.sched_u.iss[si].valid !== 1'b1)
+                        $fatal(1, "CMD_RETIRE issuer missing pass=%0d slot=%0d", expected_pass, si);
+                end
+            end
+            if (survivors != 1)
+                $fatal(1, "CMD_RETIRE command lost/duplicated pass=%0d survivors=%0d", expected_pass, survivors);
+        end
+    end
     integer expected_flits, expected_beats, expected_sync, expected_packets, cfd;
     logic [21:0] expected_errors;
     integer trace_fd = 0, trace_issue = 0, trace_return = 0, trace_consume = 0;
@@ -397,6 +421,7 @@ module tb_tile_v4;
     initial begin
         if (!$value$plusargs("VECTORS=%s", vecdir)) vecdir = "vectors";
         overlap = $test$plusargs("OVERLAP");
+        cmd_retire_probe = $test$plusargs("CMD_RETIRE_PROBE");
         cfd = $fopen({vecdir, "/checks.txt"}, "r");
         if (!cfd) $fatal(1, "missing checks.txt");
         if ($fscanf(cfd, "%d %d %d %d %h", expected_flits, expected_beats,
@@ -467,7 +492,7 @@ module tb_tile_v4;
                 diagnostic_stage = "replay";
                 rc = $fscanf(ffd, "%s %d %h %h", f1, sb, f2, pay);
                 if (rc < 4) disable replay;
-                if (!overlap && sb[2:0] == 3'd0 && pay[1:0] == 2'd1)
+                if (!overlap && !cmd_retire_probe && sb[2:0] == 3'd0 && pay[1:0] == 2'd1)
                     wait_phase(phase_requests);
                 if (pending_gather_fence && sb[2:0] == 3'd3) begin
                     wait_phase(phase_requests - 1);
@@ -491,10 +516,22 @@ module tb_tile_v4;
                 diagnostic_stage = "send_flit";
                 if (sb[2:0] == 3'd1 || sb[2:0] == 3'd2) xfifo_credit--;
                 @(negedge clk);
+                if (cmd_retire_probe && sb[2:0] == 0 && pay[1:0] == 1) begin
+                    integer waited;
+                    waited = 0;
+                    #1;
+                    while (!(dut.hup_valid === 1'b1 && dut.hup_ready === 1'b1 &&
+                             dut.hup_last === 1'b1)) begin
+                        @(negedge clk);
+                        #1;
+                        waited++;
+                        if (waited >= wait_limit) diagnostic_timeout("cmd_retire_probe");
+                    end
+                end
                 dn_valid = 1;
                 dn_sideband = sb;
                 dn_payload = pay;
-                if (overlap && sb[2:0] == 3'd0 && pay[1:0] == 2'd1)
+                if ((overlap || cmd_retire_probe) && sb[2:0] == 3'd0 && pay[1:0] == 2'd1)
                     pending_gather_fence = 1;
                 if (sb[2:0] == 3'd0 && pay[1:0] < 2'd2)
                     phase_requests++;
@@ -511,6 +548,11 @@ module tb_tile_v4;
             end
         end
         $fclose(ffd);
+        if (cmd_retire_probe) begin
+            if (cmd_retire_hits != expected_sync/2)
+                $fatal(1, "CMD_RETIRE coverage hits=%0d expected=%0d", cmd_retire_hits, expected_sync/2);
+            $display("CHECK cmd_retire hits=%0d", cmd_retire_hits);
+        end
         // ---------- drain and final checks ----------
         begin : drain
             integer idle = 0;

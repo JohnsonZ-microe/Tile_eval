@@ -1,0 +1,30 @@
+{
+  "results": [
+    {
+      "run": "vcs-20261114T103159Z-70119",
+      "accepted": 48,
+      "retired": 48,
+      "peak_slots": 1,
+      "overwritten_admissions": [],
+      "busy_context_writes": [],
+      "final_slots": [
+        null,
+        null
+      ]
+    },
+    {
+      "run": "vcs-20261115T023443Z-101124",
+      "accepted": 48,
+      "retired": 48,
+      "peak_slots": 2,
+      "overwritten_admissions": [],
+      "busy_context_writes": [],
+      "final_slots": [
+        null,
+        null
+      ]
+    }
+  ],
+  "scope": "coverage diagnostic using observed SYNC1 minus one as retirement; not independent retirement prediction",
+  "model_sha256": "86e7d38b75f03c2a8fe9e66a4d2c8053bf59040dc62d540f10bfd867ce065dcb"
+}
