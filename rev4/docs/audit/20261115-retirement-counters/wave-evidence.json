@@ -1,0 +1,32 @@
+{
+  "source": "Tile_eval\\vcd\\tile_ffn_v4.vcd",
+  "signals": {
+    "$.e": "tb_tile_v4.dut.sched_u.pstate",
+    "$/\\": "tb_tile_v4.dut.sched_u.hup_ready",
+    "$/^": "tb_tile_v4.dut.sched_u.hup_last",
+    "$/z": "tb_tile_v4.dut.sched_u.sync1"
+  },
+  "sync_high_samples": [
+    {
+      "time_ps": 1131445000,
+      "sync1": "1",
+      "pstate": "001",
+      "hup_ready": "0",
+      "hup_last": "1"
+    },
+    {
+      "time_ps": 1131446000,
+      "sync1": "1",
+      "pstate": "001",
+      "hup_ready": "0",
+      "hup_last": "1"
+    },
+    {
+      "time_ps": 1131450000,
+      "sync1": "1",
+      "pstate": "001",
+      "hup_ready": "0",
+      "hup_last": "1"
+    }
+  ]
+}

@@ -19,8 +19,12 @@ class TileTraceSourceTests(unittest.TestCase):
         bench = (root / 'tb/tb_tile_v4.sv').read_text(encoding='utf-8')
         top = (root / 'rtl/tile_ffn_v4.sv').read_text(encoding='utf-8')
         self.assertNotRegex(bench, r'dut\.hbuf_bank\b')
-        self.assertIn('trace_event("bank_release", dut.hbuf_wr_bank_sel, 0)', bench)
-        self.assertIn('.hbuf_bank(hbuf_wr_bank_sel)', top)
+        self.assertIn('trace_event("bank_release", dut.hbuf_release_bank, 0)', bench)
+        self.assertIn('.hbuf_release_bank(hbuf_release_bank)', top)
+        self.assertIn('.own_release_bank(hbuf_release_bank)', top)
+        release_event = next(line for line in bench.splitlines()
+                             if 'calibration_event("pre", "bank_release"' in line)
+        self.assertIn("int'(dut.hbuf_release_bank)", release_event)
 
 
 if __name__ == '__main__':

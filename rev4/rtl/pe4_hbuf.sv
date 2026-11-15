@@ -24,6 +24,7 @@ module pe4_hbuf (
     input  logic own_take,
     input  logic own_release,
     input  logic own_bank,
+    input  logic own_release_bank,
     input  logic [7:0] own_pass,
     input  logic [2:0] own_ntok,
     output logic [1:0] owner_valid,
@@ -51,12 +52,16 @@ module pe4_hbuf (
     always_comb begin
         wr_bad = 1'b0;
         if (wr_valid) begin
-            if (!owner_v[wr_bank]) wr_bad = 1'b1;
+            // Release ends the old owner's write permission on this edge,
+            // including a simultaneous same-bank take. No pipeline stage.
+            if (own_release && own_release_bank == wr_bank) wr_bad = 1'b1;
+            else if (!owner_v[wr_bank]) wr_bad = 1'b1;
             else if (wr_idx >= 72 || wr_lane >= 4 ||
                      wr_lane >= exp_ntok[wr_bank]) wr_bad = 1'b1;
             else if (lane_seen[wr_bank][wr_idx][wr_lane]) wr_bad = 1'b1;
         end
-        take_illegal = own_take && owner_v[own_bank];
+        take_illegal = own_take && owner_v[own_bank] &&
+                       !(own_release && own_release_bank == own_bank);
     end
     logic [127:0] wbe_c;
     logic [1023:0] wdata_c;
@@ -113,7 +118,10 @@ module pe4_hbuf (
                     end
         end else begin
             wr_err <= wr_bad || take_illegal;
-            if (own_take && !owner_v[own_bank]) begin
+            // Separate bank selectors permit D release and new GU ownership
+            // on the same edge. A same-bank handoff clears old row validity.
+            if (own_release) owner_v[own_release_bank] <= 0;
+            if (own_take && !take_illegal) begin
                 owner_v[own_bank] <= 1;
                 owner_p[own_bank] <= own_pass;
                 exp_ntok[own_bank] <= own_ntok;
@@ -121,7 +129,6 @@ module pe4_hbuf (
                     for (int l = 0; l < 4; l++)
                         lane_seen[own_bank][r][l] <= 0;
             end
-            if (own_release) owner_v[own_bank] <= 0;
             if (wr_valid && !wr_bad) begin
                 lane_seen[wr_bank][wr_idx][wr_lane] <= 1;
                 hscale[wr_bank][wr_idx][wr_lane] <= wr_se;

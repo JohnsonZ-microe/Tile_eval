@@ -47,10 +47,22 @@ class RunDiagnosticsTests(unittest.TestCase):
 
     def test_promotion_requires_complete_boundary_evidence(self):
         check = 'CHECK promotion paths=2 distinct_tail=18 stalled=18 address_checks=12 simultaneous_issue=6 scale_consume=6'
+        counters = 'CHECK counters paths=2 cases=8 blocked=8 saturation=4 clear=2 no_double=8'
+        collisions = 'CHECK command_collision paths=2 descriptors=2 bank_targets=1'
+        guard = 'CHECK quant_guard cases=22 canceled=10 independent=10 baseline=2'
+        route = 'CHECK route_guard cases=4 rejected=2 independent=2'
+        check = route + '\n' + guard + '\n' + collisions + '\n' + counters + '\n' + check
         passed = 'PASS promotion cases=18'
         for output, succeeds in [
             (check + '\n' + passed, True),
             (passed, False),
+            (check.replace(guard + '\n', '') + '\n' + passed, False),
+            (check.replace(route + '\n', '') + '\n' + passed, False),
+            (check.replace('rejected=2', 'rejected=0') + '\n' + passed, False),
+            (check.replace('canceled=10', 'canceled=0') + '\n' + passed, False),
+            (check.replace(collisions + '\n', '') + '\n' + passed, False),
+            (check.replace(counters + '\n', '') + '\n' + passed, False),
+            (check.replace('clear=2', 'clear=0') + '\n' + passed, False),
             (check.replace('distinct_tail=18', 'distinct_tail=0') + '\n' + passed, False),
             (check.replace('stalled=18', 'stalled=0') + '\n' + passed, False),
             (check.replace('simultaneous_issue=6', 'simultaneous_issue=0') + '\n' + passed, False),
@@ -67,6 +79,20 @@ class RunDiagnosticsTests(unittest.TestCase):
                 else:
                     with self.assertRaises(RuntimeError):
                         self.run_process('print(%r)' % output, test='promotion')
+
+    def test_memory_requires_ownership_boundary_evidence(self):
+        handoff = 'CHECK hbank_handoff cases=4 same_bank=2 different_bank=2'
+        fence = 'CHECK hbank_release_write rejected=4 independent=2'
+        passed = 'PASS memory rows=30 rram=160 reset_probes=4'
+        good = '\n'.join((handoff, fence, passed))
+        self.run_process('print(%r)' % good, test='memory')
+        self.assertEqual(self.manifest['simulations']['memory']['coverage']['release_write_rejected'], 4)
+        for output in (passed, good.replace(handoff, ''), good.replace(fence, ''),
+                       good.replace('rejected=4', 'rejected=0'),
+                       good.replace('independent=2', 'independent=0'),
+                       good + '\n' + fence, '\n'.join((handoff, passed, fence))):
+            with self.subTest(output=output), self.assertRaises(RuntimeError):
+                self.run_process('print(%r)' % output, test='memory')
 
     def saved_record(self):
         saved = json.loads((self.path / 'manifest.json').read_text())

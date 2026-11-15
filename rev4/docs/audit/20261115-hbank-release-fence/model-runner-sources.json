@@ -1,0 +1,18 @@
+[
+  {
+    "path": "NPU_eval/af/hbank_ownership.py",
+    "sha256": "0667b71c40acc937c63b32804a8fcb42adc568b1d4e9aa65ff252cbcd66b8ef7"
+  },
+  {
+    "path": "NPU_eval/af/tests/test_hbank_ownership.py",
+    "sha256": "626fc48c10f4f645dc18bae609593d95d5ffe78da1330a8e40cd8840ae3e9cf0"
+  },
+  {
+    "path": "Tile_eval/rev4/scripts/run.py",
+    "sha256": "f1efe34e13fa8a2cc1ab94e88aa56122c67853d361d905396c1cfb10053401e9"
+  },
+  {
+    "path": "Tile_eval/rev4/model/test_run_diagnostics.py",
+    "sha256": "d15d49cbbd1bedf0a3a9940ca1659d656ce82fc31a8a825469b62668522b879a"
+  }
+]

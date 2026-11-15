@@ -1,0 +1,71 @@
+{
+  "status": "passed",
+  "trace_sha256": "b80eb7092b96b56eae33610a82bdd7e2672e5e9c61a5382cfb9817994d5b6815",
+  "trace_bytes": 102757498,
+  "events": 572949,
+  "counts": {
+    "reset": 1,
+    "down": 9818,
+    "memory_issue": 108600,
+    "memory_return": 108600,
+    "memory_consume": 108600,
+    "staging_request": 6080,
+    "staging_consume": 6080,
+    "pe_accept": 103680,
+    "pe_commit_visible": 103680,
+    "up_beat": 877,
+    "credit": 877,
+    "act_accept": 864,
+    "act_consume": 864,
+    "sync1": 48,
+    "quant_accept": 4320,
+    "quant_consume": 4320,
+    "hbank_request": 2736,
+    "hbank_consume": 2736,
+    "bank_release": 24,
+    "y_commit": 24,
+    "y_ready_visible": 60,
+    "drain_accept": 60
+  },
+  "input_events": 10696,
+  "memory_replay": {
+    "issued": 108600,
+    "scope": "fixed memory latency, inflight credit and RQ capacity; issue/consume intent supplied by trace, not full scheduler prediction"
+  },
+  "component_latency": [
+    {
+      "input": "memory_issue",
+      "output": "memory_return",
+      "latency": 3,
+      "transactions": 108600,
+      "mismatches": [],
+      "mismatch_count": 0
+    },
+    {
+      "input": "pe_accept",
+      "output": "pe_commit_visible",
+      "latency": 35,
+      "transactions": 103680,
+      "mismatches": [],
+      "mismatch_count": 0
+    },
+    {
+      "input": "act_accept",
+      "output": "act_consume",
+      "latency": 24,
+      "transactions": 864,
+      "mismatches": [],
+      "mismatch_count": 0
+    },
+    {
+      "input": "quant_accept",
+      "output": "quant_consume",
+      "latency": 4,
+      "transactions": 4320,
+      "mismatches": [],
+      "mismatch_count": 0
+    }
+  ],
+  "scope": "component timing/identity with observed component inputs; not independent full-Tile replay or numerical calibration",
+  "checker_sha256": "bd3a0a09e28007174a89e8f68fc68cc9c343d6700bfa5236b9067747608f3958"
+}

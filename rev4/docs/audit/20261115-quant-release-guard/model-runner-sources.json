@@ -1,0 +1,18 @@
+[
+  {
+    "sha256": "7f8aed4a289cec4ad4b0dec8f66b4268a830f61f976b330624ba3fbaaf1a2a41",
+    "path": "NPU_eval/af/quant_write_guard.py"
+  },
+  {
+    "sha256": "479424d71f4da455155bfc36f57ad3084c113bcd3d7b65e0b3e75200ae237022",
+    "path": "NPU_eval/af/tests/test_quant_write_guard.py"
+  },
+  {
+    "sha256": "8b5ad7017f74b9bcc63e3ca20f366f49e180889c89068ef8fce606b317e5d3ba",
+    "path": "Tile_eval/rev4/scripts/run.py"
+  },
+  {
+    "sha256": "250c080e699064fd264f397e1b6c2e86f53cc141d4f7ffd6c10cc1cc81f53e79",
+    "path": "Tile_eval/rev4/model/test_run_diagnostics.py"
+  }
+]

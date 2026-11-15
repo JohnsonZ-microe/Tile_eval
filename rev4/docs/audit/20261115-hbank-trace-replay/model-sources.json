@@ -1,0 +1,14 @@
+[
+  {
+    "path": "NPU_eval/af/hbank_ownership.py",
+    "sha256": "0667b71c40acc937c63b32804a8fcb42adc568b1d4e9aa65ff252cbcd66b8ef7"
+  },
+  {
+    "path": "NPU_eval/af/hbank_trace_replay.py",
+    "sha256": "751051ca194d40296fc6c3eae1f7c9f4c635d00df4e4e31630ed40a03e4bb0b4"
+  },
+  {
+    "path": "NPU_eval/af/tests/test_hbank_trace_replay.py",
+    "sha256": "1037d707932315e6a62b8a6e8baefab441142b0a9a4287f1b2dccb2146a6cb2b"
+  }
+]

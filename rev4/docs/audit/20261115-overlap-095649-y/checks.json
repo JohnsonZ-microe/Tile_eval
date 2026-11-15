@@ -1,0 +1,2201 @@
+[
+  {
+    "run": "vcs-20261115T095649Z-37967",
+    "trace_sha256": "b80eb7092b96b56eae33610a82bdd7e2672e5e9c61a5382cfb9817994d5b6815",
+    "cases": [
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 5,
+          "phase": 0,
+          "fmt": 0,
+          "base": 64,
+          "bias": true
+        },
+        "tokens": 1,
+        "origin": 107292,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 1602,
+            "predicted": 1602,
+            "delta_cycles": {
+              "0": 1602
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 1602,
+            "predicted": 1602,
+            "delta_cycles": {
+              "0": 1602
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 1440,
+            "predicted": 1440,
+            "delta_cycles": {
+              "0": 1440
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 5,
+          "phase": 1,
+          "fmt": 0,
+          "base": 64,
+          "bias": true
+        },
+        "tokens": 1,
+        "origin": 113040,
+        "h_ready": 113362,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 794,
+            "predicted": 794,
+            "delta_cycles": {
+              "0": 794
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 794,
+            "predicted": 794,
+            "delta_cycles": {
+              "0": 794
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 720,
+            "predicted": 720,
+            "delta_cycles": {
+              "0": 720
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 6,
+          "phase": 0,
+          "fmt": 0,
+          "base": 8256,
+          "bias": false
+        },
+        "tokens": 2,
+        "origin": 116325,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 1600,
+            "predicted": 1600,
+            "delta_cycles": {
+              "0": 1600
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 1600,
+            "predicted": 1600,
+            "delta_cycles": {
+              "0": 1600
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 1440,
+            "predicted": 1440,
+            "delta_cycles": {
+              "0": 1440
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 6,
+          "phase": 1,
+          "fmt": 0,
+          "base": 8256,
+          "bias": false
+        },
+        "tokens": 2,
+        "origin": 122079,
+        "h_ready": 122621,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 792,
+            "predicted": 792,
+            "delta_cycles": {
+              "0": 792
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 792,
+            "predicted": 792,
+            "delta_cycles": {
+              "0": 792
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 720,
+            "predicted": 720,
+            "delta_cycles": {
+              "0": 720
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 7,
+          "phase": 0,
+          "fmt": 0,
+          "base": 16448,
+          "bias": true
+        },
+        "tokens": 3,
+        "origin": 125877,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 1602,
+            "predicted": 1602,
+            "delta_cycles": {
+              "0": 1602
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 1602,
+            "predicted": 1602,
+            "delta_cycles": {
+              "0": 1602
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 1440,
+            "predicted": 1440,
+            "delta_cycles": {
+              "0": 1440
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 7,
+          "phase": 1,
+          "fmt": 0,
+          "base": 16448,
+          "bias": true
+        },
+        "tokens": 3,
+        "origin": 131637,
+        "h_ready": 132400,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 794,
+            "predicted": 794,
+            "delta_cycles": {
+              "0": 794
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 794,
+            "predicted": 794,
+            "delta_cycles": {
+              "0": 794
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 720,
+            "predicted": 720,
+            "delta_cycles": {
+              "0": 720
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 8,
+          "phase": 0,
+          "fmt": 0,
+          "base": 24640,
+          "bias": false
+        },
+        "tokens": 4,
+        "origin": 135949,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 1600,
+            "predicted": 1600,
+            "delta_cycles": {
+              "0": 1600
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 1600,
+            "predicted": 1600,
+            "delta_cycles": {
+              "0": 1600
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 1440,
+            "predicted": 1440,
+            "delta_cycles": {
+              "0": 1440
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 8,
+          "phase": 1,
+          "fmt": 0,
+          "base": 24640,
+          "bias": false
+        },
+        "tokens": 4,
+        "origin": 141715,
+        "h_ready": 142698,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 792,
+            "predicted": 792,
+            "delta_cycles": {
+              "0": 792
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 792,
+            "predicted": 792,
+            "delta_cycles": {
+              "0": 792
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 720,
+            "predicted": 720,
+            "delta_cycles": {
+              "0": 720
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 9,
+          "phase": 0,
+          "fmt": 1,
+          "base": 32832,
+          "bias": true
+        },
+        "tokens": 1,
+        "origin": 146540,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 3042,
+            "predicted": 3042,
+            "delta_cycles": {
+              "0": 3042
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 3042,
+            "predicted": 3042,
+            "delta_cycles": {
+              "0": 3042
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 2880,
+            "predicted": 2880,
+            "delta_cycles": {
+              "0": 2880
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 9,
+          "phase": 1,
+          "fmt": 1,
+          "base": 32832,
+          "bias": true
+        },
+        "tokens": 1,
+        "origin": 152300,
+        "h_ready": 152622,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 1514,
+            "predicted": 1514,
+            "delta_cycles": {
+              "0": 1514
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 1514,
+            "predicted": 1514,
+            "delta_cycles": {
+              "0": 1514
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 1440,
+            "predicted": 1440,
+            "delta_cycles": {
+              "0": 1440
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 10,
+          "phase": 0,
+          "fmt": 1,
+          "base": 41024,
+          "bias": false
+        },
+        "tokens": 2,
+        "origin": 155598,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 3040,
+            "predicted": 3040,
+            "delta_cycles": {
+              "0": 3040
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 3040,
+            "predicted": 3040,
+            "delta_cycles": {
+              "0": 3040
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 2880,
+            "predicted": 2880,
+            "delta_cycles": {
+              "0": 2880
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 10,
+          "phase": 1,
+          "fmt": 1,
+          "base": 41024,
+          "bias": false
+        },
+        "tokens": 2,
+        "origin": 161364,
+        "h_ready": 161906,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 1512,
+            "predicted": 1512,
+            "delta_cycles": {
+              "0": 1512
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 1512,
+            "predicted": 1512,
+            "delta_cycles": {
+              "0": 1512
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 1440,
+            "predicted": 1440,
+            "delta_cycles": {
+              "0": 1440
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 11,
+          "phase": 0,
+          "fmt": 1,
+          "base": 49216,
+          "bias": true
+        },
+        "tokens": 3,
+        "origin": 165175,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 3042,
+            "predicted": 3042,
+            "delta_cycles": {
+              "0": 3042
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 3042,
+            "predicted": 3042,
+            "delta_cycles": {
+              "0": 3042
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 2880,
+            "predicted": 2880,
+            "delta_cycles": {
+              "0": 2880
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 11,
+          "phase": 1,
+          "fmt": 1,
+          "base": 49216,
+          "bias": true
+        },
+        "tokens": 3,
+        "origin": 170947,
+        "h_ready": 171710,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 1514,
+            "predicted": 1514,
+            "delta_cycles": {
+              "0": 1514
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 1514,
+            "predicted": 1514,
+            "delta_cycles": {
+              "0": 1514
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 1440,
+            "predicted": 1440,
+            "delta_cycles": {
+              "0": 1440
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 12,
+          "phase": 0,
+          "fmt": 1,
+          "base": 57408,
+          "bias": false
+        },
+        "tokens": 4,
+        "origin": 175272,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 3040,
+            "predicted": 3040,
+            "delta_cycles": {
+              "0": 3040
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 3040,
+            "predicted": 3040,
+            "delta_cycles": {
+              "0": 3040
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 2880,
+            "predicted": 2880,
+            "delta_cycles": {
+              "0": 2880
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 12,
+          "phase": 1,
+          "fmt": 1,
+          "base": 57408,
+          "bias": false
+        },
+        "tokens": 4,
+        "origin": 181050,
+        "h_ready": 182033,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 1512,
+            "predicted": 1512,
+            "delta_cycles": {
+              "0": 1512
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 1512,
+            "predicted": 1512,
+            "delta_cycles": {
+              "0": 1512
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 1440,
+            "predicted": 1440,
+            "delta_cycles": {
+              "0": 1440
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 13,
+          "phase": 0,
+          "fmt": 2,
+          "base": 65600,
+          "bias": true
+        },
+        "tokens": 1,
+        "origin": 185888,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 3002,
+            "predicted": 3002,
+            "delta_cycles": {
+              "0": 3002
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 3002,
+            "predicted": 3002,
+            "delta_cycles": {
+              "0": 3002
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 2880,
+            "predicted": 2880,
+            "delta_cycles": {
+              "0": 2880
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 13,
+          "phase": 1,
+          "fmt": 2,
+          "base": 65600,
+          "bias": true
+        },
+        "tokens": 1,
+        "origin": 191650,
+        "h_ready": 191972,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 1496,
+            "predicted": 1496,
+            "delta_cycles": {
+              "0": 1496
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 1496,
+            "predicted": 1496,
+            "delta_cycles": {
+              "0": 1496
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 1440,
+            "predicted": 1440,
+            "delta_cycles": {
+              "0": 1440
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 14,
+          "phase": 0,
+          "fmt": 2,
+          "base": 73792,
+          "bias": false
+        },
+        "tokens": 2,
+        "origin": 194951,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 3000,
+            "predicted": 3000,
+            "delta_cycles": {
+              "0": 3000
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 3000,
+            "predicted": 3000,
+            "delta_cycles": {
+              "0": 3000
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 2880,
+            "predicted": 2880,
+            "delta_cycles": {
+              "0": 2880
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 14,
+          "phase": 1,
+          "fmt": 2,
+          "base": 73792,
+          "bias": false
+        },
+        "tokens": 2,
+        "origin": 200719,
+        "h_ready": 201261,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 1494,
+            "predicted": 1494,
+            "delta_cycles": {
+              "0": 1494
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 1494,
+            "predicted": 1494,
+            "delta_cycles": {
+              "0": 1494
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 1440,
+            "predicted": 1440,
+            "delta_cycles": {
+              "0": 1440
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 15,
+          "phase": 0,
+          "fmt": 2,
+          "base": 81984,
+          "bias": true
+        },
+        "tokens": 3,
+        "origin": 204533,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 3002,
+            "predicted": 3002,
+            "delta_cycles": {
+              "0": 3002
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 3002,
+            "predicted": 3002,
+            "delta_cycles": {
+              "0": 3002
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 2880,
+            "predicted": 2880,
+            "delta_cycles": {
+              "0": 2880
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 15,
+          "phase": 1,
+          "fmt": 2,
+          "base": 81984,
+          "bias": true
+        },
+        "tokens": 3,
+        "origin": 210307,
+        "h_ready": 211070,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 1496,
+            "predicted": 1496,
+            "delta_cycles": {
+              "0": 1496
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 1496,
+            "predicted": 1496,
+            "delta_cycles": {
+              "0": 1496
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 1440,
+            "predicted": 1440,
+            "delta_cycles": {
+              "0": 1440
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 16,
+          "phase": 0,
+          "fmt": 2,
+          "base": 90176,
+          "bias": false
+        },
+        "tokens": 4,
+        "origin": 214635,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 3000,
+            "predicted": 3000,
+            "delta_cycles": {
+              "0": 3000
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 3000,
+            "predicted": 3000,
+            "delta_cycles": {
+              "0": 3000
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 2880,
+            "predicted": 2880,
+            "delta_cycles": {
+              "0": 2880
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 16,
+          "phase": 1,
+          "fmt": 2,
+          "base": 90176,
+          "bias": false
+        },
+        "tokens": 4,
+        "origin": 220415,
+        "h_ready": 221398,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 1494,
+            "predicted": 1494,
+            "delta_cycles": {
+              "0": 1494
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 1494,
+            "predicted": 1494,
+            "delta_cycles": {
+              "0": 1494
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 1440,
+            "predicted": 1440,
+            "delta_cycles": {
+              "0": 1440
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 17,
+          "phase": 0,
+          "fmt": 3,
+          "base": 98368,
+          "bias": true
+        },
+        "tokens": 1,
+        "origin": 225256,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 2962,
+            "predicted": 2962,
+            "delta_cycles": {
+              "0": 2962
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 2962,
+            "predicted": 2962,
+            "delta_cycles": {
+              "0": 2962
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 2880,
+            "predicted": 2880,
+            "delta_cycles": {
+              "0": 2880
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 17,
+          "phase": 1,
+          "fmt": 3,
+          "base": 98368,
+          "bias": true
+        },
+        "tokens": 1,
+        "origin": 231017,
+        "h_ready": 231339,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 1478,
+            "predicted": 1478,
+            "delta_cycles": {
+              "0": 1478
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 1478,
+            "predicted": 1478,
+            "delta_cycles": {
+              "0": 1478
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 1440,
+            "predicted": 1440,
+            "delta_cycles": {
+              "0": 1440
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 18,
+          "phase": 0,
+          "fmt": 3,
+          "base": 106560,
+          "bias": false
+        },
+        "tokens": 2,
+        "origin": 234317,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 2960,
+            "predicted": 2960,
+            "delta_cycles": {
+              "0": 2960
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 2960,
+            "predicted": 2960,
+            "delta_cycles": {
+              "0": 2960
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 2880,
+            "predicted": 2880,
+            "delta_cycles": {
+              "0": 2880
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 18,
+          "phase": 1,
+          "fmt": 3,
+          "base": 106560,
+          "bias": false
+        },
+        "tokens": 2,
+        "origin": 240084,
+        "h_ready": 240626,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 1476,
+            "predicted": 1476,
+            "delta_cycles": {
+              "0": 1476
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 1476,
+            "predicted": 1476,
+            "delta_cycles": {
+              "0": 1476
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 1440,
+            "predicted": 1440,
+            "delta_cycles": {
+              "0": 1440
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 19,
+          "phase": 0,
+          "fmt": 3,
+          "base": 114752,
+          "bias": true
+        },
+        "tokens": 3,
+        "origin": 243897,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 2962,
+            "predicted": 2962,
+            "delta_cycles": {
+              "0": 2962
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 2962,
+            "predicted": 2962,
+            "delta_cycles": {
+              "0": 2962
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 2880,
+            "predicted": 2880,
+            "delta_cycles": {
+              "0": 2880
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 19,
+          "phase": 1,
+          "fmt": 3,
+          "base": 114752,
+          "bias": true
+        },
+        "tokens": 3,
+        "origin": 249670,
+        "h_ready": 250433,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 1478,
+            "predicted": 1478,
+            "delta_cycles": {
+              "0": 1478
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 1478,
+            "predicted": 1478,
+            "delta_cycles": {
+              "0": 1478
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 1440,
+            "predicted": 1440,
+            "delta_cycles": {
+              "0": 1440
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 20,
+          "phase": 0,
+          "fmt": 3,
+          "base": 122944,
+          "bias": false
+        },
+        "tokens": 4,
+        "origin": 253997,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 2960,
+            "predicted": 2960,
+            "delta_cycles": {
+              "0": 2960
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 2960,
+            "predicted": 2960,
+            "delta_cycles": {
+              "0": 2960
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 2880,
+            "predicted": 2880,
+            "delta_cycles": {
+              "0": 2880
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 20,
+          "phase": 1,
+          "fmt": 3,
+          "base": 122944,
+          "bias": false
+        },
+        "tokens": 4,
+        "origin": 259776,
+        "h_ready": 260759,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 1476,
+            "predicted": 1476,
+            "delta_cycles": {
+              "0": 1476
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 1476,
+            "predicted": 1476,
+            "delta_cycles": {
+              "0": 1476
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 1440,
+            "predicted": 1440,
+            "delta_cycles": {
+              "0": 1440
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 21,
+          "phase": 0,
+          "fmt": 4,
+          "base": 131136,
+          "bias": true
+        },
+        "tokens": 1,
+        "origin": 264616,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 1762,
+            "predicted": 1762,
+            "delta_cycles": {
+              "0": 1762
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 1762,
+            "predicted": 1762,
+            "delta_cycles": {
+              "0": 1762
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 1440,
+            "predicted": 1440,
+            "delta_cycles": {
+              "0": 1440
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 21,
+          "phase": 1,
+          "fmt": 4,
+          "base": 131136,
+          "bias": true
+        },
+        "tokens": 1,
+        "origin": 270365,
+        "h_ready": 270687,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 866,
+            "predicted": 866,
+            "delta_cycles": {
+              "0": 866
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 866,
+            "predicted": 866,
+            "delta_cycles": {
+              "0": 866
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 720,
+            "predicted": 720,
+            "delta_cycles": {
+              "0": 720
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 22,
+          "phase": 0,
+          "fmt": 4,
+          "base": 139328,
+          "bias": false
+        },
+        "tokens": 2,
+        "origin": 273651,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 1760,
+            "predicted": 1760,
+            "delta_cycles": {
+              "0": 1760
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 1760,
+            "predicted": 1760,
+            "delta_cycles": {
+              "0": 1760
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 1440,
+            "predicted": 1440,
+            "delta_cycles": {
+              "0": 1440
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 22,
+          "phase": 1,
+          "fmt": 4,
+          "base": 139328,
+          "bias": false
+        },
+        "tokens": 2,
+        "origin": 279406,
+        "h_ready": 279948,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 864,
+            "predicted": 864,
+            "delta_cycles": {
+              "0": 864
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 864,
+            "predicted": 864,
+            "delta_cycles": {
+              "0": 864
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 720,
+            "predicted": 720,
+            "delta_cycles": {
+              "0": 720
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 23,
+          "phase": 0,
+          "fmt": 4,
+          "base": 147520,
+          "bias": true
+        },
+        "tokens": 3,
+        "origin": 283205,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 1762,
+            "predicted": 1762,
+            "delta_cycles": {
+              "0": 1762
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 1762,
+            "predicted": 1762,
+            "delta_cycles": {
+              "0": 1762
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 1440,
+            "predicted": 1440,
+            "delta_cycles": {
+              "0": 1440
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 23,
+          "phase": 1,
+          "fmt": 4,
+          "base": 147520,
+          "bias": true
+        },
+        "tokens": 3,
+        "origin": 288966,
+        "h_ready": 289729,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 866,
+            "predicted": 866,
+            "delta_cycles": {
+              "0": 866
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 866,
+            "predicted": 866,
+            "delta_cycles": {
+              "0": 866
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 720,
+            "predicted": 720,
+            "delta_cycles": {
+              "0": 720
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 24,
+          "phase": 0,
+          "fmt": 4,
+          "base": 155712,
+          "bias": false
+        },
+        "tokens": 4,
+        "origin": 293279,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 1760,
+            "predicted": 1760,
+            "delta_cycles": {
+              "0": 1760
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 1760,
+            "predicted": 1760,
+            "delta_cycles": {
+              "0": 1760
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 1440,
+            "predicted": 1440,
+            "delta_cycles": {
+              "0": 1440
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 24,
+          "phase": 1,
+          "fmt": 4,
+          "base": 155712,
+          "bias": false
+        },
+        "tokens": 4,
+        "origin": 299046,
+        "h_ready": 300029,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 864,
+            "predicted": 864,
+            "delta_cycles": {
+              "0": 864
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 864,
+            "predicted": 864,
+            "delta_cycles": {
+              "0": 864
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 720,
+            "predicted": 720,
+            "delta_cycles": {
+              "0": 720
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 25,
+          "phase": 0,
+          "fmt": 5,
+          "base": 163904,
+          "bias": true
+        },
+        "tokens": 1,
+        "origin": 303872,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 5762,
+            "predicted": 5762,
+            "delta_cycles": {
+              "0": 5762
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 5762,
+            "predicted": 5762,
+            "delta_cycles": {
+              "0": 5762
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 5760,
+            "predicted": 5760,
+            "delta_cycles": {
+              "0": 5760
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 25,
+          "phase": 1,
+          "fmt": 5,
+          "base": 163904,
+          "bias": true
+        },
+        "tokens": 1,
+        "origin": 311562,
+        "h_ready": 311884,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 2882,
+            "predicted": 2882,
+            "delta_cycles": {
+              "0": 2882
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 2882,
+            "predicted": 2882,
+            "delta_cycles": {
+              "0": 2882
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 2880,
+            "predicted": 2880,
+            "delta_cycles": {
+              "0": 2880
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 26,
+          "phase": 0,
+          "fmt": 5,
+          "base": 172096,
+          "bias": false
+        },
+        "tokens": 2,
+        "origin": 316116,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 5760,
+            "predicted": 5760,
+            "delta_cycles": {
+              "0": 5760
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 5760,
+            "predicted": 5760,
+            "delta_cycles": {
+              "0": 5760
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 5760,
+            "predicted": 5760,
+            "delta_cycles": {
+              "0": 5760
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 26,
+          "phase": 1,
+          "fmt": 5,
+          "base": 172096,
+          "bias": false
+        },
+        "tokens": 2,
+        "origin": 323812,
+        "h_ready": 324354,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 2880,
+            "predicted": 2880,
+            "delta_cycles": {
+              "0": 2880
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 2880,
+            "predicted": 2880,
+            "delta_cycles": {
+              "0": 2880
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 2880,
+            "predicted": 2880,
+            "delta_cycles": {
+              "0": 2880
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 27,
+          "phase": 0,
+          "fmt": 5,
+          "base": 180288,
+          "bias": true
+        },
+        "tokens": 3,
+        "origin": 328879,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 5762,
+            "predicted": 5762,
+            "delta_cycles": {
+              "0": 5762
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 5762,
+            "predicted": 5762,
+            "delta_cycles": {
+              "0": 5762
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 5760,
+            "predicted": 5760,
+            "delta_cycles": {
+              "0": 5760
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 27,
+          "phase": 1,
+          "fmt": 5,
+          "base": 180288,
+          "bias": true
+        },
+        "tokens": 3,
+        "origin": 336581,
+        "h_ready": 337344,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 2882,
+            "predicted": 2882,
+            "delta_cycles": {
+              "0": 2882
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 2882,
+            "predicted": 2882,
+            "delta_cycles": {
+              "0": 2882
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 2880,
+            "predicted": 2880,
+            "delta_cycles": {
+              "0": 2880
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 28,
+          "phase": 0,
+          "fmt": 5,
+          "base": 188480,
+          "bias": false
+        },
+        "tokens": 4,
+        "origin": 342162,
+        "h_ready": null,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 5760,
+            "predicted": 5760,
+            "delta_cycles": {
+              "0": 5760
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 5760,
+            "predicted": 5760,
+            "delta_cycles": {
+              "0": 5760
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 5760,
+            "predicted": 5760,
+            "delta_cycles": {
+              "0": 5760
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      },
+      {
+        "config": {
+          "epoch": 0,
+          "pass": 28,
+          "phase": 1,
+          "fmt": 5,
+          "base": 188480,
+          "bias": false
+        },
+        "tokens": 4,
+        "origin": 349870,
+        "h_ready": 350853,
+        "checks": [
+          {
+            "event": "memory_issue",
+            "actual": 2880,
+            "predicted": 2880,
+            "delta_cycles": {
+              "0": 2880
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "memory_consume",
+            "actual": 2880,
+            "predicted": 2880,
+            "delta_cycles": {
+              "0": 2880
+            },
+            "passed": true,
+            "first_mismatches": []
+          },
+          {
+            "event": "pe_accept",
+            "actual": 2880,
+            "predicted": 2880,
+            "delta_cycles": {
+              "0": 2880
+            },
+            "passed": true,
+            "first_mismatches": []
+          }
+        ]
+      }
+    ],
+    "y_checks": {
+      "y_ready_visible": {
+        "actual": 60,
+        "predicted": 60,
+        "passed": true,
+        "first_mismatches": []
+      },
+      "drain_accept": {
+        "actual": 60,
+        "predicted": 60,
+        "passed": true,
+        "first_mismatches": []
+      },
+      "up_beat": {
+        "actual": 600,
+        "predicted": 600,
+        "passed": true,
+        "first_mismatches": []
+      },
+      "y_commit": {
+        "actual": 24,
+        "predicted": 24,
+        "passed": true,
+        "first_mismatches": []
+      },
+      "sync1": {
+        "actual": 24,
+        "predicted": 24,
+        "passed": true,
+        "first_mismatches": []
+      }
+    },
+    "passed": true
+  }
+]

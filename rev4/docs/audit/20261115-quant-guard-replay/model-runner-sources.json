@@ -1,0 +1,26 @@
+[
+  {
+    "path": "NPU_eval/af/quant_write_guard.py",
+    "sha256": "7f8aed4a289cec4ad4b0dec8f66b4268a830f61f976b330624ba3fbaaf1a2a41"
+  },
+  {
+    "path": "NPU_eval/af/quant_guard_trace_replay.py",
+    "sha256": "91bb15ab6b97afcfbc4ea59f9df84e852944aab33ad4652960ffdfced3ddd445"
+  },
+  {
+    "path": "NPU_eval/af/tests/test_quant_guard_trace_replay.py",
+    "sha256": "d8902a591cb0e0085684064fa0571a886626e08df0c69282b301a1c080341ad9"
+  },
+  {
+    "path": "Tile_eval/rev4/scripts/run.py",
+    "sha256": "74804e0a1b968a4ca85e1ec1f016d08a11991586ec3ce1b3d142441125b53bb6"
+  },
+  {
+    "path": "Tile_eval/rev4/model/test_run_diagnostics.py",
+    "sha256": "a0897d974a07039ffe2109c692b288cb3bf586292cb1402b57acad92d65aec50"
+  },
+  {
+    "path": "Tile_eval/rev4/model/test_tile_trace_source.py",
+    "sha256": "0d93069dbb819310548b53e0605f314c13b7bb6bdc85117ac95c1de1654cf55f"
+  }
+]

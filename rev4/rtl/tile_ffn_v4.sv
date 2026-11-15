@@ -68,7 +68,7 @@ module tile_ffn_v4 #(
     logic [1023:0] stg_x_data;
     logic [31:0] stg_xs_data;
     logic hbuf_wr_valid, hbuf_wr_err, hbuf_rd_req, hbuf_rd_valid;
-    logic hbuf_wr_bank, hbuf_rd_bank, hbuf_take, hbuf_release;
+    logic hbuf_wr_bank, hbuf_rd_bank, hbuf_take, hbuf_release, hbuf_release_bank;
     logic [2:0] hbuf_wr_lane, hbuf_ntok;
     logic [6:0] hbuf_wr_idx, hbuf_rd_idx;
     logic [255:0] hbuf_wr_q;
@@ -179,7 +179,7 @@ module tile_ffn_v4 #(
         .rd_data(hbuf_rd_data), .rd_scales(hbuf_rd_scales),
         .rd_valid(hbuf_rd_valid),
         .own_take(hbuf_take), .own_release(hbuf_release),
-        .own_bank(hbuf_wr_bank_sel), .own_pass(hbuf_pass), .own_ntok(hbuf_ntok),
+        .own_bank(hbuf_wr_bank_sel), .own_release_bank(hbuf_release_bank), .own_pass(hbuf_pass), .own_ntok(hbuf_ntok),
         .owner_valid(hbuf_owner_valid), .bank_ready(hbuf_bank_ready),
         .owner_pass0(hbuf_owner_pass0), .owner_pass1(hbuf_owner_pass1));
     tile_pe_v3 pe_u (
@@ -242,7 +242,7 @@ module tile_ffn_v4 #(
         .hbuf_rd_idx(hbuf_rd_idx), .hbuf_rd_data(hbuf_rd_data),
         .hbuf_rd_scales(hbuf_rd_scales), .hbuf_rd_valid(hbuf_rd_valid),
         .hbuf_take(hbuf_take), .hbuf_release(hbuf_release),
-        .hbuf_bank(hbuf_wr_bank_sel), .hbuf_pass(hbuf_pass),
+        .hbuf_bank(hbuf_wr_bank_sel), .hbuf_release_bank(hbuf_release_bank), .hbuf_pass(hbuf_pass),
         .hbuf_ntok(hbuf_ntok),
         .hbuf_owner_valid(hbuf_owner_valid), .hbuf_bank_ready(hbuf_bank_ready),
         .hbuf_owner_pass0(hbuf_owner_pass0), .hbuf_owner_pass1(hbuf_owner_pass1),

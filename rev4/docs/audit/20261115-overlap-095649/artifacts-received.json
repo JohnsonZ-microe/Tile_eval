@@ -1,0 +1,12 @@
+{
+  "run": "vcs-20261115T095649Z-37967",
+  "bytes": 23077277,
+  "sha256": "8fff4eb47d83cb3afd390e8af3508285cdba3a199e33e24ce458e13428fb19cb",
+  "sync_matches": true,
+  "first_timestamp": 1128005000,
+  "last_timestamp": 1133005000,
+  "dumpoff": [
+    1133005000
+  ],
+  "timescale": "1ps"
+}

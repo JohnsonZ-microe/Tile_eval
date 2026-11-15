@@ -62,7 +62,7 @@ module pe4_sched #(
     input  logic [1023:0] hbuf_rd_data,
     input  logic [31:0] hbuf_rd_scales,
     input  logic hbuf_rd_valid,
-    output logic hbuf_take, hbuf_release, hbuf_bank,
+    output logic hbuf_take, hbuf_release, hbuf_bank, hbuf_release_bank,
     output logic [7:0] hbuf_pass,
     output logic [2:0] hbuf_ntok,   // token count 1..4; was [7:0] (LINK-3)
     input  logic [1:0] hbuf_owner_valid,
@@ -312,6 +312,8 @@ module pe4_sched #(
     logic [255:0] quant_q;
     logic [7:0] quant_se;
     logic [10:0] quant_otag;
+    logic [3:0] quant_bank_pipe, quant_killed_pipe;
+    logic quant_stale;
     logic [10:0] quant_unused;
     logic [7:0] stg_kb_q;
     logic [6:0] hbuf_kb_q;
@@ -516,6 +518,7 @@ module pe4_sched #(
             sync1 <= 0;
             yacc_commit_trigger <= 0;
             hbuf_take <= 0; hbuf_release <= 0;
+            hbuf_release_bank <= 0;
             yacc_load_valid <= 0;
             ev_cmd_illegal <= 0; ev_unsupported <= 0; ev_xorder <= 0;
             ev_horder <= 0; ev_rramtag <= 0; ev_snapshot <= 0;
@@ -548,100 +551,6 @@ module pe4_sched #(
                 ((reg_wr_addr >= 12'h100 && reg_wr_addr <= 12'h140) ||
                  (reg_wr_addr >= 12'h180 && reg_wr_addr <= 12'h1c0)))
                 ev_ctxbusy <= 1;
-            // ---- CMD latch ----
-            if (cmd_in_valid) begin
-                logic [511:0] pl;
-                logic [1:0] cphase;
-                logic [1:0] cclass;
-                logic cctx;
-                logic [2:0] cntok;
-                logic cbad;
-                pl = cmd_in_payload;
-                cphase = pl[1:0];
-                cclass = pl[10:9];
-                cctx = pl[11];
-                cntok = pl[45:43];
-                cbad = (cphase == 2'd2) || (cphase == 2'd3) || (cclass == 2'd3) ||
-                       (cntok == 0) || (cntok > 4) || (pl[19:12] != 8'd0) ||
-                       (pl[20] != 1'b1) || (pl[21] != 1'b1) || !cp[cctx].legal;
-                if (cphase == 2'd2) ev_unsupported <= 1;         // SCAN
-                else if (cbad) ev_cmd_illegal <= 1;
-                else if (slot[0].valid && slot[1].valid) ev_cmd_illegal <= 1;
-                else begin
-                    int si;
-                    si = slot[0].valid ? 1 : 0;
-                    slot[si].valid <= 1'b1;
-                    slot[si].phase <= cphase;
-                    slot[si].visit_slot <= pl[8:2];
-                    slot[si].class_kind <= cclass;
-                    slot[si].ctx_sel <= cctx;
-                    slot[si].base_word <= pl[42:22];
-                    slot[si].n_tok <= cntok;
-                    slot[si].ybank <= pl[46];
-                    slot[si].hbank <= pl[47];
-                    slot[si].step_begin <= pl[48];
-                    slot[si].step_end <= pl[49];
-                    slot[si].expert_id <= pl[65:50];
-                    slot[si].pass_id <= cmd_in_pass;
-                    slot[si].step_id <= pl[287:256];
-                    slot[si].lane_mask <= (4'b1 << cntok) - 4'b1;
-                    for (int l = 0; l < 4; l++) begin
-                        slot[si].y_slots[l] <= pl[96 + 40*l +: 6];
-                        slot[si].weights[l] <= pl[102 + 40*l +: 32];
-                    end
-                    slot[si].first_v <= pl[20];
-                    slot[si].last_v <= pl[21];
-                    slot[si].fmt <= cp[cctx].fmt;
-                    slot[si].sblk128 <= cp[cctx].sblk128;
-                    slot[si].bias_en <= cp[cctx].bias_en;
-                    iss[si].valid <= 1'b1;
-                    iss[si].kb <= 0;
-                    iss[si].g <= 0;
-                    iss[si].swi <= 0;
-                    iss[si].off <= 0;
-                    iss[si].started <= 1'b0;
-                    if (cp[cctx].bias_en) begin
-                        // read the phase's bias tail words first (4.6)
-                        iss[si].bias <= 1'b1;
-                        iss[si].bidx <= (cphase == 1'd1)
-                            ? cp[cctx].bias_first_d : 2'd0;
-                        iss[si].bleft <= 2'd2;
-                        iss[si].scale <= 1'b0;
-                    end else begin
-                        iss[si].bias <= 1'b0;
-                        iss[si].bidx <= 2'd0;
-                        iss[si].bleft <= 2'd0;
-                        iss[si].scale <= (cp[cctx].sw > 0);
-                    end
-                    phase_base[si] <= 21'(pl[42:22]) +
-                        (cphase == 1'd1 ? 21'(cp[cctx].gu_words) : 21'd0);
-                    tail_base[si] <= 21'(pl[42:22]) +
-                        21'(cp[cctx].gu_words) + 21'(cp[cctx].d_words);
-                    if (cphase == 0 && (si == 0 || slot[0].phase != 0)) begin
-                        hold_v[0] <= 1'b0; hold_v[1] <= 1'b0;
-                    end
-                    if (cphase == 1 && (si == 0 || slot[0].phase != 1)) begin
-                        hold_hv[0] <= 1'b0; hold_hv[1] <= 1'b0;
-                    end
-                    if (cphase == 0 && (si == 0 || slot[0].phase != 0)) begin
-                        x_popped <= '0; xs_popped <= '0;
-                        // fresh pass: the expected X/XS sequence restarts
-                        exp_grp <= 0;
-                        exp_kind <= 1;
-                        exp_lane <= 0;
-                        exp_idx <= 0;
-                    end
-                    if (cphase == 1'd0) begin
-                        hbuf_take <= 1;                  // GU owns its h bank
-                        hbuf_bank <= pl[47];
-                        hbuf_pass <= cmd_in_pass;
-                        hbuf_ntok <= cntok;
-                        bias_gu_valid <= 1'b0;           // fresh GU bias ctx
-                    end else begin
-                        bias_d_valid <= 1'b0;            // fresh D bias ctx
-                    end
-                end
-            end
             // ---- issue step + queue push (slot 0 first, then slot 1) ----
             if (iss_fire0) begin
                 iss_t nxt;
@@ -885,7 +794,7 @@ module pe4_sched #(
                         yacc_weights[l] <= slot[0].weights[l];
                     end
                     hbuf_release <= 1;                    // D frees its h bank
-                    hbuf_bank <= slot[0].hbank;
+                    hbuf_release_bank <= slot[0].hbank;
                     sync1 <= 1;                           // D phase DONE
                     slot[0] <= slot[1];
                     iss[0] <= iss_fire1 ? iss1_after_issue : iss[1];
@@ -897,6 +806,103 @@ module pe4_sched #(
                 end
                 default: ;
             endcase
+            // ---- CMD latch after retirement state updates ----
+            // Keep old-state full rejection. When only the head was occupied,
+            // a simultaneous new command initializes the just-vacated slot 0.
+            // Later NBAs win, while the epilogue above reads the old descriptor.
+            if (cmd_in_valid) begin
+                logic [511:0] pl;
+                logic [1:0] cphase;
+                logic [1:0] cclass;
+                logic cctx;
+                logic [2:0] cntok;
+                logic cbad;
+                pl = cmd_in_payload;
+                cphase = pl[1:0];
+                cclass = pl[10:9];
+                cctx = pl[11];
+                cntok = pl[45:43];
+                cbad = (cphase == 2'd2) || (cphase == 2'd3) || (cclass == 2'd3) ||
+                       (cntok == 0) || (cntok > 4) || (pl[19:12] != 8'd0) ||
+                       (pl[20] != 1'b1) || (pl[21] != 1'b1) || !cp[cctx].legal;
+                if (cphase == 2'd2) ev_unsupported <= 1;         // SCAN
+                else if (cbad) ev_cmd_illegal <= 1;
+                else if (slot[0].valid && slot[1].valid) ev_cmd_illegal <= 1;
+                else begin
+                    int si;
+                    si = (head_retire || !slot[0].valid) ? 0 : 1;
+                    slot[si].valid <= 1'b1;
+                    slot[si].phase <= cphase;
+                    slot[si].visit_slot <= pl[8:2];
+                    slot[si].class_kind <= cclass;
+                    slot[si].ctx_sel <= cctx;
+                    slot[si].base_word <= pl[42:22];
+                    slot[si].n_tok <= cntok;
+                    slot[si].ybank <= pl[46];
+                    slot[si].hbank <= pl[47];
+                    slot[si].step_begin <= pl[48];
+                    slot[si].step_end <= pl[49];
+                    slot[si].expert_id <= pl[65:50];
+                    slot[si].pass_id <= cmd_in_pass;
+                    slot[si].step_id <= pl[287:256];
+                    slot[si].lane_mask <= (4'b1 << cntok) - 4'b1;
+                    for (int l = 0; l < 4; l++) begin
+                        slot[si].y_slots[l] <= pl[96 + 40*l +: 6];
+                        slot[si].weights[l] <= pl[102 + 40*l +: 32];
+                    end
+                    slot[si].first_v <= pl[20];
+                    slot[si].last_v <= pl[21];
+                    slot[si].fmt <= cp[cctx].fmt;
+                    slot[si].sblk128 <= cp[cctx].sblk128;
+                    slot[si].bias_en <= cp[cctx].bias_en;
+                    iss[si].valid <= 1'b1;
+                    iss[si].kb <= 0;
+                    iss[si].g <= 0;
+                    iss[si].swi <= 0;
+                    iss[si].off <= 0;
+                    iss[si].started <= 1'b0;
+                    if (cp[cctx].bias_en) begin
+                        // read the phase's bias tail words first (4.6)
+                        iss[si].bias <= 1'b1;
+                        iss[si].bidx <= (cphase == 1'd1)
+                            ? cp[cctx].bias_first_d : 2'd0;
+                        iss[si].bleft <= 2'd2;
+                        iss[si].scale <= 1'b0;
+                    end else begin
+                        iss[si].bias <= 1'b0;
+                        iss[si].bidx <= 2'd0;
+                        iss[si].bleft <= 2'd0;
+                        iss[si].scale <= (cp[cctx].sw > 0);
+                    end
+                    phase_base[si] <= 21'(pl[42:22]) +
+                        (cphase == 1'd1 ? 21'(cp[cctx].gu_words) : 21'd0);
+                    tail_base[si] <= 21'(pl[42:22]) +
+                        21'(cp[cctx].gu_words) + 21'(cp[cctx].d_words);
+                    if (cphase == 0 && (si == 0 || slot[0].phase != 0)) begin
+                        hold_v[0] <= 1'b0; hold_v[1] <= 1'b0;
+                    end
+                    if (cphase == 1 && (si == 0 || slot[0].phase != 1)) begin
+                        hold_hv[0] <= 1'b0; hold_hv[1] <= 1'b0;
+                    end
+                    if (cphase == 0 && (si == 0 || slot[0].phase != 0)) begin
+                        x_popped <= '0; xs_popped <= '0;
+                        // fresh pass: the expected X/XS sequence restarts
+                        exp_grp <= 0;
+                        exp_kind <= 1;
+                        exp_lane <= 0;
+                        exp_idx <= 0;
+                    end
+                    if (cphase == 1'd0) begin
+                        hbuf_take <= 1;                  // GU owns its h bank
+                        hbuf_bank <= pl[47];
+                        hbuf_pass <= cmd_in_pass;
+                        hbuf_ntok <= cntok;
+                        bias_gu_valid <= 1'b0;           // fresh GU bias ctx
+                    end else begin
+                        bias_d_valid <= 1'b0;            // fresh D bias ctx
+                    end
+                end
+            end
             // ---- staging fill engine: pop X/XS in the defined pass order ----
             // order per GU pass: for grp 0..2: XS(lane,grp) x n_tok, then
             // X(lane, idx=32*grp + i) for i in 0..group_limit-1, lanes inner
@@ -949,11 +955,11 @@ module pe4_sched #(
             // ---- H routing through the quantizer into the h banks ----
             if (h_valid) begin
                 if ((hbuf_owner_valid[0] && hbuf_owner_pass0 == h_pass &&
-                     h_idx < 72)) begin
+                     h_idx < 72 && !(hbuf_release && !hbuf_release_bank))) begin
                     hsel <= 0;
                     quant_valid <= 1;
                 end else if (hbuf_owner_valid[1] && hbuf_owner_pass1 == h_pass
-                            && h_idx < 72) begin
+                            && h_idx < 72 && !(hbuf_release && hbuf_release_bank)) begin
                     hsel <= 1;
                     quant_valid <= 1;
                 end else begin
@@ -1000,9 +1006,28 @@ module pe4_sched #(
     // ---- quantizer ----
     // (quant_* / hsel signals declared above, before the main always_ff)
     wire [10:0] quant_tag = 11'({hsel, quant_lane, quant_idx});
+    // Sideband follows the four quantizer registers. A release invalidates
+    // every in-flight result for that bank, including the incoming stage.
+    // Sticky cancellation cannot alias on pass reuse or rapid bank reuse.
+    always_ff @(posedge clk) begin
+        if (!rst_n) begin
+            quant_bank_pipe <= '0;
+            quant_killed_pipe <= '0;
+        end else begin
+            quant_bank_pipe[0] <= hsel;
+            quant_killed_pipe[0] <= hbuf_release && hbuf_release_bank == hsel;
+            for (int i = 1; i < 4; i++) begin
+                quant_bank_pipe[i] <= quant_bank_pipe[i-1];
+                quant_killed_pipe[i] <= quant_killed_pipe[i-1] ||
+                    (hbuf_release && hbuf_release_bank == quant_bank_pipe[i-1]);
+            end
+        end
+    end
+    assign quant_stale = quant_ov && (quant_killed_pipe[3] ||
+                         (hbuf_release && hbuf_release_bank == quant_otag[10]));
     always_comb begin
         hbuf_wr_bank = quant_otag[10];
-        hbuf_wr_valid = quant_ov;
+        hbuf_wr_valid = quant_ov && !quant_stale;
         hbuf_wr_lane = quant_otag[9:7];
         hbuf_wr_idx = quant_otag[6:0];
         hbuf_wr_q = quant_q;
@@ -1049,7 +1074,7 @@ module pe4_sched #(
         err_events = '0;
         err_events[ERR_CMD_ILLEGAL] = ev_cmd_illegal;
         err_events[ERR_X_ORDER] = ev_xorder;
-        err_events[ERR_H_ORDER] = ev_horder | hbuf_wr_err;
+        err_events[ERR_H_ORDER] = ev_horder | hbuf_wr_err | quant_stale;
         err_events[ERR_RRAM_TAG] = ev_rramtag;
         err_events[ERR_SNAPSHOT] = ev_snapshot;
         err_events[ERR_UNSUPPORTED] = ev_unsupported;
@@ -1104,10 +1129,11 @@ module pe4_sched #(
                 if (sync1) begin
                     if (cnt[11] != '1) cnt[11] <= cnt[11] + 1; // CNT_SYNC1
                 end
-                // GU/D counted separately at their own retire points (R4-021)
-                if (sync1 && pstate == P_HUP && hup_last &&
+                // Count pre-edge retire handshakes. Registered sync1 is visible
+                // only after pstate has already advanced to P_RUN.
+                if (head_retire && pstate == P_HUP &&
                         cnt[0] != '1) cnt[0] <= cnt[0] + 1;   // CNT_GU
-                if (sync1 && pstate == P_DCOMMIT &&
+                if (head_retire && pstate == P_DCOMMIT &&
                         cnt[1] != '1) cnt[1] <= cnt[1] + 1;   // CNT_D
                 if (xfifo_pop && cnt[3] != '1) cnt[3] <= cnt[3] + 1;
                 if (h_valid && cnt[4] != '1) cnt[4] <= cnt[4] + 1;

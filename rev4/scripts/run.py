@@ -194,14 +194,34 @@ def execute_logged(command, logfile, cwd, environment, timeout,
                 raise RuntimeError('Yacc overlap evidence follows PASS')
             record['coverage'] = dict(packets=300, overlap_banks=2, overlap_offsets=86, overlap_packets=172,
                                       overlap_yields=int(overlap[0]), read_identity_rows=3000)
+        if test == 'memory':
+            for marker in ('CHECK hbank_handoff cases=4 same_bank=2 different_bank=2',
+                           'CHECK hbank_release_write rejected=4 independent=2'):
+                matches = re.findall(r'^' + re.escape(marker) + r'\s*$', log, re.M)
+                if len(matches) != 1 or log.index(marker) > log.index('PASS memory'):
+                    raise RuntimeError('Missing complete H-bank ownership boundary evidence')
+            record['coverage'] = dict(hbank_handoffs=4, release_write_rejected=4,
+                                      independent_bank_writes=2)
         if test == 'promotion':
             coverage = re.findall(r'^CHECK promotion paths=2 distinct_tail=18 stalled=18 address_checks=12 simultaneous_issue=6 scale_consume=6\s*$', log, re.M)
             passes = re.findall(r'^PASS promotion cases=18\s*$', log, re.M)
             if len(coverage) != 1 or len(passes) != 1 or log.index('CHECK promotion') > log.index('PASS promotion'):
                 raise RuntimeError('Missing complete promotion boundary evidence')
+            counters = re.findall(r'^CHECK counters paths=2 cases=8 blocked=8 saturation=4 clear=2 no_double=8\s*$', log, re.M)
+            if len(counters) != 1 or log.index('CHECK counters') > log.index('PASS promotion'):
+                raise RuntimeError('Missing complete retirement counter evidence')
+            collisions = re.findall(r'^CHECK command_collision paths=2 descriptors=2 bank_targets=1\s*$', log, re.M)
+            if len(collisions) != 1 or log.index('CHECK command_collision') > log.index('PASS promotion'):
+                raise RuntimeError('Missing complete command collision evidence')
+            guards = re.findall(r'^CHECK quant_guard cases=22 canceled=10 independent=10 baseline=2\s*$', log, re.M)
+            if len(guards) != 1 or log.index('CHECK quant_guard') > log.index('PASS promotion'):
+                raise RuntimeError('Missing complete quantizer release guard evidence')
+            routes = re.findall(r'^CHECK route_guard cases=4 rejected=2 independent=2\s*$', log, re.M)
+            if len(routes) != 1 or log.index('CHECK route_guard') > log.index('PASS promotion'):
+                raise RuntimeError('Missing complete H routing release evidence')
             record['coverage'] = dict(paths=2, distinct_tail=18, stalled=18, address_checks=12,
-                                      simultaneous_issue=6, scale_consume=6,
-                                      scope='white-box seeded scheduler transition')
+                                      simultaneous_issue=6, scale_consume=6, counter_cases=8, command_collision_paths=2, quant_guard_cases=22,
+                                      route_guard_cases=4, scope='white-box seeded scheduler transition')
         record['status'] = 'passed'
         return log
     except subprocess.TimeoutExpired:

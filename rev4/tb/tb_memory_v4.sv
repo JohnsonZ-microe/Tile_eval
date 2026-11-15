@@ -20,6 +20,7 @@ module tb_memory_v4;
     logic [1023:0] rd_data;
     logic [31:0] rd_scales;
     logic own_take = 0, own_release = 0, own_bank = 0;
+    logic own_release_bank = 0;
     logic [7:0] own_pass = 0;
     logic [2:0] own_ntok = 1;
     logic [1:0] owner_valid, bank_ready;
@@ -252,12 +253,75 @@ module tb_memory_v4;
                 wr_idx = 0; wr_lane = 7; tick();
                 if (wr_err !== 1) $fatal(1, "out-of-range lane accepted");
                 wr_valid = 0; read_row(bank,0,lanes);
-                own_release = 1; tick(); own_release = 0;
+                own_release_bank = own_bank; own_release = 1; tick(); own_release = 0;
                 wr_valid = 1; wr_lane = 0; tick();
                 if (wr_err !== 1) $fatal(1, "unowned write accepted");
                 wr_valid = 0; read_row(bank,0,lanes);
             end
         end
+        // Ownership handoff uses external module ports, not forced state.
+        for (integer old_bank = 0; old_bank < 2; old_bank++) begin
+            for (integer new_bank = 0; new_bank < 2; new_bank++) begin
+                own_bank = 1'(old_bank); own_take = 1; own_pass = 8'h31;
+                own_ntok = 1; tick(); own_take = 0;
+                wr_valid = 1; wr_bank = 1'(old_bank); wr_lane = 0; wr_idx = 0;
+                wr_q = '0; tick(); wr_valid = 0;
+                own_bank = 1'(new_bank); own_release_bank = 1'(old_bank);
+                own_take = 1; own_release = 1; own_pass = 8'h72;
+                tick(); own_take = 0; own_release = 0;
+                if (wr_err !== 0 || owner_valid !== (2'b01 << new_bank) ||
+                    (new_bank == 0 ? owner_pass0 : owner_pass1) !== 8'h72 ||
+                    bank_ready !== 2'b00)
+                    $fatal(1, "h simultaneous handoff old=%0d new=%0d", old_bank, new_bank);
+                // A row written by the old owner must be writable by the new one.
+                wr_valid = 1; wr_bank = 1'(new_bank); wr_idx = 0;
+                tick(); wr_valid = 0;
+                if (wr_err !== 0) $fatal(1, "h handoff retained old row validity");
+                own_release_bank = 1'(new_bank); own_release = 1;
+                tick(); own_release = 0;
+            end
+        end
+        $display("CHECK hbank_handoff cases=4 same_bank=2 different_bank=2");
+        // Seed SRAM in an earlier generation, then collide a fresh-row write
+        // with release. Check both SRAM/scale retention and validity clearing.
+        for (integer bank = 0; bank < 2; bank++) begin
+            for (integer retake = 0; retake < 2; retake++) begin
+                own_bank = 1'(bank); own_take = 1; own_ntok = 1;
+                own_pass = 8'h80; tick(); own_take = 0;
+                wr_valid = 1; wr_bank = 1'(bank); wr_idx = 1; wr_lane = 0;
+                wr_q = row_word(bank,1,0); wr_se = 120; tick(); wr_valid = 0;
+                own_release_bank = 1'(bank); own_release = 1;
+                own_take = 1; own_pass = 8'h81; tick();
+                own_release = 0; own_take = 0;
+                wr_valid = 1; wr_q = '1; wr_se = 8'hff;
+                own_release = 1; own_take = 1'(retake); own_pass = 8'h82;
+                tick(); wr_valid = 0; own_release = 0; own_take = 0;
+                if (wr_err !== 1 || owner_valid[bank] !== 1'(retake) ||
+                    hbuf.lane_seen[bank][1][0] !== 0)
+                    $fatal(1, "release/write fence bank=%0d retake=%0d", bank, retake);
+                read_row(bank,1,1);
+                if (wr_err !== 0) $fatal(1, "release/write error did not clear");
+                if (retake != 0) begin
+                    wr_valid = 1; wr_q = row_word(bank,1,0); wr_se = 120;
+                    tick(); wr_valid = 0;
+                    if (wr_err !== 0) $fatal(1, "new owner row rejected");
+                    own_release = 1; tick(); own_release = 0;
+                end
+            end
+            // Releasing the other bank must not suppress this bank's write.
+            own_bank = 1'(bank); own_take = 1; tick(); own_take = 0;
+            own_bank = 1'(1-bank); own_take = 1; tick(); own_take = 0;
+            own_release_bank = 1'(1-bank); own_release = 1; own_take = 1;
+            wr_valid = 1; wr_bank = 1'(bank); wr_idx = 1;
+            wr_q = row_word(bank,1,0); wr_se = 120; tick();
+            wr_valid = 0; own_release = 0; own_take = 0;
+            if (wr_err !== 0 || hbuf.lane_seen[bank][1][0] !== 1)
+                $fatal(1, "other bank release blocked write");
+            read_row(bank,1,1);
+            own_release_bank = 1'(bank); own_release = 1; tick();
+            own_release_bank = 1'(1-bank); tick(); own_release = 0;
+        end
+        $display("CHECK hbank_release_write rejected=4 independent=2");
         rst_n = 0; tick();
         if (owner_valid !== 0 || bank_ready !== 0) $fatal(1, "ownership reset");
         for (integer age = 1; age <= 2; age++)
