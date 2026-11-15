@@ -1,0 +1,29 @@
+rtl\pe4_sched.sv:1140:31: warning: if statement has empty body (put the semicolon on a separate line to silence this warning) [-Wempty-body]
+        if (reg_wr_addr == 0) ;   // no-op guard
+                              ^
+tb\tb_promotion_v4.sv:41:42: error: invalid target type 'logic' for assignment pattern
+        force dut.sched_u.cp = '{default:'{nkb:17'd160, ngroups:6'd9,
+                                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+tb\tb_promotion_v4.sv:41:44: error: use of undeclared identifier 'nkb'
+        force dut.sched_u.cp = '{default:'{nkb:17'd160, ngroups:6'd9,
+                                           ^~~
+tb\tb_promotion_v4.sv:41:57: error: use of undeclared identifier 'ngroups'
+        force dut.sched_u.cp = '{default:'{nkb:17'd160, ngroups:6'd9,
+                                                        ^~~~~~~
+tb\tb_promotion_v4.sv:42:13: error: use of undeclared identifier 'ncols'
+            ncols:4'd8, sw:4'd1, period:3'd1, legal:1'b1, default:'0}};
+            ^~~~~
+tb\tb_promotion_v4.sv:42:25: error: use of undeclared identifier 'sw'
+            ncols:4'd8, sw:4'd1, period:3'd1, legal:1'b1, default:'0}};
+                        ^~
+tb\tb_promotion_v4.sv:42:34: error: use of undeclared identifier 'period'
+            ncols:4'd8, sw:4'd1, period:3'd1, legal:1'b1, default:'0}};
+                                 ^~~~~~
+tb\tb_promotion_v4.sv:42:47: error: use of undeclared identifier 'legal'
+            ncols:4'd8, sw:4'd1, period:3'd1, legal:1'b1, default:'0}};
+                                              ^~~~~
+Top level design units:
+    tb_promotion_v4
+
+
+Build failed: 7 errors, 1 warning

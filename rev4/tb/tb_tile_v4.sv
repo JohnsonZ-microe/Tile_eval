@@ -18,6 +18,9 @@ module tb_tile_v4;
     integer y_packet_count = 0;
     integer phase_requests = 0;
     bit overlap = 0, pending_gather_fence = 0;
+    logic dn_valid = 0;
+    logic [511:0] dn_payload = 0;
+    logic [31:0] dn_sideband = 0;
     bit cmd_retire_probe = 0;
     integer cmd_retire_hits = 0;
     // External-interface coincidence probe: never force scheduler state.
@@ -172,9 +175,6 @@ module tb_tile_v4;
     integer up_outstanding = 0;
     string vecdir;
     logic [1023:0] a1, a2;
-    logic dn_valid = 0;
-    logic [511:0] dn_payload = 0;
-    logic [31:0] dn_sideband = 0;
     logic [1:0] up_credit = 0;
     // optional VCD (run_vcs.sh / run.py --waves passes +VCD=<path>)
     string vcdfile;
@@ -222,6 +222,29 @@ module tb_tile_v4;
         .up_sideband(up_sideband),
         .sync0(sync0), .sync1(sync1), .err_line(err_line),
         .sim_load(sim_load_r), .sim_addr(sim_addr_r), .sim_data(sim_data_r));
+    // Check the address state of an already queued successor on BOTH retire
+    // paths. This is independent of the optional new-command collision probe.
+    integer promotion_checks = 0, promotion_distinct_tail_checks = 0;
+    always @(posedge clk) begin : promotion_address_monitor
+        logic [20:0] expected_phase, expected_tail;
+        logic different_tail;
+        if (rst_n && dut.sched_u.slot[1].valid &&
+            ((dut.sched_u.pstate == dut.sched_u.P_HUP &&
+              dut.hup_ready && dut.hup_last) ||
+             (dut.sched_u.pstate == dut.sched_u.P_DCOMMIT && !dut.yacc_busy))) begin
+            expected_phase = dut.sched_u.phase_base[1];
+            expected_tail = dut.sched_u.tail_base[1];
+            different_tail = dut.sched_u.tail_base[0] !== expected_tail;
+            #1;
+            if (dut.sched_u.phase_base[0] !== expected_phase ||
+                dut.sched_u.tail_base[0] !== expected_tail)
+                $fatal(1, "PROMOTION address state lost phase=%h tail=%h expected_phase=%h expected_tail=%h",
+                       dut.sched_u.phase_base[0], dut.sched_u.tail_base[0],
+                       expected_phase, expected_tail);
+            promotion_checks++;
+            if (different_tail) promotion_distinct_tail_checks++;
+        end
+    end
     // ---------- up beat checker ----------
     logic [30:0] rq_probe_metadata [0:3];
     logic [7:0] rq_probe_pass [0:3];
@@ -600,6 +623,8 @@ module tb_tile_v4;
             end
         end
         $fclose(ffd);
+        $display("CHECK promotion addresses=%0d distinct_tail=%0d",
+                 promotion_checks, promotion_distinct_tail_checks);
         if (cmd_retire_probe) begin
             if (cmd_retire_hits != expected_sync/2)
                 $fatal(1, "CMD_RETIRE coverage hits=%0d expected=%0d", cmd_retire_hits, expected_sync/2);

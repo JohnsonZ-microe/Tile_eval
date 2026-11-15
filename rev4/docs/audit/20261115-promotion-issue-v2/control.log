@@ -1,0 +1,8 @@
+rtl\pe4_sched.sv:1140:31: warning: if statement has empty body (put the semicolon on a separate line to silence this warning) [-Wempty-body]
+        if (reg_wr_addr == 0) ;   // no-op guard
+                              ^
+Top level design units:
+    tb_control_v4
+
+
+Build succeeded: 0 errors, 1 warning

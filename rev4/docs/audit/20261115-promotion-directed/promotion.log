@@ -1,0 +1,68 @@
+rtl\pe4_sched.sv:1115:31: warning: if statement has empty body (put the semicolon on a separate line to silence this warning) [-Wempty-body]
+        if (reg_wr_addr == 0) ;   // no-op guard
+                              ^
+tb\tb_promotion_v4.sv:36:15: error: lvalue of force/release must be a net, a variable, a constant select of a net, or a concatenation of these [-Wbad-procedural-force]
+        force dut.sched_u.slot[0] = old_head;
+              ^~~~~~~~~~~~~~~~~~~
+tb\tb_promotion_v4.sv:37:15: error: lvalue of force/release must be a net, a variable, a constant select of a net, or a concatenation of these [-Wbad-procedural-force]
+        force dut.sched_u.slot[1] = successor;
+              ^~~~~~~~~~~~~~~~~~~
+tb\tb_promotion_v4.sv:38:15: error: lvalue of force/release must be a net, a variable, a constant select of a net, or a concatenation of these [-Wbad-procedural-force]
+        force dut.sched_u.iss[1].valid = 1'b1;
+              ^~~~~~~~~~~~~~~~~~~~~~~~
+tb\tb_promotion_v4.sv:39:15: error: lvalue of force/release must be a net, a variable, a constant select of a net, or a concatenation of these [-Wbad-procedural-force]
+        force dut.sched_u.iss[1].bias = 1'b1;
+              ^~~~~~~~~~~~~~~~~~~~~~~
+tb\tb_promotion_v4.sv:40:15: error: lvalue of force/release must be a net, a variable, a constant select of a net, or a concatenation of these [-Wbad-procedural-force]
+        force dut.sched_u.iss[1].bidx = bias_index_q;
+              ^~~~~~~~~~~~~~~~~~~~~~~
+tb\tb_promotion_v4.sv:41:15: error: lvalue of force/release must be a net, a variable, a constant select of a net, or a concatenation of these [-Wbad-procedural-force]
+        force dut.sched_u.iss[1].bleft = 2'd1;
+              ^~~~~~~~~~~~~~~~~~~~~~~~
+tb\tb_promotion_v4.sv:42:15: error: lvalue of force/release must be a net, a variable, a constant select of a net, or a concatenation of these [-Wbad-procedural-force]
+        force dut.sched_u.phase_base[0] = 21'h20;
+              ^~~~~~~~~~~~~~~~~~~~~~~~~
+tb\tb_promotion_v4.sv:43:15: error: lvalue of force/release must be a net, a variable, a constant select of a net, or a concatenation of these [-Wbad-procedural-force]
+        force dut.sched_u.phase_base[1] = 21'h600;
+              ^~~~~~~~~~~~~~~~~~~~~~~~~
+tb\tb_promotion_v4.sv:44:15: error: lvalue of force/release must be a net, a variable, a constant select of a net, or a concatenation of these [-Wbad-procedural-force]
+        force dut.sched_u.tail_base[0] = 21'h100;
+              ^~~~~~~~~~~~~~~~~~~~~~~~
+tb\tb_promotion_v4.sv:45:15: error: lvalue of force/release must be a net, a variable, a constant select of a net, or a concatenation of these [-Wbad-procedural-force]
+        force dut.sched_u.tail_base[1] = 21'h800;
+              ^~~~~~~~~~~~~~~~~~~~~~~~
+tb\tb_promotion_v4.sv:54:17: error: lvalue of force/release must be a net, a variable, a constant select of a net, or a concatenation of these [-Wbad-procedural-force]
+        release dut.sched_u.slot[0]; release dut.sched_u.slot[1];
+                ^~~~~~~~~~~~~~~~~~~
+tb\tb_promotion_v4.sv:54:46: error: lvalue of force/release must be a net, a variable, a constant select of a net, or a concatenation of these [-Wbad-procedural-force]
+        release dut.sched_u.slot[0]; release dut.sched_u.slot[1];
+                                             ^~~~~~~~~~~~~~~~~~~
+tb\tb_promotion_v4.sv:55:17: error: lvalue of force/release must be a net, a variable, a constant select of a net, or a concatenation of these [-Wbad-procedural-force]
+        release dut.sched_u.iss[1].valid; release dut.sched_u.iss[1].bias;
+                ^~~~~~~~~~~~~~~~~~~~~~~~
+tb\tb_promotion_v4.sv:55:51: error: lvalue of force/release must be a net, a variable, a constant select of a net, or a concatenation of these [-Wbad-procedural-force]
+        release dut.sched_u.iss[1].valid; release dut.sched_u.iss[1].bias;
+                                                  ^~~~~~~~~~~~~~~~~~~~~~~
+tb\tb_promotion_v4.sv:56:17: error: lvalue of force/release must be a net, a variable, a constant select of a net, or a concatenation of these [-Wbad-procedural-force]
+        release dut.sched_u.iss[1].bidx; release dut.sched_u.iss[1].bleft;
+                ^~~~~~~~~~~~~~~~~~~~~~~
+tb\tb_promotion_v4.sv:56:50: error: lvalue of force/release must be a net, a variable, a constant select of a net, or a concatenation of these [-Wbad-procedural-force]
+        release dut.sched_u.iss[1].bidx; release dut.sched_u.iss[1].bleft;
+                                                 ^~~~~~~~~~~~~~~~~~~~~~~~
+tb\tb_promotion_v4.sv:57:17: error: lvalue of force/release must be a net, a variable, a constant select of a net, or a concatenation of these [-Wbad-procedural-force]
+        release dut.sched_u.phase_base[0]; release dut.sched_u.phase_base[1];
+                ^~~~~~~~~~~~~~~~~~~~~~~~~
+tb\tb_promotion_v4.sv:57:52: error: lvalue of force/release must be a net, a variable, a constant select of a net, or a concatenation of these [-Wbad-procedural-force]
+        release dut.sched_u.phase_base[0]; release dut.sched_u.phase_base[1];
+                                                   ^~~~~~~~~~~~~~~~~~~~~~~~~
+tb\tb_promotion_v4.sv:58:17: error: lvalue of force/release must be a net, a variable, a constant select of a net, or a concatenation of these [-Wbad-procedural-force]
+        release dut.sched_u.tail_base[0]; release dut.sched_u.tail_base[1];
+                ^~~~~~~~~~~~~~~~~~~~~~~~
+tb\tb_promotion_v4.sv:58:51: error: lvalue of force/release must be a net, a variable, a constant select of a net, or a concatenation of these [-Wbad-procedural-force]
+        release dut.sched_u.tail_base[0]; release dut.sched_u.tail_base[1];
+                                                  ^~~~~~~~~~~~~~~~~~~~~~~~
+Top level design units:
+    tb_promotion_v4
+
+
+Build failed: 20 errors, 1 warning

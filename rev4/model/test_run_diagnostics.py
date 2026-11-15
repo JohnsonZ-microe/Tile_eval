@@ -45,6 +45,29 @@ class RunDiagnosticsTests(unittest.TestCase):
             else:
                 with self.assertRaises(RuntimeError): run()
 
+    def test_promotion_requires_complete_boundary_evidence(self):
+        check = 'CHECK promotion paths=2 distinct_tail=18 stalled=18 address_checks=12 simultaneous_issue=6 scale_consume=6'
+        passed = 'PASS promotion cases=18'
+        for output, succeeds in [
+            (check + '\n' + passed, True),
+            (passed, False),
+            (check.replace('distinct_tail=18', 'distinct_tail=0') + '\n' + passed, False),
+            (check.replace('stalled=18', 'stalled=0') + '\n' + passed, False),
+            (check.replace('simultaneous_issue=6', 'simultaneous_issue=0') + '\n' + passed, False),
+            (check.replace('scale_consume=6', 'scale_consume=0') + '\n' + passed, False),
+            (passed + '\n' + check, False),
+            (check + '\n' + check + '\n' + passed, False),
+            (check + '\n' + passed + '\nFAIL bias address', False)]:
+            with self.subTest(output=output):
+                if succeeds:
+                    self.run_process('print(%r)' % output, test='promotion')
+                    coverage = self.manifest['simulations']['promotion']['coverage']
+                    self.assertEqual(coverage['address_checks'], 12)
+                    self.assertEqual(coverage['scope'], 'white-box seeded scheduler transition')
+                else:
+                    with self.assertRaises(RuntimeError):
+                        self.run_process('print(%r)' % output, test='promotion')
+
     def saved_record(self):
         saved = json.loads((self.path / 'manifest.json').read_text())
         self.assertEqual(saved['simulations']['tile'],

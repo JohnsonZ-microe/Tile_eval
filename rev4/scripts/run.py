@@ -36,7 +36,7 @@ def waveform_arguments(enabled, test, output, vcd_from=None):
              'memory': 'memory_v4.vcd',
              'yacc': 'yacc_v4.vcd',
              'control': 'control_v4.vcd',
-             'tile': 'tile_ffn_v4.vcd'}
+             'tile': 'tile_ffn_v4.vcd', 'promotion': 'promotion_v4.vcd'}
     if not enabled or test not in names:
         return []
     args = ['+VCD=' + str(Path(output) / names[test])]
@@ -190,6 +190,14 @@ def execute_logged(command, logfile, cwd, environment, timeout,
                 raise RuntimeError('Yacc overlap evidence follows PASS')
             record['coverage'] = dict(packets=300, overlap_banks=2, overlap_offsets=86, overlap_packets=172,
                                       overlap_yields=int(overlap[0]), read_identity_rows=3000)
+        if test == 'promotion':
+            coverage = re.findall(r'^CHECK promotion paths=2 distinct_tail=18 stalled=18 address_checks=12 simultaneous_issue=6 scale_consume=6\s*$', log, re.M)
+            passes = re.findall(r'^PASS promotion cases=18\s*$', log, re.M)
+            if len(coverage) != 1 or len(passes) != 1 or log.index('CHECK promotion') > log.index('PASS promotion'):
+                raise RuntimeError('Missing complete promotion boundary evidence')
+            record['coverage'] = dict(paths=2, distinct_tail=18, stalled=18, address_checks=12,
+                                      simultaneous_issue=6, scale_consume=6,
+                                      scope='white-box seeded scheduler transition')
         record['status'] = 'passed'
         return log
     except subprocess.TimeoutExpired:
@@ -219,7 +227,7 @@ def main():
     parser.add_argument('tool', choices=['local', 'vcs', 'dc'])
     parser.add_argument('--suite', choices=['legacy', 'smoke', 'full'], default='full')
     parser.add_argument('--seed', type=int, default=817)
-    parser.add_argument('--test', choices=['all', 'cells', 'math', 'modules', 'compute', 'protocol', 'memory', 'yacc', 'control', 'tile'],
+    parser.add_argument('--test', choices=['all', 'cells', 'math', 'modules', 'compute', 'protocol', 'memory', 'yacc', 'control', 'tile', 'promotion'],
                         default='all')
     parser.add_argument('--top', default='tile_ffn_v4')
     parser.add_argument('--out', type=Path)
@@ -340,12 +348,12 @@ def main():
             exe = shutil.which(os.getenv('VCS', 'vcs'))
             if not exe:
                 raise RuntimeError('VCS not found')
-            for test in (['cells', 'math', 'modules', 'compute', 'protocol', 'memory', 'yacc', 'control', 'tile'] if args.test == 'all'
+            for test in (['cells', 'math', 'modules', 'compute', 'protocol', 'memory', 'yacc', 'control', 'tile', 'promotion'] if args.test == 'all'
                          else [args.test]):
                 top = {'cells': 'tb_cells_v4', 'math': 'tb_math_v4', 'modules': 'tb_math_v4',
                        'compute': 'tb_compute_v4',
                        'protocol': 'tb_protocol_v4', 'memory': 'tb_memory_v4',
-                       'yacc': 'tb_yacc_v4', 'control': 'tb_control_v4', 'tile': 'tb_tile_v4'}[test]
+                       'yacc': 'tb_yacc_v4', 'control': 'tb_control_v4', 'tile': 'tb_tile_v4', 'promotion': 'tb_promotion_v4'}[test]
                 binary = out / ('simv_' + test)
                 clog = run([exe, '-full64', '-sverilog',
                             '-timescale=1ns/1ps', '-debug_access+all',

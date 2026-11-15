@@ -1,0 +1,37 @@
+{
+  "tool": "pyslang",
+  "version": "12.1.0",
+  "scope": "SystemVerilog parsing and semantic elaboration only; no simulation, synthesis or PPA validation",
+  "sources": {
+    "rev4/scripts/rtl.f": "0287e0840bf5d71ed3ef18c2a12d3a99a28892d8b7216fe76f212c35e83bd747",
+    "rev4/scripts/check_sv.py": "60d339930214a8e91deef60fb545b6264a766954f246376106aab4bcf6055b44",
+    "rev3/rtl/pe3_pkg.sv": "26c21e0a0d6b5ea1b1213de9eda937d80dc3e92628a6bb59ebbf33341ba245c9",
+    "rev3/rtl/pe3_round.sv": "badcbc3ed04f995aaf35fcce8994d40b52aeb2a12f2c7173a0f12d7b459726ad",
+    "rev3/rtl/pe3_cpa.sv": "6dba2f29f2366f440b7709cece33c0d3c9ff89365cc08f102cef5986dd5c0cd4",
+    "rev3/rtl/pe3_float.sv": "000bc129562c723826ba8f3760795cd0d89b16d87cb4c2b1dedaaef4730ae9ac",
+    "rev3/rtl/pe3_dot32.sv": "4730857a1e7b4fdaa28a715c23b8bfdf9a9d8be1e127e86e3d1e390bb30bcc5c",
+    "rev3/rtl/tile_pe_v3.sv": "6122752665ef426512914f76e53c47d94d307acc55beead8ea9168e42d90d5d2",
+    "rev4/rtl/pe4_blackbox.sv": "5cf795b76ab46f5a444d40769ca62a900745077dc1978729aba811232c362bc6",
+    "rev4/rtl/pe4_pkg.sv": "3b140987785364a96a92642d8d9f7369c4836a6375846a82d798ce9c12c720bb",
+    "rev4/rtl/pe4_sram.sv": "5f3fa94b574cdd06c635ca0c51b41f375ee4dde2f1c4ab5e16bc635729d48b53",
+    "rev4/rtl/pe4_staging.sv": "64b0738bfbb3a10cd884a409887bb4da627821ddc942d14351a115a2d43204cd",
+    "rev4/rtl/pe4_fmul.sv": "b4c4758a90373c87a3ade463827cf3d21244e0906bc9264dac753f4b54095ee2",
+    "rev4/rtl/pe4_act.sv": "2e203ec73b0a3237f27b23dc8d3c773428db25bd2185e402fc4b18be74ac9d61",
+    "rev4/rtl/pe4_quant.sv": "19739881155a0775b82442a808b3de93cead5118852e72c3d7f8eed2c9bd8be4",
+    "rev4/rtl/pe4_hbuf.sv": "32ef70f832b74b168fbeb3b21eeba25ae9632571c0cb81fbda5c787b62be558e",
+    "rev4/rtl/pe4_yacc.sv": "a98ec0b6a5f94b701828a93a970ea64f4d8da52d76856426f080e6d9717ff3c1",
+    "rev4/rtl/pe4_bus.sv": "4bb1f2cf489ecbe3e4289cc242b50197643166f441e0adf140784f9ac6546b8e",
+    "rev4/rtl/pe4_sched.sv": "645676359247e6927d7b7426dbe61bc247285aa3c6b99a6a4ec2917f073e0858",
+    "rev4/rtl/tile_ffn_v4.sv": "01b9dfef3975d84406bcca4c1ddfa9c130e88d556c501f321ee0d638cbf19987",
+    "rev4/rtl/pe4_probes.sv": "7c0006ced83573df62fb137e1457795c4a0145e8697aa8be9e3a483aa97e3d36",
+    "rev4/tb/tb_promotion_v4.sv": "975b7075f58d6ac28883eae668133f54d131828f89ab62acaab6c56c620b5105"
+  },
+  "tests": [
+    {
+      "test": "promotion",
+      "exit_code": 0,
+      "passed": true
+    }
+  ],
+  "passed": true
+}

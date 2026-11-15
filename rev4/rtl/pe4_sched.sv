@@ -288,6 +288,9 @@ module pe4_sched #(
     logic [5:0] act_c, act_cout;
     logic [4:0] hup_beat, hup_beats;
     logic [31:0] last_hup_pass;
+    wire head_retire = (pstate == P_HUP && hup_ready && hup_beat == hup_beats - 1) ||
+                       (pstate == P_DCOMMIT && !yacc_busy);
+
     // staging fill engine expected-order state
     logic [1:0] exp_grp;
     logic [2:0] exp_lane;
@@ -475,12 +478,22 @@ module pe4_sched #(
         s.off = s.off + 17'(1);
         return s;
     endfunction
+    // One post-issue value is shared by the normal write and promotion.
+    // Promotion must not undo a slot-1 request accepted on the retiring edge.
+    iss_t iss1_after_issue;
+    always_comb begin
+        iss1_after_issue = iss_step(iss[1], ngroups1, sw1, per1);
+        if (iss1_after_issue.kb == ((slot[1].phase == 0)
+                ? cp[slot[1].ctx_sel].nkb : 17'(NKB_D)))
+            iss1_after_issue.valid = 1'b0;
+    end
     // ================= sequential core (part B) ===========================
     always_ff @(posedge clk) begin
         if (!rst_n) begin
             slot[0] <= '0; slot[1] <= '0;
             iss[0] <= '0; iss[1] <= '0;
             phase_base[0] <= 0; phase_base[1] <= 0;
+            tail_base[0] <= 0; tail_base[1] <= 0;
             for (int i = 0; i < 4; i++) rq[i] <= '0;
             rq_push <= 0; rq_fill <= 0; rq_cons <= 0; rq_cnt <= 0;
             stg_kb_q <= 0; stg_kb_qq <= 0;
@@ -658,7 +671,7 @@ module pe4_sched #(
             end
             if (iss_fire1) begin
                 iss_t nxt;
-                nxt = iss_step(iss[1], ngroups1, sw1, per1);
+                nxt = iss1_after_issue;
                 rq[rq_push[1:0]].slot <= 1;
                 rq[rq_push[1:0]].phase <= slot[1].phase;
                 rq[rq_push[1:0]].bias <= iss[1].bias;
@@ -690,6 +703,10 @@ module pe4_sched #(
                 end else ev_rramtag <= 1;
             end
             // ---- consume: bias words fill the phase context; scale words
+            // Migrate accumulated successor scales before handling this edge's
+            // scale return, so a simultaneous return wins at its destination.
+            if (head_retire && slot[1].valid)
+                for (int i = 0; i < 80; i++) wsh[0][i] <= wsh[1][i];
             // fill wsh; weight words feed the PE. rq_cons/rq_cnt/cap_q are
             // updated at the single points at the end of this block (R4-006)
             // and EVERY accepted weight word pushes a capture descriptor
@@ -724,15 +741,15 @@ module pe4_sched #(
                 for (int i = 0; i < 128; i++)
                     if (i < eper && head.swi*eper + i < cols_ph) begin
                         if (wbits == 32)
-                            wsh[head.slot][head.swi*eper + i] <=
+                            wsh[head_retire ? 1'b0 : head.slot][head.swi*eper + i] <=
                                 head.data[32*i +: 32];
                         else if (wbits == 16)
                             // pe3_scale reads weight_scale[15:0] and widens:
                             // 16-bit scales live in the LOW half (R4-033)
-                            wsh[head.slot][head.swi*eper + i] <=
+                            wsh[head_retire ? 1'b0 : head.slot][head.swi*eper + i] <=
                                 {16'b0, head.data[16*i +: 16]};
                         else
-                            wsh[head.slot][head.swi*eper + i] <=
+                            wsh[head_retire ? 1'b0 : head.slot][head.swi*eper + i] <=
                                 {24'b0, head.data[8*i +: 8]};
                     end
             end else if (pe_accept) begin
@@ -851,8 +868,10 @@ module pe4_sched #(
                     if (hup_beat == hup_beats - 1) begin
                         sync1 <= 1;                       // GU phase DONE
                         slot[0] <= slot[1];
-                        iss[0] <= iss[1];
+                        iss[0] <= iss_fire1 ? iss1_after_issue : iss[1];
+                        iss[1] <= '0;
                         phase_base[0] <= phase_base[1];
+                        tail_base[0] <= tail_base[1];
                         slot[1] <= '0;
                         pstate <= P_RUN;
                     end else hup_beat <= hup_beat + 1;
@@ -869,8 +888,10 @@ module pe4_sched #(
                     hbuf_bank <= slot[0].hbank;
                     sync1 <= 1;                           // D phase DONE
                     slot[0] <= slot[1];
-                    iss[0] <= iss[1];
+                    iss[0] <= iss_fire1 ? iss1_after_issue : iss[1];
+                    iss[1] <= '0;
                     phase_base[0] <= phase_base[1];
+                    tail_base[0] <= tail_base[1];
                     slot[1] <= '0;
                     pstate <= P_RUN;
                 end
@@ -943,6 +964,13 @@ module pe4_sched #(
                 quant_idx <= h_idx[6:0];
                 quant_h <= h_data;
             end else quant_valid <= 0;
+            // RQ descriptors name physical slots. Retag both old outstanding
+            // successor requests and a new push on the promotion edge.
+            if (head_retire) begin
+                for (int i = 0; i < 4; i++)
+                    if (rq[i].slot) rq[i].slot <= 1'b0;
+                if (iss_fire1) rq[rq_push[1:0]].slot <= 1'b0;
+            end
             // ---- delayed kb indices for operand-hold banking ----
             stg_kb_q <= stg_rd_kb;
             hbuf_kb_q <= hbuf_rd_idx;
