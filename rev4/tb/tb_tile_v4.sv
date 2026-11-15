@@ -94,7 +94,14 @@ module tb_tile_v4;
                 end
             end
             if (survivors != 1)
-                $fatal(1, "CMD_RETIRE command lost/duplicated pass=%0d survivors=%0d", expected_pass, survivors);
+                $fatal(1, "CMD_RETIRE command lost/duplicated pass=%0d survivors=%0d cyc=%0d s0(v/p/id)=%b/%0d/%0d s1(v/p/id)=%b/%0d/%0d iss(v)=%b%b dn=%b hup(v/r/l)=%b%b%b",
+                       expected_pass, survivors, rq_probe_cycle,
+                       dut.sched_u.slot[0].valid, dut.sched_u.slot[0].phase,
+                       dut.sched_u.slot[0].pass_id,
+                       dut.sched_u.slot[1].valid, dut.sched_u.slot[1].phase,
+                       dut.sched_u.slot[1].pass_id,
+                       dut.sched_u.iss[0].valid, dut.sched_u.iss[1].valid,
+                       dn_valid, dut.hup_valid, dut.hup_ready, dut.hup_last);
         end
     end
     integer expected_flits, expected_beats, expected_sync, expected_packets, cfd;
@@ -148,7 +155,7 @@ module tb_tile_v4;
             if (dut.sched_u.quant_valid)
                 trace_event("quant_accept", dut.sched_u.quant_tag, 0);
             if (dut.sched_u.quant_ov) trace_event("quant_return", dut.sched_u.quant_otag, 0);
-            if (dut.hbuf_release) trace_event("bank_release", dut.hbuf_wr_bank_sel, 0);
+            if (dut.hbuf_release) trace_event("bank_release", dut.hbuf_release_bank, 0);
             if (sync1) begin
                 trace_event("sync1", trace_sync, 0); trace_sync++;
             end
@@ -657,6 +664,15 @@ module tb_tile_v4;
                      sync1_count, expected_sync, y_packet_count, expected_packets);
             errors++;
         end
+        // Vectors contain paired GU/D phases; final drain has settled the
+        // registered SYNC1 count. These counters must agree with the workload.
+        if (dut.sched_u.cnt[0] !== 32'(expected_sync/2) ||
+            dut.sched_u.cnt[1] !== 32'(expected_sync/2) ||
+            dut.sched_u.cnt[11] !== 32'(expected_sync)) begin
+            $display("FAIL phase counters gu=%0d d=%0d sync1=%0d expected_sync=%0d",
+                     dut.sched_u.cnt[0], dut.sched_u.cnt[1], dut.sched_u.cnt[11], expected_sync);
+            errors++;
+        end
         if (e_valid) begin
             $display("FAIL missing expected beats");
             errors++;
@@ -671,6 +687,8 @@ module tb_tile_v4;
                 $fatal(1, "RQ probe incomplete workload");
             $display("CHECK rq_identity issued=%0d returned=%0d consumed=%0d",
                      rq_probe_issued, rq_probe_returned, rq_probe_consumed);
+            $display("CHECK phase_counters gu=%0d d=%0d sync1=%0d",
+                     dut.sched_u.cnt[0], dut.sched_u.cnt[1], dut.sched_u.cnt[11]);
             $display("PASS tile flits=%0d beats=%0d sync1=%0d",
                      flits, beats, sync1_count);
         end
@@ -705,11 +723,13 @@ module tb_tile_v4;
     always @(posedge clk) begin : calibration_monitor
         longint unsigned edge_cycle;
         integer issue_slot;
+        logic observe_hbank;
         edge_cycle = calibration_cycle;
         if (calibration_fd) begin
             if (!rst_n) begin
                 if (!calibration_reset_seen) begin
                     calibration_event("pre", "reset", 0, -1, -1, -1, -1, -1, -1, -1, '0);
+                    calibration_event("pre", "quant_guard_config", 0, -1, -1, -1, -1, -1, -1, -1, 512'd4);
                     calibration_reset_seen = 1;
                 end
                 calibration_cycle = 0;
@@ -717,6 +737,8 @@ module tb_tile_v4;
                 calibration_issue = 0; calibration_return = 0; calibration_consume = 0;
             end else begin
                 calibration_reset_seen = 0;
+                observe_hbank = dut.hbuf_take || dut.hbuf_release ||
+                                dut.hbuf_wr_valid || dut.hbuf_wr_err;
                 if (dn_valid)
                     calibration_event("pre", "down", edge_cycle, int'(dn_sideband), int'(dn_sideband[10:3]), -1, -1, -1, -1, -1, dn_payload);
                 if (up_credit != 0)
@@ -760,8 +782,17 @@ module tb_tile_v4;
                     calibration_event("pre", "quant_accept", edge_cycle, int'(dut.sched_u.quant_tag), -1, 1, -1, -1, -1, -1, '0);
                 if (dut.sched_u.quant_ov)
                     calibration_event("pre", "quant_consume", edge_cycle, int'(dut.sched_u.quant_otag), -1, 1, -1, -1, -1, -1, '0);
+                if (dut.sched_u.quant_stale)
+                    calibration_event("pre", "quant_discard", edge_cycle, int'(dut.sched_u.quant_otag), -1, -1, -1, -1, -1,
+                        int'(dut.hbuf_wr_bank), 512'(dut.sched_u.err_events[pe4_pkg::ERR_H_ORDER]));
                 if (dut.hbuf_release)
-                    calibration_event("pre", "bank_release", edge_cycle, -1, -1, 1, -1, -1, -1, int'(dut.hbuf_wr_bank_sel), '0);
+                    calibration_event("pre", "bank_release", edge_cycle, -1, -1, 1, -1, -1, -1, int'(dut.hbuf_release_bank), '0);
+                if (dut.hbuf_take)
+                    calibration_event("pre", "bank_take", edge_cycle, -1, int'(dut.hbuf_pass), 0, -1, -1, -1,
+                        int'(dut.hbuf_wr_bank_sel), 512'(dut.hbuf_ntok));
+                if (dut.hbuf_wr_valid)
+                    calibration_event("pre", "bank_write", edge_cycle, -1, -1, -1, -1,
+                        int'(dut.hbuf_wr_idx), int'(dut.hbuf_wr_lane), int'(dut.hbuf_wr_bank), '0);
                 if (dut.yacc_commit_trigger)
                     calibration_event("pre", "y_commit", edge_cycle, -1, -1, 1, -1, -1, -1, int'(dut.yacc_bank), 512'(dut.yacc_mask));
                 if (dut.drain_fire)
@@ -772,6 +803,12 @@ module tb_tile_v4;
                 if (sync1)
                     calibration_event("pre", "sync1", edge_cycle, -1, -1, -1, -1, -1, -1, -1, '0);
                 #1;
+                // Sparse post-edge state, including the edge clearing wr_err.
+                // payload[20:0] = {error, pass1, pass0, ready[1:0], owner[1:0]}.
+                if (observe_hbank)
+                    calibration_event("post", "bank_state", edge_cycle, -1, -1, -1, -1, -1, -1, -1,
+                        512'({dut.hbuf_wr_err, dut.hbuf_owner_pass1, dut.hbuf_owner_pass0,
+                              dut.hbuf_bank_ready, dut.hbuf_owner_valid}));
                 if (dut.pe_out_valid)
                     calibration_event("post", "pe_commit_visible", edge_cycle, int'(dut.pe_u.out_tag), -1, -1, -1, -1, -1, -1, 512'(dut.pe_out_col_base));
                 for (integer bank_id = 0; bank_id < 2; bank_id++)
