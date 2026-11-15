@@ -227,7 +227,7 @@ module tb_tile_v4;
                 source_slot = dut.sched_u.iss_fire0 ? 0 : 1;
                 entry_index = rq_probe_issued % 4;
                 rq_probe_metadata[entry_index] = {1'(source_slot),
-                    dut.sched_u.slot[source_slot].phase,
+                    1'(dut.sched_u.slot[source_slot].phase),  // cmd_t.phase is 2b, rq_t.phase 1b - without the cast the concat is 32b and the slot bit gets truncated
                     dut.sched_u.iss[source_slot].bias,
                     (dut.sched_u.iss[source_slot].scale && !dut.sched_u.iss[source_slot].bias),
                     dut.sched_u.iss[source_slot].bidx, dut.sched_u.iss[source_slot].swi,
