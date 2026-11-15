@@ -105,23 +105,25 @@ module tb_tile_v4;
     longint unsigned vcd_from = 0;
     initial begin
         if ($value$plusargs("VCD=%s", vcdfile)) begin
-            $dumpfile(vcdfile);
-            $dumpvars(0, tb_tile_v4);
-            // +VCD_FROM=<cycle>: a full-suite whole-tile dump reaches tens of
-            // GB, so optionally keep the dump dark until this cycle. $dumpon
-            // re-emits every signal's current value, so the window opens with
-            // a complete state snapshot (posedge k lands at 5+10k ns).
             if ($value$plusargs("VCD_FROM=%d", vcd_from) && vcd_from != 0) begin
-                $dumpoff;
-                wait ($time >= 64'(5 + 10 * vcd_from));
-                $dumpon;
+                // windowed dump: a full-suite whole-tile dump reaches tens of
+                // GB. Delay $dumpvars itself to the window start (posedge k is
+                // at 5+10k ns); calling it late still emits the complete
+                // current-value snapshot. NB: wait ($time >= X) does NOT work
+                // here - $time is not a signal, so the wait never re-evaluates.
+                $dumpfile(vcdfile);
+                #(5 + 10 * vcd_from);
+                $dumpvars(0, tb_tile_v4);
                 // $fatal terminates the process WITHOUT flushing VCS's
-                // buffered VCD writer - the whole window would be lost.
-                // Flush every cycle from here on so the dump survives.
+                // buffered VCD writer - flush every cycle from here on so the
+                // window survives an abrupt end.
                 forever begin
                     @(posedge clk);
                     $dumpflush;
                 end
+            end else begin
+                $dumpfile(vcdfile);
+                $dumpvars(0, tb_tile_v4);
             end
         end
     end
