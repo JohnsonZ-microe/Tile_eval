@@ -219,9 +219,12 @@ def execute_logged(command, logfile, cwd, environment, timeout,
             routes = re.findall(r'^CHECK route_guard cases=4 rejected=2 independent=2\s*$', log, re.M)
             if len(routes) != 1 or log.index('CHECK route_guard') > log.index('PASS promotion'):
                 raise RuntimeError('Missing complete H routing release evidence')
+            resets = re.findall(r'^CHECK quant_reset cases=10 routing=2 pipeline=8 recovery=10\s*$', log, re.M)
+            if len(resets) != 1 or log.index('CHECK quant_reset') > log.index('PASS promotion'):
+                raise RuntimeError('Missing complete H routing/quantizer reset evidence')
             record['coverage'] = dict(paths=2, distinct_tail=18, stalled=18, address_checks=12,
                                       simultaneous_issue=6, scale_consume=6, counter_cases=8, command_collision_paths=2, quant_guard_cases=22,
-                                      route_guard_cases=4, scope='white-box seeded scheduler transition')
+                                      route_guard_cases=4, quant_reset_cases=10, scope='white-box seeded scheduler transition')
         record['status'] = 'passed'
         return log
     except subprocess.TimeoutExpired:

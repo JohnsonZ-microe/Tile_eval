@@ -10,6 +10,7 @@ module tb_tile_v4;
     logic [23:0] up_sideband;
     logic sync0, sync1, err_line;
     longint unsigned cycle_count = 0;
+    longint unsigned rq_probe_cycle = 0;
     always #5 clk = ~clk;
     integer ffd, efd, rfd, errors = 0, beats = 0, flits = 0;
     integer gap = 1, cred_period = 1, cred_timer = 0;
@@ -263,7 +264,6 @@ module tb_tile_v4;
     logic [1023:0] rq_probe_data [0:3];
     longint unsigned rq_probe_issue_cycle [0:3];
     longint unsigned rq_probe_return_cycle [0:3];
-    longint unsigned rq_probe_cycle = 0;
     integer rq_probe_issued = 0, rq_probe_returned = 0, rq_probe_consumed = 0;
     always @(posedge clk) begin : rq_identity_monitor
         integer entry_index, source_slot;

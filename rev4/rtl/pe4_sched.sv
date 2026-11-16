@@ -519,6 +519,9 @@ module pe4_sched #(
             yacc_commit_trigger <= 0;
             hbuf_take <= 0; hbuf_release <= 0;
             hbuf_release_bank <= 0;
+            // Flush the routing register as well as the quantizer pipeline.
+            // Otherwise a pre-reset valid H block can re-enter after reset.
+            quant_valid <= 0;
             yacc_load_valid <= 0;
             ev_cmd_illegal <= 0; ev_unsupported <= 0; ev_xorder <= 0;
             ev_horder <= 0; ev_rramtag <= 0; ev_snapshot <= 0;

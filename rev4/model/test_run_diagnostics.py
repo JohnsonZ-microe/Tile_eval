@@ -51,13 +51,17 @@ class RunDiagnosticsTests(unittest.TestCase):
         collisions = 'CHECK command_collision paths=2 descriptors=2 bank_targets=1'
         guard = 'CHECK quant_guard cases=22 canceled=10 independent=10 baseline=2'
         route = 'CHECK route_guard cases=4 rejected=2 independent=2'
-        check = route + '\n' + guard + '\n' + collisions + '\n' + counters + '\n' + check
+        reset = 'CHECK quant_reset cases=10 routing=2 pipeline=8 recovery=10'
+        check = reset + '\n' + route + '\n' + guard + '\n' + collisions + '\n' + counters + '\n' + check
         passed = 'PASS promotion cases=18'
         for output, succeeds in [
             (check + '\n' + passed, True),
             (passed, False),
             (check.replace(guard + '\n', '') + '\n' + passed, False),
             (check.replace(route + '\n', '') + '\n' + passed, False),
+            (check.replace(reset + '\n', '') + '\n' + passed, False),
+            (check.replace('routing=2', 'routing=0') + '\n' + passed, False),
+            (check.replace('recovery=10', 'recovery=0') + '\n' + passed, False),
             (check.replace('rejected=2', 'rejected=0') + '\n' + passed, False),
             (check.replace('canceled=10', 'canceled=0') + '\n' + passed, False),
             (check.replace(collisions + '\n', '') + '\n' + passed, False),

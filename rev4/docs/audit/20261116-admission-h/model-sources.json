@@ -1,0 +1,42 @@
+[
+  {
+    "path": "NPU_eval/af/admission_h_replay.py",
+    "sha256": "ed836853d412f09c5d0ad9a7900714986be3353376713efc8c19f227bce0486a"
+  },
+  {
+    "path": "NPU_eval/af/tests/test_admission_h_replay.py",
+    "sha256": "b4d43773e2089d730cd4c163d76363a5318f57ee662f7048807d8bb6a85d772a"
+  },
+  {
+    "path": "NPU_eval/af/context_replay.py",
+    "sha256": "7a502dcd502e848005acbcb5e82029999730c0dc555deb0f2a80c28997e89ebc"
+  },
+  {
+    "path": "NPU_eval/af/config_replay.py",
+    "sha256": "ecc5f82dff65a009a1df7605152de1f2bac4284b4eb6ad8231e2ea49fda1e2e7"
+  },
+  {
+    "path": "NPU_eval/af/slot_replay.py",
+    "sha256": "6d00a1c7ca2c1de67eb8e468653192d71bb6561daec5cb56e4d2500148d5365e"
+  },
+  {
+    "path": "NPU_eval/af/h_path_replay.py",
+    "sha256": "408e67cb22dcbd9471a1fecb04c7b278169511ccfd34db9bec754b9269451b05"
+  },
+  {
+    "path": "NPU_eval/af/h_quant_routing.py",
+    "sha256": "04031ee366c0638748a750e5b81beee74d2acff0efa24cf5555b7ec84bd00774"
+  },
+  {
+    "path": "NPU_eval/af/hbank_ownership.py",
+    "sha256": "0667b71c40acc937c63b32804a8fcb42adc568b1d4e9aa65ff252cbcd66b8ef7"
+  },
+  {
+    "path": "NPU_eval/af/quant_write_guard.py",
+    "sha256": "7f8aed4a289cec4ad4b0dec8f66b4268a830f61f976b330624ba3fbaaf1a2a41"
+  },
+  {
+    "path": "Tile_eval/rev4/docs/audit/20261116-admission-h/check.py",
+    "sha256": "fdbc66cca454691cbd6e5c57d390fc97414bd7c611edc77d0a9fb4289a10f59b"
+  }
+]

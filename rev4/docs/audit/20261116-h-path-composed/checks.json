@@ -1,0 +1,382 @@
+[
+  {
+    "status": "passed",
+    "counts": {
+      "reset": 1,
+      "bank_take": 24,
+      "bank_state": 4368,
+      "down": 4320,
+      "quant_accept": 4320,
+      "quant_consume": 4320,
+      "bank_write": 4320,
+      "bank_release": 24
+    },
+    "accepted_writes": 4320,
+    "canceled": 0,
+    "route_rejections": 0,
+    "ready_edges": [
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 5,
+        "visible_cycle": 113361,
+        "sampled_cycle": 113362
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 6,
+        "visible_cycle": 122620,
+        "sampled_cycle": 122621
+      },
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 7,
+        "visible_cycle": 132399,
+        "sampled_cycle": 132400
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 8,
+        "visible_cycle": 142697,
+        "sampled_cycle": 142698
+      },
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 9,
+        "visible_cycle": 152621,
+        "sampled_cycle": 152622
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 10,
+        "visible_cycle": 161905,
+        "sampled_cycle": 161906
+      },
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 11,
+        "visible_cycle": 171709,
+        "sampled_cycle": 171710
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 12,
+        "visible_cycle": 182032,
+        "sampled_cycle": 182033
+      },
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 13,
+        "visible_cycle": 191971,
+        "sampled_cycle": 191972
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 14,
+        "visible_cycle": 201260,
+        "sampled_cycle": 201261
+      },
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 15,
+        "visible_cycle": 211069,
+        "sampled_cycle": 211070
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 16,
+        "visible_cycle": 221397,
+        "sampled_cycle": 221398
+      },
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 17,
+        "visible_cycle": 231338,
+        "sampled_cycle": 231339
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 18,
+        "visible_cycle": 240625,
+        "sampled_cycle": 240626
+      },
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 19,
+        "visible_cycle": 250432,
+        "sampled_cycle": 250433
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 20,
+        "visible_cycle": 260758,
+        "sampled_cycle": 260759
+      },
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 21,
+        "visible_cycle": 270686,
+        "sampled_cycle": 270687
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 22,
+        "visible_cycle": 279947,
+        "sampled_cycle": 279948
+      },
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 23,
+        "visible_cycle": 289728,
+        "sampled_cycle": 289729
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 24,
+        "visible_cycle": 300028,
+        "sampled_cycle": 300029
+      },
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 25,
+        "visible_cycle": 311883,
+        "sampled_cycle": 311884
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 26,
+        "visible_cycle": 324353,
+        "sampled_cycle": 324354
+      },
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 27,
+        "visible_cycle": 337343,
+        "sampled_cycle": 337344
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 28,
+        "visible_cycle": 350852,
+        "sampled_cycle": 350853
+      }
+    ],
+    "mismatches": [],
+    "scope": "raw external H sideband plus observed ownership pulses; no output timing seeds; not numeric payload or independent command lifecycle",
+    "run": "vcs-20261115T151442Z-8320",
+    "trace_sha256": "ae51caa2f4e60e622bb4393e2c2b41491b106d25b7f95e0edcfcddec3a2f4eb0"
+  },
+  {
+    "status": "passed",
+    "counts": {
+      "reset": 1,
+      "bank_take": 24,
+      "bank_state": 4368,
+      "down": 4320,
+      "quant_accept": 4320,
+      "quant_consume": 4320,
+      "bank_write": 4320,
+      "bank_release": 24
+    },
+    "accepted_writes": 4320,
+    "canceled": 0,
+    "route_rejections": 0,
+    "ready_edges": [
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 5,
+        "visible_cycle": 113361,
+        "sampled_cycle": 113362
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 6,
+        "visible_cycle": 122620,
+        "sampled_cycle": 122621
+      },
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 7,
+        "visible_cycle": 132399,
+        "sampled_cycle": 132400
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 8,
+        "visible_cycle": 142697,
+        "sampled_cycle": 142698
+      },
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 9,
+        "visible_cycle": 152621,
+        "sampled_cycle": 152622
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 10,
+        "visible_cycle": 161905,
+        "sampled_cycle": 161906
+      },
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 11,
+        "visible_cycle": 171709,
+        "sampled_cycle": 171710
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 12,
+        "visible_cycle": 182032,
+        "sampled_cycle": 182033
+      },
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 13,
+        "visible_cycle": 191971,
+        "sampled_cycle": 191972
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 14,
+        "visible_cycle": 201260,
+        "sampled_cycle": 201261
+      },
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 15,
+        "visible_cycle": 211069,
+        "sampled_cycle": 211070
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 16,
+        "visible_cycle": 221397,
+        "sampled_cycle": 221398
+      },
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 17,
+        "visible_cycle": 231338,
+        "sampled_cycle": 231339
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 18,
+        "visible_cycle": 240625,
+        "sampled_cycle": 240626
+      },
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 19,
+        "visible_cycle": 250432,
+        "sampled_cycle": 250433
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 20,
+        "visible_cycle": 260758,
+        "sampled_cycle": 260759
+      },
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 21,
+        "visible_cycle": 270686,
+        "sampled_cycle": 270687
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 22,
+        "visible_cycle": 279947,
+        "sampled_cycle": 279948
+      },
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 23,
+        "visible_cycle": 289728,
+        "sampled_cycle": 289729
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 24,
+        "visible_cycle": 300028,
+        "sampled_cycle": 300029
+      },
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 25,
+        "visible_cycle": 311883,
+        "sampled_cycle": 311884
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 26,
+        "visible_cycle": 324353,
+        "sampled_cycle": 324354
+      },
+      {
+        "epoch": 0,
+        "bank": 0,
+        "pass_id": 27,
+        "visible_cycle": 337343,
+        "sampled_cycle": 337344
+      },
+      {
+        "epoch": 0,
+        "bank": 1,
+        "pass_id": 28,
+        "visible_cycle": 350852,
+        "sampled_cycle": 350853
+      }
+    ],
+    "mismatches": [],
+    "scope": "raw external H sideband plus observed ownership pulses; no output timing seeds; not numeric payload or independent command lifecycle",
+    "run": "vcs-20261115T221329Z-18837",
+    "trace_sha256": "ae51caa2f4e60e622bb4393e2c2b41491b106d25b7f95e0edcfcddec3a2f4eb0"
+  }
+]

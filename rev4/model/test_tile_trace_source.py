@@ -10,7 +10,8 @@ class TileTraceSourceTests(unittest.TestCase):
         first_trace = bench.index('task automatic trace_event')
         for declaration in ('logic up_valid;', 'logic [23:0] up_sideband;',
                             'logic sync0, sync1, err_line;',
-                            'longint unsigned cycle_count = 0;'):
+                            'longint unsigned cycle_count = 0;',
+                            'longint unsigned rq_probe_cycle = 0;'):
             self.assertEqual(bench.count(declaration), 1)
             self.assertLess(bench.index(declaration), first_trace)
 

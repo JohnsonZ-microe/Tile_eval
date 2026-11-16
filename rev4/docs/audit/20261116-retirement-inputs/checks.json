@@ -1,0 +1,2734 @@
+[
+  {
+    "run": "vcs-20261115T151442Z-8320",
+    "passed": true,
+    "predicted_sync1": [
+      [
+        0,
+        113141
+      ],
+      [
+        0,
+        115973
+      ],
+      [
+        0,
+        122184
+      ],
+      [
+        0,
+        125232
+      ],
+      [
+        0,
+        131747
+      ],
+      [
+        0,
+        135011
+      ],
+      [
+        0,
+        141829
+      ],
+      [
+        0,
+        145309
+      ],
+      [
+        0,
+        152401
+      ],
+      [
+        0,
+        155246
+      ],
+      [
+        0,
+        161469
+      ],
+      [
+        0,
+        164530
+      ],
+      [
+        0,
+        171057
+      ],
+      [
+        0,
+        174334
+      ],
+      [
+        0,
+        181164
+      ],
+      [
+        0,
+        184657
+      ],
+      [
+        0,
+        191751
+      ],
+      [
+        0,
+        194599
+      ],
+      [
+        0,
+        200824
+      ],
+      [
+        0,
+        203888
+      ],
+      [
+        0,
+        210417
+      ],
+      [
+        0,
+        213697
+      ],
+      [
+        0,
+        220529
+      ],
+      [
+        0,
+        224025
+      ],
+      [
+        0,
+        231118
+      ],
+      [
+        0,
+        233965
+      ],
+      [
+        0,
+        240189
+      ],
+      [
+        0,
+        243252
+      ],
+      [
+        0,
+        249780
+      ],
+      [
+        0,
+        253059
+      ],
+      [
+        0,
+        259890
+      ],
+      [
+        0,
+        263385
+      ],
+      [
+        0,
+        270466
+      ],
+      [
+        0,
+        273299
+      ],
+      [
+        0,
+        279511
+      ],
+      [
+        0,
+        282560
+      ],
+      [
+        0,
+        289076
+      ],
+      [
+        0,
+        292341
+      ],
+      [
+        0,
+        299160
+      ],
+      [
+        0,
+        302641
+      ],
+      [
+        0,
+        311663
+      ],
+      [
+        0,
+        315764
+      ],
+      [
+        0,
+        323917
+      ],
+      [
+        0,
+        328234
+      ],
+      [
+        0,
+        336691
+      ],
+      [
+        0,
+        341224
+      ],
+      [
+        0,
+        349984
+      ],
+      [
+        0,
+        354733
+      ]
+    ],
+    "actual_sync1": [
+      [
+        0,
+        113141
+      ],
+      [
+        0,
+        115973
+      ],
+      [
+        0,
+        122184
+      ],
+      [
+        0,
+        125232
+      ],
+      [
+        0,
+        131747
+      ],
+      [
+        0,
+        135011
+      ],
+      [
+        0,
+        141829
+      ],
+      [
+        0,
+        145309
+      ],
+      [
+        0,
+        152401
+      ],
+      [
+        0,
+        155246
+      ],
+      [
+        0,
+        161469
+      ],
+      [
+        0,
+        164530
+      ],
+      [
+        0,
+        171057
+      ],
+      [
+        0,
+        174334
+      ],
+      [
+        0,
+        181164
+      ],
+      [
+        0,
+        184657
+      ],
+      [
+        0,
+        191751
+      ],
+      [
+        0,
+        194599
+      ],
+      [
+        0,
+        200824
+      ],
+      [
+        0,
+        203888
+      ],
+      [
+        0,
+        210417
+      ],
+      [
+        0,
+        213697
+      ],
+      [
+        0,
+        220529
+      ],
+      [
+        0,
+        224025
+      ],
+      [
+        0,
+        231118
+      ],
+      [
+        0,
+        233965
+      ],
+      [
+        0,
+        240189
+      ],
+      [
+        0,
+        243252
+      ],
+      [
+        0,
+        249780
+      ],
+      [
+        0,
+        253059
+      ],
+      [
+        0,
+        259890
+      ],
+      [
+        0,
+        263385
+      ],
+      [
+        0,
+        270466
+      ],
+      [
+        0,
+        273299
+      ],
+      [
+        0,
+        279511
+      ],
+      [
+        0,
+        282560
+      ],
+      [
+        0,
+        289076
+      ],
+      [
+        0,
+        292341
+      ],
+      [
+        0,
+        299160
+      ],
+      [
+        0,
+        302641
+      ],
+      [
+        0,
+        311663
+      ],
+      [
+        0,
+        315764
+      ],
+      [
+        0,
+        323917
+      ],
+      [
+        0,
+        328234
+      ],
+      [
+        0,
+        336691
+      ],
+      [
+        0,
+        341224
+      ],
+      [
+        0,
+        349984
+      ],
+      [
+        0,
+        354733
+      ]
+    ],
+    "prediction": {
+      "retirements": [
+        {
+          "epoch": 0,
+          "cycle": 113140,
+          "phase": 0,
+          "pass_id": 5
+        },
+        {
+          "epoch": 0,
+          "cycle": 115972,
+          "phase": 1,
+          "pass_id": 5
+        },
+        {
+          "epoch": 0,
+          "cycle": 122183,
+          "phase": 0,
+          "pass_id": 6
+        },
+        {
+          "epoch": 0,
+          "cycle": 125231,
+          "phase": 1,
+          "pass_id": 6
+        },
+        {
+          "epoch": 0,
+          "cycle": 131746,
+          "phase": 0,
+          "pass_id": 7
+        },
+        {
+          "epoch": 0,
+          "cycle": 135010,
+          "phase": 1,
+          "pass_id": 7
+        },
+        {
+          "epoch": 0,
+          "cycle": 141828,
+          "phase": 0,
+          "pass_id": 8
+        },
+        {
+          "epoch": 0,
+          "cycle": 145308,
+          "phase": 1,
+          "pass_id": 8
+        },
+        {
+          "epoch": 0,
+          "cycle": 152400,
+          "phase": 0,
+          "pass_id": 9
+        },
+        {
+          "epoch": 0,
+          "cycle": 155245,
+          "phase": 1,
+          "pass_id": 9
+        },
+        {
+          "epoch": 0,
+          "cycle": 161468,
+          "phase": 0,
+          "pass_id": 10
+        },
+        {
+          "epoch": 0,
+          "cycle": 164529,
+          "phase": 1,
+          "pass_id": 10
+        },
+        {
+          "epoch": 0,
+          "cycle": 171056,
+          "phase": 0,
+          "pass_id": 11
+        },
+        {
+          "epoch": 0,
+          "cycle": 174333,
+          "phase": 1,
+          "pass_id": 11
+        },
+        {
+          "epoch": 0,
+          "cycle": 181163,
+          "phase": 0,
+          "pass_id": 12
+        },
+        {
+          "epoch": 0,
+          "cycle": 184656,
+          "phase": 1,
+          "pass_id": 12
+        },
+        {
+          "epoch": 0,
+          "cycle": 191750,
+          "phase": 0,
+          "pass_id": 13
+        },
+        {
+          "epoch": 0,
+          "cycle": 194598,
+          "phase": 1,
+          "pass_id": 13
+        },
+        {
+          "epoch": 0,
+          "cycle": 200823,
+          "phase": 0,
+          "pass_id": 14
+        },
+        {
+          "epoch": 0,
+          "cycle": 203887,
+          "phase": 1,
+          "pass_id": 14
+        },
+        {
+          "epoch": 0,
+          "cycle": 210416,
+          "phase": 0,
+          "pass_id": 15
+        },
+        {
+          "epoch": 0,
+          "cycle": 213696,
+          "phase": 1,
+          "pass_id": 15
+        },
+        {
+          "epoch": 0,
+          "cycle": 220528,
+          "phase": 0,
+          "pass_id": 16
+        },
+        {
+          "epoch": 0,
+          "cycle": 224024,
+          "phase": 1,
+          "pass_id": 16
+        },
+        {
+          "epoch": 0,
+          "cycle": 231117,
+          "phase": 0,
+          "pass_id": 17
+        },
+        {
+          "epoch": 0,
+          "cycle": 233964,
+          "phase": 1,
+          "pass_id": 17
+        },
+        {
+          "epoch": 0,
+          "cycle": 240188,
+          "phase": 0,
+          "pass_id": 18
+        },
+        {
+          "epoch": 0,
+          "cycle": 243251,
+          "phase": 1,
+          "pass_id": 18
+        },
+        {
+          "epoch": 0,
+          "cycle": 249779,
+          "phase": 0,
+          "pass_id": 19
+        },
+        {
+          "epoch": 0,
+          "cycle": 253058,
+          "phase": 1,
+          "pass_id": 19
+        },
+        {
+          "epoch": 0,
+          "cycle": 259889,
+          "phase": 0,
+          "pass_id": 20
+        },
+        {
+          "epoch": 0,
+          "cycle": 263384,
+          "phase": 1,
+          "pass_id": 20
+        },
+        {
+          "epoch": 0,
+          "cycle": 270465,
+          "phase": 0,
+          "pass_id": 21
+        },
+        {
+          "epoch": 0,
+          "cycle": 273298,
+          "phase": 1,
+          "pass_id": 21
+        },
+        {
+          "epoch": 0,
+          "cycle": 279510,
+          "phase": 0,
+          "pass_id": 22
+        },
+        {
+          "epoch": 0,
+          "cycle": 282559,
+          "phase": 1,
+          "pass_id": 22
+        },
+        {
+          "epoch": 0,
+          "cycle": 289075,
+          "phase": 0,
+          "pass_id": 23
+        },
+        {
+          "epoch": 0,
+          "cycle": 292340,
+          "phase": 1,
+          "pass_id": 23
+        },
+        {
+          "epoch": 0,
+          "cycle": 299159,
+          "phase": 0,
+          "pass_id": 24
+        },
+        {
+          "epoch": 0,
+          "cycle": 302640,
+          "phase": 1,
+          "pass_id": 24
+        },
+        {
+          "epoch": 0,
+          "cycle": 311662,
+          "phase": 0,
+          "pass_id": 25
+        },
+        {
+          "epoch": 0,
+          "cycle": 315763,
+          "phase": 1,
+          "pass_id": 25
+        },
+        {
+          "epoch": 0,
+          "cycle": 323916,
+          "phase": 0,
+          "pass_id": 26
+        },
+        {
+          "epoch": 0,
+          "cycle": 328233,
+          "phase": 1,
+          "pass_id": 26
+        },
+        {
+          "epoch": 0,
+          "cycle": 336690,
+          "phase": 0,
+          "pass_id": 27
+        },
+        {
+          "epoch": 0,
+          "cycle": 341223,
+          "phase": 1,
+          "pass_id": 27
+        },
+        {
+          "epoch": 0,
+          "cycle": 349983,
+          "phase": 0,
+          "pass_id": 28
+        },
+        {
+          "epoch": 0,
+          "cycle": 354732,
+          "phase": 1,
+          "pass_id": 28
+        }
+      ],
+      "cases": [
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 5,
+            "phase": 0,
+            "fmt": 0,
+            "base": 64,
+            "bias": true
+          },
+          "origin": 107292,
+          "h_ready_sampled": null,
+          "retirement": 113140,
+          "sync1_sampled": 113141
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 5,
+            "phase": 1,
+            "fmt": 0,
+            "base": 64,
+            "bias": true
+          },
+          "origin": 113141,
+          "h_ready_sampled": 113362,
+          "retirement": 115972,
+          "sync1_sampled": 115973
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 6,
+            "phase": 0,
+            "fmt": 0,
+            "base": 8256,
+            "bias": false
+          },
+          "origin": 116325,
+          "h_ready_sampled": null,
+          "retirement": 122183,
+          "sync1_sampled": 122184
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 6,
+            "phase": 1,
+            "fmt": 0,
+            "base": 8256,
+            "bias": false
+          },
+          "origin": 122184,
+          "h_ready_sampled": 122621,
+          "retirement": 125231,
+          "sync1_sampled": 125232
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 7,
+            "phase": 0,
+            "fmt": 0,
+            "base": 16448,
+            "bias": true
+          },
+          "origin": 125877,
+          "h_ready_sampled": null,
+          "retirement": 131746,
+          "sync1_sampled": 131747
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 7,
+            "phase": 1,
+            "fmt": 0,
+            "base": 16448,
+            "bias": true
+          },
+          "origin": 131747,
+          "h_ready_sampled": 132400,
+          "retirement": 135010,
+          "sync1_sampled": 135011
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 8,
+            "phase": 0,
+            "fmt": 0,
+            "base": 24640,
+            "bias": false
+          },
+          "origin": 135949,
+          "h_ready_sampled": null,
+          "retirement": 141828,
+          "sync1_sampled": 141829
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 8,
+            "phase": 1,
+            "fmt": 0,
+            "base": 24640,
+            "bias": false
+          },
+          "origin": 141829,
+          "h_ready_sampled": 142698,
+          "retirement": 145308,
+          "sync1_sampled": 145309
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 9,
+            "phase": 0,
+            "fmt": 1,
+            "base": 32832,
+            "bias": true
+          },
+          "origin": 146540,
+          "h_ready_sampled": null,
+          "retirement": 152400,
+          "sync1_sampled": 152401
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 9,
+            "phase": 1,
+            "fmt": 1,
+            "base": 32832,
+            "bias": true
+          },
+          "origin": 152401,
+          "h_ready_sampled": 152622,
+          "retirement": 155245,
+          "sync1_sampled": 155246
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 10,
+            "phase": 0,
+            "fmt": 1,
+            "base": 41024,
+            "bias": false
+          },
+          "origin": 155598,
+          "h_ready_sampled": null,
+          "retirement": 161468,
+          "sync1_sampled": 161469
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 10,
+            "phase": 1,
+            "fmt": 1,
+            "base": 41024,
+            "bias": false
+          },
+          "origin": 161469,
+          "h_ready_sampled": 161906,
+          "retirement": 164529,
+          "sync1_sampled": 164530
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 11,
+            "phase": 0,
+            "fmt": 1,
+            "base": 49216,
+            "bias": true
+          },
+          "origin": 165175,
+          "h_ready_sampled": null,
+          "retirement": 171056,
+          "sync1_sampled": 171057
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 11,
+            "phase": 1,
+            "fmt": 1,
+            "base": 49216,
+            "bias": true
+          },
+          "origin": 171057,
+          "h_ready_sampled": 171710,
+          "retirement": 174333,
+          "sync1_sampled": 174334
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 12,
+            "phase": 0,
+            "fmt": 1,
+            "base": 57408,
+            "bias": false
+          },
+          "origin": 175272,
+          "h_ready_sampled": null,
+          "retirement": 181163,
+          "sync1_sampled": 181164
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 12,
+            "phase": 1,
+            "fmt": 1,
+            "base": 57408,
+            "bias": false
+          },
+          "origin": 181164,
+          "h_ready_sampled": 182033,
+          "retirement": 184656,
+          "sync1_sampled": 184657
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 13,
+            "phase": 0,
+            "fmt": 2,
+            "base": 65600,
+            "bias": true
+          },
+          "origin": 185888,
+          "h_ready_sampled": null,
+          "retirement": 191750,
+          "sync1_sampled": 191751
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 13,
+            "phase": 1,
+            "fmt": 2,
+            "base": 65600,
+            "bias": true
+          },
+          "origin": 191751,
+          "h_ready_sampled": 191972,
+          "retirement": 194598,
+          "sync1_sampled": 194599
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 14,
+            "phase": 0,
+            "fmt": 2,
+            "base": 73792,
+            "bias": false
+          },
+          "origin": 194951,
+          "h_ready_sampled": null,
+          "retirement": 200823,
+          "sync1_sampled": 200824
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 14,
+            "phase": 1,
+            "fmt": 2,
+            "base": 73792,
+            "bias": false
+          },
+          "origin": 200824,
+          "h_ready_sampled": 201261,
+          "retirement": 203887,
+          "sync1_sampled": 203888
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 15,
+            "phase": 0,
+            "fmt": 2,
+            "base": 81984,
+            "bias": true
+          },
+          "origin": 204533,
+          "h_ready_sampled": null,
+          "retirement": 210416,
+          "sync1_sampled": 210417
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 15,
+            "phase": 1,
+            "fmt": 2,
+            "base": 81984,
+            "bias": true
+          },
+          "origin": 210417,
+          "h_ready_sampled": 211070,
+          "retirement": 213696,
+          "sync1_sampled": 213697
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 16,
+            "phase": 0,
+            "fmt": 2,
+            "base": 90176,
+            "bias": false
+          },
+          "origin": 214635,
+          "h_ready_sampled": null,
+          "retirement": 220528,
+          "sync1_sampled": 220529
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 16,
+            "phase": 1,
+            "fmt": 2,
+            "base": 90176,
+            "bias": false
+          },
+          "origin": 220529,
+          "h_ready_sampled": 221398,
+          "retirement": 224024,
+          "sync1_sampled": 224025
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 17,
+            "phase": 0,
+            "fmt": 3,
+            "base": 98368,
+            "bias": true
+          },
+          "origin": 225256,
+          "h_ready_sampled": null,
+          "retirement": 231117,
+          "sync1_sampled": 231118
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 17,
+            "phase": 1,
+            "fmt": 3,
+            "base": 98368,
+            "bias": true
+          },
+          "origin": 231118,
+          "h_ready_sampled": 231339,
+          "retirement": 233964,
+          "sync1_sampled": 233965
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 18,
+            "phase": 0,
+            "fmt": 3,
+            "base": 106560,
+            "bias": false
+          },
+          "origin": 234317,
+          "h_ready_sampled": null,
+          "retirement": 240188,
+          "sync1_sampled": 240189
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 18,
+            "phase": 1,
+            "fmt": 3,
+            "base": 106560,
+            "bias": false
+          },
+          "origin": 240189,
+          "h_ready_sampled": 240626,
+          "retirement": 243251,
+          "sync1_sampled": 243252
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 19,
+            "phase": 0,
+            "fmt": 3,
+            "base": 114752,
+            "bias": true
+          },
+          "origin": 243897,
+          "h_ready_sampled": null,
+          "retirement": 249779,
+          "sync1_sampled": 249780
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 19,
+            "phase": 1,
+            "fmt": 3,
+            "base": 114752,
+            "bias": true
+          },
+          "origin": 249780,
+          "h_ready_sampled": 250433,
+          "retirement": 253058,
+          "sync1_sampled": 253059
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 20,
+            "phase": 0,
+            "fmt": 3,
+            "base": 122944,
+            "bias": false
+          },
+          "origin": 253997,
+          "h_ready_sampled": null,
+          "retirement": 259889,
+          "sync1_sampled": 259890
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 20,
+            "phase": 1,
+            "fmt": 3,
+            "base": 122944,
+            "bias": false
+          },
+          "origin": 259890,
+          "h_ready_sampled": 260759,
+          "retirement": 263384,
+          "sync1_sampled": 263385
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 21,
+            "phase": 0,
+            "fmt": 4,
+            "base": 131136,
+            "bias": true
+          },
+          "origin": 264616,
+          "h_ready_sampled": null,
+          "retirement": 270465,
+          "sync1_sampled": 270466
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 21,
+            "phase": 1,
+            "fmt": 4,
+            "base": 131136,
+            "bias": true
+          },
+          "origin": 270466,
+          "h_ready_sampled": 270687,
+          "retirement": 273298,
+          "sync1_sampled": 273299
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 22,
+            "phase": 0,
+            "fmt": 4,
+            "base": 139328,
+            "bias": false
+          },
+          "origin": 273651,
+          "h_ready_sampled": null,
+          "retirement": 279510,
+          "sync1_sampled": 279511
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 22,
+            "phase": 1,
+            "fmt": 4,
+            "base": 139328,
+            "bias": false
+          },
+          "origin": 279511,
+          "h_ready_sampled": 279948,
+          "retirement": 282559,
+          "sync1_sampled": 282560
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 23,
+            "phase": 0,
+            "fmt": 4,
+            "base": 147520,
+            "bias": true
+          },
+          "origin": 283205,
+          "h_ready_sampled": null,
+          "retirement": 289075,
+          "sync1_sampled": 289076
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 23,
+            "phase": 1,
+            "fmt": 4,
+            "base": 147520,
+            "bias": true
+          },
+          "origin": 289076,
+          "h_ready_sampled": 289729,
+          "retirement": 292340,
+          "sync1_sampled": 292341
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 24,
+            "phase": 0,
+            "fmt": 4,
+            "base": 155712,
+            "bias": false
+          },
+          "origin": 293279,
+          "h_ready_sampled": null,
+          "retirement": 299159,
+          "sync1_sampled": 299160
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 24,
+            "phase": 1,
+            "fmt": 4,
+            "base": 155712,
+            "bias": false
+          },
+          "origin": 299160,
+          "h_ready_sampled": 300029,
+          "retirement": 302640,
+          "sync1_sampled": 302641
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 25,
+            "phase": 0,
+            "fmt": 5,
+            "base": 163904,
+            "bias": true
+          },
+          "origin": 303872,
+          "h_ready_sampled": null,
+          "retirement": 311662,
+          "sync1_sampled": 311663
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 25,
+            "phase": 1,
+            "fmt": 5,
+            "base": 163904,
+            "bias": true
+          },
+          "origin": 311663,
+          "h_ready_sampled": 311884,
+          "retirement": 315763,
+          "sync1_sampled": 315764
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 26,
+            "phase": 0,
+            "fmt": 5,
+            "base": 172096,
+            "bias": false
+          },
+          "origin": 316116,
+          "h_ready_sampled": null,
+          "retirement": 323916,
+          "sync1_sampled": 323917
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 26,
+            "phase": 1,
+            "fmt": 5,
+            "base": 172096,
+            "bias": false
+          },
+          "origin": 323917,
+          "h_ready_sampled": 324354,
+          "retirement": 328233,
+          "sync1_sampled": 328234
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 27,
+            "phase": 0,
+            "fmt": 5,
+            "base": 180288,
+            "bias": true
+          },
+          "origin": 328879,
+          "h_ready_sampled": null,
+          "retirement": 336690,
+          "sync1_sampled": 336691
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 27,
+            "phase": 1,
+            "fmt": 5,
+            "base": 180288,
+            "bias": true
+          },
+          "origin": 336691,
+          "h_ready_sampled": 337344,
+          "retirement": 341223,
+          "sync1_sampled": 341224
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 28,
+            "phase": 0,
+            "fmt": 5,
+            "base": 188480,
+            "bias": false
+          },
+          "origin": 342162,
+          "h_ready_sampled": null,
+          "retirement": 349983,
+          "sync1_sampled": 349984
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 28,
+            "phase": 1,
+            "fmt": 5,
+            "base": 188480,
+            "bias": false
+          },
+          "origin": 349984,
+          "h_ready_sampled": 350853,
+          "retirement": 354732,
+          "sync1_sampled": 354733
+        }
+      ],
+      "assumptions": {
+        "idle_context": true,
+        "isolated_bus": true,
+        "idle_y_commit": true,
+        "initial_credit": 6
+      },
+      "scope": "external-input conditional retirement prediction; no numeric payload or continuous arbitration"
+    },
+    "trace_sha256": "ae51caa2f4e60e622bb4393e2c2b41491b106d25b7f95e0edcfcddec3a2f4eb0"
+  },
+  {
+    "run": "vcs-20261115T221329Z-18837",
+    "passed": true,
+    "predicted_sync1": [
+      [
+        0,
+        113141
+      ],
+      [
+        0,
+        115973
+      ],
+      [
+        0,
+        122184
+      ],
+      [
+        0,
+        125232
+      ],
+      [
+        0,
+        131747
+      ],
+      [
+        0,
+        135011
+      ],
+      [
+        0,
+        141829
+      ],
+      [
+        0,
+        145309
+      ],
+      [
+        0,
+        152401
+      ],
+      [
+        0,
+        155246
+      ],
+      [
+        0,
+        161469
+      ],
+      [
+        0,
+        164530
+      ],
+      [
+        0,
+        171057
+      ],
+      [
+        0,
+        174334
+      ],
+      [
+        0,
+        181164
+      ],
+      [
+        0,
+        184657
+      ],
+      [
+        0,
+        191751
+      ],
+      [
+        0,
+        194599
+      ],
+      [
+        0,
+        200824
+      ],
+      [
+        0,
+        203888
+      ],
+      [
+        0,
+        210417
+      ],
+      [
+        0,
+        213697
+      ],
+      [
+        0,
+        220529
+      ],
+      [
+        0,
+        224025
+      ],
+      [
+        0,
+        231118
+      ],
+      [
+        0,
+        233965
+      ],
+      [
+        0,
+        240189
+      ],
+      [
+        0,
+        243252
+      ],
+      [
+        0,
+        249780
+      ],
+      [
+        0,
+        253059
+      ],
+      [
+        0,
+        259890
+      ],
+      [
+        0,
+        263385
+      ],
+      [
+        0,
+        270466
+      ],
+      [
+        0,
+        273299
+      ],
+      [
+        0,
+        279511
+      ],
+      [
+        0,
+        282560
+      ],
+      [
+        0,
+        289076
+      ],
+      [
+        0,
+        292341
+      ],
+      [
+        0,
+        299160
+      ],
+      [
+        0,
+        302641
+      ],
+      [
+        0,
+        311663
+      ],
+      [
+        0,
+        315764
+      ],
+      [
+        0,
+        323917
+      ],
+      [
+        0,
+        328234
+      ],
+      [
+        0,
+        336691
+      ],
+      [
+        0,
+        341224
+      ],
+      [
+        0,
+        349984
+      ],
+      [
+        0,
+        354733
+      ]
+    ],
+    "actual_sync1": [
+      [
+        0,
+        113141
+      ],
+      [
+        0,
+        115973
+      ],
+      [
+        0,
+        122184
+      ],
+      [
+        0,
+        125232
+      ],
+      [
+        0,
+        131747
+      ],
+      [
+        0,
+        135011
+      ],
+      [
+        0,
+        141829
+      ],
+      [
+        0,
+        145309
+      ],
+      [
+        0,
+        152401
+      ],
+      [
+        0,
+        155246
+      ],
+      [
+        0,
+        161469
+      ],
+      [
+        0,
+        164530
+      ],
+      [
+        0,
+        171057
+      ],
+      [
+        0,
+        174334
+      ],
+      [
+        0,
+        181164
+      ],
+      [
+        0,
+        184657
+      ],
+      [
+        0,
+        191751
+      ],
+      [
+        0,
+        194599
+      ],
+      [
+        0,
+        200824
+      ],
+      [
+        0,
+        203888
+      ],
+      [
+        0,
+        210417
+      ],
+      [
+        0,
+        213697
+      ],
+      [
+        0,
+        220529
+      ],
+      [
+        0,
+        224025
+      ],
+      [
+        0,
+        231118
+      ],
+      [
+        0,
+        233965
+      ],
+      [
+        0,
+        240189
+      ],
+      [
+        0,
+        243252
+      ],
+      [
+        0,
+        249780
+      ],
+      [
+        0,
+        253059
+      ],
+      [
+        0,
+        259890
+      ],
+      [
+        0,
+        263385
+      ],
+      [
+        0,
+        270466
+      ],
+      [
+        0,
+        273299
+      ],
+      [
+        0,
+        279511
+      ],
+      [
+        0,
+        282560
+      ],
+      [
+        0,
+        289076
+      ],
+      [
+        0,
+        292341
+      ],
+      [
+        0,
+        299160
+      ],
+      [
+        0,
+        302641
+      ],
+      [
+        0,
+        311663
+      ],
+      [
+        0,
+        315764
+      ],
+      [
+        0,
+        323917
+      ],
+      [
+        0,
+        328234
+      ],
+      [
+        0,
+        336691
+      ],
+      [
+        0,
+        341224
+      ],
+      [
+        0,
+        349984
+      ],
+      [
+        0,
+        354733
+      ]
+    ],
+    "prediction": {
+      "retirements": [
+        {
+          "epoch": 0,
+          "cycle": 113140,
+          "phase": 0,
+          "pass_id": 5
+        },
+        {
+          "epoch": 0,
+          "cycle": 115972,
+          "phase": 1,
+          "pass_id": 5
+        },
+        {
+          "epoch": 0,
+          "cycle": 122183,
+          "phase": 0,
+          "pass_id": 6
+        },
+        {
+          "epoch": 0,
+          "cycle": 125231,
+          "phase": 1,
+          "pass_id": 6
+        },
+        {
+          "epoch": 0,
+          "cycle": 131746,
+          "phase": 0,
+          "pass_id": 7
+        },
+        {
+          "epoch": 0,
+          "cycle": 135010,
+          "phase": 1,
+          "pass_id": 7
+        },
+        {
+          "epoch": 0,
+          "cycle": 141828,
+          "phase": 0,
+          "pass_id": 8
+        },
+        {
+          "epoch": 0,
+          "cycle": 145308,
+          "phase": 1,
+          "pass_id": 8
+        },
+        {
+          "epoch": 0,
+          "cycle": 152400,
+          "phase": 0,
+          "pass_id": 9
+        },
+        {
+          "epoch": 0,
+          "cycle": 155245,
+          "phase": 1,
+          "pass_id": 9
+        },
+        {
+          "epoch": 0,
+          "cycle": 161468,
+          "phase": 0,
+          "pass_id": 10
+        },
+        {
+          "epoch": 0,
+          "cycle": 164529,
+          "phase": 1,
+          "pass_id": 10
+        },
+        {
+          "epoch": 0,
+          "cycle": 171056,
+          "phase": 0,
+          "pass_id": 11
+        },
+        {
+          "epoch": 0,
+          "cycle": 174333,
+          "phase": 1,
+          "pass_id": 11
+        },
+        {
+          "epoch": 0,
+          "cycle": 181163,
+          "phase": 0,
+          "pass_id": 12
+        },
+        {
+          "epoch": 0,
+          "cycle": 184656,
+          "phase": 1,
+          "pass_id": 12
+        },
+        {
+          "epoch": 0,
+          "cycle": 191750,
+          "phase": 0,
+          "pass_id": 13
+        },
+        {
+          "epoch": 0,
+          "cycle": 194598,
+          "phase": 1,
+          "pass_id": 13
+        },
+        {
+          "epoch": 0,
+          "cycle": 200823,
+          "phase": 0,
+          "pass_id": 14
+        },
+        {
+          "epoch": 0,
+          "cycle": 203887,
+          "phase": 1,
+          "pass_id": 14
+        },
+        {
+          "epoch": 0,
+          "cycle": 210416,
+          "phase": 0,
+          "pass_id": 15
+        },
+        {
+          "epoch": 0,
+          "cycle": 213696,
+          "phase": 1,
+          "pass_id": 15
+        },
+        {
+          "epoch": 0,
+          "cycle": 220528,
+          "phase": 0,
+          "pass_id": 16
+        },
+        {
+          "epoch": 0,
+          "cycle": 224024,
+          "phase": 1,
+          "pass_id": 16
+        },
+        {
+          "epoch": 0,
+          "cycle": 231117,
+          "phase": 0,
+          "pass_id": 17
+        },
+        {
+          "epoch": 0,
+          "cycle": 233964,
+          "phase": 1,
+          "pass_id": 17
+        },
+        {
+          "epoch": 0,
+          "cycle": 240188,
+          "phase": 0,
+          "pass_id": 18
+        },
+        {
+          "epoch": 0,
+          "cycle": 243251,
+          "phase": 1,
+          "pass_id": 18
+        },
+        {
+          "epoch": 0,
+          "cycle": 249779,
+          "phase": 0,
+          "pass_id": 19
+        },
+        {
+          "epoch": 0,
+          "cycle": 253058,
+          "phase": 1,
+          "pass_id": 19
+        },
+        {
+          "epoch": 0,
+          "cycle": 259889,
+          "phase": 0,
+          "pass_id": 20
+        },
+        {
+          "epoch": 0,
+          "cycle": 263384,
+          "phase": 1,
+          "pass_id": 20
+        },
+        {
+          "epoch": 0,
+          "cycle": 270465,
+          "phase": 0,
+          "pass_id": 21
+        },
+        {
+          "epoch": 0,
+          "cycle": 273298,
+          "phase": 1,
+          "pass_id": 21
+        },
+        {
+          "epoch": 0,
+          "cycle": 279510,
+          "phase": 0,
+          "pass_id": 22
+        },
+        {
+          "epoch": 0,
+          "cycle": 282559,
+          "phase": 1,
+          "pass_id": 22
+        },
+        {
+          "epoch": 0,
+          "cycle": 289075,
+          "phase": 0,
+          "pass_id": 23
+        },
+        {
+          "epoch": 0,
+          "cycle": 292340,
+          "phase": 1,
+          "pass_id": 23
+        },
+        {
+          "epoch": 0,
+          "cycle": 299159,
+          "phase": 0,
+          "pass_id": 24
+        },
+        {
+          "epoch": 0,
+          "cycle": 302640,
+          "phase": 1,
+          "pass_id": 24
+        },
+        {
+          "epoch": 0,
+          "cycle": 311662,
+          "phase": 0,
+          "pass_id": 25
+        },
+        {
+          "epoch": 0,
+          "cycle": 315763,
+          "phase": 1,
+          "pass_id": 25
+        },
+        {
+          "epoch": 0,
+          "cycle": 323916,
+          "phase": 0,
+          "pass_id": 26
+        },
+        {
+          "epoch": 0,
+          "cycle": 328233,
+          "phase": 1,
+          "pass_id": 26
+        },
+        {
+          "epoch": 0,
+          "cycle": 336690,
+          "phase": 0,
+          "pass_id": 27
+        },
+        {
+          "epoch": 0,
+          "cycle": 341223,
+          "phase": 1,
+          "pass_id": 27
+        },
+        {
+          "epoch": 0,
+          "cycle": 349983,
+          "phase": 0,
+          "pass_id": 28
+        },
+        {
+          "epoch": 0,
+          "cycle": 354732,
+          "phase": 1,
+          "pass_id": 28
+        }
+      ],
+      "cases": [
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 5,
+            "phase": 0,
+            "fmt": 0,
+            "base": 64,
+            "bias": true
+          },
+          "origin": 107292,
+          "h_ready_sampled": null,
+          "retirement": 113140,
+          "sync1_sampled": 113141
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 5,
+            "phase": 1,
+            "fmt": 0,
+            "base": 64,
+            "bias": true
+          },
+          "origin": 113141,
+          "h_ready_sampled": 113362,
+          "retirement": 115972,
+          "sync1_sampled": 115973
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 6,
+            "phase": 0,
+            "fmt": 0,
+            "base": 8256,
+            "bias": false
+          },
+          "origin": 116325,
+          "h_ready_sampled": null,
+          "retirement": 122183,
+          "sync1_sampled": 122184
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 6,
+            "phase": 1,
+            "fmt": 0,
+            "base": 8256,
+            "bias": false
+          },
+          "origin": 122184,
+          "h_ready_sampled": 122621,
+          "retirement": 125231,
+          "sync1_sampled": 125232
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 7,
+            "phase": 0,
+            "fmt": 0,
+            "base": 16448,
+            "bias": true
+          },
+          "origin": 125877,
+          "h_ready_sampled": null,
+          "retirement": 131746,
+          "sync1_sampled": 131747
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 7,
+            "phase": 1,
+            "fmt": 0,
+            "base": 16448,
+            "bias": true
+          },
+          "origin": 131747,
+          "h_ready_sampled": 132400,
+          "retirement": 135010,
+          "sync1_sampled": 135011
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 8,
+            "phase": 0,
+            "fmt": 0,
+            "base": 24640,
+            "bias": false
+          },
+          "origin": 135949,
+          "h_ready_sampled": null,
+          "retirement": 141828,
+          "sync1_sampled": 141829
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 8,
+            "phase": 1,
+            "fmt": 0,
+            "base": 24640,
+            "bias": false
+          },
+          "origin": 141829,
+          "h_ready_sampled": 142698,
+          "retirement": 145308,
+          "sync1_sampled": 145309
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 9,
+            "phase": 0,
+            "fmt": 1,
+            "base": 32832,
+            "bias": true
+          },
+          "origin": 146540,
+          "h_ready_sampled": null,
+          "retirement": 152400,
+          "sync1_sampled": 152401
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 9,
+            "phase": 1,
+            "fmt": 1,
+            "base": 32832,
+            "bias": true
+          },
+          "origin": 152401,
+          "h_ready_sampled": 152622,
+          "retirement": 155245,
+          "sync1_sampled": 155246
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 10,
+            "phase": 0,
+            "fmt": 1,
+            "base": 41024,
+            "bias": false
+          },
+          "origin": 155598,
+          "h_ready_sampled": null,
+          "retirement": 161468,
+          "sync1_sampled": 161469
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 10,
+            "phase": 1,
+            "fmt": 1,
+            "base": 41024,
+            "bias": false
+          },
+          "origin": 161469,
+          "h_ready_sampled": 161906,
+          "retirement": 164529,
+          "sync1_sampled": 164530
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 11,
+            "phase": 0,
+            "fmt": 1,
+            "base": 49216,
+            "bias": true
+          },
+          "origin": 165175,
+          "h_ready_sampled": null,
+          "retirement": 171056,
+          "sync1_sampled": 171057
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 11,
+            "phase": 1,
+            "fmt": 1,
+            "base": 49216,
+            "bias": true
+          },
+          "origin": 171057,
+          "h_ready_sampled": 171710,
+          "retirement": 174333,
+          "sync1_sampled": 174334
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 12,
+            "phase": 0,
+            "fmt": 1,
+            "base": 57408,
+            "bias": false
+          },
+          "origin": 175272,
+          "h_ready_sampled": null,
+          "retirement": 181163,
+          "sync1_sampled": 181164
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 12,
+            "phase": 1,
+            "fmt": 1,
+            "base": 57408,
+            "bias": false
+          },
+          "origin": 181164,
+          "h_ready_sampled": 182033,
+          "retirement": 184656,
+          "sync1_sampled": 184657
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 13,
+            "phase": 0,
+            "fmt": 2,
+            "base": 65600,
+            "bias": true
+          },
+          "origin": 185888,
+          "h_ready_sampled": null,
+          "retirement": 191750,
+          "sync1_sampled": 191751
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 13,
+            "phase": 1,
+            "fmt": 2,
+            "base": 65600,
+            "bias": true
+          },
+          "origin": 191751,
+          "h_ready_sampled": 191972,
+          "retirement": 194598,
+          "sync1_sampled": 194599
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 14,
+            "phase": 0,
+            "fmt": 2,
+            "base": 73792,
+            "bias": false
+          },
+          "origin": 194951,
+          "h_ready_sampled": null,
+          "retirement": 200823,
+          "sync1_sampled": 200824
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 14,
+            "phase": 1,
+            "fmt": 2,
+            "base": 73792,
+            "bias": false
+          },
+          "origin": 200824,
+          "h_ready_sampled": 201261,
+          "retirement": 203887,
+          "sync1_sampled": 203888
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 15,
+            "phase": 0,
+            "fmt": 2,
+            "base": 81984,
+            "bias": true
+          },
+          "origin": 204533,
+          "h_ready_sampled": null,
+          "retirement": 210416,
+          "sync1_sampled": 210417
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 15,
+            "phase": 1,
+            "fmt": 2,
+            "base": 81984,
+            "bias": true
+          },
+          "origin": 210417,
+          "h_ready_sampled": 211070,
+          "retirement": 213696,
+          "sync1_sampled": 213697
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 16,
+            "phase": 0,
+            "fmt": 2,
+            "base": 90176,
+            "bias": false
+          },
+          "origin": 214635,
+          "h_ready_sampled": null,
+          "retirement": 220528,
+          "sync1_sampled": 220529
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 16,
+            "phase": 1,
+            "fmt": 2,
+            "base": 90176,
+            "bias": false
+          },
+          "origin": 220529,
+          "h_ready_sampled": 221398,
+          "retirement": 224024,
+          "sync1_sampled": 224025
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 17,
+            "phase": 0,
+            "fmt": 3,
+            "base": 98368,
+            "bias": true
+          },
+          "origin": 225256,
+          "h_ready_sampled": null,
+          "retirement": 231117,
+          "sync1_sampled": 231118
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 17,
+            "phase": 1,
+            "fmt": 3,
+            "base": 98368,
+            "bias": true
+          },
+          "origin": 231118,
+          "h_ready_sampled": 231339,
+          "retirement": 233964,
+          "sync1_sampled": 233965
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 18,
+            "phase": 0,
+            "fmt": 3,
+            "base": 106560,
+            "bias": false
+          },
+          "origin": 234317,
+          "h_ready_sampled": null,
+          "retirement": 240188,
+          "sync1_sampled": 240189
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 18,
+            "phase": 1,
+            "fmt": 3,
+            "base": 106560,
+            "bias": false
+          },
+          "origin": 240189,
+          "h_ready_sampled": 240626,
+          "retirement": 243251,
+          "sync1_sampled": 243252
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 19,
+            "phase": 0,
+            "fmt": 3,
+            "base": 114752,
+            "bias": true
+          },
+          "origin": 243897,
+          "h_ready_sampled": null,
+          "retirement": 249779,
+          "sync1_sampled": 249780
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 19,
+            "phase": 1,
+            "fmt": 3,
+            "base": 114752,
+            "bias": true
+          },
+          "origin": 249780,
+          "h_ready_sampled": 250433,
+          "retirement": 253058,
+          "sync1_sampled": 253059
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 20,
+            "phase": 0,
+            "fmt": 3,
+            "base": 122944,
+            "bias": false
+          },
+          "origin": 253997,
+          "h_ready_sampled": null,
+          "retirement": 259889,
+          "sync1_sampled": 259890
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 20,
+            "phase": 1,
+            "fmt": 3,
+            "base": 122944,
+            "bias": false
+          },
+          "origin": 259890,
+          "h_ready_sampled": 260759,
+          "retirement": 263384,
+          "sync1_sampled": 263385
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 21,
+            "phase": 0,
+            "fmt": 4,
+            "base": 131136,
+            "bias": true
+          },
+          "origin": 264616,
+          "h_ready_sampled": null,
+          "retirement": 270465,
+          "sync1_sampled": 270466
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 21,
+            "phase": 1,
+            "fmt": 4,
+            "base": 131136,
+            "bias": true
+          },
+          "origin": 270466,
+          "h_ready_sampled": 270687,
+          "retirement": 273298,
+          "sync1_sampled": 273299
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 22,
+            "phase": 0,
+            "fmt": 4,
+            "base": 139328,
+            "bias": false
+          },
+          "origin": 273651,
+          "h_ready_sampled": null,
+          "retirement": 279510,
+          "sync1_sampled": 279511
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 22,
+            "phase": 1,
+            "fmt": 4,
+            "base": 139328,
+            "bias": false
+          },
+          "origin": 279511,
+          "h_ready_sampled": 279948,
+          "retirement": 282559,
+          "sync1_sampled": 282560
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 23,
+            "phase": 0,
+            "fmt": 4,
+            "base": 147520,
+            "bias": true
+          },
+          "origin": 283205,
+          "h_ready_sampled": null,
+          "retirement": 289075,
+          "sync1_sampled": 289076
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 23,
+            "phase": 1,
+            "fmt": 4,
+            "base": 147520,
+            "bias": true
+          },
+          "origin": 289076,
+          "h_ready_sampled": 289729,
+          "retirement": 292340,
+          "sync1_sampled": 292341
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 24,
+            "phase": 0,
+            "fmt": 4,
+            "base": 155712,
+            "bias": false
+          },
+          "origin": 293279,
+          "h_ready_sampled": null,
+          "retirement": 299159,
+          "sync1_sampled": 299160
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 24,
+            "phase": 1,
+            "fmt": 4,
+            "base": 155712,
+            "bias": false
+          },
+          "origin": 299160,
+          "h_ready_sampled": 300029,
+          "retirement": 302640,
+          "sync1_sampled": 302641
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 25,
+            "phase": 0,
+            "fmt": 5,
+            "base": 163904,
+            "bias": true
+          },
+          "origin": 303872,
+          "h_ready_sampled": null,
+          "retirement": 311662,
+          "sync1_sampled": 311663
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 25,
+            "phase": 1,
+            "fmt": 5,
+            "base": 163904,
+            "bias": true
+          },
+          "origin": 311663,
+          "h_ready_sampled": 311884,
+          "retirement": 315763,
+          "sync1_sampled": 315764
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 26,
+            "phase": 0,
+            "fmt": 5,
+            "base": 172096,
+            "bias": false
+          },
+          "origin": 316116,
+          "h_ready_sampled": null,
+          "retirement": 323916,
+          "sync1_sampled": 323917
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 26,
+            "phase": 1,
+            "fmt": 5,
+            "base": 172096,
+            "bias": false
+          },
+          "origin": 323917,
+          "h_ready_sampled": 324354,
+          "retirement": 328233,
+          "sync1_sampled": 328234
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 27,
+            "phase": 0,
+            "fmt": 5,
+            "base": 180288,
+            "bias": true
+          },
+          "origin": 328879,
+          "h_ready_sampled": null,
+          "retirement": 336690,
+          "sync1_sampled": 336691
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 27,
+            "phase": 1,
+            "fmt": 5,
+            "base": 180288,
+            "bias": true
+          },
+          "origin": 336691,
+          "h_ready_sampled": 337344,
+          "retirement": 341223,
+          "sync1_sampled": 341224
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 28,
+            "phase": 0,
+            "fmt": 5,
+            "base": 188480,
+            "bias": false
+          },
+          "origin": 342162,
+          "h_ready_sampled": null,
+          "retirement": 349983,
+          "sync1_sampled": 349984
+        },
+        {
+          "config": {
+            "epoch": 0,
+            "pass": 28,
+            "phase": 1,
+            "fmt": 5,
+            "base": 188480,
+            "bias": false
+          },
+          "origin": 349984,
+          "h_ready_sampled": 350853,
+          "retirement": 354732,
+          "sync1_sampled": 354733
+        }
+      ],
+      "assumptions": {
+        "idle_context": true,
+        "isolated_bus": true,
+        "idle_y_commit": true,
+        "initial_credit": 6
+      },
+      "scope": "external-input conditional retirement prediction; no numeric payload or continuous arbitration"
+    },
+    "trace_sha256": "ae51caa2f4e60e622bb4393e2c2b41491b106d25b7f95e0edcfcddec3a2f4eb0"
+  }
+]

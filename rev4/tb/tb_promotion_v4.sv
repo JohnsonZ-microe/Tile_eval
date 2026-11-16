@@ -19,6 +19,8 @@ module tb_promotion_v4;
     logic guard_valid, guard_bank, guard_release, guard_release_bank;
     logic [1:0] route_owners;
     integer route_guard_cases = 0;
+    integer quant_reset_cases = 0;
+    logic [9:0] reset_h_idx;
     logic [511:0] collision_payload;
     string vcdfile;
     initial if ($value$plusargs("VCD=%s", vcdfile)) begin
@@ -312,7 +314,58 @@ module tb_promotion_v4;
         release dut.sched_u.h_valid; release dut.sched_u.h_pass;
         release dut.sched_u.h_idx; release dut.sched_u.h_lane; release dut.sched_u.h_data;
     endtask
+    task automatic check_quant_reset(input bit bank, input integer age);
+        rst_n = 0;
+        repeat (3) @(negedge clk);
+        route_owners = 2'b01 << bank;
+        guard_valid = 1; reset_h_idx = 1;
+        force dut.sched_u.hbuf_owner_valid = route_owners;
+        force dut.sched_u.hbuf_owner_pass0 = 8'd5;
+        force dut.sched_u.hbuf_owner_pass1 = 8'd5;
+        force dut.sched_u.h_valid = guard_valid;
+        force dut.sched_u.h_pass = 8'd5;
+        force dut.sched_u.h_idx = reset_h_idx;
+        force dut.sched_u.h_lane = 3'd0;
+        force dut.sched_u.h_data = 512'd0;
+        rst_n = 1;
+        @(posedge clk); #1;
+        if (dut.sched_u.quant_valid !== 1'b1) $fatal(1, "QUANT_RESET no routed input");
+        @(negedge clk); guard_valid = 0;
+        // age=0 resets the routing register before quantizer acceptance;
+        // ages 1..4 reset after each successive quantizer register.
+        repeat (age) begin @(posedge clk); #1; @(negedge clk); end
+        rst_n = 0;
+        @(posedge clk); #1;
+        if (dut.sched_u.quant_valid !== 0 || dut.sched_u.quant_ov !== 0)
+            $fatal(1, "QUANT_RESET stale valid bank=%0d age=%0d", bank, age);
+        @(negedge clk); rst_n = 1;
+        repeat (6) begin
+            @(posedge clk); #1;
+            if (dut.sched_u.quant_valid !== 0 || dut.sched_u.quant_ov !== 0 || dut.hbuf_wr_valid !== 0)
+                $fatal(1, "QUANT_RESET stale return bank=%0d age=%0d", bank, age);
+            @(negedge clk);
+        end
+        reset_h_idx = 2; guard_valid = 1;
+        for (integer cycle = 0; cycle <= 5; cycle++) begin
+            @(posedge clk); #1;
+            if (dut.sched_u.quant_ov !== (cycle == 4) || dut.hbuf_wr_valid !== (cycle == 4))
+                $fatal(1, "QUANT_RESET recovery latency bank=%0d age=%0d cycle=%0d", bank, age, cycle);
+            if (cycle == 4 && dut.sched_u.quant_otag !== {bank,3'd0,7'd2})
+                $fatal(1, "QUANT_RESET recovery identity");
+            @(negedge clk); guard_valid = 0;
+        end
+        quant_reset_cases++;
+        rst_n = 0;
+        release dut.sched_u.hbuf_owner_valid;
+        release dut.sched_u.hbuf_owner_pass0; release dut.sched_u.hbuf_owner_pass1;
+        release dut.sched_u.h_valid; release dut.sched_u.h_pass;
+        release dut.sched_u.h_idx; release dut.sched_u.h_lane; release dut.sched_u.h_data;
+    endtask
     initial begin
+        for (integer bank = 0; bank < 2; bank++)
+            for (integer age = 0; age <= 4; age++) check_quant_reset(1'(bank), age);
+        if (quant_reset_cases != 10) $fatal(1, "QUANT_RESET incomplete coverage");
+        $display("CHECK quant_reset cases=10 routing=2 pipeline=8 recovery=10");
         for (integer bank = 0; bank < 2; bank++)
             for (integer target = 0; target < 2; target++)
                 check_route_guard(1'(bank), 1'(target));
