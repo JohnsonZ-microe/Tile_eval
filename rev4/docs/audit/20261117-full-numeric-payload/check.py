@@ -1,0 +1,104 @@
+"""All received full-suite H/Y payloads; shared oracle, conditional timing."""
+from pathlib import Path
+import csv,sys,json,hashlib,random
+ROOT=Path(__file__).resolve().parents[5]
+sys.path[:0]=[str(ROOT/'NPU_eval/af'),str(ROOT/'Tile_eval/rev4/model')]
+from trace_config_replay import decode_inputs
+from config_replay import decode_command
+from drain_input_replay import DrainInputReplay
+import vectors
+OUT=Path(__file__).parent
+runs=[]
+for run in ('vcs-20261116T004029Z-67940','vcs-20261116T011416Z-108706'):
+ path=ROOT/'Tile_eval/logs'/run/'calibration-events.csv'
+ manifest=json.loads((path.parent/'manifest.json').read_text())
+ assert manifest['seed']==817 and manifest['suite']=='full'
+ for key,file in [('model/vectors.py','Tile_eval/rev4/model/vectors.py'),('model/tile_reference.py','Tile_eval/rev4/model/tile_reference.py'),('oracle/reference.py','Tile_eval/model/reference.py')]:
+  b=(ROOT/file).read_bytes();assert manifest['sources'][key] in (hashlib.sha256(b).hexdigest(),hashlib.sha256(b.replace(b'\r\n',b'\n')).hexdigest()),key
+ downs=[];actual=[]
+ with path.open() as f:
+  for r in csv.DictReader(f):
+   if r['event']=='down':downs.append(dict(event='down',epoch=int(r['epoch']),cycle=int(r['cycle']),sideband=int(r['transaction']),payload=r['payload']))
+   if r['event']=='up_beat' and int(r['transaction'])&3 in (0,1):actual.append((int(r['cycle']),int(r['transaction']),int(r['payload'],16)))
+ timed=next(r for r in json.loads((OUT.parent/'20261117-command-error-output/checks.json').read_text()) if r['run']==run)
+ assert timed['trace_sha256']==hashlib.sha256(path.read_bytes()).hexdigest()
+ runs.append(dict(run=run,downs=downs,actual=actual,timed=timed))
+# Numerics can be shared only after exact external input ordering/content equality.
+assert [(r['sideband'],r['payload']) for r in runs[0]['downs']]==[(r['sideband'],r['payload']) for r in runs[1]['downs']]
+downs=runs[0]['downs'];raw=[dict(event='reset',epoch=0,cycle=0)]+downs
+configs=decode_inputs(raw,assume_idle_context_writes=True)['configurations']
+gurows=[r for r in downs if r['sideband']&7==0 and int(r['payload'],16)&3==0]
+assert len(gurows)==24
+rng=random.Random(817);predicted=[];scenarios=[]
+def packet(beats):
+ for b in beats:
+  sb=b['type']|(16<<2)|(b['tag']<<9)|(b['segment']<<20)|(int(b['last'])<<17)
+  # bus sideband format is checked below against the independently timed producer.
+  predicted.append((b,sb))
+for index,grow in enumerate(gurows):
+ pid=(grow['sideband']>>3)&255;end=gurows[index+1]['cycle'] if index+1<len(gurows) else 1<<60
+ rows=[r for r in downs if grow['cycle']<=r['cycle']<end]
+ cfg=next(c for c in configs if c['pass']==pid and c['phase']==0)
+ pl=int(grow['payload'],16);n=(pl>>43)&7;base=cfg['base'];fmt=cfg['fmt'];bias=cfg['bias']
+ assert (fmt,n)==(index//4,index%4+1) and base==64+8192*index and bias==(index%2==0)
+ cmd=dict(base=base,n_tok=n,mask=(1<<n)-1,slots=[(pl>>(96+40*l))&63 for l in range(4)],weights=[(pl>>(102+40*l))&0xffffffff for l in range(4)])
+ image={};ref=vectors.TileRef(image,fmt,bias)
+ vectors.make_stream(rng,ref,base,160,ref.ng_gu,72)
+ vectors.make_stream(rng,ref,base+ref.gu_words,72,ref.ng_d,80)
+ if bias:vectors.make_bias_tail(rng,image,base+ref.gu_words+ref.d_words)
+ assert [0x3f800000|rng.randrange(0,1<<20) for _ in range(4)]==cmd['weights']
+ operands={}
+ for r in rows:
+  sb=r['sideband'];kind=sb&7
+  if kind not in (1,2,3):continue
+  assert (sb>>3)&255==pid
+  key=(kind,(sb>>11)&7,(sb>>14)&1023)
+  assert key not in operands,'duplicate operand'
+  operands[key]=int(r['payload'],16)
+ required={(kind,l,k) for kind,limit in ((1,80),(2,3),(3,72)) for l in range(n) for k in range(limit)}
+ assert set(operands)==required,'missing or unexpected operands'
+ staging={'x':{},'xs':{}}
+ for grp in range(3):
+  for l in range(n):
+   generated=int.from_bytes(bytes(rng.randrange(120,135) for _ in range(64)),'little')
+   assert generated==operands[2,l,grp];staging['xs'][l,grp]=operands[2,l,grp]
+  for i in range(16 if grp==2 else 32):
+   for l in range(n):
+    generated=int.from_bytes(bytes(rng.randrange(1,247) for _ in range(64)),'little')
+    assert generated==operands[1,l,32*grp+i];staging['x'][l,32*grp+i]=operands[1,l,32*grp+i]
+ h=ref.gu(cmd,staging);hbeats=ref.hup_beats(h,n,pid)
+ packet(hbeats)
+ drow=next(r for r in rows if r['sideband']&7==0 and int(r['payload'],16)&3==1)
+ dp=int(drow['payload'],16);assert dp==pl|1 and (drow['sideband']>>3)&255==pid
+ for l in range(n):
+  for kb in range(72):
+   codes=[(operands[3,l,kb]>>(16*j))&65535 for j in range(32)]
+   generated=[h[l][kb*32+j] if kb*32+j<36 else rng.choice([0,0x3f80,0x4000,0x4048,0xbf80,0x4120,0x38d1,0x42f6]) for j in range(32)]
+   assert generated==codes,'received H differs from generated local/gathered values'
+   ref.store_h(l,kb,*vectors.quantize_block(codes))
+ ref.dphase(cmd,n);bank=(dp>>46)&1;ref.commit_y(cmd,bank)
+ drains=[];decoder=DrainInputReplay()
+ for r in rows:
+  decoder.tick(valid=True,payload=int(r['payload'],16),sideband=r['sideband']);d=decoder.tick()
+  if d is not None:drains.append(d)
+ assert len(drains)==n
+ ybeats=[]
+ for d in drains:
+  ybeats+=ref.drain_beats(d['bank'],d['slot'],d['start'],d['count'],d['segment'],d['last_segment'],(d['bank']<<7)|(d['slot']<<1))
+ packet(ybeats)
+ result=dict(index=index,pass_id=pid,fmt=fmt,tokens=n,bias=bias,h_beats=len(hbeats),y_beats=len(ybeats))
+ scenarios.append(result);print(json.dumps(result),flush=True)
+ (OUT/'progress.json').write_text(json.dumps(scenarios,indent=2)+'\n')
+(OUT/'numeric-beats.json').write_text(json.dumps([b for b,_ in predicted],indent=2)+'\n')
+results=[]
+for run in runs:
+ timed=[(c,s) for c,s in run['timed']['predicted_beats'] if s&3 in (0,1)]
+ assert len(predicted)==len(timed)==876
+ full=[(c,s,b['payload']) for (c,s),(b,_) in zip(timed,predicted)]
+ # Numeric formatter metadata must independently agree with the timed source.
+ metadata=all((s&3)==b['type'] and ((s>>9)&255)==b['tag'] and ((s>>20)&3)==b['segment'] and bool((s>>17)&1)==b['last'] for (_,s),(b,_) in zip(timed,predicted))
+ checks=dict(payload=[p for _,_,p in full]==[p for _,_,p in run['actual']],timed_beats=full==run['actual'],metadata=metadata)
+ results.append(dict(run=run['run'],passed=all(checks.values()),checks=checks,scenarios=scenarios,predicted=full,actual=run['actual'],trace_sha256=run['timed']['trace_sha256']))
+ print(json.dumps(dict(run=run['run'],checks=checks)),flush=True)
+(OUT/'checks.json').write_text(json.dumps(results,indent=2)+'\n')
+raise SystemExit(0 if all(r['passed'] for r in results) else 1)

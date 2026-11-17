@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "counts": {
+    "edges": 1892,
+    "reset_edges": 4,
+    "fifo_pops": 728,
+    "up_beats": 431,
+    "overflow_edges": 1,
+    "stall_edges": 362,
+    "ctrl_hits": 2
+  },
+  "arbitration": {
+    "h_y_contend": 247,
+    "all_contend": 247,
+    "h_blocked_by_y_lock": 74,
+    "y_lock_bubble_with_h": 6,
+    "h_credit_stall": 71,
+    "y_credit_stall": 170,
+    "h_fire": 115,
+    "y_fire": 150,
+    "status_fire": 166
+  },
+  "sha256": "9eb091f489e07c938a043fd078ce5476198311f150c4ebcec9fcf09712d234b8",
+  "model_sha256": "74521501a7e4a55abe08209207e61bba60f14496423e0e70053bf08102dc8aaf",
+  "checker_sha256": "4a53646a94a362bf3eda153583c0e81a933cf9cc9ba3049aceb666c849ad2388",
+  "scope": "imported bus waveform replay only; not full Tile scheduler calibration or source equivalence"
+}

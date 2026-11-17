@@ -1,0 +1,7944 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "tokens": 1,
+      "credit_delay": 1,
+      "capture_cycle": 160,
+      "include_y": true,
+      "first_h_ready": 221,
+      "gu_retire": 225,
+      "h_ready_to_retire": 5,
+      "status_cycle": 301,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 0
+      },
+      "beats": [
+        {
+          "cycle": 221,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 222,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 223,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 224,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 225,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 225,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 1,
+      "credit_delay": 1,
+      "capture_cycle": 179,
+      "include_y": true,
+      "first_h_ready": 240,
+      "gu_retire": 305,
+      "h_ready_to_retire": 66,
+      "status_cycle": 306,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 0,
+        "h_blocked_by_y_lock": 61,
+        "h_blocked_by_y_bubble": 52
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 306,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 244,
+      "gu_retire_delta": 61
+    },
+    {
+      "tokens": 1,
+      "credit_delay": 1,
+      "capture_cycle": 240,
+      "include_y": true,
+      "first_h_ready": 301,
+      "gu_retire": 305,
+      "h_ready_to_retire": 5,
+      "status_cycle": 306,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 0
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 306,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 305,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 1,
+      "credit_delay": 6,
+      "capture_cycle": 160,
+      "include_y": true,
+      "first_h_ready": 221,
+      "gu_retire": 225,
+      "h_ready_to_retire": 5,
+      "status_cycle": 301,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 0
+      },
+      "beats": [
+        {
+          "cycle": 221,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 222,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 223,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 224,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 225,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 225,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 1,
+      "credit_delay": 6,
+      "capture_cycle": 179,
+      "include_y": true,
+      "first_h_ready": 240,
+      "gu_retire": 305,
+      "h_ready_to_retire": 66,
+      "status_cycle": 307,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 1,
+        "h_blocked_by_y_lock": 61,
+        "h_blocked_by_y_bubble": 52
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 307,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 244,
+      "gu_retire_delta": 61
+    },
+    {
+      "tokens": 1,
+      "credit_delay": 6,
+      "capture_cycle": 240,
+      "include_y": true,
+      "first_h_ready": 301,
+      "gu_retire": 305,
+      "h_ready_to_retire": 5,
+      "status_cycle": 307,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 1
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 307,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 305,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 1,
+      "credit_delay": 7,
+      "capture_cycle": 160,
+      "include_y": true,
+      "first_h_ready": 221,
+      "gu_retire": 225,
+      "h_ready_to_retire": 5,
+      "status_cycle": 301,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 0
+      },
+      "beats": [
+        {
+          "cycle": 221,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 222,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 223,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 224,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 225,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 225,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 1,
+      "credit_delay": 7,
+      "capture_cycle": 179,
+      "include_y": true,
+      "first_h_ready": 240,
+      "gu_retire": 305,
+      "h_ready_to_retire": 66,
+      "status_cycle": 308,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 2,
+        "h_blocked_by_y_lock": 61,
+        "h_blocked_by_y_bubble": 52
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 308,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 244,
+      "gu_retire_delta": 61
+    },
+    {
+      "tokens": 1,
+      "credit_delay": 7,
+      "capture_cycle": 240,
+      "include_y": true,
+      "first_h_ready": 301,
+      "gu_retire": 305,
+      "h_ready_to_retire": 5,
+      "status_cycle": 308,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 2
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 308,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 305,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 1,
+      "credit_delay": 16,
+      "capture_cycle": 160,
+      "include_y": true,
+      "first_h_ready": 221,
+      "gu_retire": 225,
+      "h_ready_to_retire": 5,
+      "status_cycle": 301,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 0
+      },
+      "beats": [
+        {
+          "cycle": 221,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 222,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 223,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 224,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 225,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 225,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 1,
+      "credit_delay": 16,
+      "capture_cycle": 179,
+      "include_y": true,
+      "first_h_ready": 240,
+      "gu_retire": 310,
+      "h_ready_to_retire": 71,
+      "status_cycle": 317,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 11,
+        "h_blocked_by_y_lock": 61,
+        "h_blocked_by_y_bubble": 52
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 317,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 244,
+      "gu_retire_delta": 66
+    },
+    {
+      "tokens": 1,
+      "credit_delay": 16,
+      "capture_cycle": 240,
+      "include_y": true,
+      "first_h_ready": 301,
+      "gu_retire": 310,
+      "h_ready_to_retire": 10,
+      "status_cycle": 317,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 11
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 317,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 305,
+      "gu_retire_delta": 5
+    },
+    {
+      "tokens": 1,
+      "credit_delay": 64,
+      "capture_cycle": 160,
+      "include_y": true,
+      "first_h_ready": 221,
+      "gu_retire": 225,
+      "h_ready_to_retire": 5,
+      "status_cycle": 372,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 71
+      },
+      "beats": [
+        {
+          "cycle": 221,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 222,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 223,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 224,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 225,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 307,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 314,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 321,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 351,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 358,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 365,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 372,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 225,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 1,
+      "credit_delay": 64,
+      "capture_cycle": 179,
+      "include_y": true,
+      "first_h_ready": 240,
+      "gu_retire": 381,
+      "h_ready_to_retire": 142,
+      "status_cycle": 388,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 82,
+        "h_blocked_by_y_lock": 84,
+        "h_blocked_by_y_bubble": 52
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 316,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 323,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 330,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 337,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 367,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 374,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 381,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 388,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 244,
+      "gu_retire_delta": 137
+    },
+    {
+      "tokens": 1,
+      "credit_delay": 64,
+      "capture_cycle": 240,
+      "include_y": true,
+      "first_h_ready": 301,
+      "gu_retire": 381,
+      "h_ready_to_retire": 81,
+      "status_cycle": 388,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 82,
+        "h_blocked_by_y_lock": 23,
+        "h_blocked_by_y_bubble": 18
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 316,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 323,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 330,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 337,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 367,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 374,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 381,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 388,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 305,
+      "gu_retire_delta": 76
+    },
+    {
+      "tokens": 2,
+      "credit_delay": 1,
+      "capture_cycle": 160,
+      "include_y": true,
+      "first_h_ready": 221,
+      "gu_retire": 229,
+      "h_ready_to_retire": 9,
+      "status_cycle": 301,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 0
+      },
+      "beats": [
+        {
+          "cycle": 221,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 222,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 223,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 224,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 225,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 226,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 227,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 228,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 229,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 229,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 2,
+      "credit_delay": 1,
+      "capture_cycle": 179,
+      "include_y": true,
+      "first_h_ready": 240,
+      "gu_retire": 309,
+      "h_ready_to_retire": 70,
+      "status_cycle": 310,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 0,
+        "h_blocked_by_y_lock": 61,
+        "h_blocked_by_y_bubble": 52
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 306,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 307,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 308,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 310,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 248,
+      "gu_retire_delta": 61
+    },
+    {
+      "tokens": 2,
+      "credit_delay": 1,
+      "capture_cycle": 240,
+      "include_y": true,
+      "first_h_ready": 301,
+      "gu_retire": 309,
+      "h_ready_to_retire": 9,
+      "status_cycle": 310,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 0
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 306,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 307,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 308,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 310,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 309,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 2,
+      "credit_delay": 6,
+      "capture_cycle": 160,
+      "include_y": true,
+      "first_h_ready": 221,
+      "gu_retire": 230,
+      "h_ready_to_retire": 10,
+      "status_cycle": 301,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 1
+      },
+      "beats": [
+        {
+          "cycle": 221,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 222,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 223,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 224,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 225,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 226,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 228,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 229,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 230,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 230,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 2,
+      "credit_delay": 6,
+      "capture_cycle": 179,
+      "include_y": true,
+      "first_h_ready": 240,
+      "gu_retire": 310,
+      "h_ready_to_retire": 71,
+      "status_cycle": 311,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 1,
+        "h_blocked_by_y_lock": 61,
+        "h_blocked_by_y_bubble": 52
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 307,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 308,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 311,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 249,
+      "gu_retire_delta": 61
+    },
+    {
+      "tokens": 2,
+      "credit_delay": 6,
+      "capture_cycle": 240,
+      "include_y": true,
+      "first_h_ready": 301,
+      "gu_retire": 310,
+      "h_ready_to_retire": 10,
+      "status_cycle": 311,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 1
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 307,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 308,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 311,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 310,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 2,
+      "credit_delay": 7,
+      "capture_cycle": 160,
+      "include_y": true,
+      "first_h_ready": 221,
+      "gu_retire": 231,
+      "h_ready_to_retire": 11,
+      "status_cycle": 301,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 2
+      },
+      "beats": [
+        {
+          "cycle": 221,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 222,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 223,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 224,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 225,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 226,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 229,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 230,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 231,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 231,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 2,
+      "credit_delay": 7,
+      "capture_cycle": 179,
+      "include_y": true,
+      "first_h_ready": 240,
+      "gu_retire": 311,
+      "h_ready_to_retire": 72,
+      "status_cycle": 312,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 2,
+        "h_blocked_by_y_lock": 61,
+        "h_blocked_by_y_bubble": 52
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 308,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 311,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 312,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 250,
+      "gu_retire_delta": 61
+    },
+    {
+      "tokens": 2,
+      "credit_delay": 7,
+      "capture_cycle": 240,
+      "include_y": true,
+      "first_h_ready": 301,
+      "gu_retire": 311,
+      "h_ready_to_retire": 11,
+      "status_cycle": 312,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 2
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 308,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 311,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 312,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 311,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 2,
+      "credit_delay": 16,
+      "capture_cycle": 160,
+      "include_y": true,
+      "first_h_ready": 221,
+      "gu_retire": 240,
+      "h_ready_to_retire": 20,
+      "status_cycle": 305,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 11
+      },
+      "beats": [
+        {
+          "cycle": 221,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 222,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 223,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 224,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 225,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 226,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 238,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 239,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 240,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 241,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 248,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 255,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 262,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 269,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 276,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 283,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 290,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 297,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 305,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 240,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 2,
+      "credit_delay": 16,
+      "capture_cycle": 179,
+      "include_y": true,
+      "first_h_ready": 240,
+      "gu_retire": 320,
+      "h_ready_to_retire": 81,
+      "status_cycle": 321,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 11,
+        "h_blocked_by_y_lock": 61,
+        "h_blocked_by_y_bubble": 52
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 317,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 318,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 319,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 320,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 321,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 259,
+      "gu_retire_delta": 61
+    },
+    {
+      "tokens": 2,
+      "credit_delay": 16,
+      "capture_cycle": 240,
+      "include_y": true,
+      "first_h_ready": 301,
+      "gu_retire": 320,
+      "h_ready_to_retire": 20,
+      "status_cycle": 321,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 11
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 317,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 318,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 319,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 320,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 321,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 320,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 2,
+      "credit_delay": 64,
+      "capture_cycle": 160,
+      "include_y": true,
+      "first_h_ready": 221,
+      "gu_retire": 288,
+      "h_ready_to_retire": 68,
+      "status_cycle": 423,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 129
+      },
+      "beats": [
+        {
+          "cycle": 221,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 222,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 223,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 224,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 225,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 226,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 287,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 288,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 289,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 296,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 351,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 358,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 365,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 372,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 379,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 386,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 416,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 423,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 288,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 2,
+      "credit_delay": 64,
+      "capture_cycle": 179,
+      "include_y": true,
+      "first_h_ready": 240,
+      "gu_retire": 432,
+      "h_ready_to_retire": 193,
+      "status_cycle": 439,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 129,
+        "h_blocked_by_y_lock": 84,
+        "h_blocked_by_y_bubble": 52
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 316,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 323,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 330,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 337,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 367,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 374,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 381,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 388,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 395,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 402,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 432,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 439,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 307,
+      "gu_retire_delta": 125
+    },
+    {
+      "tokens": 2,
+      "credit_delay": 64,
+      "capture_cycle": 240,
+      "include_y": true,
+      "first_h_ready": 301,
+      "gu_retire": 432,
+      "h_ready_to_retire": 132,
+      "status_cycle": 439,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 129,
+        "h_blocked_by_y_lock": 23,
+        "h_blocked_by_y_bubble": 18
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 316,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 323,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 330,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 337,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 367,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 374,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 381,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 388,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 395,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 402,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 432,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 439,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 368,
+      "gu_retire_delta": 64
+    },
+    {
+      "tokens": 3,
+      "credit_delay": 1,
+      "capture_cycle": 160,
+      "include_y": true,
+      "first_h_ready": 221,
+      "gu_retire": 234,
+      "h_ready_to_retire": 14,
+      "status_cycle": 301,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 0
+      },
+      "beats": [
+        {
+          "cycle": 221,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 222,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 223,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 224,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 225,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 226,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 227,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 228,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 229,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 230,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 231,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 232,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 233,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 234,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 234,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 3,
+      "credit_delay": 1,
+      "capture_cycle": 179,
+      "include_y": true,
+      "first_h_ready": 240,
+      "gu_retire": 314,
+      "h_ready_to_retire": 75,
+      "status_cycle": 315,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 0,
+        "h_blocked_by_y_lock": 61,
+        "h_blocked_by_y_bubble": 52
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 306,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 307,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 308,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 311,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 312,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 313,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 314,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 315,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 253,
+      "gu_retire_delta": 61
+    },
+    {
+      "tokens": 3,
+      "credit_delay": 1,
+      "capture_cycle": 240,
+      "include_y": true,
+      "first_h_ready": 301,
+      "gu_retire": 314,
+      "h_ready_to_retire": 14,
+      "status_cycle": 315,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 0
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 306,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 307,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 308,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 311,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 312,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 313,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 314,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 315,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 314,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 3,
+      "credit_delay": 6,
+      "capture_cycle": 160,
+      "include_y": true,
+      "first_h_ready": 221,
+      "gu_retire": 236,
+      "h_ready_to_retire": 16,
+      "status_cycle": 301,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 2
+      },
+      "beats": [
+        {
+          "cycle": 221,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 222,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 223,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 224,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 225,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 226,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 228,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 229,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 230,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 231,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 232,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 233,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 235,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 236,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 236,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 3,
+      "credit_delay": 6,
+      "capture_cycle": 179,
+      "include_y": true,
+      "first_h_ready": 240,
+      "gu_retire": 316,
+      "h_ready_to_retire": 77,
+      "status_cycle": 317,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 2,
+        "h_blocked_by_y_lock": 61,
+        "h_blocked_by_y_bubble": 52
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 307,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 308,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 311,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 312,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 314,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 315,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 316,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 317,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 255,
+      "gu_retire_delta": 61
+    },
+    {
+      "tokens": 3,
+      "credit_delay": 6,
+      "capture_cycle": 240,
+      "include_y": true,
+      "first_h_ready": 301,
+      "gu_retire": 316,
+      "h_ready_to_retire": 16,
+      "status_cycle": 317,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 2
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 307,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 308,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 311,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 312,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 314,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 315,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 316,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 317,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 316,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 3,
+      "credit_delay": 7,
+      "capture_cycle": 160,
+      "include_y": true,
+      "first_h_ready": 221,
+      "gu_retire": 238,
+      "h_ready_to_retire": 18,
+      "status_cycle": 303,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 4
+      },
+      "beats": [
+        {
+          "cycle": 221,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 222,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 223,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 224,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 225,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 226,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 229,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 230,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 231,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 232,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 233,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 234,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 237,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 238,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 239,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 246,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 253,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 260,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 267,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 274,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 281,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 288,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 295,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 303,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 238,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 3,
+      "credit_delay": 7,
+      "capture_cycle": 179,
+      "include_y": true,
+      "first_h_ready": 240,
+      "gu_retire": 318,
+      "h_ready_to_retire": 79,
+      "status_cycle": 319,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 4,
+        "h_blocked_by_y_lock": 61,
+        "h_blocked_by_y_bubble": 52
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 308,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 311,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 312,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 313,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 316,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 317,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 318,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 319,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 257,
+      "gu_retire_delta": 61
+    },
+    {
+      "tokens": 3,
+      "credit_delay": 7,
+      "capture_cycle": 240,
+      "include_y": true,
+      "first_h_ready": 301,
+      "gu_retire": 318,
+      "h_ready_to_retire": 18,
+      "status_cycle": 319,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 4
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 308,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 311,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 312,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 313,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 316,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 317,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 318,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 319,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 318,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 3,
+      "credit_delay": 16,
+      "capture_cycle": 160,
+      "include_y": true,
+      "first_h_ready": 221,
+      "gu_retire": 256,
+      "h_ready_to_retire": 36,
+      "status_cycle": 321,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 22
+      },
+      "beats": [
+        {
+          "cycle": 221,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 222,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 223,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 224,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 225,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 226,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 238,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 239,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 240,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 241,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 242,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 243,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 255,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 256,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 257,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 264,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 271,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 278,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 285,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 292,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 299,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 306,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 313,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 320,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 321,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 256,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 3,
+      "credit_delay": 16,
+      "capture_cycle": 179,
+      "include_y": true,
+      "first_h_ready": 240,
+      "gu_retire": 336,
+      "h_ready_to_retire": 97,
+      "status_cycle": 337,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 22,
+        "h_blocked_by_y_lock": 61,
+        "h_blocked_by_y_bubble": 52
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 317,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 318,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 319,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 320,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 321,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 327,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 334,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 335,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 336,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 337,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 275,
+      "gu_retire_delta": 61
+    },
+    {
+      "tokens": 3,
+      "credit_delay": 16,
+      "capture_cycle": 240,
+      "include_y": true,
+      "first_h_ready": 301,
+      "gu_retire": 336,
+      "h_ready_to_retire": 36,
+      "status_cycle": 337,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 22
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 317,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 318,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 319,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 320,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 321,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 327,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 334,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 335,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 336,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 337,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 336,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 3,
+      "credit_delay": 64,
+      "capture_cycle": 160,
+      "include_y": true,
+      "first_h_ready": 221,
+      "gu_retire": 352,
+      "h_ready_to_retire": 132,
+      "status_cycle": 481,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 182
+      },
+      "beats": [
+        {
+          "cycle": 221,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 222,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 223,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 224,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 225,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 226,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 287,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 288,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 289,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 290,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 291,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 351,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 352,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 353,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 360,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 367,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 374,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 416,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 423,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 430,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 437,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 444,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 451,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 481,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 352,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 3,
+      "credit_delay": 64,
+      "capture_cycle": 179,
+      "include_y": true,
+      "first_h_ready": 240,
+      "gu_retire": 467,
+      "h_ready_to_retire": 228,
+      "status_cycle": 497,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 182,
+        "h_blocked_by_y_lock": 84,
+        "h_blocked_by_y_bubble": 52
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 316,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 323,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 330,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 337,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 367,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 374,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 381,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 388,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 395,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 402,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 432,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 439,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 446,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 453,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 460,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 467,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 497,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 371,
+      "gu_retire_delta": 96
+    },
+    {
+      "tokens": 3,
+      "credit_delay": 64,
+      "capture_cycle": 240,
+      "include_y": true,
+      "first_h_ready": 301,
+      "gu_retire": 467,
+      "h_ready_to_retire": 167,
+      "status_cycle": 497,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 182,
+        "h_blocked_by_y_lock": 23,
+        "h_blocked_by_y_bubble": 18
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 316,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 323,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 330,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 337,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 367,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 374,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 381,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 388,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 395,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 402,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 432,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 439,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 446,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 453,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 460,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 467,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 497,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 432,
+      "gu_retire_delta": 35
+    },
+    {
+      "tokens": 4,
+      "credit_delay": 1,
+      "capture_cycle": 160,
+      "include_y": true,
+      "first_h_ready": 221,
+      "gu_retire": 238,
+      "h_ready_to_retire": 18,
+      "status_cycle": 303,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 0
+      },
+      "beats": [
+        {
+          "cycle": 221,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 222,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 223,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 224,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 225,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 226,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 227,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 228,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 229,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 230,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 231,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 232,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 233,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 234,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 235,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 236,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 237,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 238,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 239,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 246,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 253,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 260,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 267,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 274,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 281,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 288,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 295,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 303,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 238,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 4,
+      "credit_delay": 1,
+      "capture_cycle": 179,
+      "include_y": true,
+      "first_h_ready": 240,
+      "gu_retire": 318,
+      "h_ready_to_retire": 79,
+      "status_cycle": 319,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 0,
+        "h_blocked_by_y_lock": 61,
+        "h_blocked_by_y_bubble": 52
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 306,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 307,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 308,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 311,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 312,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 313,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 314,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 315,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 316,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 317,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 318,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 319,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 257,
+      "gu_retire_delta": 61
+    },
+    {
+      "tokens": 4,
+      "credit_delay": 1,
+      "capture_cycle": 240,
+      "include_y": true,
+      "first_h_ready": 301,
+      "gu_retire": 318,
+      "h_ready_to_retire": 18,
+      "status_cycle": 319,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 0
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 306,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 307,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 308,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 311,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 312,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 313,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 314,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 315,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 316,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 317,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 318,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 319,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 318,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 4,
+      "credit_delay": 6,
+      "capture_cycle": 160,
+      "include_y": true,
+      "first_h_ready": 221,
+      "gu_retire": 240,
+      "h_ready_to_retire": 20,
+      "status_cycle": 306,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 3
+      },
+      "beats": [
+        {
+          "cycle": 221,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 222,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 223,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 224,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 225,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 226,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 228,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 229,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 230,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 231,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 232,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 233,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 235,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 236,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 237,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 238,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 239,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 240,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 242,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 249,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 256,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 263,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 270,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 277,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 284,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 291,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 298,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 306,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 240,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 4,
+      "credit_delay": 6,
+      "capture_cycle": 179,
+      "include_y": true,
+      "first_h_ready": 240,
+      "gu_retire": 321,
+      "h_ready_to_retire": 82,
+      "status_cycle": 322,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 3,
+        "h_blocked_by_y_lock": 61,
+        "h_blocked_by_y_bubble": 52
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 307,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 308,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 311,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 312,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 314,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 315,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 316,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 317,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 318,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 319,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 321,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 322,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 259,
+      "gu_retire_delta": 62
+    },
+    {
+      "tokens": 4,
+      "credit_delay": 6,
+      "capture_cycle": 240,
+      "include_y": true,
+      "first_h_ready": 301,
+      "gu_retire": 321,
+      "h_ready_to_retire": 21,
+      "status_cycle": 322,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 3
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 307,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 308,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 311,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 312,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 314,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 315,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 316,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 317,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 318,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 319,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 321,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 322,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 320,
+      "gu_retire_delta": 1
+    },
+    {
+      "tokens": 4,
+      "credit_delay": 7,
+      "capture_cycle": 160,
+      "include_y": true,
+      "first_h_ready": 221,
+      "gu_retire": 242,
+      "h_ready_to_retire": 22,
+      "status_cycle": 309,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 6
+      },
+      "beats": [
+        {
+          "cycle": 221,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 222,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 223,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 224,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 225,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 226,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 229,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 230,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 231,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 232,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 233,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 234,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 237,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 238,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 239,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 240,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 241,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 242,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 245,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 252,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 259,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 266,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 273,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 280,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 287,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 294,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 301,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 308,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 309,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 242,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 4,
+      "credit_delay": 7,
+      "capture_cycle": 179,
+      "include_y": true,
+      "first_h_ready": 240,
+      "gu_retire": 324,
+      "h_ready_to_retire": 85,
+      "status_cycle": 325,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 6,
+        "h_blocked_by_y_lock": 61,
+        "h_blocked_by_y_bubble": 52
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 308,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 311,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 312,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 313,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 316,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 317,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 318,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 319,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 320,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 321,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 324,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 325,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 261,
+      "gu_retire_delta": 63
+    },
+    {
+      "tokens": 4,
+      "credit_delay": 7,
+      "capture_cycle": 240,
+      "include_y": true,
+      "first_h_ready": 301,
+      "gu_retire": 324,
+      "h_ready_to_retire": 24,
+      "status_cycle": 325,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 6
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 305,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 308,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 311,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 312,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 313,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 316,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 317,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 318,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 319,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 320,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 321,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 324,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 325,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 322,
+      "gu_retire_delta": 2
+    },
+    {
+      "tokens": 4,
+      "credit_delay": 16,
+      "capture_cycle": 160,
+      "include_y": true,
+      "first_h_ready": 221,
+      "gu_retire": 260,
+      "h_ready_to_retire": 40,
+      "status_cycle": 336,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 33
+      },
+      "beats": [
+        {
+          "cycle": 221,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 222,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 223,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 224,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 225,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 226,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 238,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 239,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 240,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 241,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 242,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 243,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 255,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 256,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 257,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 259,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 260,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 307,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 314,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 321,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 328,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 335,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 336,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 260,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 4,
+      "credit_delay": 16,
+      "capture_cycle": 179,
+      "include_y": true,
+      "first_h_ready": 240,
+      "gu_retire": 351,
+      "h_ready_to_retire": 112,
+      "status_cycle": 352,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 33,
+        "h_blocked_by_y_lock": 61,
+        "h_blocked_by_y_bubble": 52
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 317,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 318,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 319,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 320,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 321,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 327,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 334,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 335,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 336,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 337,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 338,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 344,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 351,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 352,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 279,
+      "gu_retire_delta": 72
+    },
+    {
+      "tokens": 4,
+      "credit_delay": 16,
+      "capture_cycle": 240,
+      "include_y": true,
+      "first_h_ready": 301,
+      "gu_retire": 351,
+      "h_ready_to_retire": 51,
+      "status_cycle": 352,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 33
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 279,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 293,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 300,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 301,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 303,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 304,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 310,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 317,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 318,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 319,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 320,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 321,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 327,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 334,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 335,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 336,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 337,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 338,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 344,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 351,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 352,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 340,
+      "gu_retire_delta": 11
+    },
+    {
+      "tokens": 4,
+      "credit_delay": 64,
+      "capture_cycle": 160,
+      "include_y": true,
+      "first_h_ready": 221,
+      "gu_retire": 356,
+      "h_ready_to_retire": 136,
+      "status_cycle": 509,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 206
+      },
+      "beats": [
+        {
+          "cycle": 221,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 222,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 223,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 224,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 225,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 226,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 286,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 287,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 288,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 289,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 290,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 291,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 351,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 352,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 353,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 354,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 355,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 356,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 416,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 423,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 430,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 437,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 444,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 451,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 481,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 488,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 495,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 502,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 509,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 356,
+      "gu_retire_delta": 0
+    },
+    {
+      "tokens": 4,
+      "credit_delay": 64,
+      "capture_cycle": 179,
+      "include_y": true,
+      "first_h_ready": 240,
+      "gu_retire": 518,
+      "h_ready_to_retire": 279,
+      "status_cycle": 525,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 206,
+        "h_blocked_by_y_lock": 84,
+        "h_blocked_by_y_bubble": 52
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 316,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 323,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 330,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 337,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 367,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 374,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 381,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 388,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 395,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 402,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 432,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 439,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 446,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 453,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 460,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 467,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 497,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 504,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 511,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 518,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 525,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 375,
+      "gu_retire_delta": 143
+    },
+    {
+      "tokens": 4,
+      "credit_delay": 64,
+      "capture_cycle": 240,
+      "include_y": true,
+      "first_h_ready": 301,
+      "gu_retire": 518,
+      "h_ready_to_retire": 218,
+      "status_cycle": 525,
+      "final_credit": 6,
+      "counters": {
+        "credit_stall": 206,
+        "h_blocked_by_y_lock": 23,
+        "h_blocked_by_y_bubble": 18
+      },
+      "beats": [
+        {
+          "cycle": 237,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 244,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 251,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 258,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 265,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 272,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 302,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 309,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 316,
+          "kind": 1,
+          "last": false
+        },
+        {
+          "cycle": 323,
+          "kind": 1,
+          "last": true
+        },
+        {
+          "cycle": 330,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 337,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 367,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 374,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 381,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 388,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 395,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 402,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 432,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 439,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 446,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 453,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 460,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 467,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 497,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 504,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 511,
+          "kind": 0,
+          "last": false
+        },
+        {
+          "cycle": 518,
+          "kind": 0,
+          "last": true
+        },
+        {
+          "cycle": 525,
+          "kind": 2,
+          "last": true
+        }
+      ],
+      "scope": "synthetic output-only; no RTL contention calibration or application throughput claim",
+      "without_y_retire": 436,
+      "gu_retire_delta": 82
+    }
+  ],
+  "scope": "synthetic model-only invariants and latency experiment; no RTL validation"
+}

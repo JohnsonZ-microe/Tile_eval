@@ -1,0 +1,185 @@
+{
+  "pass_id": 5,
+  "tokens": 1,
+  "bad_blocks": [
+    {
+      "kb": 4,
+      "activation_positions": [
+        [
+          0,
+          2
+        ]
+      ],
+      "scale_lanes": []
+    },
+    {
+      "kb": 10,
+      "activation_positions": [
+        [
+          0,
+          26
+        ]
+      ],
+      "scale_lanes": []
+    },
+    {
+      "kb": 14,
+      "activation_positions": [
+        [
+          0,
+          23
+        ]
+      ],
+      "scale_lanes": []
+    },
+    {
+      "kb": 27,
+      "activation_positions": [
+        [
+          0,
+          5
+        ]
+      ],
+      "scale_lanes": []
+    },
+    {
+      "kb": 34,
+      "activation_positions": [
+        [
+          0,
+          5
+        ]
+      ],
+      "scale_lanes": []
+    },
+    {
+      "kb": 38,
+      "activation_positions": [
+        [
+          0,
+          12
+        ]
+      ],
+      "scale_lanes": []
+    },
+    {
+      "kb": 41,
+      "activation_positions": [
+        [
+          0,
+          24
+        ]
+      ],
+      "scale_lanes": []
+    },
+    {
+      "kb": 51,
+      "activation_positions": [
+        [
+          0,
+          6
+        ]
+      ],
+      "scale_lanes": []
+    },
+    {
+      "kb": 64,
+      "activation_positions": [
+        [
+          0,
+          0
+        ]
+      ],
+      "scale_lanes": []
+    },
+    {
+      "kb": 65,
+      "activation_positions": [
+        [
+          0,
+          16
+        ]
+      ],
+      "scale_lanes": []
+    },
+    {
+      "kb": 74,
+      "activation_positions": [
+        [
+          0,
+          21
+        ]
+      ],
+      "scale_lanes": []
+    },
+    {
+      "kb": 92,
+      "activation_positions": [
+        [
+          0,
+          26
+        ]
+      ],
+      "scale_lanes": []
+    },
+    {
+      "kb": 93,
+      "activation_positions": [
+        [
+          0,
+          13
+        ]
+      ],
+      "scale_lanes": []
+    },
+    {
+      "kb": 103,
+      "activation_positions": [
+        [
+          0,
+          14
+        ]
+      ],
+      "scale_lanes": []
+    },
+    {
+      "kb": 117,
+      "activation_positions": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          31
+        ]
+      ],
+      "scale_lanes": []
+    },
+    {
+      "kb": 137,
+      "activation_positions": [
+        [
+          0,
+          4
+        ],
+        [
+          0,
+          15
+        ]
+      ],
+      "scale_lanes": []
+    },
+    {
+      "kb": 155,
+      "activation_positions": [
+        [
+          0,
+          26
+        ]
+      ],
+      "scale_lanes": []
+    }
+  ],
+  "trace_sha256": "940c5f8cf9afa7d305402b86f49357b7451a80f7cd10e61f90fa1634ca06a42a"
+}

@@ -1,0 +1,8 @@
+test_credit_delay_and_arrival_sweep_conserves_packets (test_output_contention.OutputContentionTests.test_credit_delay_and_arrival_sweep_conserves_packets) ... ok
+test_invalid_delay_and_incomplete_horizon (test_output_contention.OutputContentionTests.test_invalid_delay_and_incomplete_horizon) ... ok
+test_y_lock_bubbles_delay_h_and_status (test_output_contention.OutputContentionTests.test_y_lock_bubbles_delay_h_and_status) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.151s
+
+OK

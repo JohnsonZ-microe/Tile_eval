@@ -1,0 +1,11 @@
+{
+  "pe_accepts_matched": 1440,
+  "candidate": {
+    "accept": 107448,
+    "kb": 4,
+    "tag": 2625536,
+    "alarm_sample_if_no_earlier_error": 107486
+  },
+  "trace_sha256": "940c5f8cf9afa7d305402b86f49357b7451a80f7cd10e61f90fa1634ca06a42a",
+  "scope": "activation/XS candidate only; weights not reconstructed"
+}

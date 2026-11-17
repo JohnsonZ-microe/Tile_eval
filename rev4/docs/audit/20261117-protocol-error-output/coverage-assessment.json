@@ -1,0 +1,22 @@
+[
+  {
+    "run": "vcs-20261116T004029Z-67940",
+    "output_checks_passed": true,
+    "expected_final_errors": "0xe0004",
+    "modeled_final_errors": "0xe0000",
+    "missing_error_bits": "0x4",
+    "unexpected_error_bits": "0x0",
+    "full_error_state_validated": false,
+    "full_tile_calibrated": false
+  },
+  {
+    "run": "vcs-20261116T011416Z-108706",
+    "output_checks_passed": true,
+    "expected_final_errors": "0xe0004",
+    "modeled_final_errors": "0xe0000",
+    "missing_error_bits": "0x4",
+    "unexpected_error_bits": "0x0",
+    "full_error_state_validated": false,
+    "full_tile_calibrated": false
+  }
+]

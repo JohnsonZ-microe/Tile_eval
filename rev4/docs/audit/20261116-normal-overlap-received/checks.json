@@ -1,0 +1,513 @@
+[
+  {
+    "run": "vcs-20261116T004029Z-67940",
+    "test": "tile",
+    "status": "passed",
+    "exit_code": "0",
+    "simulation_command": [
+      "/dfs/usrhome/eezhyzhao/Desktop/Products/vcs-20261116T004029Z-67940/simv_tile",
+      "+VECTORS=/dfs/usrhome/eezhyzhao/Desktop/Products/vcs-20261116T004029Z-67940/vectors",
+      "+SIGMOID_HEX=/dfs/usrhome/eezhyzhao/Desktop/Products/vcs-20261116T004029Z-67940/snapshot/rtl/pe4_sigmoid_rom.hex",
+      "+PROGRESS_CYCLES=10000",
+      "+WAIT_LIMIT=2000000",
+      "+MAX_CYCLES=20000000",
+      "+TRACE=/dfs/usrhome/eezhyzhao/Desktop/Products/vcs-20261116T004029Z-67940/tile-events.csv",
+      "+CALIBRATION_TRACE=/dfs/usrhome/eezhyzhao/Desktop/Products/vcs-20261116T004029Z-67940/calibration-events.csv",
+      "+CRED_PERIOD=1",
+      "+GAP=1"
+    ],
+    "sources": [
+      {
+        "file": "scripts/rtl.f",
+        "recorded": "0287e0840bf5d71ed3ef18c2a12d3a99a28892d8b7216fe76f212c35e83bd747",
+        "raw": "0287e0840bf5d71ed3ef18c2a12d3a99a28892d8b7216fe76f212c35e83bd747",
+        "normalized_lf": "0287e0840bf5d71ed3ef18c2a12d3a99a28892d8b7216fe76f212c35e83bd747",
+        "matches": true
+      },
+      {
+        "file": "scripts/run.py",
+        "recorded": "37a131b60aa5cdc2c9aa7dc36538835b01c498cba71a13c58073b1ff8709d890",
+        "raw": "91197fba43225fa6bd720f8cde4d0587f0c150ea53e1ac7e64e70b2f1918f664",
+        "normalized_lf": "37a131b60aa5cdc2c9aa7dc36538835b01c498cba71a13c58073b1ff8709d890",
+        "matches": true
+      },
+      {
+        "file": "tb/tb_tile_v4.sv",
+        "recorded": "9946cc3c535ee6b600d1bbf4f7d43124402fa025c0c4ebfc7699891360547b50",
+        "raw": "ad6a1312c778a43b5c7998bd766ec3b3a456ed4ec18240af2ae91ab774ca3e01",
+        "normalized_lf": "9946cc3c535ee6b600d1bbf4f7d43124402fa025c0c4ebfc7699891360547b50",
+        "matches": true
+      },
+      {
+        "file": "../rev3/rtl/pe3_pkg.sv",
+        "recorded": "26c21e0a0d6b5ea1b1213de9eda937d80dc3e92628a6bb59ebbf33341ba245c9",
+        "raw": "26c21e0a0d6b5ea1b1213de9eda937d80dc3e92628a6bb59ebbf33341ba245c9",
+        "normalized_lf": "26c21e0a0d6b5ea1b1213de9eda937d80dc3e92628a6bb59ebbf33341ba245c9",
+        "matches": true
+      },
+      {
+        "file": "../rev3/rtl/pe3_round.sv",
+        "recorded": "badcbc3ed04f995aaf35fcce8994d40b52aeb2a12f2c7173a0f12d7b459726ad",
+        "raw": "badcbc3ed04f995aaf35fcce8994d40b52aeb2a12f2c7173a0f12d7b459726ad",
+        "normalized_lf": "badcbc3ed04f995aaf35fcce8994d40b52aeb2a12f2c7173a0f12d7b459726ad",
+        "matches": true
+      },
+      {
+        "file": "../rev3/rtl/pe3_cpa.sv",
+        "recorded": "6dba2f29f2366f440b7709cece33c0d3c9ff89365cc08f102cef5986dd5c0cd4",
+        "raw": "6dba2f29f2366f440b7709cece33c0d3c9ff89365cc08f102cef5986dd5c0cd4",
+        "normalized_lf": "6dba2f29f2366f440b7709cece33c0d3c9ff89365cc08f102cef5986dd5c0cd4",
+        "matches": true
+      },
+      {
+        "file": "../rev3/rtl/pe3_float.sv",
+        "recorded": "000bc129562c723826ba8f3760795cd0d89b16d87cb4c2b1dedaaef4730ae9ac",
+        "raw": "000bc129562c723826ba8f3760795cd0d89b16d87cb4c2b1dedaaef4730ae9ac",
+        "normalized_lf": "000bc129562c723826ba8f3760795cd0d89b16d87cb4c2b1dedaaef4730ae9ac",
+        "matches": true
+      },
+      {
+        "file": "../rev3/rtl/pe3_dot32.sv",
+        "recorded": "4730857a1e7b4fdaa28a715c23b8bfdf9a9d8be1e127e86e3d1e390bb30bcc5c",
+        "raw": "4730857a1e7b4fdaa28a715c23b8bfdf9a9d8be1e127e86e3d1e390bb30bcc5c",
+        "normalized_lf": "4730857a1e7b4fdaa28a715c23b8bfdf9a9d8be1e127e86e3d1e390bb30bcc5c",
+        "matches": true
+      },
+      {
+        "file": "../rev3/rtl/tile_pe_v3.sv",
+        "recorded": "6122752665ef426512914f76e53c47d94d307acc55beead8ea9168e42d90d5d2",
+        "raw": "6122752665ef426512914f76e53c47d94d307acc55beead8ea9168e42d90d5d2",
+        "normalized_lf": "6122752665ef426512914f76e53c47d94d307acc55beead8ea9168e42d90d5d2",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_blackbox.sv",
+        "recorded": "5cf795b76ab46f5a444d40769ca62a900745077dc1978729aba811232c362bc6",
+        "raw": "5cf795b76ab46f5a444d40769ca62a900745077dc1978729aba811232c362bc6",
+        "normalized_lf": "5cf795b76ab46f5a444d40769ca62a900745077dc1978729aba811232c362bc6",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_pkg.sv",
+        "recorded": "3b140987785364a96a92642d8d9f7369c4836a6375846a82d798ce9c12c720bb",
+        "raw": "3b140987785364a96a92642d8d9f7369c4836a6375846a82d798ce9c12c720bb",
+        "normalized_lf": "3b140987785364a96a92642d8d9f7369c4836a6375846a82d798ce9c12c720bb",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_sram.sv",
+        "recorded": "5f3fa94b574cdd06c635ca0c51b41f375ee4dde2f1c4ab5e16bc635729d48b53",
+        "raw": "5f3fa94b574cdd06c635ca0c51b41f375ee4dde2f1c4ab5e16bc635729d48b53",
+        "normalized_lf": "5f3fa94b574cdd06c635ca0c51b41f375ee4dde2f1c4ab5e16bc635729d48b53",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_staging.sv",
+        "recorded": "64b0738bfbb3a10cd884a409887bb4da627821ddc942d14351a115a2d43204cd",
+        "raw": "64b0738bfbb3a10cd884a409887bb4da627821ddc942d14351a115a2d43204cd",
+        "normalized_lf": "64b0738bfbb3a10cd884a409887bb4da627821ddc942d14351a115a2d43204cd",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_fmul.sv",
+        "recorded": "b4c4758a90373c87a3ade463827cf3d21244e0906bc9264dac753f4b54095ee2",
+        "raw": "b4c4758a90373c87a3ade463827cf3d21244e0906bc9264dac753f4b54095ee2",
+        "normalized_lf": "b4c4758a90373c87a3ade463827cf3d21244e0906bc9264dac753f4b54095ee2",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_act.sv",
+        "recorded": "2e203ec73b0a3237f27b23dc8d3c773428db25bd2185e402fc4b18be74ac9d61",
+        "raw": "2e203ec73b0a3237f27b23dc8d3c773428db25bd2185e402fc4b18be74ac9d61",
+        "normalized_lf": "2e203ec73b0a3237f27b23dc8d3c773428db25bd2185e402fc4b18be74ac9d61",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_quant.sv",
+        "recorded": "19739881155a0775b82442a808b3de93cead5118852e72c3d7f8eed2c9bd8be4",
+        "raw": "19739881155a0775b82442a808b3de93cead5118852e72c3d7f8eed2c9bd8be4",
+        "normalized_lf": "19739881155a0775b82442a808b3de93cead5118852e72c3d7f8eed2c9bd8be4",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_hbuf.sv",
+        "recorded": "3df490f4cd7fe3283897c6f71848d6c8ee0b3926aba5ad61bfef9e828cef1b23",
+        "raw": "e00d0788be10c2092f7bf1a2ee97e59b27c36ca517ffc374e14d1d4b1d9f3b99",
+        "normalized_lf": "3df490f4cd7fe3283897c6f71848d6c8ee0b3926aba5ad61bfef9e828cef1b23",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_yacc.sv",
+        "recorded": "a98ec0b6a5f94b701828a93a970ea64f4d8da52d76856426f080e6d9717ff3c1",
+        "raw": "a98ec0b6a5f94b701828a93a970ea64f4d8da52d76856426f080e6d9717ff3c1",
+        "normalized_lf": "a98ec0b6a5f94b701828a93a970ea64f4d8da52d76856426f080e6d9717ff3c1",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_bus.sv",
+        "recorded": "4bb1f2cf489ecbe3e4289cc242b50197643166f441e0adf140784f9ac6546b8e",
+        "raw": "4bb1f2cf489ecbe3e4289cc242b50197643166f441e0adf140784f9ac6546b8e",
+        "normalized_lf": "4bb1f2cf489ecbe3e4289cc242b50197643166f441e0adf140784f9ac6546b8e",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_sched.sv",
+        "recorded": "5c34d7615ec4e7fee17eb6425e9ac50f58801cd52b60a90e3f2d529384aba791",
+        "raw": "6323b08248e66acb4d679f533eac1e8b6bd768caabcfdd69c0b563b23e026cf6",
+        "normalized_lf": "5c34d7615ec4e7fee17eb6425e9ac50f58801cd52b60a90e3f2d529384aba791",
+        "matches": true
+      },
+      {
+        "file": "rtl/tile_ffn_v4.sv",
+        "recorded": "deb864da793997e2e3e7f650bdf1a636e406bcaede0a68cc557a76aec86c2391",
+        "raw": "1f4951da9a774770980082df1c2ee4857c0b86ab8479229fd80c3bf69de96b16",
+        "normalized_lf": "deb864da793997e2e3e7f650bdf1a636e406bcaede0a68cc557a76aec86c2391",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_probes.sv",
+        "recorded": "7c0006ced83573df62fb137e1457795c4a0145e8697aa8be9e3a483aa97e3d36",
+        "raw": "7c0006ced83573df62fb137e1457795c4a0145e8697aa8be9e3a483aa97e3d36",
+        "normalized_lf": "7c0006ced83573df62fb137e1457795c4a0145e8697aa8be9e3a483aa97e3d36",
+        "matches": true
+      }
+    ],
+    "mismatch_files": [],
+    "markers": [
+      "CHECK promotion addresses=0 distinct_tail=0",
+      "CHECK rq_identity issued=108600 returned=108600 consumed=108600",
+      "CHECK phase_counters gu=24 d=24 sync1=48",
+      "PASS tile flits=9818 beats=877 sync1=48"
+    ],
+    "artifacts": {
+      "calibration-events.csv": {
+        "bytes": 104268614,
+        "sha256": "940c5f8cf9afa7d305402b86f49357b7451a80f7cd10e61f90fa1634ca06a42a"
+      },
+      "checks.json": {
+        "bytes": 308,
+        "sha256": "b6e43b90efe4ec0fc45ac2c915804ae90ecaf09a5931bc7f9b681f7f42c882ac"
+      },
+      "compile_tile.log": {
+        "bytes": 5343,
+        "sha256": "6437c28653f7e353894298e7cc0716e9d26683bb237fa4719b167f90a806273e"
+      },
+      "compute_trace.log": {
+        "bytes": 111,
+        "sha256": "4ede07dd9110c91460f76b2833b5ebd6e52a391c025f905cfef55bc5dac5ca2f"
+      },
+      "exit_code.txt": {
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "manifest.json": {
+        "bytes": 48162,
+        "sha256": "bfe2442c1246e68835feb501b27f7bc290f20cda56e17658f7adc627e8c37ca6"
+      },
+      "python_reference.log": {
+        "bytes": 13706,
+        "sha256": "5d318ff0e019d905c78070c9d28fad7d4050ad25043394817c42ee9eb7e43873"
+      },
+      "run_tile.log": {
+        "bytes": 69229,
+        "sha256": "8333a21da1e59d896b1592f675786883697b5a2da54638c3893fc548fc778bcf"
+      },
+      "tile-events.csv": {
+        "bytes": 14423787,
+        "sha256": "d4f6d28a6f3822ccb4fabfe367492d951560af25fb798ad26a2959bc5e722408"
+      },
+      "vectors.log": {
+        "bytes": 84,
+        "sha256": "4917708af72dbc502e3c9a1067b917b2f65f50a7c7897bc78c5e043e139a4bbc"
+      },
+      "vector_check.log": {
+        "bytes": 61,
+        "sha256": "3bbc6b6820869ee8e4d55b046f88bf5fee3aaf954804e4c7ff3e078a9467b27f"
+      }
+    },
+    "hbank": {
+      "status": "passed",
+      "checked_edges": 4368,
+      "counts": {
+        "reset": 1,
+        "bank_take": 24,
+        "bank_state": 4368,
+        "bank_write": 4320,
+        "bank_release": 24
+      },
+      "mismatches": [],
+      "scope": "observed H-buffer input replay; owner/pass/ready/error only; not numerical payload or independent full-Tile calibration"
+    },
+    "quant_guard": {
+      "status": "passed",
+      "counts": {
+        "reset": 1,
+        "quant_guard_config": 1,
+        "quant_accept": 4320,
+        "quant_consume": 4320,
+        "bank_write": 4320,
+        "bank_release": 24
+      },
+      "canceled": 0,
+      "writes": 4320,
+      "mismatches": [],
+      "scope": "observed quantizer inputs/releases; latency, identity, cancellation and write gating; not H admission, numerical payload or independent full-Tile prediction"
+    }
+  },
+  {
+    "run": "vcs-20261116T011416Z-108706",
+    "test": "tile",
+    "status": "passed",
+    "exit_code": "0",
+    "simulation_command": [
+      "/dfs/usrhome/eezhyzhao/Desktop/Products/vcs-20261116T011416Z-108706/simv_tile",
+      "+VECTORS=/dfs/usrhome/eezhyzhao/Desktop/Products/vcs-20261116T011416Z-108706/vectors",
+      "+SIGMOID_HEX=/dfs/usrhome/eezhyzhao/Desktop/Products/vcs-20261116T011416Z-108706/snapshot/rtl/pe4_sigmoid_rom.hex",
+      "+PROGRESS_CYCLES=10000",
+      "+WAIT_LIMIT=2000000",
+      "+MAX_CYCLES=20000000",
+      "+TRACE=/dfs/usrhome/eezhyzhao/Desktop/Products/vcs-20261116T011416Z-108706/tile-events.csv",
+      "+CALIBRATION_TRACE=/dfs/usrhome/eezhyzhao/Desktop/Products/vcs-20261116T011416Z-108706/calibration-events.csv",
+      "+CRED_PERIOD=1",
+      "+GAP=1",
+      "+OVERLAP"
+    ],
+    "sources": [
+      {
+        "file": "scripts/rtl.f",
+        "recorded": "0287e0840bf5d71ed3ef18c2a12d3a99a28892d8b7216fe76f212c35e83bd747",
+        "raw": "0287e0840bf5d71ed3ef18c2a12d3a99a28892d8b7216fe76f212c35e83bd747",
+        "normalized_lf": "0287e0840bf5d71ed3ef18c2a12d3a99a28892d8b7216fe76f212c35e83bd747",
+        "matches": true
+      },
+      {
+        "file": "scripts/run.py",
+        "recorded": "37a131b60aa5cdc2c9aa7dc36538835b01c498cba71a13c58073b1ff8709d890",
+        "raw": "91197fba43225fa6bd720f8cde4d0587f0c150ea53e1ac7e64e70b2f1918f664",
+        "normalized_lf": "37a131b60aa5cdc2c9aa7dc36538835b01c498cba71a13c58073b1ff8709d890",
+        "matches": true
+      },
+      {
+        "file": "tb/tb_tile_v4.sv",
+        "recorded": "9946cc3c535ee6b600d1bbf4f7d43124402fa025c0c4ebfc7699891360547b50",
+        "raw": "ad6a1312c778a43b5c7998bd766ec3b3a456ed4ec18240af2ae91ab774ca3e01",
+        "normalized_lf": "9946cc3c535ee6b600d1bbf4f7d43124402fa025c0c4ebfc7699891360547b50",
+        "matches": true
+      },
+      {
+        "file": "../rev3/rtl/pe3_pkg.sv",
+        "recorded": "26c21e0a0d6b5ea1b1213de9eda937d80dc3e92628a6bb59ebbf33341ba245c9",
+        "raw": "26c21e0a0d6b5ea1b1213de9eda937d80dc3e92628a6bb59ebbf33341ba245c9",
+        "normalized_lf": "26c21e0a0d6b5ea1b1213de9eda937d80dc3e92628a6bb59ebbf33341ba245c9",
+        "matches": true
+      },
+      {
+        "file": "../rev3/rtl/pe3_round.sv",
+        "recorded": "badcbc3ed04f995aaf35fcce8994d40b52aeb2a12f2c7173a0f12d7b459726ad",
+        "raw": "badcbc3ed04f995aaf35fcce8994d40b52aeb2a12f2c7173a0f12d7b459726ad",
+        "normalized_lf": "badcbc3ed04f995aaf35fcce8994d40b52aeb2a12f2c7173a0f12d7b459726ad",
+        "matches": true
+      },
+      {
+        "file": "../rev3/rtl/pe3_cpa.sv",
+        "recorded": "6dba2f29f2366f440b7709cece33c0d3c9ff89365cc08f102cef5986dd5c0cd4",
+        "raw": "6dba2f29f2366f440b7709cece33c0d3c9ff89365cc08f102cef5986dd5c0cd4",
+        "normalized_lf": "6dba2f29f2366f440b7709cece33c0d3c9ff89365cc08f102cef5986dd5c0cd4",
+        "matches": true
+      },
+      {
+        "file": "../rev3/rtl/pe3_float.sv",
+        "recorded": "000bc129562c723826ba8f3760795cd0d89b16d87cb4c2b1dedaaef4730ae9ac",
+        "raw": "000bc129562c723826ba8f3760795cd0d89b16d87cb4c2b1dedaaef4730ae9ac",
+        "normalized_lf": "000bc129562c723826ba8f3760795cd0d89b16d87cb4c2b1dedaaef4730ae9ac",
+        "matches": true
+      },
+      {
+        "file": "../rev3/rtl/pe3_dot32.sv",
+        "recorded": "4730857a1e7b4fdaa28a715c23b8bfdf9a9d8be1e127e86e3d1e390bb30bcc5c",
+        "raw": "4730857a1e7b4fdaa28a715c23b8bfdf9a9d8be1e127e86e3d1e390bb30bcc5c",
+        "normalized_lf": "4730857a1e7b4fdaa28a715c23b8bfdf9a9d8be1e127e86e3d1e390bb30bcc5c",
+        "matches": true
+      },
+      {
+        "file": "../rev3/rtl/tile_pe_v3.sv",
+        "recorded": "6122752665ef426512914f76e53c47d94d307acc55beead8ea9168e42d90d5d2",
+        "raw": "6122752665ef426512914f76e53c47d94d307acc55beead8ea9168e42d90d5d2",
+        "normalized_lf": "6122752665ef426512914f76e53c47d94d307acc55beead8ea9168e42d90d5d2",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_blackbox.sv",
+        "recorded": "5cf795b76ab46f5a444d40769ca62a900745077dc1978729aba811232c362bc6",
+        "raw": "5cf795b76ab46f5a444d40769ca62a900745077dc1978729aba811232c362bc6",
+        "normalized_lf": "5cf795b76ab46f5a444d40769ca62a900745077dc1978729aba811232c362bc6",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_pkg.sv",
+        "recorded": "3b140987785364a96a92642d8d9f7369c4836a6375846a82d798ce9c12c720bb",
+        "raw": "3b140987785364a96a92642d8d9f7369c4836a6375846a82d798ce9c12c720bb",
+        "normalized_lf": "3b140987785364a96a92642d8d9f7369c4836a6375846a82d798ce9c12c720bb",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_sram.sv",
+        "recorded": "5f3fa94b574cdd06c635ca0c51b41f375ee4dde2f1c4ab5e16bc635729d48b53",
+        "raw": "5f3fa94b574cdd06c635ca0c51b41f375ee4dde2f1c4ab5e16bc635729d48b53",
+        "normalized_lf": "5f3fa94b574cdd06c635ca0c51b41f375ee4dde2f1c4ab5e16bc635729d48b53",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_staging.sv",
+        "recorded": "64b0738bfbb3a10cd884a409887bb4da627821ddc942d14351a115a2d43204cd",
+        "raw": "64b0738bfbb3a10cd884a409887bb4da627821ddc942d14351a115a2d43204cd",
+        "normalized_lf": "64b0738bfbb3a10cd884a409887bb4da627821ddc942d14351a115a2d43204cd",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_fmul.sv",
+        "recorded": "b4c4758a90373c87a3ade463827cf3d21244e0906bc9264dac753f4b54095ee2",
+        "raw": "b4c4758a90373c87a3ade463827cf3d21244e0906bc9264dac753f4b54095ee2",
+        "normalized_lf": "b4c4758a90373c87a3ade463827cf3d21244e0906bc9264dac753f4b54095ee2",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_act.sv",
+        "recorded": "2e203ec73b0a3237f27b23dc8d3c773428db25bd2185e402fc4b18be74ac9d61",
+        "raw": "2e203ec73b0a3237f27b23dc8d3c773428db25bd2185e402fc4b18be74ac9d61",
+        "normalized_lf": "2e203ec73b0a3237f27b23dc8d3c773428db25bd2185e402fc4b18be74ac9d61",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_quant.sv",
+        "recorded": "19739881155a0775b82442a808b3de93cead5118852e72c3d7f8eed2c9bd8be4",
+        "raw": "19739881155a0775b82442a808b3de93cead5118852e72c3d7f8eed2c9bd8be4",
+        "normalized_lf": "19739881155a0775b82442a808b3de93cead5118852e72c3d7f8eed2c9bd8be4",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_hbuf.sv",
+        "recorded": "3df490f4cd7fe3283897c6f71848d6c8ee0b3926aba5ad61bfef9e828cef1b23",
+        "raw": "e00d0788be10c2092f7bf1a2ee97e59b27c36ca517ffc374e14d1d4b1d9f3b99",
+        "normalized_lf": "3df490f4cd7fe3283897c6f71848d6c8ee0b3926aba5ad61bfef9e828cef1b23",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_yacc.sv",
+        "recorded": "a98ec0b6a5f94b701828a93a970ea64f4d8da52d76856426f080e6d9717ff3c1",
+        "raw": "a98ec0b6a5f94b701828a93a970ea64f4d8da52d76856426f080e6d9717ff3c1",
+        "normalized_lf": "a98ec0b6a5f94b701828a93a970ea64f4d8da52d76856426f080e6d9717ff3c1",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_bus.sv",
+        "recorded": "4bb1f2cf489ecbe3e4289cc242b50197643166f441e0adf140784f9ac6546b8e",
+        "raw": "4bb1f2cf489ecbe3e4289cc242b50197643166f441e0adf140784f9ac6546b8e",
+        "normalized_lf": "4bb1f2cf489ecbe3e4289cc242b50197643166f441e0adf140784f9ac6546b8e",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_sched.sv",
+        "recorded": "5c34d7615ec4e7fee17eb6425e9ac50f58801cd52b60a90e3f2d529384aba791",
+        "raw": "6323b08248e66acb4d679f533eac1e8b6bd768caabcfdd69c0b563b23e026cf6",
+        "normalized_lf": "5c34d7615ec4e7fee17eb6425e9ac50f58801cd52b60a90e3f2d529384aba791",
+        "matches": true
+      },
+      {
+        "file": "rtl/tile_ffn_v4.sv",
+        "recorded": "deb864da793997e2e3e7f650bdf1a636e406bcaede0a68cc557a76aec86c2391",
+        "raw": "1f4951da9a774770980082df1c2ee4857c0b86ab8479229fd80c3bf69de96b16",
+        "normalized_lf": "deb864da793997e2e3e7f650bdf1a636e406bcaede0a68cc557a76aec86c2391",
+        "matches": true
+      },
+      {
+        "file": "rtl/pe4_probes.sv",
+        "recorded": "7c0006ced83573df62fb137e1457795c4a0145e8697aa8be9e3a483aa97e3d36",
+        "raw": "7c0006ced83573df62fb137e1457795c4a0145e8697aa8be9e3a483aa97e3d36",
+        "normalized_lf": "7c0006ced83573df62fb137e1457795c4a0145e8697aa8be9e3a483aa97e3d36",
+        "matches": true
+      }
+    ],
+    "mismatch_files": [],
+    "markers": [
+      "CHECK promotion addresses=24 distinct_tail=0",
+      "CHECK rq_identity issued=108600 returned=108600 consumed=108600",
+      "CHECK phase_counters gu=24 d=24 sync1=48",
+      "PASS tile flits=9818 beats=877 sync1=48"
+    ],
+    "artifacts": {
+      "calibration-events.csv": {
+        "bytes": 104268614,
+        "sha256": "de95e8841fcadcc21b173d22932ffb3f79e429adac135f786130d80c7bac80f7"
+      },
+      "checks.json": {
+        "bytes": 308,
+        "sha256": "b6e43b90efe4ec0fc45ac2c915804ae90ecaf09a5931bc7f9b681f7f42c882ac"
+      },
+      "compile_tile.log": {
+        "bytes": 5366,
+        "sha256": "4a1232dc487449c28a6c2c40b8404fe0a3d2a1a6bb9bb2d9b0b10481b7058caa"
+      },
+      "compute_trace.log": {
+        "bytes": 112,
+        "sha256": "902cbcad5a49ccd00667cceb120c9f8a996b8a847537f08b9158fd52b1e16e65"
+      },
+      "exit_code.txt": {
+        "bytes": 2,
+        "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa"
+      },
+      "manifest.json": {
+        "bytes": 48193,
+        "sha256": "b67e281e05c45d08af7a5ffa171b20a24cb54b7b9c958248726e7727a09e29cc"
+      },
+      "python_reference.log": {
+        "bytes": 13706,
+        "sha256": "007223743f83d3a9705c01038fd5c8bf9d3bfd91d36ff36e9b872774b3e16e09"
+      },
+      "run_tile.log": {
+        "bytes": 69247,
+        "sha256": "450c5a3472907f50c98e35259ba5d6ac5db10c7e4bd85e6491a4b15b4a2eaee0"
+      },
+      "tile-events.csv": {
+        "bytes": 14423787,
+        "sha256": "aabde3da803df37e207d154b26eff9c6a739569e396b2d9c4f6bd762ebfd438b"
+      },
+      "vectors.log": {
+        "bytes": 84,
+        "sha256": "4917708af72dbc502e3c9a1067b917b2f65f50a7c7897bc78c5e043e139a4bbc"
+      },
+      "vector_check.log": {
+        "bytes": 61,
+        "sha256": "3bbc6b6820869ee8e4d55b046f88bf5fee3aaf954804e4c7ff3e078a9467b27f"
+      }
+    },
+    "hbank": {
+      "status": "passed",
+      "checked_edges": 4368,
+      "counts": {
+        "reset": 1,
+        "bank_take": 24,
+        "bank_state": 4368,
+        "bank_write": 4320,
+        "bank_release": 24
+      },
+      "mismatches": [],
+      "scope": "observed H-buffer input replay; owner/pass/ready/error only; not numerical payload or independent full-Tile calibration"
+    },
+    "quant_guard": {
+      "status": "passed",
+      "counts": {
+        "reset": 1,
+        "quant_guard_config": 1,
+        "quant_accept": 4320,
+        "quant_consume": 4320,
+        "bank_write": 4320,
+        "bank_release": 24
+      },
+      "canceled": 0,
+      "writes": 4320,
+      "mismatches": [],
+      "scope": "observed quantizer inputs/releases; latency, identity, cancellation and write gating; not H admission, numerical payload or independent full-Tile prediction"
+    }
+  }
+]

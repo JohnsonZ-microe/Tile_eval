@@ -1,0 +1,14 @@
+test_credit_persists_across_captures_and_recovers_next_edge (test_continuous_hup_replay.ContinuousHupTests.test_credit_persists_across_captures_and_recovers_next_edge) ... ok
+test_isolated_compatibility (test_continuous_hup_replay.ContinuousHupTests.test_isolated_compatibility) ... ok
+test_locked_y_bubble_blocks_h_until_last_then_h_beats_status (test_continuous_hup_replay.ContinuousHupTests.test_locked_y_bubble_blocks_h_until_last_then_h_beats_status) ... ok
+test_overreturn_is_reported_without_creating_credit (test_continuous_hup_replay.ContinuousHupTests.test_overreturn_is_reported_without_creating_credit) ... ok
+test_reset_flushes_work_and_busy_capture_rejected (test_continuous_hup_replay.ContinuousHupTests.test_reset_flushes_work_and_busy_capture_rejected) ... ok
+test_busy_commands_rejected_and_reset_flushes_both_producers (test_continuous_output_replay.ContinuousOutputTests.test_busy_commands_rejected_and_reset_flushes_both_producers) ... ok
+test_isolated_y_edges_match_existing_model (test_continuous_output_replay.ContinuousOutputTests.test_isolated_y_edges_match_existing_model) ... ok
+test_no_credit_preserves_pending_y_and_blocks_h_until_recovery (test_continuous_output_replay.ContinuousOutputTests.test_no_credit_preserves_pending_y_and_blocks_h_until_recovery) ... ok
+test_real_y_packet_lock_delays_h_and_status_with_credit_conservation (test_continuous_output_replay.ContinuousOutputTests.test_real_y_packet_lock_delays_h_and_status_with_credit_conservation) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.013s
+
+OK

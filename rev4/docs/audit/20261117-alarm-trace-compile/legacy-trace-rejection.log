@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Dropbox\LNS_DSE\NPU_eval\af\alarm_trace_replay.py", line 59, in <module>
+    result=check(read_events(args.trace))
+  File "C:\Users\Administrator\Dropbox\LNS_DSE\NPU_eval\af\alarm_trace_replay.py", line 30, in check
+    raise ValueError('reset and initial ALARM samples required')
+ValueError: reset and initial ALARM samples required

@@ -174,6 +174,23 @@ def execute_logged(command, logfile, cwd, environment, timeout,
         if test and (not re.search(r'^PASS ' + re.escape(test) + r'\b', log, re.M)
                      or re.search(r'^\s*(FAIL\b|Fatal:|FATAL\b)', log, re.M)):
             raise RuntimeError('Missing clean PASS in ' + test)
+        if test == 'protocol':
+            marker = 'CHECK output_contention cases=20 tokens=4 delays=5 packet_lock=1 credit_conservation=1'
+            matches = re.findall(r'^' + re.escape(marker) + r'\s*$', log, re.M)
+            passes = re.findall(r'^PASS protocol\b.*$', log, re.M)
+            if (len(matches) != 1 or len(passes) != 1 or
+                    log.index(marker) > log.index('PASS protocol')):
+                raise RuntimeError('Missing complete protocol output contention evidence')
+            record['coverage'] = dict(output_contention_cases=20, tokens=4, delays=5,
+                                      packet_lock=1, credit_conservation=1)
+        if test == 'control':
+            marker = 'CHECK alarm_delivery cases=2 raw_protocol=1 mask_unmask=1'
+            matches = re.findall(r'^' + re.escape(marker) + r'\s*$', log, re.M)
+            passes = re.findall(r'^PASS control\b.*$', log, re.M)
+            if (len(matches) != 1 or len(passes) != 1 or
+                    log.index(marker) > log.index('PASS control')):
+                raise RuntimeError('Missing complete control ALARM delivery evidence')
+            record['coverage'] = dict(alarm_delivery_cases=2, raw_protocol=1, mask_unmask=1)
         if test == 'tile' and '+CMD_RETIRE_PROBE' in command:
             hits = re.findall(r'^CHECK cmd_retire hits=([0-9]+)\s*$', log, re.M)
             syncs = re.findall(r'^PASS tile flits=[0-9]+ beats=[0-9]+ sync1=([0-9]+)\s*$', log, re.M)

@@ -1,0 +1,20 @@
+test_credit_overreturn_generates_registered_error_without_credit_creation (test_alarm_control_output_replay.AlarmControlOutputTests.test_credit_overreturn_generates_registered_error_without_credit_creation) ... ok
+test_ctrl_operation_delay_target_filter_and_first_identity (test_alarm_control_output_replay.AlarmControlOutputTests.test_ctrl_operation_delay_target_filter_and_first_identity) ... ok
+test_pgm_is_same_edge_and_reset_cancels_pending_ctrl_error (test_alarm_control_output_replay.AlarmControlOutputTests.test_pgm_is_same_edge_and_reset_cancels_pending_ctrl_error) ... ok
+test_raw_error_w1c_mask_unmask_outputs (test_alarm_control_output_replay.AlarmControlOutputTests.test_raw_error_w1c_mask_unmask_outputs) ... ok
+test_reset_cancels_pending_mask_and_no_default_unknown_reads (test_alarm_control_output_replay.AlarmControlOutputTests.test_reset_cancels_pending_mask_and_no_default_unknown_reads) ... ok
+test_wrong_target_does_not_clear_and_read_uses_old_state (test_alarm_control_output_replay.AlarmControlOutputTests.test_wrong_target_does_not_clear_and_read_uses_old_state) ... ok
+test_first_error_priority_payload_and_pending_stability (test_alarm_replay.AlarmTests.test_first_error_priority_payload_and_pending_stability) ... ok
+test_mask_is_registered_and_unmask_rearms_alarm (test_alarm_replay.AlarmTests.test_mask_is_registered_and_unmask_rearms_alarm) ... ok
+test_old_pending_accept_wins_same_edge_regeneration_and_reset (test_alarm_replay.AlarmTests.test_old_pending_accept_wins_same_edge_regeneration_and_reset) ... ok
+test_set_wins_clear_and_first_identity_uses_old_status (test_alarm_replay.AlarmTests.test_set_wins_clear_and_first_identity_uses_old_status) ... ok
+test_missing_coverage_and_bad_schema (test_alarm_trace_replay.AlarmTraceTests.test_missing_coverage_and_bad_schema) ... ok
+test_sparse_gap_generation_and_acceptance (test_alarm_trace_replay.AlarmTraceTests.test_sparse_gap_generation_and_acceptance) ... ok
+test_wrong_cycle_missing_state_and_missing_pending_sample (test_alarm_trace_replay.AlarmTraceTests.test_wrong_cycle_missing_state_and_missing_pending_sample) ... ok
+test_corrupted_sticky_register_rejected_before_coverage_check (test_vcd_alarm_check.AlarmWaveTests.test_corrupted_sticky_register_rejected_before_coverage_check) ... ok
+test_idle_alarm_waveform_is_not_calibration (test_vcd_alarm_check.AlarmWaveTests.test_idle_alarm_waveform_is_not_calibration) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.528s
+
+OK

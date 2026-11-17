@@ -1,0 +1,7 @@
+# PE error pipeline to ALARM timing
+
+PeErrorPipeline classifies accepted PE input bits, carries errors for the fixed 35-edge commit delay derived from pe3_pkg PIPE_STAGES-1, updates sticky status at commit and exposes the top-level sticky rising-edge pulse on the following edge. Numeric maps to scheduler bit 18 and malformed transaction to bit 2. No in_ready prediction, operand reconstruction or observed error seeding is included.
+
+Three tests passed: E0 input -> E35 commit -> E36 scheduler event -> E38 sampled bus ALARM under idle bus/six-credit assumptions; repeated errors produce only one rising edge per sticky bit; reset cancels inflight errors and reinitializes sticky detection. The end-to-end directed test composes actual classifier, alarm registers and BusReplay and checks the complete alarm payload. Timing is derived from RTL source, not fitted to the received alarm edge. This new chain has not yet been dynamically compared to a PE waveform.
+
+Remaining work: reconstruct each accepted transaction's packed operands and acceptance cycle from external stimuli/core scheduling. Active-slot pass identity must be sampled when the scheduler captures first error, not assumed to equal a historical PE transaction tag. Quantizer errors and other event sources remain separate. The real-credit full-output mismatch is still open; no artificial event was inserted at cycle 107484 to make it pass.

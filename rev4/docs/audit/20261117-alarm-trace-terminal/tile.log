@@ -1,0 +1,38 @@
+rtl\pe4_sched.sv:1169:31: warning: if statement has empty body (put the semicolon on a separate line to silence this warning) [-Wempty-body]
+        if (reg_wr_addr == 0) ;   // no-op guard
+                              ^
+tb\tb_tile_v4.sv:647:21: warning: initializing a static variable in a procedural context requires an explicit 'static' keyword [-Wexplicit-static]
+            integer idle = 0;
+                    ^~~~
+tb\tb_tile_v4.sv:648:21: warning: initializing a static variable in a procedural context requires an explicit 'static' keyword [-Wexplicit-static]
+            integer waited = 0;
+                    ^~~~~~
+tb\tb_tile_v4.sv:700:13: error: identifier 'calibration_fd' used before its declaration
+        if (calibration_fd && calibration_cycle != 0) begin
+            ^~~~~~~~~~~~~~
+tb\tb_tile_v4.sv:712:13: note: declared here
+    integer calibration_fd = 0;
+            ^
+tb\tb_tile_v4.sv:700:31: error: identifier 'calibration_cycle' used before its declaration
+        if (calibration_fd && calibration_cycle != 0) begin
+                              ^~~~~~~~~~~~~~~~~
+tb\tb_tile_v4.sv:715:22: note: declared here
+    longint unsigned calibration_cycle = 0;
+                     ^
+tb\tb_tile_v4.sv:701:55: error: identifier 'calibration_cycle' used before its declaration
+            calibration_event("post", "alarm_end_v1", calibration_cycle - 1,
+                                                      ^~~~~~~~~~~~~~~~~
+tb\tb_tile_v4.sv:715:22: note: declared here
+    longint unsigned calibration_cycle = 0;
+                     ^
+tb\tb_tile_v4.sv:707:21: error: identifier 'calibration_fd' used before its declaration
+            $fflush(calibration_fd);
+                    ^~~~~~~~~~~~~~
+tb\tb_tile_v4.sv:712:13: note: declared here
+    integer calibration_fd = 0;
+            ^
+Top level design units:
+    tb_tile_v4
+
+
+Build failed: 4 errors, 3 warnings

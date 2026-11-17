@@ -1,0 +1,4 @@
+{
+  "status": "not_validated",
+  "reason": "ALARM coverage absent: {'edges': 352, 'resets': 3, 'generated': 0, 'accepted': 0, 'w1c': 2, 'mask_writes': 1}"
+}

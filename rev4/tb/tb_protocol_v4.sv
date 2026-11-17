@@ -133,6 +133,7 @@ module tb_protocol_v4;
     integer cycles = 0, up_checked = 0, fifo_checked = 0;
     integer hseq = 0, yseq = 0, sseq = 0;
     integer credit_cases = 0;
+    integer contention_cases = 0;
     bit take_h, take_y, take_s;
     task automatic tick;
         integer selected;
@@ -233,6 +234,58 @@ module tb_protocol_v4;
         credit_cases++;
     endtask
 
+    task automatic check_output_contention(input integer tokens,
+                                           input integer return_delay);
+        integer due[0:1023];
+        integer yh, hh, ss, outstanding, next_y, h_retire, status_edge;
+        integer h_count;
+        bit complete;
+        for (integer i = 0; i < 1024; i++) due[i] = 0;
+        yh = 0; hh = 0; ss = 0; outstanding = 0; next_y = 0;
+        h_retire = -1; status_edge = -1; complete = 0;
+        h_count = (36*tokens+7)/8;
+        rst_n = 0; dn_valid = 0; xfifo_pop = 0; up_credit = 0;
+        hup_valid = 0; ysrc_valid = 0; st_valid = 0;
+        @(posedge clk); #1;
+        @(negedge clk);
+        rst_n = 1; credits = 6; locked = 0; count = 0;
+        head = 0; tail = 0;
+        for (integer c = 0; c < 900; c++) begin
+            up_credit = 2'(due[c]);
+            outstanding -= due[c];
+            ysrc_valid = yh < 10 && c >= next_y;
+            ysrc_payload = 128'h12340000 + 128'(yh);
+            ysrc_src = 16; ysrc_tag = 8'h86;
+            ysrc_segment = 2; ysrc_last = yh == 9;
+            hup_valid = c >= 3 && hh < h_count;
+            hup_payload = 128'h56780000 + 128'(hh);
+            hup_src = 16; hup_tag = 7; hup_last = hh == h_count-1;
+            st_valid = c >= 3 && ss == 0;
+            st_payload = 128'h9abc; st_src = 16; st_tag = 99;
+            tick();
+            if (up_credit_err) $fatal(1, "contention credit overreturn");
+            if (up_valid) begin
+                due[c+return_delay]++;
+                outstanding++;
+            end
+            if (take_y) begin yh++; next_y = c+7; end
+            if (take_h) begin hh++; if (hh == h_count) h_retire = c; end
+            if (take_s) begin ss++; status_edge = c; end
+            if (credits + outstanding != 6)
+                $fatal(1, "contention credit conservation");
+            if (yh == 10 && hh == h_count && ss == 1 && outstanding == 0) begin
+                complete = 1;
+                break;
+            end
+        end
+        if (!complete || credits != 6 || locked != 0)
+            $fatal(1, "contention incomplete tokens=%0d delay=%0d", tokens, return_delay);
+        if (tokens == 1 && return_delay == 1 && (h_retire != 68 || status_edge != 69))
+            $fatal(1, "contention reference edges h=%0d status=%0d", h_retire, status_edge);
+        up_credit = 0; hup_valid = 0; ysrc_valid = 0; st_valid = 0;
+        contention_cases++;
+    endtask
+
     initial begin
         repeat (3) @(negedge clk);
         rst_n = 1;
@@ -281,6 +334,15 @@ module tb_protocol_v4;
                 for (integer request_beat = 0; request_beat <= 1; request_beat++)
                     check_credit_case(initial_credit, returned, 1'(request_beat));
         if (credit_cases != 42) $fatal(1, "credit case coverage");
+        for (integer tokens = 1; tokens <= 4; tokens++) begin
+            check_output_contention(tokens, 1);
+            check_output_contention(tokens, 6);
+            check_output_contention(tokens, 7);
+            check_output_contention(tokens, 16);
+            check_output_contention(tokens, 64);
+        end
+        if (contention_cases != 20) $fatal(1, "contention case coverage");
+        $display("CHECK output_contention cases=20 tokens=4 delays=5 packet_lock=1 credit_conservation=1");
         @(negedge clk); rst_n = 0;
         @(posedge clk); #1;
         if (xfifo_level !== 0 || up_valid !== 0 || dut.active_valid !== 0)

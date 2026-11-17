@@ -45,6 +45,41 @@ class RunDiagnosticsTests(unittest.TestCase):
             else:
                 with self.assertRaises(RuntimeError): run()
 
+    def test_control_requires_alarm_delivery_before_unique_pass(self):
+        marker = 'CHECK alarm_delivery cases=2 raw_protocol=1 mask_unmask=1'
+        passed = 'PASS control replies=76 stall_cycles=40'
+        for output, succeeds in [
+            (marker+'\n'+passed, True),
+            (passed, False),
+            (marker.replace('cases=2','cases=1')+'\n'+passed, False),
+            (marker.replace('mask_unmask=1','mask_unmask=0')+'\n'+passed, False),
+            (marker+'\n'+marker+'\n'+passed, False),
+            (passed+'\n'+marker, False),
+            (marker+'\n'+passed+'\n'+passed, False),
+            (marker+'\nFatal: injected\n'+passed, False)]:
+            with self.subTest(output=output):
+                if succeeds:
+                    self.run_process('print(%r)' % output,test='control')
+                    coverage=self.manifest['simulations']['control']['coverage']
+                    self.assertEqual(coverage,dict(alarm_delivery_cases=2,raw_protocol=1,mask_unmask=1))
+                else:
+                    with self.assertRaises(RuntimeError):
+                        self.run_process('print(%r)' % output,test='control')
+
+    def test_protocol_requires_bounded_contention_coverage(self):
+        marker='CHECK output_contention cases=20 tokens=4 delays=5 packet_lock=1 credit_conservation=1'
+        passed='PASS protocol fifo=728 up=1000 credit_cases=42'
+        valid=marker+'\n'+passed
+        self.run_process('print(%r)' % valid,test='protocol')
+        self.assertEqual(self.manifest['simulations']['protocol']['coverage'],
+                         dict(output_contention_cases=20,tokens=4,delays=5,packet_lock=1,credit_conservation=1))
+        bad=[passed,passed+'\n'+marker,marker+'\n'+valid,valid+'\n'+passed,valid+'\nFAIL injected']
+        bad += [valid.replace(old,new) for old,new in [('cases=20','cases=19'),('tokens=4','tokens=3'),
+                ('delays=5','delays=4'),('packet_lock=1','packet_lock=0'),('credit_conservation=1','credit_conservation=0')]]
+        for output in bad:
+            with self.subTest(output=output),self.assertRaises(RuntimeError):
+                self.run_process('print(%r)' % output,test='protocol')
+
     def test_promotion_requires_complete_boundary_evidence(self):
         check = 'CHECK promotion paths=2 distinct_tail=18 stalled=18 address_checks=12 simultaneous_issue=6 scale_consume=6'
         counters = 'CHECK counters paths=2 cases=8 blocked=8 saturation=4 clear=2 no_double=8'

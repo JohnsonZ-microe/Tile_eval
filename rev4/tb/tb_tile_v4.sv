@@ -695,6 +695,7 @@ module tb_tile_v4;
         else
             $display("FAIL tile errors=%0d flits=%0d beats=%0d",
                      errors, flits, beats);
+        calibration_finish();
         $fflush();
         $finish;
     end
@@ -704,6 +705,8 @@ module tb_tile_v4;
     longint unsigned calibration_cycle = 0;
     bit calibration_reset_seen = 0;
     bit [127:0] calibration_y_valid = 0;
+    logic [186:0] calibration_alarm_state;
+    bit calibration_alarm_seen = 0;
     string calibration_path;
     initial begin
         if ($value$plusargs("CALIBRATION_TRACE=%s", calibration_path)) begin
@@ -720,10 +723,25 @@ module tb_tile_v4;
             calibration_epoch, edge_cycle, sampling, event_name, transaction,
             pass_id, phase_id, slot_id, kb, group_id, bank, payload);
     endtask
+    task automatic calibration_finish;
+        // Terminal record at the last fully sampled edge. A truncated sparse
+        // trace must not look like a complete register-trajectory comparison.
+        if (calibration_fd && calibration_cycle != 0) begin
+            calibration_event("post", "alarm_end_v1", calibration_cycle - 1,
+                -1, -1, -1, -1, -1, -1, -1,
+                512'({32'(errors), dut.sched_u.alarm_payload,
+                    dut.sched_u.err_first_pass, dut.sched_u.err_first_bit,
+                    dut.sched_u.alarm_pending, dut.sched_u.alarm_armed,
+                    dut.sched_u.alarm_mask_q, dut.sched_u.err_q}));
+            $fflush(calibration_fd);
+        end
+    endtask
     always @(posedge clk) begin : calibration_monitor
         longint unsigned edge_cycle;
         integer issue_slot;
         logic observe_hbank;
+        logic [186:0] alarm_state;
+        logic [75:0] alarm_inputs;
         edge_cycle = calibration_cycle;
         if (calibration_fd) begin
             if (!rst_n) begin
@@ -734,11 +752,26 @@ module tb_tile_v4;
                 end
                 calibration_cycle = 0;
                 calibration_y_valid = 0;
+                calibration_alarm_seen = 0;
                 calibration_issue = 0; calibration_return = 0; calibration_consume = 0;
             end else begin
                 calibration_reset_seen = 0;
                 observe_hbank = dut.hbuf_take || dut.hbuf_release ||
                                 dut.hbuf_wr_valid || dut.hbuf_wr_err;
+                // Schema 1: exact pre-edge inputs to the error accumulator.
+                // [21:0] events, [43:22] W1C, [65:44] mask data,
+                // [66] mask write, [74:67] selected first pass, [75] ready.
+                alarm_inputs = {dut.sched_u.alarm_ready,
+                    dut.sched_u.err_first_pass_n,
+                    (dut.sched_u.reg_wr_valid && dut.sched_u.reg_wr_addr == 12),
+                    ((dut.sched_u.reg_wr_valid && dut.sched_u.reg_wr_addr == 12)
+                        ? dut.sched_u.reg_wr_data[21:0] : 22'd0), dut.sched_u.err_w1c,
+                    dut.sched_u.err_new};
+                if (!calibration_alarm_seen || (|dut.sched_u.err_new) ||
+                    (|dut.sched_u.err_w1c) || alarm_inputs[66] ||
+                    dut.sched_u.alarm_pending)
+                    calibration_event("pre", "alarm_inputs_v1", edge_cycle,
+                        -1, -1, -1, -1, -1, -1, -1, 512'(alarm_inputs));
                 if (dn_valid)
                     calibration_event("pre", "down", edge_cycle, int'(dn_sideband), int'(dn_sideband[10:3]), -1, -1, -1, -1, -1, dn_payload);
                 if (up_credit != 0)
@@ -803,6 +836,17 @@ module tb_tile_v4;
                 if (sync1)
                     calibration_event("pre", "sync1", edge_cycle, -1, -1, -1, -1, -1, -1, -1, '0);
                 #1;
+                // [21:0] errors, [43:22] mask, [44] armed, [45] pending,
+                // [50:46] first bit, [58:51] first pass, [186:59] payload.
+                alarm_state = {dut.sched_u.alarm_payload,
+                    dut.sched_u.err_first_pass, dut.sched_u.err_first_bit,
+                    dut.sched_u.alarm_pending, dut.sched_u.alarm_armed,
+                    dut.sched_u.alarm_mask_q, dut.sched_u.err_q};
+                if (!calibration_alarm_seen || alarm_state !== calibration_alarm_state)
+                    calibration_event("post", "alarm_state_v1", edge_cycle,
+                        -1, -1, -1, -1, -1, -1, -1, 512'(alarm_state));
+                calibration_alarm_state = alarm_state;
+                calibration_alarm_seen = 1;
                 // Sparse post-edge state, including the edge clearing wr_err.
                 // payload[20:0] = {error, pass1, pass0, ready[1:0], owner[1:0]}.
                 if (observe_hbank)

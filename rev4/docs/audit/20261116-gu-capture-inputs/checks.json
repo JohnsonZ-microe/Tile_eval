@@ -1,0 +1,456 @@
+[
+  {
+    "run": "vcs-20261116T004029Z-67940",
+    "passed": true,
+    "prediction": [
+      {
+        "epoch": 0,
+        "cycle": 113075,
+        "tokens": 1,
+        "pass_id": 5,
+        "origin": 107292
+      },
+      {
+        "epoch": 0,
+        "cycle": 122117,
+        "tokens": 2,
+        "pass_id": 6,
+        "origin": 116328
+      },
+      {
+        "epoch": 0,
+        "cycle": 131678,
+        "tokens": 3,
+        "pass_id": 7,
+        "origin": 125883
+      },
+      {
+        "epoch": 0,
+        "cycle": 141759,
+        "tokens": 4,
+        "pass_id": 8,
+        "origin": 135958
+      },
+      {
+        "epoch": 0,
+        "cycle": 152347,
+        "tokens": 1,
+        "pass_id": 9,
+        "origin": 146552
+      },
+      {
+        "epoch": 0,
+        "cycle": 161414,
+        "tokens": 2,
+        "pass_id": 10,
+        "origin": 155613
+      },
+      {
+        "epoch": 0,
+        "cycle": 171000,
+        "tokens": 3,
+        "pass_id": 11,
+        "origin": 165193
+      },
+      {
+        "epoch": 0,
+        "cycle": 181106,
+        "tokens": 4,
+        "pass_id": 12,
+        "origin": 175293
+      },
+      {
+        "epoch": 0,
+        "cycle": 191709,
+        "tokens": 1,
+        "pass_id": 13,
+        "origin": 185912
+      },
+      {
+        "epoch": 0,
+        "cycle": 200781,
+        "tokens": 2,
+        "pass_id": 14,
+        "origin": 194978
+      },
+      {
+        "epoch": 0,
+        "cycle": 210372,
+        "tokens": 3,
+        "pass_id": 15,
+        "origin": 204563
+      },
+      {
+        "epoch": 0,
+        "cycle": 220483,
+        "tokens": 4,
+        "pass_id": 16,
+        "origin": 214668
+      },
+      {
+        "epoch": 0,
+        "cycle": 231088,
+        "tokens": 1,
+        "pass_id": 17,
+        "origin": 225292
+      },
+      {
+        "epoch": 0,
+        "cycle": 240158,
+        "tokens": 2,
+        "pass_id": 18,
+        "origin": 234356
+      },
+      {
+        "epoch": 0,
+        "cycle": 249747,
+        "tokens": 3,
+        "pass_id": 19,
+        "origin": 243939
+      },
+      {
+        "epoch": 0,
+        "cycle": 259856,
+        "tokens": 4,
+        "pass_id": 20,
+        "origin": 254042
+      },
+      {
+        "epoch": 0,
+        "cycle": 270448,
+        "tokens": 1,
+        "pass_id": 21,
+        "origin": 264664
+      },
+      {
+        "epoch": 0,
+        "cycle": 279492,
+        "tokens": 2,
+        "pass_id": 22,
+        "origin": 273702
+      },
+      {
+        "epoch": 0,
+        "cycle": 289055,
+        "tokens": 3,
+        "pass_id": 23,
+        "origin": 283259
+      },
+      {
+        "epoch": 0,
+        "cycle": 299138,
+        "tokens": 4,
+        "pass_id": 24,
+        "origin": 293336
+      },
+      {
+        "epoch": 0,
+        "cycle": 311657,
+        "tokens": 1,
+        "pass_id": 25,
+        "origin": 303932
+      },
+      {
+        "epoch": 0,
+        "cycle": 323910,
+        "tokens": 2,
+        "pass_id": 26,
+        "origin": 316179
+      },
+      {
+        "epoch": 0,
+        "cycle": 336682,
+        "tokens": 3,
+        "pass_id": 27,
+        "origin": 328945
+      },
+      {
+        "epoch": 0,
+        "cycle": 349974,
+        "tokens": 4,
+        "pass_id": 28,
+        "origin": 342231
+      }
+    ],
+    "predicted_act_start": [
+      113076,
+      122118,
+      131679,
+      141760,
+      152348,
+      161415,
+      171001,
+      181107,
+      191710,
+      200782,
+      210373,
+      220484,
+      231089,
+      240159,
+      249748,
+      259857,
+      270449,
+      279493,
+      289056,
+      299139,
+      311658,
+      323911,
+      336683,
+      349975
+    ],
+    "actual_act_start": [
+      113076,
+      122118,
+      131679,
+      141760,
+      152348,
+      161415,
+      171001,
+      181107,
+      191710,
+      200782,
+      210373,
+      220484,
+      231089,
+      240159,
+      249748,
+      259857,
+      270449,
+      279493,
+      289056,
+      299139,
+      311658,
+      323911,
+      336683,
+      349975
+    ],
+    "trace_sha256": "940c5f8cf9afa7d305402b86f49357b7451a80f7cd10e61f90fa1634ca06a42a"
+  },
+  {
+    "run": "vcs-20261116T011416Z-108706",
+    "passed": true,
+    "prediction": [
+      {
+        "epoch": 0,
+        "cycle": 113075,
+        "tokens": 1,
+        "pass_id": 5,
+        "origin": 107292
+      },
+      {
+        "epoch": 0,
+        "cycle": 122114,
+        "tokens": 2,
+        "pass_id": 6,
+        "origin": 116325
+      },
+      {
+        "epoch": 0,
+        "cycle": 131672,
+        "tokens": 3,
+        "pass_id": 7,
+        "origin": 125877
+      },
+      {
+        "epoch": 0,
+        "cycle": 141750,
+        "tokens": 4,
+        "pass_id": 8,
+        "origin": 135949
+      },
+      {
+        "epoch": 0,
+        "cycle": 152335,
+        "tokens": 1,
+        "pass_id": 9,
+        "origin": 146540
+      },
+      {
+        "epoch": 0,
+        "cycle": 161399,
+        "tokens": 2,
+        "pass_id": 10,
+        "origin": 155598
+      },
+      {
+        "epoch": 0,
+        "cycle": 170982,
+        "tokens": 3,
+        "pass_id": 11,
+        "origin": 165175
+      },
+      {
+        "epoch": 0,
+        "cycle": 181085,
+        "tokens": 4,
+        "pass_id": 12,
+        "origin": 175272
+      },
+      {
+        "epoch": 0,
+        "cycle": 191685,
+        "tokens": 1,
+        "pass_id": 13,
+        "origin": 185888
+      },
+      {
+        "epoch": 0,
+        "cycle": 200754,
+        "tokens": 2,
+        "pass_id": 14,
+        "origin": 194951
+      },
+      {
+        "epoch": 0,
+        "cycle": 210342,
+        "tokens": 3,
+        "pass_id": 15,
+        "origin": 204533
+      },
+      {
+        "epoch": 0,
+        "cycle": 220450,
+        "tokens": 4,
+        "pass_id": 16,
+        "origin": 214635
+      },
+      {
+        "epoch": 0,
+        "cycle": 231052,
+        "tokens": 1,
+        "pass_id": 17,
+        "origin": 225256
+      },
+      {
+        "epoch": 0,
+        "cycle": 240119,
+        "tokens": 2,
+        "pass_id": 18,
+        "origin": 234317
+      },
+      {
+        "epoch": 0,
+        "cycle": 249705,
+        "tokens": 3,
+        "pass_id": 19,
+        "origin": 243897
+      },
+      {
+        "epoch": 0,
+        "cycle": 259811,
+        "tokens": 4,
+        "pass_id": 20,
+        "origin": 253997
+      },
+      {
+        "epoch": 0,
+        "cycle": 270400,
+        "tokens": 1,
+        "pass_id": 21,
+        "origin": 264616
+      },
+      {
+        "epoch": 0,
+        "cycle": 279441,
+        "tokens": 2,
+        "pass_id": 22,
+        "origin": 273651
+      },
+      {
+        "epoch": 0,
+        "cycle": 289001,
+        "tokens": 3,
+        "pass_id": 23,
+        "origin": 283205
+      },
+      {
+        "epoch": 0,
+        "cycle": 299081,
+        "tokens": 4,
+        "pass_id": 24,
+        "origin": 293279
+      },
+      {
+        "epoch": 0,
+        "cycle": 311597,
+        "tokens": 1,
+        "pass_id": 25,
+        "origin": 303872
+      },
+      {
+        "epoch": 0,
+        "cycle": 323847,
+        "tokens": 2,
+        "pass_id": 26,
+        "origin": 316116
+      },
+      {
+        "epoch": 0,
+        "cycle": 336616,
+        "tokens": 3,
+        "pass_id": 27,
+        "origin": 328879
+      },
+      {
+        "epoch": 0,
+        "cycle": 349905,
+        "tokens": 4,
+        "pass_id": 28,
+        "origin": 342162
+      }
+    ],
+    "predicted_act_start": [
+      113076,
+      122115,
+      131673,
+      141751,
+      152336,
+      161400,
+      170983,
+      181086,
+      191686,
+      200755,
+      210343,
+      220451,
+      231053,
+      240120,
+      249706,
+      259812,
+      270401,
+      279442,
+      289002,
+      299082,
+      311598,
+      323848,
+      336617,
+      349906
+    ],
+    "actual_act_start": [
+      113076,
+      122115,
+      131673,
+      141751,
+      152336,
+      161400,
+      170983,
+      181086,
+      191686,
+      200755,
+      210343,
+      220451,
+      231053,
+      240120,
+      249706,
+      259812,
+      270401,
+      279442,
+      289002,
+      299082,
+      311598,
+      323848,
+      336617,
+      349906
+    ],
+    "trace_sha256": "de95e8841fcadcc21b173d22932ffb3f79e429adac135f786130d80c7bac80f7"
+  }
+]

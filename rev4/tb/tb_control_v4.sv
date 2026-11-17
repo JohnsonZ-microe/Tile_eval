@@ -30,6 +30,46 @@ module tb_control_v4;
     integer context_cases = 0, rejected_commands = 0;
     integer context_busy_cases = 0;
     integer unaligned_cases = 0;
+    integer alarm_cases = 0;
+    task automatic expect_protocol_alarm;
+        // Fresh reset leaves both slot pass IDs zero. Reserved down type
+        // produces ERR_PROTO_TYPE (bit 0), so payload is exactly one.
+        expected_data[head] = 128'd1;
+        expected_sb[head] = {4'b0,2'b0,1'b1,8'hf3,1'b0,TEST_ID,2'd2};
+        head++;
+    endtask
+    task automatic check_alarm_delivery;
+        // check_context_busy ends in reset. Clear driver accounting as well.
+        debt = 0; stalls = 0; up_credit = 0; dn_valid = 0;
+        rst_n = 1;
+        tick();
+        expect_protocol_alarm();
+        dn_valid = 1; dn_sideband = 6; dn_payload = 0;
+        tick(); dn_valid = 0;
+        flush();
+        if (dut.sched_u.err_q !== 1 || dut.sched_u.alarm_pending !== 0)
+            $fatal(1, "unmasked protocol ALARM not delivered");
+        alarm_cases++;
+        control(int'(TEST_ID),1,12'h008,1);
+        repeat (4) tick();
+        if (dut.sched_u.err_q !== 0 || dut.sched_u.alarm_armed !== 1)
+            $fatal(1, "ALARM did not rearm after W1C");
+        control(int'(TEST_ID),1,12'h00c,1);
+        repeat (3) tick();
+        dn_valid = 1; dn_sideband = 6; dn_payload = 0;
+        tick(); dn_valid = 0;
+        repeat (4) tick();
+        if (dut.sched_u.err_q !== 1 || dut.sched_u.alarm_pending !== 0)
+            $fatal(1, "masked protocol event generated ALARM");
+        expect_protocol_alarm();
+        control(int'(TEST_ID),1,12'h00c,0);
+        flush();
+        if (dut.sched_u.alarm_pending !== 0)
+            $fatal(1, "unmask ALARM not delivered");
+        alarm_cases++;
+        if (alarm_cases != 2) $fatal(1, "ALARM delivery coverage");
+        $display("CHECK alarm_delivery cases=2 raw_protocol=1 mask_unmask=1");
+    endtask
     task automatic tick;
         #1;
         up_credit = return_enable && debt > 0 ? 1 : 0;
@@ -223,6 +263,7 @@ module tb_control_v4;
         if (unaligned_cases != 6) $fatal(1, "unaligned CTX coverage");
         check_context_busy();
         if (context_busy_cases != 4) $fatal(1, "CTX busy coverage");
+        check_alarm_delivery();
         $display("PASS control replies=%0d stall_cycles=%0d numeric_w1c=1 context_cases=%0d rejected_commands=%0d context_busy_cases=%0d unaligned_cases=%0d",
                  tail,stalls,context_cases,rejected_commands,context_busy_cases,unaligned_cases);
         $finish;

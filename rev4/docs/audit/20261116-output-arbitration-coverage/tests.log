@@ -1,0 +1,10 @@
+test_credit_exhaustive_legal_wire_values (test_bus_replay.BusReplayTests.test_credit_exhaustive_legal_wire_values) ... ok
+test_ctrl_filter_and_discard_overreturn (test_bus_replay.BusReplayTests.test_ctrl_filter_and_discard_overreturn) ... ok
+test_fifo_prestate_full_empty_and_wrap (test_bus_replay.BusReplayTests.test_fifo_prestate_full_empty_and_wrap) ... ok
+test_imported_waveform_and_mutations (test_bus_replay.BusReplayTests.test_imported_waveform_and_mutations) ... ok
+test_lock_bubble_and_credit_recovery (test_bus_replay.BusReplayTests.test_lock_bubble_and_credit_recovery) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.940s
+
+OK
