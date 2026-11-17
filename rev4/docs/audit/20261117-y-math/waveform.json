@@ -1,0 +1,176 @@
+{
+  "status": "passed",
+  "edges": 98114,
+  "cells": {
+    "dut.rowmath[0].fm": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 0,
+      "unknown_outputs": 0
+    },
+    "dut.rowmath[0].ab": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 1,
+      "unknown_outputs": 1
+    },
+    "dut.rowmath[0].ay": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 0,
+      "unknown_outputs": 0
+    },
+    "dut.rowmath[1].fm": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 0,
+      "unknown_outputs": 0
+    },
+    "dut.rowmath[1].ab": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 1,
+      "unknown_outputs": 1
+    },
+    "dut.rowmath[1].ay": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 0,
+      "unknown_outputs": 0
+    },
+    "dut.rowmath[2].fm": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 0,
+      "unknown_outputs": 0
+    },
+    "dut.rowmath[2].ab": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 1,
+      "unknown_outputs": 1
+    },
+    "dut.rowmath[2].ay": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 0,
+      "unknown_outputs": 0
+    },
+    "dut.rowmath[3].fm": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 0,
+      "unknown_outputs": 0
+    },
+    "dut.rowmath[3].ab": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 1,
+      "unknown_outputs": 1
+    },
+    "dut.rowmath[3].ay": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 0,
+      "unknown_outputs": 0
+    },
+    "dut.rowmath[4].fm": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 0,
+      "unknown_outputs": 0
+    },
+    "dut.rowmath[4].ab": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 1,
+      "unknown_outputs": 1
+    },
+    "dut.rowmath[4].ay": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 0,
+      "unknown_outputs": 0
+    },
+    "dut.rowmath[5].fm": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 0,
+      "unknown_outputs": 0
+    },
+    "dut.rowmath[5].ab": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 1,
+      "unknown_outputs": 1
+    },
+    "dut.rowmath[5].ay": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 0,
+      "unknown_outputs": 0
+    },
+    "dut.rowmath[6].fm": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 0,
+      "unknown_outputs": 0
+    },
+    "dut.rowmath[6].ab": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 1,
+      "unknown_outputs": 1
+    },
+    "dut.rowmath[6].ay": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 0,
+      "unknown_outputs": 0
+    },
+    "dut.rowmath[7].fm": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 0,
+      "unknown_outputs": 0
+    },
+    "dut.rowmath[7].ab": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 1,
+      "unknown_outputs": 1
+    },
+    "dut.rowmath[7].ay": {
+      "inputs": 3000,
+      "outputs": 3000,
+      "cancelled": 0,
+      "unknown_inputs": 0,
+      "unknown_outputs": 0
+    }
+  },
+  "sha256": "2baa34fd8477684040ef4462a322f193892b21faa91c9ad13660cb83d9a214e9",
+  "scope": "24 Y arithmetic cells from observed cell inputs; integer arithmetic and 4/7-stage pipeline; not full COMMIT scheduling"
+}

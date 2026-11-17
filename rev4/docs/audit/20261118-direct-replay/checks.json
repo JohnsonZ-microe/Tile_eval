@@ -1,0 +1,9 @@
+{
+  "af_status": "passed",
+  "tests": 289,
+  "seconds": 60.794,
+  "log_sha256": "373fadde4a25777de74de166721366a877d16d966de9622f3b3b508e8323d293",
+  "direct_rtl_replay": "pending_new_vcd",
+  "mode_confusion_tests": "passed",
+  "nested_scope_test": "passed"
+}

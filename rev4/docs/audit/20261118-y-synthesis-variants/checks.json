@@ -1,0 +1,11 @@
+{
+  "semantic_compile": {
+    "pe4_yacc_baseline": "passed",
+    "pe4_yacc_direct": "passed"
+  },
+  "dc_shell_available": false,
+  "synthesis_comparison": "not_run",
+  "area_delta": null,
+  "timing_delta": null,
+  "energy_delta": null
+}

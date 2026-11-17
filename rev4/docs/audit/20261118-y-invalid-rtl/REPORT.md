@@ -1,0 +1,9 @@
+# RTL illegal-DRAIN interval probe — 2026-11-18
+
+Extended tb_yacc_v4 with all 62,296 illegal eight-bit start/count pairs. Each command has a following idle edge. The existing tick helper now accepts an expected illegal pulse (default false); both branches require v0_drain=0. After each command and idle edge, assertions check idle DRAIN state, no output valid, no read request or bank read/write enable, and no ownership-clear request. The full 128-bit ownership bitmap is compared before/after the sweep. The sweep runs after the existing 300-packet/3,000-read checks. At this point ownership is empty, so preservation of populated bitmaps remains software-only coverage in this probe. No memory-content checksum is taken: no writes is the hardware invariant checked.
+
+The extra 124,592 tick calls keep the complete test below the existing one-million-cycle watchdog. Bank alternates with start parity, slot is 63, segment is 3 and last_segment is asserted. This is exhaustive interval coverage at idle, not a Cartesian sweep of every input or busy-state behavior. Existing successful packet totals remain 300.
+
+Runner requires exactly one `CHECK yacc_illegal intervals=62296 no_read_write=1 pulse_clear=1` before PASS, alongside overlap/read-identity markers, and records illegal_intervals=62296. Tests reject missing, wrong-count and duplicate markers. Historical manifests are not changed.
+
+Validation: yacc SystemVerilog parsing/semantic elaboration passed (compile/); all 15 runner diagnostic tests passed in 4.916 seconds. Dynamic VCS execution is pending. The existing command `bash scripts/run_vcs.sh --test yacc --suite full --seed 817 --waves` will include this probe when run from updated sources. No remote job was launched. Additional clock activity increases waveform size; no new size estimate is asserted.

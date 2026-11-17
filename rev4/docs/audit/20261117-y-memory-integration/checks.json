@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "af_tests": 255,
+  "seconds": 41.761,
+  "interruption_cases": 860,
+  "log": "af-regression-final.log",
+  "log_sha256": "b632c5f6bf5f9a78a4d5ba7d6f96c0c377a676e97727e575f91b964375bc0a46",
+  "scope": "Y control/mux/SRAM integration and AF regression; arithmetic callback remains external"
+}

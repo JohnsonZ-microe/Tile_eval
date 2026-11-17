@@ -26,7 +26,7 @@ set_output_delay -min $output_min -clock core_clk [all_outputs]
 set_input_transition $transition $inputs
 set_load $load [all_outputs]
 set handle [open [file join [setting DC_RUN_DIR "."] settings.txt] w]
-puts $handle "TOP=$top\nTARGET_DB=$target\nDC_CORES=[setting DC_CORES 16]"
+puts $handle "TOP=$top\nTARGET_DB=$target\nDC_CORES=[setting DC_CORES 4]"
 foreach name {period setup_uncertainty hold_uncertainty input_delay output_delay input_min output_min transition load fix_hold} {
     puts $handle "$name=[set $name]"
 }

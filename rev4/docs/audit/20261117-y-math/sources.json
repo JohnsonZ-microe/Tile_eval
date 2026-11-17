@@ -1,0 +1,12 @@
+{
+  "NPU_eval/af/fp32_bits.py": "2a5250cc50fb12b33a14f340db6cb66f2fcccac0603d8492d6c902e08bbf519b",
+  "NPU_eval/af/vcd_y_math_check.py": "a608d160354e380e6aeaf33cf09ccec666ccbe537cf2ef9e1cfa33c0a03e5e04",
+  "NPU_eval/af/tests/test_fp32_bits.py": "41c0ddc11c4c874849cf4a2a595f7ad4afc648ceb85a27dcbc6e74cb7c67c828",
+  "NPU_eval/af/y_drain_payload.py": "6bc4d4539884394b97d0e6fb9662f05e466537f5679aa3eb16d62ae8728f4625",
+  "Tile_eval/model/reference.py": "f1785c3e92cae81e4c6b5005d61514897f90f68dce61c685b9ca86c4da7c7efc",
+  "Tile_eval/rev4/rtl/pe4_fmul.sv": "b4c4758a90373c87a3ade463827cf3d21244e0906bc9264dac753f4b54095ee2",
+  "Tile_eval/rev3/rtl/pe3_float.sv": "000bc129562c723826ba8f3760795cd0d89b16d87cb4c2b1dedaaef4730ae9ac",
+  "Tile_eval/rev3/rtl/pe3_round.sv": "badcbc3ed04f995aaf35fcce8994d40b52aeb2a12f2c7173a0f12d7b459726ad",
+  "Tile_eval/rev4/rtl/pe4_yacc.sv": "c39301c56d83e8489652b61d060b6dfae2ae5cc458e04e355d36a8d120183caf",
+  "Tile_eval/rev4/tb/tb_yacc_v4.sv": "12c32784e5034bc02060136dab277ecb4230f94da6a7da1710d10dd71e937c1d"
+}

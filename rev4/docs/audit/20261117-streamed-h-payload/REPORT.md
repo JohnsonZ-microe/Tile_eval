@@ -1,0 +1,9 @@
+# H payloads inside persistent handshake replay
+
+ContinuousHupReplay now accepts optional capture_payloads: an exact-length tuple/list of unsigned 128-bit beats, snapshotted at capture. Invalid length/value or payloads without capture are rejected; a busy capture remains rejected. Each payload uses the current GU epilogue beat index, which advances only on hup_ready. Retirement/reset clears the stored packet. Omission retains the existing explicitly timing-only zero payload behavior. ContinuousOutputReplay and the DRAIN/CTRL/ALARM adapters forward the new optional input.
+
+Both received runs match all 276 H output tuples (cycle, sideband, payload) through the real-credit persistent output model. Existing 877 output timing/metadata, ALARM payload, final error value, GU retirement, Y-ready/drain and final-empty-slot checks still pass. The numeric beats are precomputed from the preceding raw-input arithmetic audit and selected by pass identity. No observed output payload is injected; no final time/value zipping is used for the new H comparison. The cache trace fingerprint must match.
+
+Tests cover immutable capture snapshots, six-credit exhaustion, repeated stalls without beat advancement, no same-edge credit bypass, exact payload recovery, reset cancellation, invalid widths/lengths and invalid invocation. Eleven continuous-output tests pass; af-regression.log contains the full subsequent regression.
+
+Limitations: ACT numerical results remain precomputed shared-oracle inputs at capture, not an independent arithmetic pipeline. Capture/retirement timing retains conditional upstream assumptions. Y numeric payloads are still zero in the continuous model and validated separately by the previous full numeric audit. No actual H/Y contention exists in these received traces; synthetic contention tests remain separate from RTL evidence. This does not close full Tile independence, PPA or realistic multi-tile throughput.

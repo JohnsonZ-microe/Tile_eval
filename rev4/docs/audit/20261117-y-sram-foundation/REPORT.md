@@ -1,0 +1,11 @@
+# Y SRAM numerical foundation and explicit snapshot limits
+
+Precomputed Y packet mode now rejects same-bank COMMIT/DRAIN overlap before continuous-output state advances, for both launch orders and simultaneous launch. This is a limitation of the numerical snapshot adapter, not a new RTL illegality or restriction on the timing-only model. Different-bank COMMIT with numerical DRAIN remains permitted and is tested. Do not use snapshot mode to claim same-bank numerical concurrency support.
+
+Added Lat2SramData as a foundation for the future full Y numerical model. It follows the behavioral pe4_sram LAT=2 implementation: old registered address is sampled on the next tick, pre/post output views distinguish consumer sampling from registered update, byte-enable writes preserve untouched bytes, and sampling precedes same-edge writes. A write on the request edge is visible on the following sample edge; a write on the sample edge returns old data. Data output can change even while rvalid is false because the RTL samples the retained address every edge.
+
+Unwritten bytes are tracked with known_mask instead of fabricated valid zeros. The model starts after an idle validity-priming edge; it does not claim to model power-on X states before priming. There is no reset API because the SRAM RTL has no reset pin. Controller reset must retain memory and the actual in-flight SRAM behavior. Address and port errors are rejected before mutation. This models the behavioral wrapper, not an implementation-specific compiled SRAM macro.
+
+Four focused memory tests cover request/sample-write distinctions, back-to-back addresses, byte masks/unknown data and invalid ports. New continuous-output tests cover all same-bank launch orders and successful different-bank overlap. af-regression.log records full local regression. check.py repeats both received traces under the new snapshot guard; checks.json records output agreement. The SRAM model itself is not yet connected to Y COMMIT/DRAIN and has not yet been dynamically compared against RTL waveforms. That integration and comparison are required before claiming numerical shared-port coverage.
+
+No RTL changes, physical PPA claims or remote execution were made. Historical audits were preserved.

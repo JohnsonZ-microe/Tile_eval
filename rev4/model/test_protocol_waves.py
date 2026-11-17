@@ -18,7 +18,7 @@ class ProtocolWaveTests(unittest.TestCase):
                  'modules': 'modules_v4.vcd',
                  'protocol': 'protocol_v4.vcd',
                  'memory': 'memory_v4.vcd',
-                 'yacc': 'yacc_v4.vcd',
+                 'yacc': 'yacc_v4.vcd', 'yacc_direct': 'yacc_direct_v4.vcd',
                  'control': 'control_v4.vcd',
                  'tile': 'tile_ffn_v4.vcd'}
         for test, vcd in names.items():
@@ -36,7 +36,7 @@ class ProtocolWaveTests(unittest.TestCase):
             self.assertIn('if ($value$plusargs("VCD=%s", vcdfile))', bench,
                           bench_name + ' lacks the +VCD plusarg')
             self.assertIn('$dumpfile(vcdfile);', bench, bench_name)
-            self.assertIn('$dumpvars(0, %s);' % bench_name, bench, bench_name)
+            self.assertIn('$dumpvars(0);' if bench_name == 'tb_yacc_v4' else '$dumpvars(0, %s);' % bench_name, bench, bench_name)
         self.assertIn('PASS protocol fifo=',
                       (ROOT / 'tb/tb_protocol_v4.sv').read_text(encoding='utf-8'))
 

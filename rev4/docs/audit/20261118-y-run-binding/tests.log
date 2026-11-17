@@ -1,0 +1,8 @@
+test_binding_and_explicit_line_ending_normalization (test_y_run_evidence.YRunEvidenceTests.test_binding_and_explicit_line_ending_normalization) ... ok
+test_missing_duplicate_late_failure_and_false_coverage_rejected (test_y_run_evidence.YRunEvidenceTests.test_missing_duplicate_late_failure_and_false_coverage_rejected) ... ok
+test_source_change_and_stale_or_corrupt_waveform_rejected (test_y_run_evidence.YRunEvidenceTests.test_source_change_and_stale_or_corrupt_waveform_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.113s
+
+OK

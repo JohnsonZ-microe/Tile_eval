@@ -1,0 +1,8 @@
+test_packet_integrity_credit_conservation_and_overlap_matrix (test_numeric_output_replay.NumericOutputTests.test_packet_integrity_credit_conservation_and_overlap_matrix) ... ok
+test_packet_lock_delay_and_commit_fence_change_output_order (test_numeric_output_replay.NumericOutputTests.test_packet_lock_delay_and_commit_fence_change_output_order) ... ok
+test_reset_cancels_sources_restores_credit_but_preserves_memory (test_numeric_output_replay.NumericOutputTests.test_reset_cancels_sources_restores_credit_but_preserves_memory) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.351s
+
+OK

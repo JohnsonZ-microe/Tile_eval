@@ -1,0 +1,15 @@
+# Direct DRAIN presentation candidate — 2026-11-18
+
+This is an explicitly experimental Python model, not current RTL. DirectYExperiment presents a numerically formatted SRAM row at the baseline capture edge, asserting output valid at that edge instead of using the following DSEND edge to copy dphit. The baseline read request, SRAM latency, capture point, same-bank COMMIT fence and restart remain unchanged. Once presented, data holds until ready; next-row reads still start only after the previous beat is accepted. Invalid-slot DV0 behavior remains unchanged.
+
+The default YNumericReplay and NumericOutputReplay are unchanged. The contention harness accepts an explicit model factory and labels the selected model in its results. Existing current-RTL waveform replay does not import the experimental class.
+
+For one token and credit delay 1, baseline Y first/last accepted edges are 237/300 and GU retires at 305. Candidate edges are 236/290, with GU retirement at 295. Row interval falls from seven to six edges. Inclusive first-to-last packet span falls from 64 to 55 edges; total Y completion is ten edges earlier because the first beat also moves one edge earlier. This is a 10-edge latency saving, not a claim of equivalent end-to-end TPOT improvement.
+
+Across credit delays 1/6/7/16/64 (one token, no interruption), Y completion savings are 10/10/10/10/4 edges and GU retirement savings are 10/10/10/9/3. The 40-case matrix covers tokens 1..4, those five delays and either no interruption or a second same-bank COMMIT at edge 233. Each candidate run retains exact H/Y/STATUS values and order, credit conservation and packet integrity, with no Y completion regression in this matrix. This single interruption timing does not prove all COMMIT offsets or ordering equivalence for every workload.
+
+Additional tests check partial rows, randomized backpressure, data held while stalled and reset at six selected output-phase offsets; memory contents persist and output/ownership are cleared. Two experiment tests and three baseline output tests passed. The entire AF suite was not rerun for this isolated candidate.
+
+RTL implementation would move the BF16 formatter result and output metadata into the capture-edge registers, then retain DSEND for holding/accepting. It must explicitly handle payload, valid, last, tag and segment together; merely asserting valid earlier would expose stale data. The 128-bit dphit register might become redundant, but this model does not remove a physical register or measure synthesis results. Timing into yb_payload, clock activity, area and energy remain unknown. Do not enable this candidate for AF estimates advertised as calibrated until RTL implementation, differential tests, new waveform calibration and synthesis checks are complete.
+
+No production RTL was changed and no remote run launched. checks.json records baseline/candidate accepted beats and measured model savings; sources.json binds the experiment. The broader Tile design/validation goal remains incomplete.

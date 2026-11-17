@@ -1,0 +1,7 @@
+test_actual_rtl_matrix_and_interval_partition (test_protocol_contention_timing.ProtocolTimingTests.test_actual_rtl_matrix_and_interval_partition) ... ok
+test_corrupt_credit_payload_and_incomplete_matrix_rejected (test_protocol_contention_timing.ProtocolTimingTests.test_corrupt_credit_payload_and_incomplete_matrix_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.606s
+
+OK

@@ -1,0 +1,12 @@
+pe4_yacc_baseline: passed
+pe4_yacc_direct: passed
+Top level design units:
+    pe4_yacc_baseline
+
+
+Build succeeded: 0 errors, 1 warning
+Top level design units:
+    pe4_yacc_direct
+
+
+Build succeeded: 0 errors, 1 warning

@@ -34,7 +34,7 @@ def waveform_arguments(enabled, test, output, vcd_from=None, vcd_to=None):
              'compute': 'compute_v4.vcd',
              'protocol': 'protocol_v4.vcd',
              'memory': 'memory_v4.vcd',
-             'yacc': 'yacc_v4.vcd',
+             'yacc': 'yacc_v4.vcd', 'yacc_direct': 'yacc_direct_v4.vcd',
              'control': 'control_v4.vcd',
              'tile': 'tile_ffn_v4.vcd', 'promotion': 'promotion_v4.vcd'}
     if not enabled or test not in names:
@@ -199,18 +199,27 @@ def execute_logged(command, logfile, cwd, environment, timeout,
                     log.index('CHECK cmd_retire') > log.index('PASS tile')):
                 raise RuntimeError('Missing complete CMD retirement collision evidence')
             record['coverage'] = dict(cmd_retire_hits=int(hits[0]))
-        if test == 'yacc':
+        if test in ('yacc', 'yacc_direct'):
             overlap = re.findall(r'^CHECK yacc_overlap banks=2 offsets=86 packets=172 yields=([0-9]+)\s*$', log, re.M)
-            passed = re.findall(r'^PASS yacc packets=300 cycles=([0-9]+)\s*$', log, re.M)
+            passed = re.findall(r'^PASS ' + re.escape(test) + r' packets=300 cycles=([0-9]+)\s*$', log, re.M)
             identities = re.findall(r'^CHECK yacc_read_identity rows=3000\s*$', log, re.M)
             if len(overlap) != 1 or len(passed) != 1 or int(overlap[0]) <= 0 or int(passed[0]) <= 0:
                 raise RuntimeError('Missing complete yacc overlap evidence')
-            if len(identities) != 1 or log.index('CHECK yacc_read_identity') > log.index('PASS yacc'):
+            if len(identities) != 1 or log.index('CHECK yacc_read_identity') > log.index('PASS ' + test):
                 raise RuntimeError('Missing complete yacc read identity evidence')
-            if log.index('CHECK yacc_overlap') > log.index('PASS yacc'):
+            if log.index('CHECK yacc_overlap') > log.index('PASS ' + test):
                 raise RuntimeError('Yacc overlap evidence follows PASS')
+            illegal_marker = 'CHECK yacc_illegal intervals=62296 no_read_write=1 pulse_clear=1'
+            if (len(re.findall(r'^' + re.escape(illegal_marker) + r'\s*$', log, re.M)) != 1 or
+                    log.index(illegal_marker) > log.index('PASS ' + test)):
+                raise RuntimeError('Missing complete yacc illegal interval evidence')
             record['coverage'] = dict(packets=300, overlap_banks=2, overlap_offsets=86, overlap_packets=172,
-                                      overlap_yields=int(overlap[0]), read_identity_rows=3000)
+                                      overlap_yields=int(overlap[0]), read_identity_rows=3000, illegal_intervals=62296)
+            if test == 'yacc_direct':
+                mode = 'CHECK yacc_mode direct=1'
+                if len(re.findall(r'^' + re.escape(mode) + r'\s*$', log, re.M)) != 1 or log.index(mode) > log.index('PASS ' + test):
+                    raise RuntimeError('Missing direct DRAIN experiment mode')
+                record['coverage']['direct_drain'] = 1
         if test == 'memory':
             for marker in ('CHECK hbank_handoff cases=4 same_bank=2 different_bank=2',
                            'CHECK hbank_release_write rejected=4 independent=2'):
@@ -271,7 +280,7 @@ def main():
     parser.add_argument('tool', choices=['local', 'vcs', 'dc'])
     parser.add_argument('--suite', choices=['legacy', 'smoke', 'full'], default='full')
     parser.add_argument('--seed', type=int, default=817)
-    parser.add_argument('--test', choices=['all', 'cells', 'math', 'modules', 'compute', 'protocol', 'memory', 'yacc', 'control', 'tile', 'promotion'],
+    parser.add_argument('--test', choices=['all', 'cells', 'math', 'modules', 'compute', 'protocol', 'memory', 'yacc', 'yacc_direct', 'control', 'tile', 'promotion'],
                         default='all')
     parser.add_argument('--top', default='tile_ffn_v4')
     parser.add_argument('--out', type=Path)
@@ -400,11 +409,12 @@ def main():
                 top = {'cells': 'tb_cells_v4', 'math': 'tb_math_v4', 'modules': 'tb_math_v4',
                        'compute': 'tb_compute_v4',
                        'protocol': 'tb_protocol_v4', 'memory': 'tb_memory_v4',
-                       'yacc': 'tb_yacc_v4', 'control': 'tb_control_v4', 'tile': 'tb_tile_v4', 'promotion': 'tb_promotion_v4'}[test]
+                       'yacc': 'tb_yacc_v4', 'yacc_direct': 'tb_yacc_direct_v4', 'control': 'tb_control_v4', 'tile': 'tb_tile_v4', 'promotion': 'tb_promotion_v4'}[test]
                 binary = out / ('simv_' + test)
                 clog = run([exe, '-full64', '-sverilog',
                             '-timescale=1ns/1ps', '-debug_access+all',
                             '-f', str(filelist),
+                            *([str(snap / 'tb/tb_yacc_v4.sv')] if test == 'yacc_direct' else []),
                             str(snap / 'tb' / (top + '.sv')), '-top', top,
                             '-Mdir=' + str(out / ('csrc_' + test)),
                             '-o', str(binary)], 'compile_%s.log' % test)

@@ -1,0 +1,10 @@
+{
+  "NPU_eval\\af\\y_read_port_replay.py": "e50f3fdcfba6fe2c5db91214b0cdfe1dd28633000e1321e8dc651d245c802125",
+  "NPU_eval\\af\\sram_data_replay.py": "6406453a7c1e31309e6b56a6e44d7d0c2adf4efbcd3434a8a6f721c551b64abf",
+  "NPU_eval\\af\\vcd_bus_check.py": "fc102a0df27c516be3609c1c86b886f2774f2d16da3c354a79c4d22d1aff706f",
+  "NPU_eval\\af\\tests\\test_y_read_port_replay.py": "021f40f4cfad59c3c0dcf7bc71468d557e5604559b1f9b94ca5bc24161bed8ee",
+  "Tile_eval\\rev4\\rtl\\pe4_yacc.sv": "a98ec0b6a5f94b701828a93a970ea64f4d8da52d76856426f080e6d9717ff3c1",
+  "Tile_eval\\rev4\\rtl\\pe4_sram.sv": "5f3fa94b574cdd06c635ca0c51b41f375ee4dde2f1c4ab5e16bc635729d48b53",
+  "Tile_eval\\rev4\\docs\\audit\\20261117-y-read-port\\check.py": "278c1708c06ef1e6bd8e3a80ce34c863ca6864fee71b04db975077e25b7023b3",
+  "Tile_eval\\rev4\\docs\\audit\\20261117-y-read-port\\checks.json": "624e875e235c0a72538a000e928eecc2683b1633628c9cf7e7cee545bf7c2285"
+}

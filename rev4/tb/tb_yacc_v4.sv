@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-module tb_yacc_v4;
+module tb_yacc_v4 #(parameter bit DIRECT_DRAIN = 0);
     logic clk = 0, rst_n = 0;
     always #5 clk = ~clk;
     // optional VCD (run.py --waves passes +VCD=<path>)
@@ -7,7 +7,7 @@ module tb_yacc_v4;
     initial begin
         if ($value$plusargs("VCD=%s", vcdfile)) begin
             $dumpfile(vcdfile);
-            $dumpvars(0, tb_yacc_v4);
+            $dumpvars(0);
         end
     end
     logic load_valid = 0;
@@ -30,7 +30,20 @@ module tb_yacc_v4;
     logic [1:0] yb_segment;
     logic [7:0] yb_tag;
     integer cycles = 0, packets = 0;
-    pe4_yacc dut(.*);
+    // Packed aliases expose unpacked command arrays in VCD for external-input
+    // numerical replay; they do not drive or alter the DUT.
+    wire [23:0] model_commit_slots;
+    wire [127:0] model_commit_weights;
+    for (genvar lane = 0; lane < 4; lane++) begin : model_input_visibility
+        assign model_commit_slots[6*lane +: 6] = commit_slots[lane];
+        assign model_commit_weights[32*lane +: 32] = commit_weights[lane];
+    end
+    pe4_yacc #(.DIRECT_DRAIN(DIRECT_DRAIN)) dut(.*);
+    // Sample after the preceding rising edge has applied synchronous reset.
+    always @(negedge clk) begin
+        if (!rst_n && {dut.mul_v, dut.addb_v, dut.add_v} !== 24'b0)
+            $fatal(1, "Y arithmetic input valid not cleared by reset");
+    end
     logic [9:0] read_identity_addr [0:1];
     logic [9:0] read_identity_output [0:1];
     bit read_identity_known [0:1];
@@ -89,10 +102,11 @@ module tb_yacc_v4;
             default: return 16'h4110;
         endcase
     endfunction
-    task automatic tick;
+    task automatic tick(input bit expect_illegal = 0);
         @(posedge clk); #1; cycles++;
         if (cycles > 1000000) $fatal(1, "yacc global watchdog");
-        if (drain_illegal || v0_drain) $fatal(1, "unexpected DRAIN error");
+        if (drain_illegal !== expect_illegal || v0_drain !== 0)
+            $fatal(1, "DRAIN error pulse mismatch expected_illegal=%0d actual=%b v0=%b", expect_illegal,drain_illegal,v0_drain);
         @(negedge clk);
     endtask
     task automatic drain_one(input integer bank, slot_id, lane,
@@ -175,6 +189,45 @@ module tb_yacc_v4;
         if (overlap_yields == 0) $fatal(1, "same-bank overlap did not exercise yield");
         $display("CHECK yacc_overlap banks=2 offsets=86 packets=172 yields=%0d", overlap_yields);
     endtask
+    task automatic check_illegal_intervals;
+        integer checked;
+        logic [127:0] before_valid;
+        checked = 0;
+        for (integer bank = 0; bank < 2; bank++)
+            for (integer slot_id = 0; slot_id < 64; slot_id++)
+                before_valid[64*bank+slot_id] = dut.vbit[bank][slot_id];
+        for (integer start_col = 0; start_col < 256; start_col++) begin
+            for (integer count_col = 0; count_col < 256; count_col++) begin
+                if (count_col == 0 || start_col + count_col > 80) begin
+                    drain_bank = 1'(start_col);
+                    drain_slot = 63;
+                    drain_col_start = 8'(start_col);
+                    drain_count = 8'(count_col);
+                    drain_segment = 3;
+                    drain_last_seg = 1;
+                    drain_valid = 1;
+                    tick(1);
+                    if (dut.dstate !== 0 || yb_valid !== 0 ||
+                        dut.dre !== 0 || dut.re0 !== 0 || dut.re1 !== 0 ||
+                        dut.we0 !== 0 || dut.we1 !== 0 || dut.v_clr_req !== 0)
+                        $fatal(1, "illegal DRAIN side effect start=%0d count=%0d",start_col,count_col);
+                    drain_valid = 0;
+                    tick();
+                    if (dut.dstate !== 0 || yb_valid !== 0 ||
+                        dut.dre !== 0 || dut.re0 !== 0 || dut.re1 !== 0 ||
+                        dut.we0 !== 0 || dut.we1 !== 0 || dut.v_clr_req !== 0)
+                        $fatal(1, "delayed illegal DRAIN side effect");
+                    checked++;
+                end
+            end
+        end
+        for (integer bank = 0; bank < 2; bank++)
+            for (integer slot_id = 0; slot_id < 64; slot_id++)
+                if (dut.vbit[bank][slot_id] !== before_valid[64*bank+slot_id])
+                    $fatal(1, "illegal DRAIN changed ownership");
+        if (checked != 62296) $fatal(1, "illegal interval coverage");
+        $display("CHECK yacc_illegal intervals=62296 no_read_write=1 pulse_clear=1");
+    endtask
     initial begin
         for (integer lane = 0; lane < 4; lane++) begin
             commit_slots[lane] = 0; commit_weights[lane] = 32'h3f800000;
@@ -228,8 +281,11 @@ module tb_yacc_v4;
         check_same_bank_overlap();
         if (packets != 300) $fatal(1, "Y overlap packet coverage");
         if (read_identity_checks != 3000) $fatal(1, "Y read identity coverage");
+        check_illegal_intervals();
         $display("CHECK yacc_read_identity rows=%0d", read_identity_checks);
-        $display("PASS yacc packets=%0d cycles=%0d",packets,cycles);
+        $display("CHECK yacc_mode direct=%0d", DIRECT_DRAIN);
+        if (DIRECT_DRAIN) $display("PASS yacc_direct packets=%0d cycles=%0d",packets,cycles);
+        else $display("PASS yacc packets=%0d cycles=%0d",packets,cycles);
         $finish;
     end
 endmodule

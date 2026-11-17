@@ -1,0 +1,7 @@
+test_bank_register_and_commit_priority_exhaustive (test_y_read_port_replay.YReadPortTests.test_bank_register_and_commit_priority_exhaustive) ... ok
+test_registered_mux_then_sram_sampling_and_reset (test_y_read_port_replay.YReadPortTests.test_registered_mux_then_sram_sampling_and_reset) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK

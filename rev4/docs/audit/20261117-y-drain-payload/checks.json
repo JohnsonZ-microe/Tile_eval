@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "counts": {
+    "edges": 98114,
+    "captures": 3000,
+    "valid_edges": 10490,
+    "beats": 3000,
+    "zero_presentations": 0,
+    "stalls": 7490
+  },
+  "sha256": "2baa34fd8477684040ef4462a322f193892b21faa91c9ad13660cb83d9a214e9",
+  "scope": "DRAIN conversion and output registers; observed SRAM and FSM boundaries; no accumulation or full Tile calibration",
+  "regression": {
+    "tests": 260,
+    "seconds": 42.972,
+    "status": "passed",
+    "log_sha256": "b3a5a84cdb509f1636f70d4b358f983dd83877342da02b89ed3c7ef9349a6f6d"
+  }
+}

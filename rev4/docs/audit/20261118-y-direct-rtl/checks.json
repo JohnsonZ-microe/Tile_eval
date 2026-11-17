@@ -1,0 +1,12 @@
+{
+  "semantic_tops_passed": [
+    "yacc",
+    "yacc_direct",
+    "tile"
+  ],
+  "runner_tests": 16,
+  "wave_argument_tests": 2,
+  "rtl_simulation": "pending",
+  "production_parameter_default": 0,
+  "experimental_parameter": 1
+}

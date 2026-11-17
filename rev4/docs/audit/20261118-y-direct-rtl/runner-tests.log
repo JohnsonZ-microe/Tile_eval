@@ -1,0 +1,22 @@
+test_run_diagnostics (unittest.loader._FailedTest.test_run_diagnostics) ... ERROR
+
+======================================================================
+ERROR: test_run_diagnostics (unittest.loader._FailedTest.test_run_diagnostics)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_run_diagnostics
+Traceback (most recent call last):
+  File "C:\ProgramData\anaconda3\Lib\unittest\loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "C:\ProgramData\anaconda3\Lib\unittest\loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "C:\Users\Administrator\Dropbox\LNS_DSE\Tile_eval\rev4\model\test_run_diagnostics.py", line 182
+    good = ('CHECK yacc_overlap banks=2 offsets=86 packets=172 yields=2
+            ^
+SyntaxError: unterminated string literal (detected at line 182)
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

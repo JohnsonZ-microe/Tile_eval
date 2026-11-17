@@ -1,0 +1,7 @@
+test_complete_credit_matrix_preserves_data_and_packet_integrity (test_experimental_y_direct.DirectYTests.test_complete_credit_matrix_preserves_data_and_packet_integrity) ... ok
+test_partial_rows_stall_hold_and_reset_at_each_output_phase (test_experimental_y_direct.DirectYTests.test_partial_rows_stall_hold_and_reset_at_each_output_phase) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.648s
+
+OK

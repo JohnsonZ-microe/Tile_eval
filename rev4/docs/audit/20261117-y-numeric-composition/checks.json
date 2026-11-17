@@ -1,0 +1,10 @@
+{
+  "af_tests": 270,
+  "af_status": "passed",
+  "af_seconds": 45.626,
+  "af_log_sha256": "e5ec8d91d6914b8a9e7292eb92ed4312717861a7e60e693bdd6379f6596ffb84",
+  "focused_numeric_tests": 6,
+  "yacc_semantic_compile": "passed",
+  "composed_external_input_vcd_replay": "pending",
+  "upstream_PE_arithmetic": "outside_component"
+}

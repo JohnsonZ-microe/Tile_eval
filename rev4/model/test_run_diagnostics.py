@@ -158,7 +158,7 @@ class RunDiagnosticsTests(unittest.TestCase):
         self.assertEqual(self.manifest['failed_step'], 'run_tile.log')
 
     def test_yacc_requires_new_overlap_evidence(self):
-        good = 'CHECK yacc_overlap banks=2 offsets=86 packets=172 yields=2\nCHECK yacc_read_identity rows=3000\nPASS yacc packets=300 cycles=1000'
+        good = 'CHECK yacc_illegal intervals=62296 no_read_write=1 pulse_clear=1\nCHECK yacc_overlap banks=2 offsets=86 packets=172 yields=2\nCHECK yacc_read_identity rows=3000\nPASS yacc packets=300 cycles=1000'
         self.run_process('print(%r)' % good, test='yacc')
         self.assertEqual(self.manifest['simulations']['yacc']['coverage']['overlap_yields'], 2)
         for bad in ('PASS yacc packets=128 cycles=1000',
@@ -169,11 +169,29 @@ class RunDiagnosticsTests(unittest.TestCase):
                     good + '\nFAIL overlap',
                     good.replace('CHECK yacc_read_identity rows=3000\n', ''),
                     good.replace('rows=3000', 'rows=2159'),
+                    good.replace('intervals=62296', 'intervals=1'),
+                    good.replace('CHECK yacc_illegal intervals=62296 no_read_write=1 pulse_clear=1\n', ''),
+                    good + '\nCHECK yacc_illegal intervals=62296 no_read_write=1 pulse_clear=1',
                     good.replace('packets=300', 'packets=132')):
             with self.subTest(log=bad):
                 with self.assertRaises(RuntimeError):
                     self.run_process('print(%r)' % bad, test='yacc')
                 self.assertEqual(self.manifest['simulations']['yacc']['status'], 'failed')
+
+    def test_direct_yacc_requires_experiment_mode_and_all_coverage(self):
+        good = ('CHECK yacc_overlap banks=2 offsets=86 packets=172 yields=2\n'
+                'CHECK yacc_read_identity rows=3000\n'
+                'CHECK yacc_illegal intervals=62296 no_read_write=1 pulse_clear=1\n'
+                'CHECK yacc_mode direct=1\nPASS yacc_direct packets=300 cycles=1000')
+        self.run_process('print(%r)' % good, test='yacc_direct')
+        self.assertEqual(self.manifest['simulations']['yacc_direct']['coverage']['direct_drain'], 1)
+        for bad in (good.replace('direct=1', 'direct=0'),
+                    good.replace('CHECK yacc_mode direct=1\n', ''),
+                    good + '\nCHECK yacc_mode direct=1',
+                    good.replace('PASS yacc_direct', 'PASS yacc'),
+                    good.replace('intervals=62296', 'intervals=0')):
+            with self.subTest(log=bad), self.assertRaises(RuntimeError):
+                self.run_process('print(%r)' % bad, test='yacc_direct')
 
     def test_missing_pass(self):
         with self.assertRaises(RuntimeError):

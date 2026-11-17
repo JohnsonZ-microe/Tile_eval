@@ -12,7 +12,7 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-TOPS = ('cells', 'math', 'compute', 'protocol', 'memory', 'yacc', 'control', 'tile', 'promotion')
+TOPS = ('cells', 'math', 'compute', 'protocol', 'memory', 'yacc', 'yacc_direct', 'control', 'tile', 'promotion')
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
@@ -32,7 +32,7 @@ def main():
         driver.addStandardArgs()
         top = 'tb_' + args.test + '_v4'
         # Parent fixes cwd to ROOT. No shell expansion is used.
-        if not driver.parseCommandLine('slang -f scripts/rtl.f tb/' + top + '.sv --top ' + top + ' --timescale 1ns/1ps'):
+        if not driver.parseCommandLine('slang -f scripts/rtl.f ' + ('tb/tb_yacc_v4.sv ' if args.test == 'yacc_direct' else '') + 'tb/' + top + '.sv --top ' + top + ' --timescale 1ns/1ps'):
             return 2
         if not driver.processOptions() or not driver.parseAllSources():
             driver.reportDiagnostics(False)
@@ -45,6 +45,8 @@ def main():
     sources += [ROOT / line.strip() for line in (ROOT / 'scripts/rtl.f').read_text().splitlines()
                 if line.strip() and not line.lstrip().startswith('#')]
     sources += [ROOT / 'tb' / ('tb_' + test + '_v4.sv') for test in tests]
+    if 'yacc_direct' in tests:
+        sources.append(ROOT / 'tb/tb_yacc_v4.sv')
     result = dict(tool='pyslang', version=pyslang.__version__,
                   scope='SystemVerilog parsing and semantic elaboration only; no simulation, synthesis or PPA validation',
                   sources={str(path.resolve().relative_to(ROOT.parent)).replace('\\', '/'):

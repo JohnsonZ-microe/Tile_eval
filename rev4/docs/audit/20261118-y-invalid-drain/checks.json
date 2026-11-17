@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "af_tests": 280,
+  "seconds": 61.561,
+  "illegal_intervals": 62296,
+  "port_interval_combinations": 65536,
+  "legal_intervals_previously_covered": 3240,
+  "log_sha256": "8db85647c9b90e9ade1d29f8baa2572e3abb03486681d8df013ecdc0c0fd7230",
+  "external_input_rtl_validation": "pending"
+}

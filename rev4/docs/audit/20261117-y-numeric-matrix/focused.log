@@ -1,0 +1,6 @@
+test_masks_banks_bias_partial_loads_and_segmented_drain (test_y_numeric_matrix.NumericMatrixTests.test_masks_banks_bias_partial_loads_and_segmented_drain) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 3.202s
+
+OK

@@ -8,7 +8,7 @@
 // phase. Rows of one commit never overlap; the next D DONE waits for
 // commit_busy=0. Same-bank commit reads have priority over DRAIN reads,
 // which yield one cycle (CNT_Y_YIELD at the top).
-module pe4_yacc (
+module pe4_yacc #(parameter bit DIRECT_DRAIN = 0) (
     input  logic clk, rst_n,
     input  logic load_valid,
     input  logic [6:0] load_base,          // column base 0..79 (any alignment)
@@ -143,7 +143,7 @@ module pe4_yacc (
             we0 <= 0; we1 <= 0;        // re0/re1/raddr0/raddr1 are owned by
             waddr0 <= 0; waddr1 <= 0;  // the read-port arbitration block above
             wdata0 <= 0; wdata1 <= 0;
-            y_old_r <= 0; mul_v <= 0; add_v <= 0;
+            y_old_r <= 0; mul_v <= 0; addb_v <= 0; add_v <= 0;
             cre <= 0; craddr <= 0;
             v_set_req <= 0;   // v_clr_req is owned by the DRAIN engine below
             for (int c = 0; c < 80; c++)
@@ -296,17 +296,26 @@ module pe4_yacc (
                         // sram rdata valid in this cycle: build the phit
                         for (int c = 0; c < 8; c++) begin
                             logic [7:0] col;
+                            logic [15:0] converted;
                             col = {drow, 3'(c)};
                             if (col >= dstart && col < dstart + dcount)
-                                dphit[16*c +: 16] <= fp32_to_bf16(
+                                converted = fp32_to_bf16(
                                     dbank ? yq1[32*c +: 32] : yq0[32*c +: 32]);
-                            else dphit[16*c +: 16] <= 16'h0000;
+                            else converted = 16'h0000;
+                            if (DIRECT_DRAIN) yb_payload[16*c +: 16] <= converted;
+                            else dphit[16*c +: 16] <= converted;
+                        end
+                        if (DIRECT_DRAIN) begin
+                            yb_valid <= 1;
+                            yb_last <= row_is_last;
+                            yb_segment <= dseg;
+                            yb_tag <= {dbank, dslot, 1'b0};
                         end
                         dstate <= DSEND;
                     end
                 end
                 DSEND: begin
-                    if (!yb_valid) begin
+                    if (!DIRECT_DRAIN && !yb_valid) begin
                     yb_valid <= 1;
                     yb_payload <= dphit;
                     yb_last <= row_is_last;

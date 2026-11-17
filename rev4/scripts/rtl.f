@@ -13,6 +13,7 @@ rtl/pe4_act.sv
 rtl/pe4_quant.sv
 rtl/pe4_hbuf.sv
 rtl/pe4_yacc.sv
+rtl/pe4_yacc_variants.sv
 rtl/pe4_bus.sv
 rtl/pe4_sched.sv
 rtl/tile_ffn_v4.sv

@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "counts": {
+    "edges": 98112,
+    "commit_requests": 3000,
+    "drain_requests": 3024,
+    "same_bank_collision": 0,
+    "different_bank_parallel": 0,
+    "known_returns": 4744,
+    "unknown_returns": 1280
+  },
+  "trace_sha256": "2baa34fd8477684040ef4462a322f193892b21faa91c9ad13660cb83d9a214e9",
+  "scope": "observed FSM request pulses and write data; predicted mux and SRAM read timing/data; not independent Y engine"
+}

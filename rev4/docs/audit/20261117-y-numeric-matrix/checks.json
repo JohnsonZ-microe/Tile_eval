@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "af_tests": 278,
+  "seconds": 51.057,
+  "log_sha256": "f5eabd8f54de8c4db159efc0745555532d134982c75d296b94f08747d58a43ad",
+  "commit_configurations": 64,
+  "legal_drain_intervals": 3240,
+  "validity_variants_per_interval": 2,
+  "drain_cases": 6480,
+  "seed": 817,
+  "scope": "software differential and interval coverage; external-input RTL calibration pending"
+}

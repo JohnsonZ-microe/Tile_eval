@@ -1,0 +1,11 @@
+{
+  "af_tests": 273,
+  "af_status": "passed",
+  "af_seconds": 46.36,
+  "af_log_sha256": "b4e16022bf5ab994e04f82f4afb764fbd4667d38870c5829c1c44b5389e89750",
+  "hand_calculated_fixture_edges": 303,
+  "fixture_writes": 10,
+  "fixture_beats": 10,
+  "historical_vcd": "rejected_missing_command_alias",
+  "external_input_rtl_validation": "pending"
+}

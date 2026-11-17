@@ -1,0 +1,59 @@
+{
+  "run": "vcs-20261117T014645Z-83541",
+  "status": "passed",
+  "coverage": {
+    "output_contention_cases": 20,
+    "tokens": 4,
+    "delays": 5,
+    "packet_lock": 1,
+    "credit_conservation": 1
+  },
+  "replay": {
+    "status": "passed",
+    "counts": {
+      "edges": 4767,
+      "reset_edges": 66,
+      "fifo_pops": 728,
+      "up_beats": 1024,
+      "overflow_edges": 1,
+      "stall_edges": 1062,
+      "ctrl_hits": 2
+    },
+    "arbitration": {
+      "h_y_contend": 519,
+      "all_contend": 519,
+      "h_blocked_by_y_lock": 1386,
+      "y_lock_bubble_with_h": 1046,
+      "h_credit_stall": 623,
+      "y_credit_stall": 262,
+      "h_fire": 489,
+      "y_fire": 350,
+      "status_fire": 185
+    },
+    "sha256": "7d47a834cb047d0c151cf4721e7e659ff2608ead1c253ae7315a48e35897c9d8",
+    "model_sha256": "74521501a7e4a55abe08209207e61bba60f14496423e0e70053bf08102dc8aaf",
+    "checker_sha256": "fc102a0df27c516be3609c1c86b886f2774f2d16da3c354a79c4d22d1aff706f",
+    "scope": "imported bus waveform replay only; not full Tile scheduler calibration or source equivalence"
+  },
+  "source_comparison": {
+    "rtl/pe4_bus.sv": {
+      "manifest_sha256": "4bb1f2cf489ecbe3e4289cc242b50197643166f441e0adf140784f9ac6546b8e",
+      "local_sha256": "4bb1f2cf489ecbe3e4289cc242b50197643166f441e0adf140784f9ac6546b8e",
+      "local_lf_sha256": "4bb1f2cf489ecbe3e4289cc242b50197643166f441e0adf140784f9ac6546b8e",
+      "match": "exact"
+    },
+    "tb/tb_protocol_v4.sv": {
+      "manifest_sha256": "7e83a6e516701e176a5633cec7cbf021ca71882d57af95b2d68ed7112e769d91",
+      "local_sha256": "7e83a6e516701e176a5633cec7cbf021ca71882d57af95b2d68ed7112e769d91",
+      "local_lf_sha256": "7e83a6e516701e176a5633cec7cbf021ca71882d57af95b2d68ed7112e769d91",
+      "match": "exact"
+    },
+    "scripts/run.py": {
+      "manifest_sha256": "afc06206786778f10d921c53f99c1af4e4fbcd9fd0abcc4350f26acb119f20e7",
+      "local_sha256": "eb5365eeb50c7fd321c7fd3134dcb5f7d121d6c0f5d9992edd5e17a355908579",
+      "local_lf_sha256": "afc06206786778f10d921c53f99c1af4e4fbcd9fd0abcc4350f26acb119f20e7",
+      "match": "LF-normalized"
+    }
+  },
+  "waveform_binding": "local SHA256 matches sync receipt tagged with run; size matches remote manifest; remote manifest has no VCD hash"
+}

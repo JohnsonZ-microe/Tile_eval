@@ -1,0 +1,11 @@
+{
+  "af_tests": 264,
+  "af_status": "passed",
+  "af_log_sha256": "f5a59ba41583650c94e71cbf2b657518bd7e449b3812f3fc4d90f277da7104bd",
+  "known_waveform_operations": 72000,
+  "unknown_input_valids": 8,
+  "unknown_output_valids": 8,
+  "rtl_reset_fix_semantic_compile": "passed",
+  "rtl_reset_fix_dynamic_validation": "pending",
+  "full_numeric_composition": "pending"
+}

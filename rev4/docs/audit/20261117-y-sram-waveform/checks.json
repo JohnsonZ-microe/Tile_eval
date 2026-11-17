@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "banks": [
+    {
+      "edges": 98112,
+      "writes": 1500,
+      "reads": 3012,
+      "known_returns": 2372,
+      "unknown_returns": 640,
+      "reset_edges": 2,
+      "partial_writes": 0
+    },
+    {
+      "edges": 98112,
+      "writes": 1500,
+      "reads": 3012,
+      "known_returns": 2372,
+      "unknown_returns": 640,
+      "reset_edges": 2,
+      "partial_writes": 0
+    }
+  ],
+  "sha256": "2baa34fd8477684040ef4462a322f193892b21faa91c9ad13660cb83d9a214e9",
+  "scope": "observed SRAM ports; known valid return data only; unknown returns counted but not compared; no full Y/physical macro validation"
+}
