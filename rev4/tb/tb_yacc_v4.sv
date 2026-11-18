@@ -40,8 +40,14 @@ module tb_yacc_v4 #(parameter bit DIRECT_DRAIN = 0);
     end
     pe4_yacc #(.DIRECT_DRAIN(DIRECT_DRAIN)) dut(.*);
     // Sample after the preceding rising edge has applied synchronous reset.
+    // NB: "logic clk = 0" creates an X->0 transition at t=0, which counts as a
+    // NEGEDGE - the block would otherwise run at time 0 with the DUT still X
+    // and fire spuriously. Arm the check only after a first rising edge.
+    bit arith_reset_check_armed = 0;
+    always @(posedge clk) arith_reset_check_armed <= 1'b1;
     always @(negedge clk) begin
-        if (!rst_n && {dut.mul_v, dut.addb_v, dut.add_v} !== 24'b0)
+        if (arith_reset_check_armed && !rst_n &&
+            {dut.mul_v, dut.addb_v, dut.add_v} !== 24'b0)
             $fatal(1, "Y arithmetic input valid not cleared by reset");
     end
     logic [9:0] read_identity_addr [0:1];
