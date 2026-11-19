@@ -1,4 +1,4 @@
-"""tile_cycles.py - cycle-accurate performance model of Tile FFN revision 4.
+"""tile_cycles.py - partially calibrated cycle-stepped performance model of Tile FFN revision 4.
 
 Single-file, self-contained (Python 3.6+, standard library only). Copy this
 file into your LLM serving/profiling code and import TileCycleModel.
@@ -42,7 +42,7 @@ LATENCIES = {
     'ACT_COLS': 36,       # SwiGLU column pairs (H_COLS)
     'YACC_ROW': 22,       # registered row sequencer; VCD-checked 2026-11-14
     'YACC_WARM': 1,       # trigger -> first row read
-    'DRAIN_ROW': 6,       # drain: read (SRAM_LAT) + build + beat gap
+    'DRAIN_ROW': 7,       # baseline accepted-beat interval; VCS 91900, no overlap
     'UP_CREDITS': 6,      # tile->L1 launcher credits
     'XFIFO': 128,         # x FIFO depth (hub-side credit seed)
     'HUB_TURN': 2,        # H broadcast start after the last H_UP beat

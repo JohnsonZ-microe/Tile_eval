@@ -1,3 +1,25 @@
+# Cycle-model audit update — 2026-11-18
+
+Standalone DRAIN_ROW is now 7 cycles, matching baseline accepted-beat spacing
+in verified Yacc run 91900 (direct mode is separate). The 24 no-bias, one-pass
+format/token profiles each finish 9 cycles later. This does not fix first-beat
+admission, bank ownership or the CRD-only overlap approximation. Do not use
+standalone overlap predictions as calibrated hardware timing.
+
+Native/generic production integration disables the standalone DRAIN and uses
+DrainLeafTiming (7-cycle first beat and interval) after all commits finish.
+It therefore does not inherit this particular standalone fix. The new complete
+snapshots are reports/npu-rev4/20261118-tile-audit and
+reports/npu-generic/20261118-tile-audit at the project root. Compare them with
+the old page source using reports/af-composition/20261118-implementation/
+npu-diff-vs-page-source.json; that difference includes prior model corrections,
+not only this one-line interval fix.
+
+The entries below are historical. Component waveform parity and seed-817 RTL
+functional regression do not establish full raw-input tile-cycle calibration.
+
+---
+
 2026-11-14: YACC commit rows corrected from 17 to 22 cycles using 152 commits
 from the supplied VCS waveform. Disabled-lane scan cycles and next-edge valid
 consumption are included. See audit/20261114-yacc-timing/REPORT.md for all-event
